@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+    <base href="https://hadoop.apache.org">
+    <title>Apache Hadoop</title>
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/hadoop.css">
+
+    
+    
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img class="navbar-logo" src="/elephant.png">
+          <a class="navbar-brand" href="/"> Apache Hadoop</a>
+        </div>
+        
+   <div id="navbar" class="navbar-collapse collapse">
+     <ul class="nav navbar-nav">
+       
+       
+          
+             <li class=""><a href="releases.html">Download</a></li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="http://hadoop.apache.org/docs/current/">Latest</a></li>
+               
+                  <li ><a href="http://hadoop.apache.org/docs/stable/">Stable</a></li>
+               
+               
+               <li role="separator" class="divider"></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.1.1/">3.1.1</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.0.3/">3.0.3</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.9.1/">2.9.1</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.7.5/">2.7.5</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.8.3/">2.8.3</a></li>
+               
+               <li role="separator" class="divider"></li>
+               <li><a href="https://wiki.apache.org/hadoop">Wiki</a></li>
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown  active">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Community <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="/bylaws.html">Bylaws</a></li>
+               
+                  <li ><a href="/committer_criteria.html">Criteria for Committership</a></li>
+               
+                  <li ><a href="/mailing_lists.html">Mailing lists</a></li>
+               
+                  <li ><a href="/who.html">Who We are</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Development <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="https://wiki.apache.org/hadoop/HowToContribute">How to Contribute</a></li>
+               
+                  <li ><a href="/issue_tracking.html">Issue Tracking</a></li>
+               
+                  <li ><a href="/version_control.html">Version Control</a></li>
+               
+                  <li ><a href="/versioning.html">Versioning</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="http://www.cafepress.com/hadoop">Buy Stuff</a></li>
+               
+                  <li ><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorshop</a></li>
+               
+                  <li ><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+     </ul>
+     <ul class="nav navbar-nav navbar-right">
+      <li>
+       <a href="https://www.apache.org/">Apache Software Foundation <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+      </li>
+
+
+     </ul>
+   </div>
+
+      </div>
+    </nav>
+
+<div class="container">
+<h1>Bylaws</h1>
+
+
+<!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This document defines the bylaws under which the Apache Hadoop project
+operates. It defines the roles and responsibilities of the project, who
+may vote, how voting works, how conflicts are resolved, etc.</p>
+
+<p>Hadoop is a project of the <a href="http://www.apache.org/foundation/">Apache Software
+Foundation</a>. The foundation holds the
+trademark on the name &ldquo;Hadoop&rdquo; and copyright on Apache code including
+the code in the Hadoop codebase. The <a href="http://www.apache.org/foundation/faq.html">foundation
+FAQ</a> explains the operation
+and background of the foundation.</p>
+
+<p>Hadoop is typical of Apache projects in that it operates under a set of
+principles, known collectively as the &ldquo;Apache Way&rdquo;. If you are new to
+Apache development, please refer to the <a href="http://incubator.apache.org">Incubator
+project</a> for more information on how Apache
+projects operate.</p>
+
+<h1 id="roles-and-responsibilities">Roles and Responsibilities</h1>
+
+<p>Apache projects define a set of roles with associated rights and
+responsibilities. These roles govern what tasks an individual may
+perform within the project. The roles are defined in the following
+sections</p>
+
+<ul>
+<li><p><strong>Users</strong></p>
+
+<p>The most important participants in the project are people who use
+our software. The majority of our developers start out as users and
+guide their development efforts from the user&rsquo;s perspective.</p>
+
+<p>Users contribute to the Apache projects by providing feedback to
+developers in the form of bug reports and feature suggestions. As
+well, users participate in the Apache community by helping other
+users on mailing lists and user support forums.</p></li>
+
+<li><p><strong>Contributors</strong></p>
+
+<p>All of the volunteers who are contributing time, code,
+documentation, or resources to the Hadoop Project. A contributor
+that makes sustained, welcome contributions to the project may be
+invited to become a Committer, though the exact timing of such
+invitations depends on many factors.</p></li>
+
+<li><p><strong>Committers</strong></p>
+
+<p>The project&rsquo;s Committers are responsible for the project&rsquo;s technical
+management. Committers have access to all subproject subversion
+repositories. Committers may cast binding votes on any technical
+discussion regarding any subproject.</p>
+
+<p>Committer access is by invitation only and must be approved by
+consensus approval of the active PMC members. A Committer is
+considered emeritus by their own declaration or by not contributing
+in any form to the project for over six months. An emeritus
+committer may request reinstatement of commit access from the PMC.
+Such reinstatement is subject to consensus approval of active PMC
+members.</p>
+
+<p>Significant, pervasive features are often developed in a speculative
+branch of the repository. The PMC may grant commit rights on the
+branch to its consistent contributors, while the initiative is
+active. Branch committers are responsible for shepherding their
+feature into an active release and do not cast binding votes or
+vetoes in the project.</p>
+
+<p>All Apache committers are required to have a signed Contributor
+License Agreement (CLA) on file with the Apache Software Foundation.
+There is a <a href="http://www.apache.org/dev/committers.html">Committer
+FAQ</a> which provides more
+details on the requirements for Committers</p>
+
+<p>A committer who makes a sustained contribution to the project may be
+invited to become a member of the PMC. The form of contribution is
+not limited to code. It can also include code review, helping out
+users on the mailing lists, documentation, testing, etc.</p></li>
+
+<li><p><strong>Release Manager</strong></p>
+
+<p>A Release Manager (RM) is a committer who volunteers to produce a
+Release Candidate according to
+<a href="https://wiki.apache.org/hadoop/HowToRelease">HowToRelease</a>. The RM
+shall publish a Release Plan on the <em>common-dev@</em> list stating the
+branch from which they intend to make a Release Candidate, at least
+one week before they do so. The RM is responsible for building
+consensus around the content of the Release Candidate, in order to
+achieve a successful Product Release vote.</p></li>
+
+<li><p><strong>Project Management Committee</strong></p>
+
+<p>The Project Management Committee (PMC) for Apache Hadoop was created
+by the Apache Board in January 2008 when Hadoop moved out of Lucene
+and became a top level project at Apache. The PMC is responsible to
+the board and the ASF for the management and oversight of the Apache
+Hadoop codebase. The responsibilities of the PMC include</p>
+
+<ul>
+<li>Deciding what is distributed as products of the Apache Hadoop
+project. In particular all releases must be approved by the PMC</li>
+<li>Maintaining the project&rsquo;s shared resources, including the
+codebase repository, mailing lists, websites.</li>
+<li>Speaking on behalf of the project.</li>
+<li>Resolving license disputes regarding products of the project</li>
+<li>Nominating new PMC members and committers</li>
+<li>Maintaining these bylaws and other guidelines of the project</li>
+</ul>
+
+<p>Membership of the PMC is by invitation only and must be approved by
+a consensus approval of active PMC members. A PMC member is
+considered &ldquo;emeritus&rdquo; by their own declaration or by not
+contributing in any form to the project for over six months. An
+emeritus member may request reinstatement to the PMC. Such
+reinstatement is subject to consensus approval of the active PMC
+members.</p>
+
+<p>The chair of the PMC is appointed by the ASF board. The chair is an
+office holder of the Apache Software Foundation (Vice President,
+Apache Hadoop) and has primary responsibility to the board for the
+management of the projects within the scope of the Hadoop PMC. The
+chair reports to the board quarterly on developments within the
+Hadoop project.</p>
+
+<p>The chair of the PMC is rotated annually. When the chair is rotated
+or if the current chair of the PMC resigns, the PMC votes to
+recommend a new chair using Single Transferable Vote (STV) voting.
+See <a href="http://wiki.apache.org/general/BoardVoting">http://wiki.apache.org/general/BoardVoting</a> for specifics. The
+decision must be ratified by the Apache board.</p></li>
+</ul>
+
+<h1 id="decision-making">Decision Making</h1>
+
+<p>Within the Hadoop project, different types of decisions require
+different forms of approval. For example, the <a href="#Roles+and+Responsibilities">previous
+section</a> describes several decisions which
+require &ldquo;consensus approval&rdquo; approval. This section defines how voting
+is performed, the types of approvals, and which types of decision
+require which type of approval.</p>
+
+<ul>
+<li><p><strong>Voting</strong></p>
+
+<p>Decisions regarding the project are made by votes on the primary
+project development mailing list (general@hadoop.apache.org). Where
+necessary, PMC voting may take place on the private Hadoop PMC
+mailing list. Votes are clearly indicated by subject line starting
+with [VOTE]. Votes may contain multiple items for approval and
+these should be clearly separated. Voting is carried out by replying
+to the vote mail. Voting may take four flavors</p>
+
+<ul>
+<li><strong>+1</strong> &ldquo;Yes,&rdquo; &ldquo;Agree,&rdquo; or &ldquo;the action should be performed.&rdquo; In
+general, this vote also indicates a willingness on the behalf of
+the voter in &ldquo;making it happen&rdquo;</li>
+<li><strong>+0</strong> This vote indicates a willingness for the action under
+consideration to go ahead. The voter, however will not be able
+to help.</li>
+<li><strong>-0</strong> This vote indicates that the voter does not, in general,
+agree with the proposed action but is not concerned enough to
+prevent the action going ahead.</li>
+<li><strong>-1</strong> This is a negative vote. On issues where consensus is
+required, this vote counts as a <strong>veto</strong>. All vetoes must
+contain an explanation of why the veto is appropriate. Vetoes
+with no explanation are void. It may also be appropriate for a
+-1 vote to include an alternative course of action.</li>
+</ul>
+
+<p>All participants in the Hadoop project are encouraged to show their
+agreement with or against a particular action by voting. For
+technical decisions, only the votes of active committers are
+binding. Non binding votes are still useful for those with binding
+votes to understand the perception of an action in the wider Hadoop
+community. For PMC decisions, only the votes of PMC members are
+binding.</p>
+
+<p>Voting can also be applied to changes made to the Hadoop codebase.
+These typically take the form of a veto (-1) in reply to the commit
+message sent when the commit is made.</p></li>
+
+<li><p><strong>Approvals</strong></p>
+
+<p>These are the types of approvals that can be sought. Different
+actions require different types of approvals</p>
+
+<ul>
+<li><strong>Consensus Approval -</strong> Consensus approval requires 3 binding
++1 votes and no binding vetoes.</li>
+<li><strong>Lazy Consensus -</strong> Lazy consensus requires no -1 votes
+(&lsquo;silence gives assent&rsquo;).</li>
+<li><strong>Lazy Majority -</strong> A lazy majority vote requires 3 binding +1
+votes and more binding +1 votes than -1 votes.</li>
+<li><strong>Lazy <sup>2</sup>&frasl;<sub>3</sub> Majority -</strong> Lazy <sup>2</sup>&frasl;<sub>3</sub> majority votes requires at
+least 3 votes and twice as many +1 votes as -1 votes.</li>
+</ul></li>
+
+<li><p><strong>Vetoes</strong></p>
+
+<p>A valid, binding veto cannot be overruled. If a veto is cast, it
+must be accompanied by a valid reason explaining the reasons for the
+veto. The validity of a veto, if challenged, can be confirmed by
+anyone who has a binding vote. This does not necessarily signify
+agreement with the veto - merely that the veto is valid.</p>
+
+<p>If you disagree with a valid veto, you must lobby the person casting
+the veto to withdraw their veto. If a veto is not withdrawn, any
+action that has been vetoed must be reversed in a timely manner.</p></li>
+
+<li><p><strong>Actions</strong></p>
+
+<p>This section describes the various actions which are undertaken
+within the project, the corresponding approval required for that
+action and those who have binding votes over the action.</p>
+
+<ul>
+<li><p><strong>Code Change</strong></p>
+
+<p>A change made to a codebase of the project and committed by a
+committer. This includes source code, documentation, website
+content, etc.</p>
+
+<p>Consensus approval of active committers, but with a minimum of
+one +1. The code can be committed after the first +1, unless the
+code change represents a merge from a branch, in which case
+three +1s are required.</p></li>
+
+<li><p><strong>Product Release</strong></p>
+
+<p>When a release of one of the project&rsquo;s products is ready, a vote
+is required to accept the release as an official release of the
+project.</p>
+
+<p>Lazy Majority of active PMC members</p></li>
+
+<li><p><strong>Adoption of New Codebase</strong></p>
+
+<p>When the codebase for an existing, released product is to be
+replaced with an alternative codebase. If such a vote fails to
+gain approval, the existing code base will continue.</p>
+
+<p>This also covers the creation of new sub-projects within the
+project</p>
+
+<p>Lazy <sup>2</sup>&frasl;<sub>3</sub> majority of PMC members</p></li>
+
+<li><p><strong>New Branch Committer</strong></p>
+
+<p>When a branch committer is proposed for the PMC</p>
+
+<p>Lazy consensus of active PMC members</p></li>
+
+<li><p><strong>New Committer</strong></p>
+
+<p>When a new committer is proposed for the project</p>
+
+<p>Consensus approval of active PMC members</p></li>
+
+<li><p><strong>New PMC Member</strong></p>
+
+<p>When a committer is proposed for the PMC</p>
+
+<p>Consensus approval of active PMC members</p></li>
+
+<li><p><strong>Branch Committer Removal</strong></p>
+
+<p>When removal of commit privileges is sought <strong>or</strong> when the
+branch is merged to the mainline</p>
+
+<p>Lazy <sup>2</sup>&frasl;<sub>3</sub> majority of active PMC members</p></li>
+
+<li><p><strong>Committer Removal</strong></p>
+
+<p>When removal of commit privileges is sought. Note: Such actions
+will also be referred to the ASF board by the PMC chair</p>
+
+<p>Lazy <sup>2</sup>&frasl;<sub>3</sub> majority of active PMC members (excluding the committer
+in question if a member of the PMC).</p></li>
+
+<li><p><strong>PMC Member Removal</strong></p>
+
+<p>When removal of a PMC member is sought. Note: Such actions will
+also be referred to the ASF board by the PMC chair.</p>
+
+<p>Lazy <sup>2</sup>&frasl;<sub>3</sub> majority of active PMC members (excluding the member in
+question)</p></li>
+
+<li><p><strong>Modifying Bylaws</strong></p>
+
+<p>Modifying this document.</p>
+
+<p>Lazy majority of active PMC members</p></li>
+</ul></li>
+
+<li><p><strong>Voting Timeframes</strong></p>
+
+<p>Votes are open for a period of 7 days to allow all active voters
+time to consider the vote. Votes relating to code changes are not
+subject to a strict timetable but should be made as timely as
+possible.</p>
+
+<ul>
+<li><p><strong>Product Release - Vote Timeframe</strong></p>
+
+<p>Release votes, alone, run for a period of 5 days. All other
+votes are subject to the above timeframe of 7 days.</p></li>
+</ul></li>
+</ul>
+
+<p></div></p>
+
+</div>
+
+<div class="container">
+<footer class="footer container">
+  <div class="col-md-6">
+  <p>Apache Hadoop, Hadoop, Apache, the Apache feather logo,
+    and the Apache Hadoop project logo are either registered trademarks or trademarks of the Apache Software Foundation
+     in the United States and other countries</p>
+  <p>Copyright © 2018 The Apache Software Foundation.</p>
+  <p><a href="/privacy_policy.html">Privacy policy</a></p>
+  </div>
+  <div class="col-md-6">
+    <img class="img-responsive" src="/asf_logo_wide.png"/>
+  </div>
+</footer>
+</div>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+    $(function() { $('table').addClass('table table-striped'); })
+    </script>
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7453027-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+</body>
+</html>
+

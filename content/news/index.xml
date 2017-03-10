@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>News on Apache Hadoop</title>
+    <link>https://hadoop.apache.org/news.html</link>
+    <description>Recent content in News on Apache Hadoop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018 Apache Software Foundation</copyright>
+    <lastBuildDate>Thu, 31 Mar 2011 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://hadoop.apache.org/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Apache Hadoop takes top prize at Media Guardian Innovation Awards</title>
+      <link>https://hadoop.apache.org/news/2011-03-xx-award.html</link>
+      <pubDate>Thu, 31 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2011-03-xx-award.html</guid>
+      <description>Described by the judging panel as a &amp;ldquo;Swiss army knife of the 21st century&amp;rdquo;, Apache Hadoop picked up the innovator of the year award for having the potential to change the face of media innovations.
+See The Guardian web site</description>
+    </item>
+    
+    <item>
+      <title>ZooKeeper Graduates</title>
+      <link>https://hadoop.apache.org/news/2011-01-xx-zookeeper.html</link>
+      <pubDate>Sun, 30 Jan 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2011-01-xx-zookeeper.html</guid>
+      <description>Hadoop&amp;rsquo;s ZooKeeper subproject has graduated to become a top-level Apache project.
+Apache ZooKeeper can now be found at http://zookeeper.apache.org/</description>
+    </item>
+    
+    <item>
+      <title>Hive and Pig Graduate</title>
+      <link>https://hadoop.apache.org/news/2010-10-xx-hive-pig.html</link>
+      <pubDate>Sat, 30 Oct 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2010-10-xx-hive-pig.html</guid>
+      <description>Hadoop&amp;rsquo;s Hive and Pig subprojects have graduated to become top-level Apache projects.
+Apache Hive can now be found at http://hive.apache.org/
+Pig can now be found at http://pig.apache.org/</description>
+    </item>
+    
+    <item>
+      <title>Avro and HBase Graduate</title>
+      <link>https://hadoop.apache.org/news/2010-05-xx-avro-hbase.html</link>
+      <pubDate>Mon, 31 May 2010 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2010-05-xx-avro-hbase.html</guid>
+      <description>Hadoop&amp;rsquo;s Avro and HBase subprojects have graduated to become top-level Apache projects.
+Apache Avro can now be found at http://avro.apache.org/
+Apache HBase can now be found at http://hbase.apache.org/</description>
+    </item>
+    
+    <item>
+      <title>New Hadoop Subprojects</title>
+      <link>https://hadoop.apache.org/news/2009-07-xx-subprojects.html</link>
+      <pubDate>Fri, 31 Jul 2009 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2009-07-xx-subprojects.html</guid>
+      <description>Hadoop is getting bigger!
+ Hadoop Core is renamed Hadoop Common. MapReduce and the Hadoop Distributed File System (HDFS) are now separate subprojects. Avro and Chukwa are new Hadoop subprojects.  See the summary descriptions for all subprojects above. Visit the individual sites for more detailed information.</description>
+    </item>
+    
+    <item>
+      <title>ApacheCon EU</title>
+      <link>https://hadoop.apache.org/news/2009-03-xx-apachecon-eu.html</link>
+      <pubDate>Tue, 31 Mar 2009 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2009-03-xx-apachecon-eu.html</guid>
+      <description>In case you missed it&amp;hellip;. ApacheCon Europe 2009</description>
+    </item>
+    
+    <item>
+      <title>ApacheCon US 2008</title>
+      <link>https://hadoop.apache.org/news/2008-11-xx-apachecon.html</link>
+      <pubDate>Sun, 30 Nov 2008 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2008-11-xx-apachecon.html</guid>
+      <description>In case you missed it&amp;hellip;. ApacheCon US 2008</description>
+    </item>
+    
+    <item>
+      <title>July 2008 - Hadoop Wins Terabyte Sort Benchmark</title>
+      <link>https://hadoop.apache.org/news/2008-07-xx-terabyte-sort.html</link>
+      <pubDate>Thu, 31 Jul 2008 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2008-07-xx-terabyte-sort.html</guid>
+      <description>Hadoop Wins Terabyte Sort Benchmark: One of Yahoo&amp;rsquo;s Hadoop clusters sorted 1 terabyte of data in 209 seconds, which beat the previous record of 297 seconds in the annual general purpose (Daytona) terabyte sort benchmark. This is the first time that either a Java or an open source program has won.</description>
+    </item>
+    
+  </channel>
+</rss>

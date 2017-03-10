@@ -1,0 +1,689 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+    <base href="https://hadoop.apache.org">
+    <title>Apache Hadoop</title>
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/hadoop.css">
+
+    
+    
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img class="navbar-logo" src="/elephant.png">
+          <a class="navbar-brand" href="/"> Apache Hadoop</a>
+        </div>
+        
+   <div id="navbar" class="navbar-collapse collapse">
+     <ul class="nav navbar-nav">
+       
+       
+          
+             <li class=""><a href="releases.html">Download</a></li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="http://hadoop.apache.org/docs/current/">Latest</a></li>
+               
+                  <li ><a href="http://hadoop.apache.org/docs/stable/">Stable</a></li>
+               
+               
+               <li role="separator" class="divider"></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.1.1/">3.1.1</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.0.3/">3.0.3</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.9.1/">2.9.1</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.7.5/">2.7.5</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.8.3/">2.8.3</a></li>
+               
+               <li role="separator" class="divider"></li>
+               <li><a href="https://wiki.apache.org/hadoop">Wiki</a></li>
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Community <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="/bylaws.html">Bylaws</a></li>
+               
+                  <li ><a href="/committer_criteria.html">Criteria for Committership</a></li>
+               
+                  <li ><a href="/mailing_lists.html">Mailing lists</a></li>
+               
+                  <li ><a href="/who.html">Who We are</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Development <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="https://wiki.apache.org/hadoop/HowToContribute">How to Contribute</a></li>
+               
+                  <li ><a href="/issue_tracking.html">Issue Tracking</a></li>
+               
+                  <li ><a href="/version_control.html">Version Control</a></li>
+               
+                  <li ><a href="/versioning.html">Versioning</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="http://www.cafepress.com/hadoop">Buy Stuff</a></li>
+               
+                  <li ><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorshop</a></li>
+               
+                  <li ><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+     </ul>
+     <ul class="nav navbar-nav navbar-right">
+      <li>
+       <a href="https://www.apache.org/">Apache Software Foundation <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+      </li>
+
+
+     </ul>
+   </div>
+
+      </div>
+    </nav>
+
+<div class="container">
+
+<section id="main">
+  <div>
+    <h1 id="title">Releases Archive</h1>
+        <ul id="list">
+            
+            <h1><a href="/release/2.0.1-alpha.html">Release 2.0.1-alpha available</a></h1>
+            <p><small>2012 Jul 26 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This release contains important security fixes over hadoop-2.0.0-alpha.</p>
+
+<p>Please see the <a href="http://hadoop.apache.org/docs/r2.0.1-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 2.0.1-alpha Release
+Notes</a>
+for details.</p>
+
+
+            
+            <h1><a href="/release/2.0.0-alpha.html">Release 2.0.0-alpha available</a></h1>
+            <p><small>2012 May 23 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This is the first (alpha) version in the hadoop-2.x series.</p>
+
+<p>This delivers significant major features over the currently stable
+hadoop-1.x series including:</p>
+
+<ul>
+<li>HDFS HA for NameNode (manual failover)</li>
+<li>YARN aka NextGen MapReduce</li>
+<li>HDFS Federation</li>
+<li>Performance</li>
+<li>Wire-compatibility for both HDFS and YARN/MapReduce (using
+protobufs)</li>
+</ul>
+
+<p>Please see the <a href="http://hadoop.apache.org/docs/r2.0.0-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 2.0.0-alpha Release
+Notes</a>
+for details.</p>
+
+
+            
+            <h1><a href="/release/1.0.3.html">Release 1.0.3 available</a></h1>
+            <p><small>2012 May 16 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This is a bug fix release for version 1.0.</p>
+
+<p>Bug fixes and feature enhancements in this minor release include:</p>
+
+<ul>
+<li>4 patches in support of non-Oracle JDKs</li>
+<li>several patches to clean up error handling and log messages</li>
+<li>various production issue fixes</li>
+</ul>
+
+<p>Please see the <a href="http://hadoop.apache.org/docs/r1.0.3/releasenotes.html">Hadoop 1.0.3 Release
+Notes</a> for
+details.</p>
+
+
+            
+            <h1><a href="/release/1.0.2.html">Release 1.0.2 available</a></h1>
+            <p><small>2012 Apr 3 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This is a bug fix release for version 1.0.</p>
+
+<p>Bug fixes and feature enhancements in this minor release include:</p>
+
+<ul>
+<li>Snappy compressor/decompressor is available</li>
+<li>Occassional deadlock in metrics serving thread fixed</li>
+<li>64-bit secure datanodes failed to start, now fixed</li>
+<li>Changed package names for 64-bit rpm/debs to use &ldquo;.x86_64.&rdquo; instead
+of &ldquo;.amd64.&rdquo;</li>
+</ul>
+
+<p>Please see the <a href="http://hadoop.apache.org/docs/r1.0.2/releasenotes.html">Hadoop 1.0.2 Release
+Notes</a> for
+details.</p>
+
+
+            
+            <h1><a href="/release/1.0.1.html">Release 1.0.1 available</a></h1>
+            <p><small>2012 Mar 10 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This is a bug fix release for version 1.0. This release is now
+considered stable, replacing the long-standing 0.20.203.</p>
+
+<p>Bug fixes in this minor release include:</p>
+
+<ul>
+<li>Added hadoop-client and hadoop-minicluster artifacts for ease of
+client install and testing</li>
+<li>Support run-as-user in non-secure mode</li>
+<li>Better compatibility with Ganglia, HBase, and Sqoop</li>
+</ul>
+
+<p>Please see the <a href="http://hadoop.apache.org/docs/r1.0.1/releasenotes.html">Hadoop 1.0.1 Release
+Notes</a> for
+details.</p>
+
+
+            
+            <h1><a href="/release/0.23.1.html">release 0.23.1 available</a></h1>
+            <p><small>2012 Feb 27 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This is the second alpha version of the hadoop-0.23 major release after
+the first alpha 0.23.0. This release has significant improvements
+compared to 0.23.0 but should still be considered as alpha-quality and
+not for production use.</p>
+
+<p>hadoop-0.23.1 contains several major advances from 0.23.0:</p>
+
+<ul>
+<li>Lots of bug fixes and improvements in both HDFS and MapReduce</li>
+<li>Major performance work to make this release either match or exceed
+performance of Hadoop-1 in most aspects of both HDFS and MapReduce.</li>
+<li>Several downstream projects like HBase, Pig, Oozie, Hive etc. are
+better integrated with this release</li>
+</ul>
+
+<p>See the <a href="http://hadoop.apache.org/docs/r0.23.1/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 0.23.1 Release
+Notes</a>
+for details.</p>
+
+
+            
+            <h1><a href="/release/1.0.0.html">release 1.0.0 available</a></h1>
+            <p><small>2011 Dec 27 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>After six years of gestation, Hadoop reaches 1.0.0! This release is from
+the 0.20-security code line, and includes support for:</p>
+
+<ul>
+<li>security</li>
+<li>HBase (append/hsynch/hflush, and security)</li>
+<li>webhdfs (with full support for security)</li>
+<li>performance enhanced access to local files for HBase</li>
+<li>other performance enhancements, bug fixes, and features</li>
+</ul>
+
+<p>Please see the complete <a href="http://hadoop.apache.org/docs/r1.0.0/releasenotes.html">Hadoop 1.0.0 Release
+Notes</a> for
+details.</p>
+
+
+            
+            <h1><a href="/release/0.22.0.html">release 0.22.0 available</a></h1>
+            <p><small>2011 Dec 10 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This release contains many bug fixes and optimizations compared to its
+predecessor 0.21.0. See the <a href="http://hadoop.apache.org/docs/r0.22.0/releasenotes.html">Hadoop 0.22.0 Release
+Notes</a> for
+details. Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.22.0/changes.html">change log for
+this release</a></p>
+
+<p>Notes:</p>
+
+<p>The following features are not supported in Hadoop 0.22.0.</p>
+
+<ul>
+<li>Security.</li>
+<li>Latest optimizations of the MapReduce framework introduced in the
+Hadoop 0.20.security line of releases.</li>
+<li>Disk-fail-in-place.</li>
+<li>JMX-based metrics v2.</li>
+</ul>
+
+<p>Hadoop 0.22.0 features</p>
+
+<ul>
+<li>HBase support with <code>hflush</code> and <code>hsync</code>.</li>
+<li>New implementation of file append.</li>
+<li>Symbolic links.</li>
+<li>BackupNode and CheckpointNode.</li>
+<li>Hierarchical job queues.</li>
+<li>Job limits per queue/pool.</li>
+<li>Dynamically stop/start job queues.</li>
+<li>Andvances in new mapreduce API: Input/Output formats,
+ChainMapper/Reducer.</li>
+<li>TaskTracker blacklisting.</li>
+<li>DistributedCache sharing.</li>
+</ul>
+
+
+            
+            <h1><a href="/release/0.23.0.html">release 0.23.0 available</a></h1>
+            <p><small>2011 Nov 11 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This is the alpha version of the hadoop-0.23 major release. This is the
+first release we&rsquo;ve made off Apache Hadoop trunk in a long while. This
+release is alpha-quality and not yet ready for serious use.</p>
+
+<p>hadoop-0.23 contains several major advances:</p>
+
+<ul>
+<li>HDFS Federation</li>
+<li>NextGen MapReduce (YARN)</li>
+</ul>
+
+<p>It also has several major performance improvements to both HDFS and
+MapReduce.</p>
+
+<p>See the <a href="http://hadoop.apache.org/docs/r0.23.0/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 0.23.0 Release
+Notes</a>
+for details.</p>
+
+
+            
+            <h1><a href="/release/0.20.205.0.html">release 0.20.205.0 available</a></h1>
+            <p><small>2011 Oct 17 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This release contains improvements, new features, bug fixes and
+optimizations. This release includes rpms and debs, all duly checksummed
+and securely signed.</p>
+
+<p>See the <a href="http://hadoop.apache.org/docs/r0.20.205.0/releasenotes.html">Hadoop 0.20.205.0 Release
+Notes</a> for
+details. Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.20.205.0/changes.html">change log for
+this release</a>.</p>
+
+<p>Notes:</p>
+
+<ul>
+<li>This release includes a merge of append/hsynch/hflush capabilities
+from 0.20-append branch, to support HBase in secure mode.</li>
+<li>This release includes the new webhdfs file system, but webhdfs write
+calls currently fail in secure mode.</li>
+</ul>
+
+
+            
+        </ul>
+  </div>
+
+
+<ul class="pagination">
+    
+    <li class="page-item">
+        <a href="/release.html" class="page-link" aria-label="First"><span aria-hidden="true">&laquo;&laquo;</span></a>
+    </li>
+    
+    <li class="page-item">
+    <a href="/release/page/6.html" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+    </li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/release.html">1</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/release/page/2.html">2</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/release/page/3.html">3</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item disabled"><span aria-hidden="true">&nbsp;&hellip;&nbsp;</span></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/release/page/6.html">6</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item active"><a class="page-link" href="/release/page/7.html">7</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/release/page/8.html">8</a></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item disabled"><span aria-hidden="true">&nbsp;&hellip;&nbsp;</span></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/release/page/10.html">10</a></li>
+    
+    
+    <li class="page-item">
+    <a href="/release/page/8.html" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+    </li>
+    
+    <li class="page-item">
+        <a href="/release/page/10.html" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+    </li>
+    
+</ul>
+
+</section>
+</div>
+
+<div class="container">
+<footer class="footer container">
+  <div class="col-md-6">
+  <p>Apache Hadoop, Hadoop, Apache, the Apache feather logo,
+    and the Apache Hadoop project logo are either registered trademarks or trademarks of the Apache Software Foundation
+     in the United States and other countries</p>
+  <p>Copyright © 2018 The Apache Software Foundation.</p>
+  <p><a href="/privacy_policy.html">Privacy policy</a></p>
+  </div>
+  <div class="col-md-6">
+    <img class="img-responsive" src="/asf_logo_wide.png"/>
+  </div>
+</footer>
+</div>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+    $(function() { $('table').addClass('table table-striped'); })
+    </script>
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7453027-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+</body>
+</html>
+

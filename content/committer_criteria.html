@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+    <base href="https://hadoop.apache.org">
+    <title>Apache Hadoop</title>
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/hadoop.css">
+
+    
+    
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img class="navbar-logo" src="/elephant.png">
+          <a class="navbar-brand" href="/"> Apache Hadoop</a>
+        </div>
+        
+   <div id="navbar" class="navbar-collapse collapse">
+     <ul class="nav navbar-nav">
+       
+       
+          
+             <li class=""><a href="releases.html">Download</a></li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="http://hadoop.apache.org/docs/current/">Latest</a></li>
+               
+                  <li ><a href="http://hadoop.apache.org/docs/stable/">Stable</a></li>
+               
+               
+               <li role="separator" class="divider"></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.1.1/">3.1.1</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.0.3/">3.0.3</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.9.1/">2.9.1</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.7.5/">2.7.5</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.8.3/">2.8.3</a></li>
+               
+               <li role="separator" class="divider"></li>
+               <li><a href="https://wiki.apache.org/hadoop">Wiki</a></li>
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown  active">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Community <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="/bylaws.html">Bylaws</a></li>
+               
+                  <li ><a href="/committer_criteria.html">Criteria for Committership</a></li>
+               
+                  <li ><a href="/mailing_lists.html">Mailing lists</a></li>
+               
+                  <li ><a href="/who.html">Who We are</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Development <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="https://wiki.apache.org/hadoop/HowToContribute">How to Contribute</a></li>
+               
+                  <li ><a href="/issue_tracking.html">Issue Tracking</a></li>
+               
+                  <li ><a href="/version_control.html">Version Control</a></li>
+               
+                  <li ><a href="/versioning.html">Versioning</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Help <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="http://www.cafepress.com/hadoop">Buy Stuff</a></li>
+               
+                  <li ><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorshop</a></li>
+               
+                  <li ><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+     </ul>
+     <ul class="nav navbar-nav navbar-right">
+      <li>
+       <a href="https://www.apache.org/">Apache Software Foundation <span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a>
+      </li>
+
+
+     </ul>
+   </div>
+
+      </div>
+    </nav>
+
+<div class="container">
+<h1>Criteria for Committership</h1>
+
+
+<!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>Committers are responsible for reviewing and integrating code changes.
+The PMC votes to make a contributor a committer based on an assessment
+of their contributions to the project. Contributions can be made in many
+ways, and there is no one route to committership. That said, here are
+the general criteria that the PMC looks for from all potential
+committers:</p>
+
+<ul>
+<li><p><strong>A history of sustained contribution to the project.</strong> This is a
+way for a contributor to demonstrate their expertise in an area, and
+thus their ability to help review and commit contributions by others
+in that same area. Sustained contribution is also a way of
+demonstrating commitment to the project, essentially that someone
+will continue contributing even after they become a committer.</p></li>
+
+<li><p><strong>High-quality contributions.</strong> As experienced contributors,
+committers set an example for others in the project, and help
+inculcate a culture of high-quality contributions. For code
+contributions, this means clean, documented code which includes unit
+tests if appropriate and passes precommit checks. For reviews, this
+means thorough, actionable feedback, and a +1 vote (even
+non-binding) only when there is a high degree of confidence in the
+change.</p></li>
+
+<li><p><strong>Community involvement.</strong> Contributors are always expected to be
+polite, constructive, and respectful of others during community
+interactions. Disagreement can (and will) happen over technical
+issues, but the discussion should remain friendly and focused on
+technical merits. Committers also have the additional responsibility
+of mentoring newer contributors, as well as helping to grow the
+community through actions like responding to emails on the user and
+dev list.</p></li>
+</ul>
+
+<h1 id="example-paths-to-committership">Example Paths to Committership</h1>
+
+<p>Here are a few hypothetical example paths to a commit bit:</p>
+
+<p><em>Han Meimei</em> works at a big company operating a large Apache Hadoop
+cluster. While deploying the newest version of Hadoop to her staging
+cluster, she discovers a number of bugs and performance regressions. She
+files JIRAs for these issues, and is able to post patches for some of
+them. On the remaining JIRAs, she works with other community members by
+doing additional debugging on her cluster and testing and reviewing
+intermediate patches. Additionally, Han Meimei works with the release
+manager of the release line, <em>Lei Li</em>, to make sure critical issues are
+backported to the next maintenance release. Han Meimei also makes an
+effort to help fix and review other critical issues targeted at the next
+maintenance release, even though her cluster is not currently affected.
+She continues doing similar stabilization work for subsequent
+maintenance releases in this release line, demonstrating her commitment
+to shipping high-quality upstream releases.</p>
+
+<p><em>Elise</em> works at a commercial big data vendor as a developer. Elise
+ramps up by doing some newbie JIRAs, but then gets involved with a large
+cross-company development effort happening on a feature branch. Elise
+helps to review the design of the feature, providing constructive
+feedback, and works with other community members to divide the work into
+subtasks. At this point, the PMC grants Elise branch committership to
+accelerate development. Elise submits good patches for a number of
+subtasks, and shows care and thoroughness when reviewing and committing
+code of others. After the feature branch is later merged to trunk, Elise
+continues to find and fix bugs related to the feature, as well as
+reviewing code contributions from others.</p>
+
+<p><em>Raj</em> works as a test engineer at a commercial big data vendor. Raj
+notices the lack of integration testing upstream, and contributes a test
+harness for fault-injection testing which is committed to the project.
+Raj coordinates with the PMC to get the test harness running on Apache
+infrastructure, and starts triaging the output and filing JIRAs for
+relevant bugs with reproductions. Raj helps with gathering logs and
+reproducing issues, and continues making improvements to the test
+harness.</p>
+
+<p><em>Peter</em> is a technical writer interested in improving Hadoop&rsquo;s
+documentation. He starts by fixing outdated information and incorrect
+examples, reaching out to subject matter experts and exploring the
+codebase to clarify technical details. As Peter becomes more familiar
+with the set of documentation, he realizes that a newly contributed
+feature didn&rsquo;t include sufficient documentation, and contributes a guide
+on how to setup and use the feature that also explains some of the
+design decisions that influenced API design. Peter continues to broaden
+his doc contributions to more and more areas, and also is active
+answering user questions on the mailing list. This demonstrates his
+knowledge of the project, attention to detail, and also his user-focus.</p>
+
+</div>
+
+<div class="container">
+<footer class="footer container">
+  <div class="col-md-6">
+  <p>Apache Hadoop, Hadoop, Apache, the Apache feather logo,
+    and the Apache Hadoop project logo are either registered trademarks or trademarks of the Apache Software Foundation
+     in the United States and other countries</p>
+  <p>Copyright © 2018 The Apache Software Foundation.</p>
+  <p><a href="/privacy_policy.html">Privacy policy</a></p>
+  </div>
+  <div class="col-md-6">
+    <img class="img-responsive" src="/asf_logo_wide.png"/>
+  </div>
+</footer>
+</div>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+    $(function() { $('table').addClass('table table-striped'); })
+    </script>
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-7453027-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+</body>
+</html>
+
