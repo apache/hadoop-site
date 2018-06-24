@@ -1,0 +1,106 @@
+<!--
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. See accompanying LICENSE file.
+-->
+{{ partial "header.html" . }}
+<div class="main-section">
+
+</div>
+
+<div class="whatis">
+    <div class="container">
+        <div class="row header">
+            <h2>What is Apache Hadoop Ozone?</h2>
+            <p class="lead">
+                Ozone is a new subproject of Apache Hadoop. It provides an
+                 object store semantic for Hadoop.</p>
+            <p class="lead">It uses Hadoop Distributed Data Storage (HDDS) for storage layer. HDDS is 
+             another new subporoject of Apache Hadoop.
+            </p>
+            </p>
+            <p></p>
+        </div>
+    </div>
+</div>
+
+
+<div class="main-section feature-list-group" style="padding: 80px;">
+    <div class="container">
+        <div class="row feature-list">
+            <div class="col-md-4 col-sm-4 feature-item">
+
+                <h4><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Scalable</h4>
+                <p>
+                 Ozone is designed to scale to tens of billions of files and
+                 blocks and, in the future, even more.
+                </p>
+                <p>
+                  Small files or huge number of datanodes are no longer a limitation.
+                </p>
+                <p></p>
+            </div>
+            <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                   Consistent</h4>
+                <p>
+                    Storage Layer uses RAFT protocol for consistentency.
+                </p>
+            </div>
+            <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>Cloud-native</h4>
+                <p>Hadoop Ozone is designed to work well in containerized environment.
+                </p><p>
+                  Quadra
+                  is a new component based on the HDDS storage layer which
+                  could provide raw device access to Kubernetes or any
+                  other CNI compatible cloud solutions.
+                </p>
+            </div>
+
+
+        </div><!-- /.feature-list -->
+
+
+    </div><!-- /.container -->
+</div><!-- /.feature-list-group -->
+
+
+<a name="qa"></a>
+<div class="main-section">
+    <div class="container">
+        <div class="row header">
+            <h2>Question and Answers</h2>
+            <h3>Where can I download it?</h3>
+            <p>Apache Hadoop Ozone is not yet released. It's being actively developed on
+              the trunk branch of Apache Hadoop. It will be released independently from
+              the main Hadoop release.</p>
+            <h3>How can I contribute</h3>
+            <p>The contribution process is the same as is for any other
+              <a href="https://wiki.apache.org/hadoop/HowToContribute">
+                Hadoop subproject.</a></p>
+            <h3>Does it mean a new Hadoop server component?</h3>
+              <p>Both Ozone and HDDS requires one additional master component - 
+               Ozone Manager and Storage Container Manger, respectively. The 
+               worker parts of Ozone/HDDS can be started as a HDFS 
+               Datanode plugin. 
+            </p>
+            <h3>How can I try it out?</h3>
+              <p>There is a
+                <a href="https://www.katacoda.com/elek/scenarios/ozone101">katacoda</a>
+                which can be used to try out Ozone. Please note that this is for 
+                demostration and is not released by Apache.</p>
+              <p>For the Apache version, you can download and build the latest version
+               from <a href="https://github.com/apache/hadoop">trunk</a></p>
+        </div>
+    </div>
+</div>
+{{ partial "footer.html" . }}
