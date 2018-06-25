@@ -17,7 +17,8 @@ copyright = "&copy; 2018 Apache Software Foundation"
 enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 uglyurls = true
-
+contentDir = "sitecontent"
+publishDir = "content"
 
 [[menu.main]]
   name = "Download"
