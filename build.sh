@@ -23,7 +23,7 @@ if [ ! -d "$DIR/build/apache-rat-0.12" ]; then
 	tar zvxf apache-rat.tar.gz
 	cd -
 fi
-java -jar $DIR/build/apache-rat-0.12/apache-rat-0.12.jar $DIR -e public -e apache-rat-0.12 -e .git -e .gitignore
+java -jar $DIR/build/apache-rat-0.12/apache-rat-0.12.jar $DIR -e public -e apache-rat-0.12 -e .git -e .gitignore -e content
 
 HUGO_EXEC=$(which hugo)
 if [ "$?" -ne 0 ]; then
