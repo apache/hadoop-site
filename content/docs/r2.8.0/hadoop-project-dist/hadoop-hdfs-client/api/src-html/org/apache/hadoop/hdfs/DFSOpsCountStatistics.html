@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.hadoop.hdfs;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import org.apache.hadoop.fs.StorageStatistics;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.apache.hadoop.hdfs.protocol.HdfsConstants;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.util.EnumMap;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.HashMap;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.Iterator;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.Map;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.Map.Entry;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.NoSuchElementException;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.util.concurrent.atomic.AtomicLong;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>/**<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * This storage statistics tracks how many times each DFS operation was issued.<a name="line.32"></a>
+<span class="sourceLineNo">033</span> *<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * For each tracked DFS operation, there is a respective entry in the enum<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * {@link OpType}. To use, increment the value the {@link DistributedFileSystem}<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * and {@link org.apache.hadoop.hdfs.web.WebHdfsFileSystem}.<a name="line.36"></a>
+<span class="sourceLineNo">037</span> *<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * This class is thread safe, and is generally shared by multiple threads.<a name="line.38"></a>
+<span class="sourceLineNo">039</span> */<a name="line.39"></a>
+<span class="sourceLineNo">040</span>public class DFSOpsCountStatistics extends StorageStatistics {<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>  /** This is for counting distributed file system operations. */<a name="line.42"></a>
+<span class="sourceLineNo">043</span>  public enum OpType {<a name="line.43"></a>
+<span class="sourceLineNo">044</span>    ALLOW_SNAPSHOT("op_allow_snapshot"),<a name="line.44"></a>
+<span class="sourceLineNo">045</span>    APPEND(CommonStatisticNames.OP_APPEND),<a name="line.45"></a>
+<span class="sourceLineNo">046</span>    CONCAT("op_concat"),<a name="line.46"></a>
+<span class="sourceLineNo">047</span>    COPY_FROM_LOCAL_FILE(CommonStatisticNames.OP_COPY_FROM_LOCAL_FILE),<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    CREATE(CommonStatisticNames.OP_CREATE),<a name="line.48"></a>
+<span class="sourceLineNo">049</span>    CREATE_NON_RECURSIVE(CommonStatisticNames.OP_CREATE_NON_RECURSIVE),<a name="line.49"></a>
+<span class="sourceLineNo">050</span>    CREATE_SNAPSHOT("op_create_snapshot"),<a name="line.50"></a>
+<span class="sourceLineNo">051</span>    CREATE_SYM_LINK("op_create_symlink"),<a name="line.51"></a>
+<span class="sourceLineNo">052</span>    DELETE(CommonStatisticNames.OP_DELETE),<a name="line.52"></a>
+<span class="sourceLineNo">053</span>    DELETE_SNAPSHOT("op_delete_snapshot"),<a name="line.53"></a>
+<span class="sourceLineNo">054</span>    DISALLOW_SNAPSHOT("op_disallow_snapshot"),<a name="line.54"></a>
+<span class="sourceLineNo">055</span>    EXISTS(CommonStatisticNames.OP_EXISTS),<a name="line.55"></a>
+<span class="sourceLineNo">056</span>    GET_BYTES_WITH_FUTURE_GS("op_get_bytes_with_future_generation_stamps"),<a name="line.56"></a>
+<span class="sourceLineNo">057</span>    GET_CONTENT_SUMMARY(CommonStatisticNames.OP_GET_CONTENT_SUMMARY),<a name="line.57"></a>
+<span class="sourceLineNo">058</span>    GET_FILE_BLOCK_LOCATIONS("op_get_file_block_locations"),<a name="line.58"></a>
+<span class="sourceLineNo">059</span>    GET_FILE_CHECKSUM(CommonStatisticNames.OP_GET_FILE_CHECKSUM),<a name="line.59"></a>
+<span class="sourceLineNo">060</span>    GET_FILE_LINK_STATUS("op_get_file_link_status"),<a name="line.60"></a>
+<span class="sourceLineNo">061</span>    GET_FILE_STATUS(CommonStatisticNames.OP_GET_FILE_STATUS),<a name="line.61"></a>
+<span class="sourceLineNo">062</span>    GET_LINK_TARGET("op_get_link_target"),<a name="line.62"></a>
+<span class="sourceLineNo">063</span>    GET_QUOTA_USAGE("op_get_quota_usage"),<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    GET_STATUS(CommonStatisticNames.OP_GET_STATUS),<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    GET_STORAGE_POLICIES("op_get_storage_policies"),<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    GET_STORAGE_POLICY("op_get_storage_policy"),<a name="line.66"></a>
+<span class="sourceLineNo">067</span>    GET_XATTR("op_get_xattr"),<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    LIST_LOCATED_STATUS(CommonStatisticNames.OP_LIST_LOCATED_STATUS),<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    LIST_STATUS(CommonStatisticNames.OP_LIST_STATUS),<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    MKDIRS(CommonStatisticNames.OP_MKDIRS),<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    MODIFY_ACL_ENTRIES(CommonStatisticNames.OP_MODIFY_ACL_ENTRIES),<a name="line.71"></a>
+<span class="sourceLineNo">072</span>    OPEN(CommonStatisticNames.OP_OPEN),<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    PRIMITIVE_CREATE("op_primitive_create"),<a name="line.73"></a>
+<span class="sourceLineNo">074</span>    PRIMITIVE_MKDIR("op_primitive_mkdir"),<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    REMOVE_ACL(CommonStatisticNames.OP_REMOVE_ACL),<a name="line.75"></a>
+<span class="sourceLineNo">076</span>    REMOVE_ACL_ENTRIES(CommonStatisticNames.OP_REMOVE_ACL_ENTRIES),<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    REMOVE_DEFAULT_ACL(CommonStatisticNames.OP_REMOVE_DEFAULT_ACL),<a name="line.77"></a>
+<span class="sourceLineNo">078</span>    REMOVE_XATTR("op_remove_xattr"),<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    RENAME(CommonStatisticNames.OP_RENAME),<a name="line.79"></a>
+<span class="sourceLineNo">080</span>    RENAME_SNAPSHOT("op_rename_snapshot"),<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    RESOLVE_LINK("op_resolve_link"),<a name="line.81"></a>
+<span class="sourceLineNo">082</span>    SET_ACL(CommonStatisticNames.OP_SET_ACL),<a name="line.82"></a>
+<span class="sourceLineNo">083</span>    SET_OWNER(CommonStatisticNames.OP_SET_OWNER),<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    SET_PERMISSION(CommonStatisticNames.OP_SET_PERMISSION),<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    SET_REPLICATION("op_set_replication"),<a name="line.85"></a>
+<span class="sourceLineNo">086</span>    SET_STORAGE_POLICY("op_set_storagePolicy"),<a name="line.86"></a>
+<span class="sourceLineNo">087</span>    SET_TIMES(CommonStatisticNames.OP_SET_TIMES),<a name="line.87"></a>
+<span class="sourceLineNo">088</span>    SET_XATTR("op_set_xattr"),<a name="line.88"></a>
+<span class="sourceLineNo">089</span>    TRUNCATE(CommonStatisticNames.OP_TRUNCATE),<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    UNSET_STORAGE_POLICY("op_unset_storage_policy");<a name="line.90"></a>
+<span class="sourceLineNo">091</span><a name="line.91"></a>
+<span class="sourceLineNo">092</span>    private static final Map&lt;String, OpType&gt; SYMBOL_MAP =<a name="line.92"></a>
+<span class="sourceLineNo">093</span>        new HashMap&lt;&gt;(OpType.values().length);<a name="line.93"></a>
+<span class="sourceLineNo">094</span>    static {<a name="line.94"></a>
+<span class="sourceLineNo">095</span>      for (OpType opType : values()) {<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        SYMBOL_MAP.put(opType.getSymbol(), opType);<a name="line.96"></a>
+<span class="sourceLineNo">097</span>      }<a name="line.97"></a>
+<span class="sourceLineNo">098</span>    }<a name="line.98"></a>
+<span class="sourceLineNo">099</span><a name="line.99"></a>
+<span class="sourceLineNo">100</span>    private final String symbol;<a name="line.100"></a>
+<span class="sourceLineNo">101</span><a name="line.101"></a>
+<span class="sourceLineNo">102</span>    OpType(String symbol) {<a name="line.102"></a>
+<span class="sourceLineNo">103</span>      this.symbol = symbol;<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    }<a name="line.104"></a>
+<span class="sourceLineNo">105</span><a name="line.105"></a>
+<span class="sourceLineNo">106</span>    public String getSymbol() {<a name="line.106"></a>
+<span class="sourceLineNo">107</span>      return symbol;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>    }<a name="line.108"></a>
+<span class="sourceLineNo">109</span><a name="line.109"></a>
+<span class="sourceLineNo">110</span>    public static OpType fromSymbol(String symbol) {<a name="line.110"></a>
+<span class="sourceLineNo">111</span>      return SYMBOL_MAP.get(symbol);<a name="line.111"></a>
+<span class="sourceLineNo">112</span>    }<a name="line.112"></a>
+<span class="sourceLineNo">113</span>  }<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>  public static final String NAME = "DFSOpsCountStatistics";<a name="line.115"></a>
+<span class="sourceLineNo">116</span><a name="line.116"></a>
+<span class="sourceLineNo">117</span>  private final Map&lt;OpType, AtomicLong&gt; opsCount = new EnumMap&lt;&gt;(OpType.class);<a name="line.117"></a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span>  public DFSOpsCountStatistics() {<a name="line.119"></a>
+<span class="sourceLineNo">120</span>    super(NAME);<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    for (OpType opType : OpType.values()) {<a name="line.121"></a>
+<span class="sourceLineNo">122</span>      opsCount.put(opType, new AtomicLong(0));<a name="line.122"></a>
+<span class="sourceLineNo">123</span>    }<a name="line.123"></a>
+<span class="sourceLineNo">124</span>  }<a name="line.124"></a>
+<span class="sourceLineNo">125</span><a name="line.125"></a>
+<span class="sourceLineNo">126</span>  public void incrementOpCounter(OpType op) {<a name="line.126"></a>
+<span class="sourceLineNo">127</span>    opsCount.get(op).addAndGet(1);<a name="line.127"></a>
+<span class="sourceLineNo">128</span>  }<a name="line.128"></a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span>  private class LongIterator implements Iterator&lt;LongStatistic&gt; {<a name="line.130"></a>
+<span class="sourceLineNo">131</span>    private Iterator&lt;Entry&lt;OpType, AtomicLong&gt;&gt; iterator =<a name="line.131"></a>
+<span class="sourceLineNo">132</span>        opsCount.entrySet().iterator();<a name="line.132"></a>
+<span class="sourceLineNo">133</span><a name="line.133"></a>
+<span class="sourceLineNo">134</span>    @Override<a name="line.134"></a>
+<span class="sourceLineNo">135</span>    public boolean hasNext() {<a name="line.135"></a>
+<span class="sourceLineNo">136</span>      return iterator.hasNext();<a name="line.136"></a>
+<span class="sourceLineNo">137</span>    }<a name="line.137"></a>
+<span class="sourceLineNo">138</span><a name="line.138"></a>
+<span class="sourceLineNo">139</span>    @Override<a name="line.139"></a>
+<span class="sourceLineNo">140</span>    public LongStatistic next() {<a name="line.140"></a>
+<span class="sourceLineNo">141</span>      if (!iterator.hasNext()) {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>        throw new NoSuchElementException();<a name="line.142"></a>
+<span class="sourceLineNo">143</span>      }<a name="line.143"></a>
+<span class="sourceLineNo">144</span>      final Entry&lt;OpType, AtomicLong&gt; entry = iterator.next();<a name="line.144"></a>
+<span class="sourceLineNo">145</span>      return new LongStatistic(entry.getKey().getSymbol(),<a name="line.145"></a>
+<span class="sourceLineNo">146</span>          entry.getValue().get());<a name="line.146"></a>
+<span class="sourceLineNo">147</span>    }<a name="line.147"></a>
+<span class="sourceLineNo">148</span><a name="line.148"></a>
+<span class="sourceLineNo">149</span>    @Override<a name="line.149"></a>
+<span class="sourceLineNo">150</span>    public void remove() {<a name="line.150"></a>
+<span class="sourceLineNo">151</span>      throw new UnsupportedOperationException();<a name="line.151"></a>
+<span class="sourceLineNo">152</span>    }<a name="line.152"></a>
+<span class="sourceLineNo">153</span>  }<a name="line.153"></a>
+<span class="sourceLineNo">154</span><a name="line.154"></a>
+<span class="sourceLineNo">155</span>  @Override<a name="line.155"></a>
+<span class="sourceLineNo">156</span>  public String getScheme() {<a name="line.156"></a>
+<span class="sourceLineNo">157</span>    return HdfsConstants.HDFS_URI_SCHEME;<a name="line.157"></a>
+<span class="sourceLineNo">158</span>  }<a name="line.158"></a>
+<span class="sourceLineNo">159</span><a name="line.159"></a>
+<span class="sourceLineNo">160</span>  @Override<a name="line.160"></a>
+<span class="sourceLineNo">161</span>  public Iterator&lt;LongStatistic&gt; getLongStatistics() {<a name="line.161"></a>
+<span class="sourceLineNo">162</span>    return new LongIterator();<a name="line.162"></a>
+<span class="sourceLineNo">163</span>  }<a name="line.163"></a>
+<span class="sourceLineNo">164</span><a name="line.164"></a>
+<span class="sourceLineNo">165</span>  @Override<a name="line.165"></a>
+<span class="sourceLineNo">166</span>  public Long getLong(String key) {<a name="line.166"></a>
+<span class="sourceLineNo">167</span>    final OpType type = OpType.fromSymbol(key);<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    return type == null ? null : opsCount.get(type).get();<a name="line.168"></a>
+<span class="sourceLineNo">169</span>  }<a name="line.169"></a>
+<span class="sourceLineNo">170</span><a name="line.170"></a>
+<span class="sourceLineNo">171</span>  @Override<a name="line.171"></a>
+<span class="sourceLineNo">172</span>  public boolean isTracked(String key) {<a name="line.172"></a>
+<span class="sourceLineNo">173</span>    return OpType.fromSymbol(key) != null;<a name="line.173"></a>
+<span class="sourceLineNo">174</span>  }<a name="line.174"></a>
+<span class="sourceLineNo">175</span><a name="line.175"></a>
+<span class="sourceLineNo">176</span>  @Override<a name="line.176"></a>
+<span class="sourceLineNo">177</span>  public void reset() {<a name="line.177"></a>
+<span class="sourceLineNo">178</span>    for (AtomicLong count : opsCount.values()) {<a name="line.178"></a>
+<span class="sourceLineNo">179</span>      count.set(0);<a name="line.179"></a>
+<span class="sourceLineNo">180</span>    }<a name="line.180"></a>
+<span class="sourceLineNo">181</span>  }<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span>}<a name="line.183"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

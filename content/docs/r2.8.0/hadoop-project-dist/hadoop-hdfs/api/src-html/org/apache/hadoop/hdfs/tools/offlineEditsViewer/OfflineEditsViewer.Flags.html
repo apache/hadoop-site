@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.hadoop.hdfs.tools.offlineEditsViewer;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import org.apache.hadoop.classification.InterfaceAudience;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.apache.hadoop.classification.InterfaceStability;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.apache.hadoop.conf.Configured;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.apache.hadoop.hdfs.tools.offlineEditsViewer.OfflineEditsLoader.OfflineEditsLoaderFactory;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.apache.hadoop.util.Tool;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.apache.hadoop.util.ToolRunner;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.apache.commons.cli.CommandLine;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.apache.commons.cli.CommandLineParser;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.apache.commons.cli.OptionBuilder;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.apache.commons.cli.Options;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.apache.commons.cli.ParseException;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.apache.commons.cli.PosixParser;<a name="line.33"></a>
+<span class="sourceLineNo">034</span><a name="line.34"></a>
+<span class="sourceLineNo">035</span>/**<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * This class implements an offline edits viewer, tool that<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * can be used to view edit logs.<a name="line.37"></a>
+<span class="sourceLineNo">038</span> */<a name="line.38"></a>
+<span class="sourceLineNo">039</span>@InterfaceAudience.Private<a name="line.39"></a>
+<span class="sourceLineNo">040</span>@InterfaceStability.Unstable<a name="line.40"></a>
+<span class="sourceLineNo">041</span>public class OfflineEditsViewer extends Configured implements Tool {<a name="line.41"></a>
+<span class="sourceLineNo">042</span>  private static final String HELP_OPT = "-h";<a name="line.42"></a>
+<span class="sourceLineNo">043</span>  private static final String HELP_LONGOPT = "--help";<a name="line.43"></a>
+<span class="sourceLineNo">044</span>  private final static String defaultProcessor = "xml";<a name="line.44"></a>
+<span class="sourceLineNo">045</span><a name="line.45"></a>
+<span class="sourceLineNo">046</span>  /**<a name="line.46"></a>
+<span class="sourceLineNo">047</span>   * Print help.<a name="line.47"></a>
+<span class="sourceLineNo">048</span>   */  <a name="line.48"></a>
+<span class="sourceLineNo">049</span>  private void printHelp() {<a name="line.49"></a>
+<span class="sourceLineNo">050</span>    String summary =<a name="line.50"></a>
+<span class="sourceLineNo">051</span>      "Usage: bin/hdfs oev [OPTIONS] -i INPUT_FILE -o OUTPUT_FILE\n" +<a name="line.51"></a>
+<span class="sourceLineNo">052</span>      "Offline edits viewer\n" +<a name="line.52"></a>
+<span class="sourceLineNo">053</span>      "Parse a Hadoop edits log file INPUT_FILE and save results\n" +<a name="line.53"></a>
+<span class="sourceLineNo">054</span>      "in OUTPUT_FILE.\n" +<a name="line.54"></a>
+<span class="sourceLineNo">055</span>      "Required command line arguments:\n" +<a name="line.55"></a>
+<span class="sourceLineNo">056</span>      "-i,--inputFile &lt;arg&gt;   edits file to process, xml (case\n" +<a name="line.56"></a>
+<span class="sourceLineNo">057</span>      "                       insensitive) extension means XML format,\n" +<a name="line.57"></a>
+<span class="sourceLineNo">058</span>      "                       any other filename means binary format\n" +<a name="line.58"></a>
+<span class="sourceLineNo">059</span>      "-o,--outputFile &lt;arg&gt;  Name of output file. If the specified\n" +<a name="line.59"></a>
+<span class="sourceLineNo">060</span>      "                       file exists, it will be overwritten,\n" +<a name="line.60"></a>
+<span class="sourceLineNo">061</span>      "                       format of the file is determined\n" +<a name="line.61"></a>
+<span class="sourceLineNo">062</span>      "                       by -p option\n" +<a name="line.62"></a>
+<span class="sourceLineNo">063</span>      "\n" + <a name="line.63"></a>
+<span class="sourceLineNo">064</span>      "Optional command line arguments:\n" +<a name="line.64"></a>
+<span class="sourceLineNo">065</span>      "-p,--processor &lt;arg&gt;   Select which type of processor to apply\n" +<a name="line.65"></a>
+<span class="sourceLineNo">066</span>      "                       against image file, currently supported\n" +<a name="line.66"></a>
+<span class="sourceLineNo">067</span>      "                       processors are: binary (native binary format\n" +<a name="line.67"></a>
+<span class="sourceLineNo">068</span>      "                       that Hadoop uses), xml (default, XML\n" +<a name="line.68"></a>
+<span class="sourceLineNo">069</span>      "                       format), stats (prints statistics about\n" +<a name="line.69"></a>
+<span class="sourceLineNo">070</span>      "                       edits file)\n" +<a name="line.70"></a>
+<span class="sourceLineNo">071</span>      "-h,--help              Display usage information and exit\n" +<a name="line.71"></a>
+<span class="sourceLineNo">072</span>      "-f,--fix-txids         Renumber the transaction IDs in the input,\n" +<a name="line.72"></a>
+<span class="sourceLineNo">073</span>      "                       so that there are no gaps or invalid\n" +<a name="line.73"></a>
+<span class="sourceLineNo">074</span>      "                       transaction IDs.\n" +<a name="line.74"></a>
+<span class="sourceLineNo">075</span>      "-r,--recover           When reading binary edit logs, use recovery \n" +<a name="line.75"></a>
+<span class="sourceLineNo">076</span>      "                       mode.  This will give you the chance to skip \n" +<a name="line.76"></a>
+<span class="sourceLineNo">077</span>      "                       corrupt parts of the edit log.\n" +<a name="line.77"></a>
+<span class="sourceLineNo">078</span>      "-v,--verbose           More verbose output, prints the input and\n" +<a name="line.78"></a>
+<span class="sourceLineNo">079</span>      "                       output filenames, for processors that write\n" +<a name="line.79"></a>
+<span class="sourceLineNo">080</span>      "                       to a file, also output to screen. On large\n" +<a name="line.80"></a>
+<span class="sourceLineNo">081</span>      "                       image files this will dramatically increase\n" +<a name="line.81"></a>
+<span class="sourceLineNo">082</span>      "                       processing time (default is false).\n";<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span><a name="line.84"></a>
+<span class="sourceLineNo">085</span>    System.out.println(summary);<a name="line.85"></a>
+<span class="sourceLineNo">086</span>    System.out.println();<a name="line.86"></a>
+<span class="sourceLineNo">087</span>    ToolRunner.printGenericCommandUsage(System.out);<a name="line.87"></a>
+<span class="sourceLineNo">088</span>  }<a name="line.88"></a>
+<span class="sourceLineNo">089</span><a name="line.89"></a>
+<span class="sourceLineNo">090</span>  /**<a name="line.90"></a>
+<span class="sourceLineNo">091</span>   * Build command-line options and descriptions<a name="line.91"></a>
+<span class="sourceLineNo">092</span>   *<a name="line.92"></a>
+<span class="sourceLineNo">093</span>   * @return command line options<a name="line.93"></a>
+<span class="sourceLineNo">094</span>   */<a name="line.94"></a>
+<span class="sourceLineNo">095</span>  public static Options buildOptions() {<a name="line.95"></a>
+<span class="sourceLineNo">096</span>    Options options = new Options();<a name="line.96"></a>
+<span class="sourceLineNo">097</span><a name="line.97"></a>
+<span class="sourceLineNo">098</span>    // Build in/output file arguments, which are required, but there is no <a name="line.98"></a>
+<span class="sourceLineNo">099</span>    // addOption method that can specify this<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    OptionBuilder.isRequired();<a name="line.100"></a>
+<span class="sourceLineNo">101</span>    OptionBuilder.hasArgs();<a name="line.101"></a>
+<span class="sourceLineNo">102</span>    OptionBuilder.withLongOpt("outputFilename");<a name="line.102"></a>
+<span class="sourceLineNo">103</span>    options.addOption(OptionBuilder.create("o"));<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    <a name="line.104"></a>
+<span class="sourceLineNo">105</span>    OptionBuilder.isRequired();<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    OptionBuilder.hasArgs();<a name="line.106"></a>
+<span class="sourceLineNo">107</span>    OptionBuilder.withLongOpt("inputFilename");<a name="line.107"></a>
+<span class="sourceLineNo">108</span>    options.addOption(OptionBuilder.create("i"));<a name="line.108"></a>
+<span class="sourceLineNo">109</span>    <a name="line.109"></a>
+<span class="sourceLineNo">110</span>    options.addOption("p", "processor", true, "");<a name="line.110"></a>
+<span class="sourceLineNo">111</span>    options.addOption("v", "verbose", false, "");<a name="line.111"></a>
+<span class="sourceLineNo">112</span>    options.addOption("f", "fix-txids", false, "");<a name="line.112"></a>
+<span class="sourceLineNo">113</span>    options.addOption("r", "recover", false, "");<a name="line.113"></a>
+<span class="sourceLineNo">114</span>    options.addOption("h", "help", false, "");<a name="line.114"></a>
+<span class="sourceLineNo">115</span><a name="line.115"></a>
+<span class="sourceLineNo">116</span>    return options;<a name="line.116"></a>
+<span class="sourceLineNo">117</span>  }<a name="line.117"></a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span>  /** Process an edit log using the chosen processor or visitor.<a name="line.119"></a>
+<span class="sourceLineNo">120</span>   * <a name="line.120"></a>
+<span class="sourceLineNo">121</span>   * @param inputFilename   The file to process<a name="line.121"></a>
+<span class="sourceLineNo">122</span>   * @param outputFilename  The output file name<a name="line.122"></a>
+<span class="sourceLineNo">123</span>   * @param processor       If visitor is null, the processor to use<a name="line.123"></a>
+<span class="sourceLineNo">124</span>   * @param visitor         If non-null, the visitor to use.<a name="line.124"></a>
+<span class="sourceLineNo">125</span>   * <a name="line.125"></a>
+<span class="sourceLineNo">126</span>   * @return                0 on success; error code otherwise<a name="line.126"></a>
+<span class="sourceLineNo">127</span>   */<a name="line.127"></a>
+<span class="sourceLineNo">128</span>  public int go(String inputFileName, String outputFileName, String processor,<a name="line.128"></a>
+<span class="sourceLineNo">129</span>      Flags flags, OfflineEditsVisitor visitor)<a name="line.129"></a>
+<span class="sourceLineNo">130</span>  {<a name="line.130"></a>
+<span class="sourceLineNo">131</span>    if (flags.getPrintToScreen()) {<a name="line.131"></a>
+<span class="sourceLineNo">132</span>      System.out.println("input  [" + inputFileName  + "]");<a name="line.132"></a>
+<span class="sourceLineNo">133</span>      System.out.println("output [" + outputFileName + "]");<a name="line.133"></a>
+<span class="sourceLineNo">134</span>    }<a name="line.134"></a>
+<span class="sourceLineNo">135</span>    try {<a name="line.135"></a>
+<span class="sourceLineNo">136</span>      if (visitor == null) {<a name="line.136"></a>
+<span class="sourceLineNo">137</span>        visitor = OfflineEditsVisitorFactory.getEditsVisitor(<a name="line.137"></a>
+<span class="sourceLineNo">138</span>            outputFileName, processor, flags.getPrintToScreen());<a name="line.138"></a>
+<span class="sourceLineNo">139</span>      }<a name="line.139"></a>
+<span class="sourceLineNo">140</span>      boolean xmlInput = inputFileName.toLowerCase().endsWith(".xml");<a name="line.140"></a>
+<span class="sourceLineNo">141</span>      OfflineEditsLoader loader = OfflineEditsLoaderFactory.<a name="line.141"></a>
+<span class="sourceLineNo">142</span>          createLoader(visitor, inputFileName, xmlInput, flags);<a name="line.142"></a>
+<span class="sourceLineNo">143</span>      loader.loadEdits();<a name="line.143"></a>
+<span class="sourceLineNo">144</span>    } catch(Exception e) {<a name="line.144"></a>
+<span class="sourceLineNo">145</span>      System.err.println("Encountered exception. Exiting: " + e.getMessage());<a name="line.145"></a>
+<span class="sourceLineNo">146</span>      e.printStackTrace(System.err);<a name="line.146"></a>
+<span class="sourceLineNo">147</span>      return -1;<a name="line.147"></a>
+<span class="sourceLineNo">148</span>    }<a name="line.148"></a>
+<span class="sourceLineNo">149</span>    return 0;<a name="line.149"></a>
+<span class="sourceLineNo">150</span>  }<a name="line.150"></a>
+<span class="sourceLineNo">151</span><a name="line.151"></a>
+<span class="sourceLineNo">152</span>  public static class Flags {<a name="line.152"></a>
+<span class="sourceLineNo">153</span>    private boolean printToScreen = false;<a name="line.153"></a>
+<span class="sourceLineNo">154</span>    private boolean fixTxIds = false;<a name="line.154"></a>
+<span class="sourceLineNo">155</span>    private boolean recoveryMode = false;<a name="line.155"></a>
+<span class="sourceLineNo">156</span>    <a name="line.156"></a>
+<span class="sourceLineNo">157</span>    public Flags() {<a name="line.157"></a>
+<span class="sourceLineNo">158</span>    }<a name="line.158"></a>
+<span class="sourceLineNo">159</span>    <a name="line.159"></a>
+<span class="sourceLineNo">160</span>    public boolean getPrintToScreen() {<a name="line.160"></a>
+<span class="sourceLineNo">161</span>      return printToScreen;<a name="line.161"></a>
+<span class="sourceLineNo">162</span>    }<a name="line.162"></a>
+<span class="sourceLineNo">163</span>    <a name="line.163"></a>
+<span class="sourceLineNo">164</span>    public void setPrintToScreen() {<a name="line.164"></a>
+<span class="sourceLineNo">165</span>      printToScreen = true;<a name="line.165"></a>
+<span class="sourceLineNo">166</span>    }<a name="line.166"></a>
+<span class="sourceLineNo">167</span>    <a name="line.167"></a>
+<span class="sourceLineNo">168</span>    public boolean getFixTxIds() {<a name="line.168"></a>
+<span class="sourceLineNo">169</span>      return fixTxIds;<a name="line.169"></a>
+<span class="sourceLineNo">170</span>    }<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    <a name="line.171"></a>
+<span class="sourceLineNo">172</span>    public void setFixTxIds() {<a name="line.172"></a>
+<span class="sourceLineNo">173</span>      fixTxIds = true;<a name="line.173"></a>
+<span class="sourceLineNo">174</span>    }<a name="line.174"></a>
+<span class="sourceLineNo">175</span>    <a name="line.175"></a>
+<span class="sourceLineNo">176</span>    public boolean getRecoveryMode() {<a name="line.176"></a>
+<span class="sourceLineNo">177</span>      return recoveryMode;<a name="line.177"></a>
+<span class="sourceLineNo">178</span>    }<a name="line.178"></a>
+<span class="sourceLineNo">179</span>    <a name="line.179"></a>
+<span class="sourceLineNo">180</span>    public void setRecoveryMode() {<a name="line.180"></a>
+<span class="sourceLineNo">181</span>      recoveryMode = true;<a name="line.181"></a>
+<span class="sourceLineNo">182</span>    }<a name="line.182"></a>
+<span class="sourceLineNo">183</span>  }<a name="line.183"></a>
+<span class="sourceLineNo">184</span>  <a name="line.184"></a>
+<span class="sourceLineNo">185</span>  /**<a name="line.185"></a>
+<span class="sourceLineNo">186</span>   * Main entry point for ToolRunner (see ToolRunner docs)<a name="line.186"></a>
+<span class="sourceLineNo">187</span>   *<a name="line.187"></a>
+<span class="sourceLineNo">188</span>   * @param argv The parameters passed to this program.<a name="line.188"></a>
+<span class="sourceLineNo">189</span>   * @return 0 on success, non zero on error.<a name="line.189"></a>
+<span class="sourceLineNo">190</span>   */<a name="line.190"></a>
+<span class="sourceLineNo">191</span>  @Override<a name="line.191"></a>
+<span class="sourceLineNo">192</span>  public int run(String[] argv) throws Exception {<a name="line.192"></a>
+<span class="sourceLineNo">193</span>    Options options = buildOptions();<a name="line.193"></a>
+<span class="sourceLineNo">194</span>    if(argv.length == 0) {<a name="line.194"></a>
+<span class="sourceLineNo">195</span>      printHelp();<a name="line.195"></a>
+<span class="sourceLineNo">196</span>      return 0;<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    }<a name="line.197"></a>
+<span class="sourceLineNo">198</span>    // print help and exit with zero exit code<a name="line.198"></a>
+<span class="sourceLineNo">199</span>    if (argv.length == 1 &amp;&amp; isHelpOption(argv[0])) {<a name="line.199"></a>
+<span class="sourceLineNo">200</span>      printHelp();<a name="line.200"></a>
+<span class="sourceLineNo">201</span>      return 0;<a name="line.201"></a>
+<span class="sourceLineNo">202</span>    }<a name="line.202"></a>
+<span class="sourceLineNo">203</span>    CommandLineParser parser = new PosixParser();<a name="line.203"></a>
+<span class="sourceLineNo">204</span>    CommandLine cmd;<a name="line.204"></a>
+<span class="sourceLineNo">205</span>    try {<a name="line.205"></a>
+<span class="sourceLineNo">206</span>      cmd = parser.parse(options, argv);<a name="line.206"></a>
+<span class="sourceLineNo">207</span>    } catch (ParseException e) {<a name="line.207"></a>
+<span class="sourceLineNo">208</span>      System.out.println(<a name="line.208"></a>
+<span class="sourceLineNo">209</span>        "Error parsing command-line options: " + e.getMessage());<a name="line.209"></a>
+<span class="sourceLineNo">210</span>      printHelp();<a name="line.210"></a>
+<span class="sourceLineNo">211</span>      return -1;<a name="line.211"></a>
+<span class="sourceLineNo">212</span>    }<a name="line.212"></a>
+<span class="sourceLineNo">213</span>    <a name="line.213"></a>
+<span class="sourceLineNo">214</span>    if (cmd.hasOption("h")) {<a name="line.214"></a>
+<span class="sourceLineNo">215</span>      // print help and exit with non zero exit code since<a name="line.215"></a>
+<span class="sourceLineNo">216</span>      // it is not expected to give help and other options together.<a name="line.216"></a>
+<span class="sourceLineNo">217</span>      printHelp();<a name="line.217"></a>
+<span class="sourceLineNo">218</span>      return -1;<a name="line.218"></a>
+<span class="sourceLineNo">219</span>    }<a name="line.219"></a>
+<span class="sourceLineNo">220</span>    String inputFileName = cmd.getOptionValue("i");<a name="line.220"></a>
+<span class="sourceLineNo">221</span>    String outputFileName = cmd.getOptionValue("o");<a name="line.221"></a>
+<span class="sourceLineNo">222</span>    String processor = cmd.getOptionValue("p");<a name="line.222"></a>
+<span class="sourceLineNo">223</span>    if(processor == null) {<a name="line.223"></a>
+<span class="sourceLineNo">224</span>      processor = defaultProcessor;<a name="line.224"></a>
+<span class="sourceLineNo">225</span>    }<a name="line.225"></a>
+<span class="sourceLineNo">226</span>    Flags flags = new Flags();<a name="line.226"></a>
+<span class="sourceLineNo">227</span>    if (cmd.hasOption("r")) {<a name="line.227"></a>
+<span class="sourceLineNo">228</span>      flags.setRecoveryMode();<a name="line.228"></a>
+<span class="sourceLineNo">229</span>    }<a name="line.229"></a>
+<span class="sourceLineNo">230</span>    if (cmd.hasOption("f")) {<a name="line.230"></a>
+<span class="sourceLineNo">231</span>      flags.setFixTxIds();<a name="line.231"></a>
+<span class="sourceLineNo">232</span>    }<a name="line.232"></a>
+<span class="sourceLineNo">233</span>    if (cmd.hasOption("v")) {<a name="line.233"></a>
+<span class="sourceLineNo">234</span>      flags.setPrintToScreen();<a name="line.234"></a>
+<span class="sourceLineNo">235</span>    }<a name="line.235"></a>
+<span class="sourceLineNo">236</span>    return go(inputFileName, outputFileName, processor, flags, null);<a name="line.236"></a>
+<span class="sourceLineNo">237</span>  }<a name="line.237"></a>
+<span class="sourceLineNo">238</span><a name="line.238"></a>
+<span class="sourceLineNo">239</span>  /**<a name="line.239"></a>
+<span class="sourceLineNo">240</span>   * main() runs the offline edits viewer using ToolRunner<a name="line.240"></a>
+<span class="sourceLineNo">241</span>   *<a name="line.241"></a>
+<span class="sourceLineNo">242</span>   * @param argv Command line parameters.<a name="line.242"></a>
+<span class="sourceLineNo">243</span>   */<a name="line.243"></a>
+<span class="sourceLineNo">244</span>  public static void main(String[] argv) throws Exception {<a name="line.244"></a>
+<span class="sourceLineNo">245</span>    int res = ToolRunner.run(new OfflineEditsViewer(), argv);<a name="line.245"></a>
+<span class="sourceLineNo">246</span>    System.exit(res);<a name="line.246"></a>
+<span class="sourceLineNo">247</span>  }<a name="line.247"></a>
+<span class="sourceLineNo">248</span><a name="line.248"></a>
+<span class="sourceLineNo">249</span>  private static boolean isHelpOption(String arg) {<a name="line.249"></a>
+<span class="sourceLineNo">250</span>    return arg.equalsIgnoreCase(HELP_OPT) ||<a name="line.250"></a>
+<span class="sourceLineNo">251</span>        arg.equalsIgnoreCase(HELP_LONGOPT);<a name="line.251"></a>
+<span class="sourceLineNo">252</span>  }<a name="line.252"></a>
+<span class="sourceLineNo">253</span>}<a name="line.253"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

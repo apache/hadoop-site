@@ -1,0 +1,17 @@
+MISSING @SINCE TAG: org.apache.hadoop.util.VersionInfo Class
+NO DOC BLOCK: org.apache.hadoop.fs.FsServerDefaults Constructor (long, int, int, short, int, boolean, long, org.apache.hadoop.util.DataChecksum.Type, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.FsServerDefaults Constructor (long, int, int, short, int, boolean, long, org.apache.hadoop.util.DataChecksum.Type, java.lang.String, byte)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileStatus Method compareTo(java.lang.Object)
+MISSING @SINCE TAG: org.apache.hadoop.io.IOUtils Method fsync(java.io.File)
+MISSING @SINCE TAG: org.apache.hadoop.io.IOUtils Method fsync(java.nio.channels.FileChannel, boolean)
+NO DOC BLOCK: org.apache.hadoop.fs.FsServerDefaults Method getDefaultStoragePolicyId()
+NO DOC BLOCK: org.apache.hadoop.fs.FsServerDefaults Method getKeyProviderUri()
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method getServerDefaults(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method getServerDefaults()
+NO DOC BLOCK: org.apache.hadoop.fs.viewfs.ViewFs Method getServerDefaults(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.security.token.Token Method isPrivate()
+MISSING @SINCE TAG: org.apache.hadoop.security.token.Token Method isPrivateCloneOf(org.apache.hadoop.io.Text)
+MISSING @SINCE TAG: org.apache.hadoop.security.token.Token Method privateClone(org.apache.hadoop.io.Text)
+MISSING @SINCE TAG: org.apache.hadoop.conf.Configuration Method reloadExistingConfigurations()
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method rename(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.Path, org.apache.hadoop.fs.Options.Rename[])
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_HTTP_AUTHENTICATION_TYPE

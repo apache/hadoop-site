@@ -1,0 +1,1283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.9">
+<meta name="Forrest-skin-name" content="pelt">
+<title>GridMix</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="images/favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">Apache</a> &gt; <a href="http://hadoop.apache.org/">Hadoop</a> &gt; <a href="http://hadoop.apache.org/core/">Core</a><script src="skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href="http://hadoop.apache.org/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo.jpg" title="Apache Hadoop"></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href="http://hadoop.apache.org/core/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo-2.gif" title="Scalable Computing Platform"></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="hadoop.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with google');" size="25" name="q" id="query" type="text" value="Search the site with google">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="unselected" href="http://hadoop.apache.org/core/">Project</a>
+</li>
+<li>
+<a class="unselected" href="http://wiki.apache.org/hadoop">Wiki</a>
+</li>
+<li class="current">
+<a class="selected" href="index.html">Hadoop 1.2.1 Documentation</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">Getting Started</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="single_node_setup.html">Single Node Setup</a>
+</div>
+<div class="menuitem">
+<a href="cluster_setup.html">Cluster Setup</a>
+</div>
+<div class="menuitem">
+<a href="cli_minicluster.html">CLI MiniCluster</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.2', 'skin/')" id="menu_1.2Title" class="menutitle">Guides</div>
+<div id="menu_1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="HttpAuthentication.html">Authentication for Hadoop HTTP web-consoles</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.3', 'skin/')" id="menu_selected_1.3Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">MapReduce</div>
+<div id="menu_selected_1.3" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="mapred_tutorial.html">MapReduce Tutorial</a>
+</div>
+<div class="menuitem">
+<a href="streaming.html">Hadoop Streaming</a>
+</div>
+<div class="menuitem">
+<a href="commands_manual.html">Hadoop Commands</a>
+</div>
+<div class="menuitem">
+<a href="distcp.html">DistCp</a>
+</div>
+<div class="menuitem">
+<a href="distcp2.html">DistCp Version 2</a>
+</div>
+<div class="menuitem">
+<a href="vaidya.html">Vaidya</a>
+</div>
+<div class="menuitem">
+<a href="hadoop_archives.html">Hadoop Archives</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Gridmix</div>
+</div>
+<div class="menuitem">
+<a href="rumen.html">Rumen</a>
+</div>
+<div class="menuitem">
+<a href="capacity_scheduler.html">Capacity Scheduler</a>
+</div>
+<div class="menuitem">
+<a href="fair_scheduler.html">Fair Scheduler</a>
+</div>
+<div class="menuitem">
+<a href="hod_scheduler.html">Hod Scheduler</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.4', 'skin/')" id="menu_1.4Title" class="menutitle">HDFS</div>
+<div id="menu_1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="hdfs_user_guide.html">HDFS Users </a>
+</div>
+<div class="menuitem">
+<a href="hdfs_design.html">HDFS Architecture</a>
+</div>
+<div class="menuitem">
+<a href="hdfs_permissions_guide.html">Permissions</a>
+</div>
+<div class="menuitem">
+<a href="hdfs_quota_admin_guide.html">Quotas</a>
+</div>
+<div class="menuitem">
+<a href="SLG_user_guide.html">Synthetic Load Generator</a>
+</div>
+<div class="menuitem">
+<a href="hdfs_imageviewer.html">Offline Image Viewer</a>
+</div>
+<div class="menuitem">
+<a href="hftp.html">HFTP</a>
+</div>
+<div class="menuitem">
+<a href="webhdfs.html">WebHDFS REST API</a>
+</div>
+<div class="menuitem">
+<a href="libhdfs.html">C API libhdfs</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.5', 'skin/')" id="menu_1.5Title" class="menutitle">Common</div>
+<div id="menu_1.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="deployment_layout.html">Deployment Layout</a>
+</div>
+<div class="menuitem">
+<a href="file_system_shell.html">File System Shell</a>
+</div>
+<div class="menuitem">
+<a href="service_level_auth.html">Service Level Authorization</a>
+</div>
+<div class="menuitem">
+<a href="native_libraries.html">Native Libraries</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.6', 'skin/')" id="menu_1.6Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="Secure_Impersonation.html">Secure Impersonation</a>
+</div>
+<div class="menuitem">
+<a href="api/index.html">API Docs</a>
+</div>
+<div class="menuitem">
+<a href="jdiff/changes.html">API Changes</a>
+</div>
+<div class="menuitem">
+<a href="http://wiki.apache.org/hadoop/">Wiki</a>
+</div>
+<div class="menuitem">
+<a href="http://wiki.apache.org/hadoop/FAQ">FAQ</a>
+</div>
+<div class="menuitem">
+<a href="releasenotes.html">Release Notes</a>
+</div>
+<div class="menuitem">
+<a href="changes.html">Change Log</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2"></div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="gridmix.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>GridMix</h1>
+<div id="front-matter">
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#overview">Overview</a>
+</li>
+<li>
+<a href="#usage">Usage</a>
+</li>
+<li>
+<a href="#cfgparams">General Configuration Parameters</a>
+</li>
+<li>
+<a href="#jobtypes">Job Types</a>
+</li>
+<li>
+<a href="#policies">Job Submission Policies</a>
+</li>
+<li>
+<a href="#usersqueues">Emulating Users and Queues</a>
+</li>
+<li>
+<a href="#distributedcacheload">Emulating Distributed Cache Load</a>
+</li>
+<li>
+<a href="#simulatedjobconf">Configuration of Simulated Jobs</a>
+</li>
+<li>
+<a href="#compression-emulation">Emulating Compression/Decompression</a>
+</li>
+<li>
+<a href="#highram-emulation">Emulating High-Ram jobs</a>
+</li>
+<li>
+<a href="#resource-usage-emulation">Emulating resource usages</a>
+</li>
+<li>
+<a href="#assumptions">Simplifying Assumptions</a>
+</li>
+<li>
+<a href="#appendix">Appendix</a>
+</li>
+</ul>
+</div>
+</div>
+    
+<a name="overview"></a>
+<h2 class="h3">Overview</h2>
+<div class="section">
+<p>GridMix is a benchmark for Hadoop clusters. It submits a mix of
+      synthetic jobs, modeling a profile mined from production loads.</p>
+<p>There exist three versions of the GridMix tool. This document
+      discusses the third (checked into <span class="codefrag">src/contrib</span>), distinct
+      from the two checked into the <span class="codefrag">src/benchmarks</span> sub-directory.
+      While the first two versions of the tool included stripped-down versions
+      of common jobs, both were principally saturation tools for stressing the
+      framework at scale. In support of a broader range of deployments and
+      finer-tuned job mixes, this version of the tool will attempt to model
+      the resource profiles of production jobs to identify bottlenecks, guide
+      development, and serve as a replacement for the existing GridMix
+      benchmarks.</p>
+<p>To run GridMix, you need a MapReduce job trace describing the job mix
+      for a given cluster. Such traces are typically generated by Rumen (see
+      Rumen documentation). GridMix also requires input data from which the
+      synthetic jobs will be reading bytes. The input data need not be in any
+      particular format, as the synthetic jobs are currently binary readers.
+      If you are running on a new cluster, an optional step generating input
+      data may precede the run.</p>
+<p>In order to emulate the load of production jobs from a given cluster
+      on the same or another cluster, follow these steps:</p>
+<ol>
+	
+<li>Locate the job history files on the production cluster. This
+	location is specified by the
+	<span class="codefrag">mapred.job.tracker.history.completed.location</span>
+	configuration property of the cluster.</li>
+	
+<li>Run Rumen to build a job trace in JSON format for all or select
+	jobs.</li>
+	
+<li>Use GridMix with the job trace on the benchmark cluster.</li>
+      
+</ol>
+<p>Jobs submitted by GridMix have names of the form
+      "<span class="codefrag">GRIDMIXnnnnnn</span>", where
+      "<span class="codefrag">nnnnnn</span>" is a sequence number padded with leading
+      zeroes.</p>
+</div>
+    
+<a name="usage"></a>
+<h2 class="h3">Usage</h2>
+<div class="section">
+<p>Basic command-line usage without configuration parameters:</p>
+<pre class="code">
+org.apache.hadoop.mapred.gridmix.Gridmix [-generate &lt;size&gt;] [-users &lt;users-list&gt;] &lt;iopath&gt; &lt;trace&gt;
+      </pre>
+<p>Basic command-line usage with configuration parameters:</p>
+<pre class="code">
+org.apache.hadoop.mapred.gridmix.Gridmix \
+  -Dgridmix.client.submit.threads=10 -Dgridmix.output.directory=foo \
+  [-generate &lt;size&gt;] [-users &lt;users-list&gt;] &lt;iopath&gt; &lt;trace&gt;
+      </pre>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">
+	Configuration parameters like
+	<span class="codefrag">-Dgridmix.client.submit.threads=10</span> and
+	<span class="codefrag">-Dgridmix.output.directory=foo</span> as given above should
+	be used <em>before</em> other GridMix parameters.
+      </div>
+</div>
+<p>The <span class="codefrag">&lt;iopath&gt;</span> parameter is the working directory for
+      GridMix. Note that this can either be on the local file-system
+      or on HDFS, but it is highly recommended that it be the same as that for
+      the original job mix so that GridMix puts the same load on the local
+      file-system and HDFS respectively.</p>
+<p>The <span class="codefrag">-generate</span> option is used to generate input data and
+      Distributed Cache files for the synthetic jobs. It accepts standard units
+      of size suffixes, e.g. <span class="codefrag">100g</span> will generate
+      100 * 2<sup>30</sup> bytes as input data.
+      <span class="codefrag">&lt;iopath&gt;/input</span> is the destination directory for
+      generated input data and/or the directory from which input data will be
+      read. HDFS-based Distributed Cache files are generated under the
+      distributed cache directory <span class="codefrag">&lt;iopath&gt;/distributedCache</span>.
+      If some of the needed Distributed Cache files are already existing in the
+      distributed cache directory, then only the remaining non-existing
+      Distributed Cache files are generated when <span class="codefrag">-generate</span> option
+      is specified.</p>
+<p>The <span class="codefrag">-users</span> option is used to point to a users-list
+      file (see <a href="#usersqueues">Emulating Users and Queues</a>).</p>
+<p>The <span class="codefrag">&lt;trace&gt;</span> parameter is a path to a job trace
+      generated by Rumen. This trace can be compressed (it must be readable
+      using one of the compression codecs supported by the cluster) or
+      uncompressed. Use "-" as the value of this parameter if you
+      want to pass an <em>uncompressed</em> trace via the standard
+      input-stream of GridMix.</p>
+<p>The class <span class="codefrag">org.apache.hadoop.mapred.gridmix.Gridmix</span> can
+      be found in the JAR
+      <span class="codefrag">contrib/gridmix/hadoop-gridmix-$VERSION.jar</span> inside your
+      Hadoop installation, where <span class="codefrag">$VERSION</span> corresponds to the
+      version of Hadoop installed. A simple way of ensuring that this class
+      and all its dependencies are loaded correctly is to use the
+      <span class="codefrag">hadoop</span> wrapper script in Hadoop:</p>
+<pre class="code">
+hadoop jar &lt;gridmix-jar&gt; org.apache.hadoop.mapred.gridmix.Gridmix \
+  [-generate &lt;size&gt;] [-users &lt;users-list&gt;] &lt;iopath&gt; &lt;trace&gt;
+      </pre>
+<p>The supported configuration parameters are explained in the
+      following sections.</p>
+</div>
+    
+<a name="cfgparams"></a>
+<h2 class="h3">General Configuration Parameters</h2>
+<div class="section">
+<p></p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<th colspan="1" rowspan="1">Parameter</th>
+          <th colspan="1" rowspan="1">Description</th>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.output.directory</span>
+          </td>
+          <td colspan="1" rowspan="1">The directory into which output will be written. If specified,
+	  <span class="codefrag">iopath</span> will be relative to this parameter. The
+	  submitting user must have read/write access to this directory. The
+	  user should also be mindful of any quota issues that may arise
+	  during a run. The default is "<span class="codefrag">gridmix</span>".</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.client.submit.threads</span>
+          </td>
+          <td colspan="1" rowspan="1">The number of threads submitting jobs to the cluster. This
+	  also controls how many splits will be loaded into memory at a given
+	  time, pending the submit time in the trace. Splits are pre-generated
+	  to hit submission deadlines, so particularly dense traces may want
+	  more submitting threads. However, storing splits in memory is
+	  reasonably expensive, so you should raise this cautiously. The
+	  default is 1 for the SERIAL job-submission policy (see
+	  <a href="#policies">Job Submission Policies</a>) and one more than
+	  the number of processors on the client machine for the other
+	  policies.</td>
+        
+</tr>
+	
+<tr>
+	  
+<td colspan="1" rowspan="1">
+	    <span class="codefrag">gridmix.submit.multiplier</span>
+	  </td>
+	  <td colspan="1" rowspan="1">The multiplier to accelerate or decelerate the submission of
+	  jobs. The time separating two jobs is multiplied by this factor.
+	  The default value is 1.0. This is a crude mechanism to size
+	  a job trace to a cluster.</td>
+	
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.client.pending.queue.depth</span>
+          </td>
+          <td colspan="1" rowspan="1">The depth of the queue of job descriptions awaiting split
+	  generation. The jobs read from the trace occupy a queue of this
+	  depth before being processed by the submission threads. It is
+	  unusual to configure this. The default is 5.</td>
+        
+</tr>
+	
+<tr>
+	  
+<td colspan="1" rowspan="1">
+	    <span class="codefrag">gridmix.gen.blocksize</span>
+	  </td>
+	  <td colspan="1" rowspan="1">The block-size of generated data. The default value is 256
+	  MiB.</td>
+	
+</tr>
+	
+<tr>
+	  
+<td colspan="1" rowspan="1">
+	    <span class="codefrag">gridmix.gen.bytes.per.file</span>
+	  </td>
+	  <td colspan="1" rowspan="1">The maximum bytes written per file. The default value is 1
+	  GiB.</td>
+	
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.min.file.size</span>
+          </td>
+          <td colspan="1" rowspan="1">The minimum size of the input files. The default limit is 128
+	  MiB. Tweak this parameter if you see an error-message like
+	  "Found no satisfactory file" while testing GridMix with
+	  a relatively-small input data-set.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.max.total.scan</span>
+          </td>
+          <td colspan="1" rowspan="1">The maximum size of the input files. The default limit is 100
+	  TiB.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.task.jvm-options.enable</span>
+          </td>
+          <td colspan="1" rowspan="1">Enables Gridmix to configure the simulated task's max heap 
+              options using the values obtained from the original task (i.e via
+              trace).
+          </td>
+        
+</tr>
+      
+</table>
+</div>
+    
+<a name="jobtypes"></a>
+<h2 class="h3">Job Types</h2>
+<div class="section">
+<p>GridMix takes as input a job trace, essentially a stream of
+      JSON-encoded job descriptions. For each job description, the submission
+      client obtains the original job submission time and for each task in
+      that job, the byte and record counts read and written. Given this data,
+      it constructs a synthetic job with the same byte and record patterns as
+      recorded in the trace. It constructs jobs of two types:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<th colspan="1" rowspan="1">Job Type</th>
+          <th colspan="1" rowspan="1">Description</th>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">LOADJOB</span>
+          </td>
+          <td colspan="1" rowspan="1">A synthetic job that emulates the workload mentioned in Rumen
+	  trace. In the current version we are supporting I/O. It reproduces
+	  the I/O workload on the benchmark cluster. It does so by embedding
+	  the detailed I/O information for every map and reduce task, such as
+	  the number of bytes and records read and written, into each
+	  job's input splits. The map tasks further relay the I/O patterns of
+	  reduce tasks through the intermediate map output data.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">SLEEPJOB</span>
+          </td>
+	  <td colspan="1" rowspan="1">A synthetic job where each task does <em>nothing</em> but sleep
+	  for a certain duration as observed in the production trace. The
+	  scalability of the Job Tracker is often limited by how many
+	  heartbeats it can handle every second. (Heartbeats are periodic
+	  messages sent from Task Trackers to update their status and grab new
+	  tasks from the Job Tracker.) Since a benchmark cluster is typically
+	  a fraction in size of a production cluster, the heartbeat traffic
+	  generated by the slave nodes is well below the level of the
+	  production cluster. One possible solution is to run multiple Task
+	  Trackers on each slave node. This leads to the obvious problem that
+	  the I/O workload generated by the synthetic jobs would thrash the
+	  slave nodes. Hence the need for such a job.</td>
+        
+</tr>
+      
+</table>
+<p>The following configuration parameters affect the job type:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<th colspan="1" rowspan="1">Parameter</th>
+          <th colspan="1" rowspan="1">Description</th>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.job.type</span>
+          </td>
+          <td colspan="1" rowspan="1">The value for this key can be one of LOADJOB or SLEEPJOB. The
+	  default value is LOADJOB.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.key.fraction</span>
+          </td>
+          <td colspan="1" rowspan="1">For a LOADJOB type of job, the fraction of a record used for
+	  the data for the key. The default value is 0.1.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.sleep.maptask-only</span>
+          </td>
+          <td colspan="1" rowspan="1">For a SLEEPJOB type of job, whether to ignore the reduce
+	  tasks for the job. The default is <span class="codefrag">false</span>.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.sleep.fake-locations</span>
+          </td>
+          <td colspan="1" rowspan="1">For a SLEEPJOB type of job, the number of fake locations
+	  for map tasks for the job. The default is 0.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.sleep.max-map-time</span>
+          </td>
+          <td colspan="1" rowspan="1">For a SLEEPJOB type of job, the maximum runtime for map
+	  tasks for the job in milliseconds. The default is unlimited.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.sleep.max-reduce-time</span>
+          </td>
+          <td colspan="1" rowspan="1">For a SLEEPJOB type of job, the maximum runtime for reduce
+	  tasks for the job in milliseconds. The default is unlimited.</td>
+        
+</tr>
+      
+</table>
+</div>
+    
+<a name="policies"></a>
+<h2 class="h3">Job Submission Policies</h2>
+<div class="section">
+<p>GridMix controls the rate of job submission. This control can be
+      based on the trace information or can be based on statistics it gathers
+      from the Job Tracker. Based on the submission policies users define,
+      GridMix uses the respective algorithm to control the job submission.
+      There are currently three types of policies:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<th colspan="1" rowspan="1">Job Submission Policy</th>
+          <th colspan="1" rowspan="1">Description</th>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">STRESS</span>
+          </td>
+          <td colspan="1" rowspan="1">Keep submitting jobs so that the cluster remains under stress.
+	  In this mode we control the rate of job submission by monitoring
+	  the real-time load of the cluster so that we can maintain a stable
+	  stress level of workload on the cluster. Based on the statistics we
+	  gather we define if a cluster is <em>underloaded</em> or
+	  <em>overloaded</em>. We consider a cluster <em>underloaded</em> if
+	  and only if the following three conditions are true:
+	  <ol>
+	    
+<li>the number of pending and running jobs are under a threshold
+	    TJ</li>
+	    
+<li>the number of pending and running maps are under threshold
+	    TM</li>
+	    
+<li>the number of pending and running reduces are under threshold
+	    TR</li>
+	  
+</ol>
+          The thresholds TJ, TM and TR are proportional to the size of the
+	  cluster and map, reduce slots capacities respectively. In case of a
+	  cluster being <em>overloaded</em>, we throttle the job submission.
+	  In the actual calculation we also weigh each running task with its
+	  remaining work - namely, a 90% complete task is only counted as 0.1
+	  in calculation. Finally, to avoid a very large job blocking other
+	  jobs, we limit the number of pending/waiting tasks each job can
+	  contribute.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">REPLAY</span>
+          </td>
+          <td colspan="1" rowspan="1">In this mode we replay the job traces faithfully. This mode
+	  exactly follows the time-intervals given in the actual job
+	  trace.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">SERIAL</span>
+          </td>
+          <td colspan="1" rowspan="1">In this mode we submit the next job only once the job submitted
+	  earlier is completed.</td>
+        
+</tr>
+      
+</table>
+<p>The following configuration parameters affect the job submission
+      policy:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<th colspan="1" rowspan="1">Parameter</th>
+          <th colspan="1" rowspan="1">Description</th>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.job-submission.policy</span>
+          </td>
+          <td colspan="1" rowspan="1">The value for this key would be one of the three: STRESS, REPLAY
+	  or SERIAL. In most of the cases the value of key would be STRESS or
+	  REPLAY. The default value is STRESS.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.throttle.jobs-to-tracker-ratio</span>
+          </td>
+          <td colspan="1" rowspan="1">In STRESS mode, the minimum ratio of running jobs to Task
+	  Trackers in a cluster for the cluster to be considered
+	  <em>overloaded</em>. This is the threshold TJ referred to earlier.
+	  The default is 1.0.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.throttle.maps.task-to-slot-ratio</span>
+          </td>
+          <td colspan="1" rowspan="1">In STRESS mode, the minimum ratio of pending and running map
+	  tasks (i.e. incomplete map tasks) to the number of map slots for
+	  a cluster for the cluster to be considered <em>overloaded</em>.
+	  This is the threshold TM referred to earlier. Running map tasks are
+	  counted partially. For example, a 40% complete map task is counted
+	  as 0.6 map tasks. The default is 2.0.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.throttle.reduces.task-to-slot-ratio</span>
+          </td>
+          <td colspan="1" rowspan="1">In STRESS mode, the minimum ratio of pending and running reduce
+	  tasks (i.e. incomplete reduce tasks) to the number of reduce slots
+	  for a cluster for the cluster to be considered <em>overloaded</em>.
+	  This is the threshold TR referred to earlier. Running reduce tasks
+	  are counted partially. For example, a 30% complete reduce task is
+	  counted as 0.7 reduce tasks. The default is 2.5.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.throttle.maps.max-slot-share-per-job</span>
+          </td>
+          <td colspan="1" rowspan="1">In STRESS mode, the maximum share of a cluster's map-slots
+	  capacity that can be counted toward a job's incomplete map tasks in
+	  overload calculation. The default is 0.1.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.throttle.reducess.max-slot-share-per-job</span>
+          </td>
+          <td colspan="1" rowspan="1">In STRESS mode, the maximum share of a cluster's reduce-slots
+	  capacity that can be counted toward a job's incomplete reduce tasks
+	  in overload calculation. The default is 0.1.</td>
+        
+</tr>
+      
+</table>
+</div>
+    
+<a name="usersqueues"></a>
+<h2 class="h3">Emulating Users and Queues</h2>
+<div class="section">
+<p>Typical production clusters are often shared with different users and
+      the cluster capacity is divided among different departments through job
+      queues. Ensuring fairness among jobs from all users, honoring queue
+      capacity allocation policies and avoiding an ill-behaving job from
+      taking over the cluster adds significant complexity in Hadoop software.
+      To be able to sufficiently test and discover bugs in these areas,
+      GridMix must emulate the contentions of jobs from different users and/or
+      submitted to different queues.</p>
+<p>Emulating multiple queues is easy - we simply set up the benchmark
+      cluster with the same queue configuration as the production cluster and
+      we configure synthetic jobs so that they get submitted to the same queue
+      as recorded in the trace. However, not all users shown in the trace have
+      accounts on the benchmark cluster. Instead, we set up a number of testing
+      user accounts and associate each unique user in the trace to testing
+      users in a round-robin fashion.</p>
+<p>The following configuration parameters affect the emulation of users
+      and queues:</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<th colspan="1" rowspan="1">Parameter</th>
+          <th colspan="1" rowspan="1">Description</th>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.job-submission.use-queue-in-trace</span>
+          </td>
+          <td colspan="1" rowspan="1">When set to <span class="codefrag">true</span> it uses exactly the same set of
+	  queues as those mentioned in the trace. The default value is
+	  <span class="codefrag">false</span>.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.job-submission.default-queue</span>
+          </td>
+          <td colspan="1" rowspan="1">Specifies the default queue to which all the jobs would be
+	  submitted. If this parameter is not specified, GridMix uses the
+	  default queue defined for the submitting user on the cluster.</td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.user.resolve.class</span>
+          </td>
+          <td colspan="1" rowspan="1">Specifies which <span class="codefrag">UserResolver</span> implementation to use.
+	  We currently have three implementations:
+	  <ol>
+	    
+<li>
+<span class="codefrag">org.apache.hadoop.mapred.gridmix.EchoUserResolver</span>
+	    - submits a job as the user who submitted the original job. All
+	    the users of the production cluster identified in the job trace
+	    must also have accounts on the benchmark cluster in this case.</li>
+	    
+<li>
+<span class="codefrag">org.apache.hadoop.mapred.gridmix.SubmitterUserResolver</span>
+	    - submits all the jobs as current GridMix user. In this case we
+	    simply map all the users in the trace to the current GridMix user
+	    and submit the job.</li>
+	    
+<li>
+<span class="codefrag">org.apache.hadoop.mapred.gridmix.RoundRobinUserResolver</span>
+	    - maps trace users to test users in a round-robin fashion. In
+	    this case we set up a number of testing user accounts and
+	    associate each unique user in the trace to testing users in a
+	    round-robin fashion.</li>
+	  
+</ol>
+	  The default is
+	  <span class="codefrag">org.apache.hadoop.mapred.gridmix.SubmitterUserResolver</span>.</td>
+        
+</tr>
+      
+</table>
+<p>If the parameter <span class="codefrag">gridmix.user.resolve.class</span> is set to
+      <span class="codefrag">org.apache.hadoop.mapred.gridmix.RoundRobinUserResolver</span>,
+      we need to define a users-list file with a list of test users.
+      This is specified using the <span class="codefrag">-users</span> option to GridMix.</p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">
+      Specifying a users-list file using the <span class="codefrag">-users</span> option is
+      mandatory when using the round-robin user-resolver. Other user-resolvers
+      ignore this option.
+      </div>
+</div>
+<p>A users-list file has one user per line, each line of the format:</p>
+<pre class="code">
+      &lt;username&gt;
+      </pre>
+<p>For example:</p>
+<pre class="code">
+      user1
+      user2
+      user3
+      </pre>
+<p>In the above example we have defined three users <span class="codefrag">user1</span>,
+      <span class="codefrag">user2</span> and <span class="codefrag">user3</span>.
+      Now we would associate each unique user in the trace to the above users
+      defined in round-robin fashion. For example, if trace's users are
+      <span class="codefrag">tuser1</span>, <span class="codefrag">tuser2</span>, <span class="codefrag">tuser3</span>,
+      <span class="codefrag">tuser4</span> and <span class="codefrag">tuser5</span>, then the mappings would
+      be:</p>
+<pre class="code">
+      tuser1 -&gt; user1
+      tuser2 -&gt; user2
+      tuser3 -&gt; user3
+      tuser4 -&gt; user1
+      tuser5 -&gt; user2
+      </pre>
+<p>For backward compatibility reasons, each line of users-list file can
+      contain username followed by groupnames in the form username[,group]*.
+      The groupnames will be ignored by Gridmix.
+      </p>
+</div>
+
+  
+<a name="distributedcacheload"></a>
+<h2 class="h3">Emulating Distributed Cache Load</h2>
+<div class="section">
+<p>Gridmix emulates Distributed Cache load by default for LOADJOB type of
+    jobs. This is done by precreating the needed Distributed Cache files for all
+    the simulated jobs as part of a separate MapReduce job.</p>
+<p>Emulation of Distributed Cache load in gridmix simulated jobs can be
+    disabled by configuring the property
+    <span class="codefrag">gridmix.distributed-cache-emulation.enable</span> to
+    <span class="codefrag">false</span>.
+    But generation of Distributed Cache data by gridmix is driven by
+    <span class="codefrag">-generate</span> option and is independent of this configuration
+    property.</p>
+<p>Both generation of Distributed Cache files and emulation of
+    Distributed Cache load are disabled if:</p>
+<ul>
+    
+<li>input trace comes from the standard input-stream instead of file, or</li>
+    
+<li>
+<span class="codefrag">&lt;iopath&gt;</span> specified is on local file-system, or</li>
+    
+<li>any of the ascendant directories of the distributed cache directory
+    i.e. <span class="codefrag">&lt;iopath&gt;/distributedCache</span> (including the distributed
+    cache directory) doesn't have execute permission for others.</li>
+    
+</ul>
+</div>
+
+    
+<a name="simulatedjobconf"></a>
+<h2 class="h3">Configuration of Simulated Jobs</h2>
+<div class="section">
+<p> Gridmix3 sets some configuration properties in the simulated Jobs
+      submitted by it so that they can be mapped back to the corresponding Job
+      in the input Job trace. These configuration parameters include:
+      </p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<th colspan="1" rowspan="1">Parameter</th>
+          <th colspan="1" rowspan="1">Description</th>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.job.original-job-id</span>
+          </td>
+          <td colspan="1" rowspan="1"> The job id of the original cluster's job corresponding to this
+          simulated job.
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">
+            <span class="codefrag">gridmix.job.original-job-name</span>
+          </td>
+          <td colspan="1" rowspan="1"> The job name of the original cluster's job corresponding to this
+          simulated job.
+          </td>
+        
+</tr>
+      
+</table>
+</div>
+
+  
+<a name="compression-emulation"></a>
+<h2 class="h3">Emulating Compression/Decompression</h2>
+<div class="section">
+<p>MapReduce supports data compression and decompression. 
+         Input to a MapReduce job can be compressed. Similarly, output of Map
+         and Reduce tasks can also be compressed. Compression/Decompression 
+         emulation in GridMix is important because emulating 
+         compression/decompression will effect the CPU and Memory usage of the 
+         task. A task emulating compression/decompression will affect other 
+         tasks and daemons running on the same node.
+       </p>
+<p>Compression emulation is enabled if 
+         <span class="codefrag">gridmix.compression-emulation.enable</span> is set to
+         <span class="codefrag">true</span>. By default compression emulation is enabled for 
+         jobs of type <em>LOADJOB</em>. With compression emulation enabled, 
+         GridMix will now generate compressed text data with a constant 
+         compression ratio. Hence a simulated GridMix job will now emulate 
+         compression/decompression using compressible text data (having a 
+         constant compression ratio), irrespective of the compression ratio 
+         observed in the actual job.
+      </p>
+<p>A typical MapReduce Job deals with data compression/decompression in 
+         the following phases </p>
+<ul>
+        
+<li>
+<span class="codefrag">Job input data decompression: </span> GridMix generates 
+            compressible input data when compression emulation is enabled. 
+            Based on the original job's configuration, a simulated GridMix job 
+            will use a decompressor to read the compressed input data. 
+            Currently, GridMix uses
+            <span class="codefrag">mapreduce.input.fileinputformat.inputdir</span> to determine 
+            if the original job used compressed input data or 
+            not. If the original job's input files are uncompressed then the 
+            simulated job will read the compressed input file without using a 
+            decompressor. 
+        </li>
+        
+<li>
+<span class="codefrag">Intermediate data compression and decompression: </span>
+            If the original job has map output compression enabled then GridMix 
+            too will enable map output compression for the simulated job. 
+            Accordingly, the reducers will use a decompressor to read the map 
+            output data.
+        </li>
+        
+<li>
+<span class="codefrag">Job output data compression: </span>
+            If the original job's output is compressed then GridMix 
+            too will enable job output compression for the simulated job. 
+        </li>
+      
+</ul>
+<p>The following configuration parameters affect compression emulation
+      </p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<th colspan="1" rowspan="1">Parameter</th>
+          <th colspan="1" rowspan="1">Description</th>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1">gridmix.compression-emulation.enable</td>
+          <td colspan="1" rowspan="1">Enables compression emulation in simulated GridMix jobs. 
+              Default is true.</td>
+        
+</tr>
+      
+</table>
+<p>With compression emulation turned on, GridMix will generate compressed
+         input data. Hence the total size of the input 
+         data will be lesser than the expected size. Set 
+         <span class="codefrag">gridmix.min.file.size</span> to a smaller value (roughly 10% of
+         <span class="codefrag">gridmix.gen.bytes.per.file</span>) for enabling GridMix to 
+         correctly emulate compression.
+      </p>
+</div>
+
+    
+<a name="highram-emulation"></a>
+<h2 class="h3">Emulating High-Ram jobs</h2>
+<div class="section">
+<p>MapReduce allows users to define a job as a High-Ram job. Tasks from a 
+         High-Ram job can occupy multiple slots on the task-trackers. 
+         Task-tracker assigns fixed virtual memory for each slot. Tasks from 
+         High-Ram jobs can occupy multiple slots and thus can use up more 
+         virtual memory as compared to a default task.
+      </p>
+<p>Emulating this behavior is important because of the following reasons
+      </p>
+<ul>
+       
+<li>Impact on scheduler:  Scheduling of tasks from High-Ram jobs 
+           impacts the scheduling behavior as it might result into slot 
+           reservation and slot/resource utilization.
+       </li>
+       
+<li>Impact on the node : Since High-Ram tasks occupy multiple slots,
+           trackers do some bookkeeping for allocating extra resources for 
+           these tasks. Thus this becomes a precursor for memory emulation
+           where tasks with high memory requirements needs to be considered
+           as a High-Ram task.
+       </li>
+     
+</ul>
+<p>High-Ram feature emulation can be disabled by setting  
+        <span class="codefrag">gridmix.highram-emulation.enable</span> to
+        <span class="codefrag">false</span>.
+     </p>
+</div>
+    
+    
+<a name="resource-usage-emulation"></a>
+<h2 class="h3">Emulating resource usages</h2>
+<div class="section">
+<p>Usages of resources like CPU, physical memory, virtual memory, JVM heap
+         etc are recorded by MapReduce using its task counters. This information
+         is used by GridMix to emulate the resource usages in the simulated 
+         tasks. Emulating resource usages will help GridMix exert similar load 
+         on the test cluster as seen in the actual cluster.
+      </p>
+<p>MapReduce tasks use up resources during its entire lifetime. GridMix
+         also tries to mimic this behavior by spanning resource usage emulation
+         across the entire lifetime of the simulated task. Each resource to be
+         emulated should have an <em>emulator</em> associated with it.
+         Each such <em>emulator</em> should implement the 
+         <span class="codefrag">org.apache.hadoop.mapred.gridmix.emulators.resourceusage
+         .ResourceUsageEmulatorPlugin</span> interface. Resource 
+         <em>emulators</em> in GridMix are <em>plugins</em> that can be 
+         configured (plugged in or out) before every run. GridMix users can 
+         configure multiple emulator <em>plugins</em> by passing a comma 
+         separated list of <em>emulators</em> as a value for the 
+         <span class="codefrag">gridmix.emulators.resource-usage.plugins</span> parameter. 
+      </p>
+<p>List of <em>emulators</em> shipped with GridMix:
+      </p>
+<ul>
+       
+<li>Cumulative CPU usage <em>emulator</em>: 
+           GridMix uses the cumulative CPU usage value published by Rumen 
+           and makes sure that the total cumulative CPU usage of the simulated 
+           task is close to the value published by Rumen. GridMix can be 
+           configured to emulate cumulative CPU usage by adding 
+           <span class="codefrag">org.apache.hadoop.mapred.gridmix.emulators.resourceusage
+           .CumulativeCpuUsageEmulatorPlugin</span> to the list of emulator 
+           <em>plugins</em> configured for the 
+           <span class="codefrag">gridmix.emulators.resource-usage.plugins</span> parameter.
+           CPU usage emulator is designed in such a way that
+           it only emulates at specific progress boundaries of the task. This 
+           interval can be configured using 
+           <span class="codefrag">gridmix.emulators.resource-usage.cpu.emulation-interval</span>.
+           The default value for this parameter is <span class="codefrag">0.1</span> i.e 
+           <span class="codefrag">10%</span>.
+       </li>
+       
+<li>Total heap usage <em>emulator</em>: 
+           GridMix uses the total heap usage value published by Rumen 
+           and makes sure that the total heap usage of the simulated 
+           task is close to the value published by Rumen. GridMix can be 
+           configured to emulate total heap usage by adding 
+           <span class="codefrag">org.apache.hadoop.mapred.gridmix.emulators.resourceusage
+           .TotalHeapUsageEmulatorPlugin</span> to the list of emulator 
+           <em>plugins</em> configured for the 
+           <span class="codefrag">gridmix.emulators.resource-usage.plugins</span> parameter.
+           Heap usage emulator is designed in such a way that
+           it only emulates at specific progress boundaries of the task. This 
+           interval can be configured using 
+           <span class="codefrag">gridmix.emulators.resource-usage.heap.emulation-interval
+           </span>. The default value for this parameter is <span class="codefrag">0.1</span> 
+           i.e <span class="codefrag">10%</span> progress interval.
+</li>
+     
+</ul>
+<p>Note that GridMix will emulate resource usages only for jobs of type 
+        <em>LOADJOB</em>.
+     </p>
+</div>
+    
+    
+<a name="assumptions"></a>
+<h2 class="h3">Simplifying Assumptions</h2>
+<div class="section">
+<p>GridMix will be developed in stages, incorporating feedback and
+      patches from the community. Currently its intent is to evaluate
+      MapReduce and HDFS performance and not the layers on top of them (i.e.
+      the extensive lib and sub-project space). Given these two limitations,
+      the following characteristics of job load are not currently captured in
+      job traces and cannot be accurately reproduced in GridMix:</p>
+<ul>
+	
+<li>
+<em>Filesystem Properties</em> - No attempt is made to match block
+	sizes, namespace hierarchies, or any property of input, intermediate
+	or output data other than the bytes/records consumed and emitted from
+	a given task. This implies that some of the most heavily-used parts of
+	the system - text processing, streaming, etc. - cannot be meaningfully tested 
+	with the current implementation.</li>
+	
+<li>
+<em>I/O Rates</em> - The rate at which records are
+	consumed/emitted is assumed to be limited only by the speed of the
+	reader/writer and constant throughout the task.</li>
+	
+<li>
+<em>Memory Profile</em> - No data on tasks' memory usage over time
+	is available, though the max heap-size is retained.</li>
+	
+<li>
+<em>Skew</em> - The records consumed and emitted to/from a given
+	task are assumed to follow observed averages, i.e. records will be
+	more regular than may be seen in the wild. Each map also generates
+	a proportional percentage of data for each reduce, so a job with
+	unbalanced input will be flattened.</li>
+	
+<li>
+<em>Job Failure</em> - User code is assumed to be correct.</li>
+	
+<li>
+<em>Job Independence</em> - The output or outcome of one job does
+	not affect when or whether a subsequent job will run.</li>
+      
+</ul>
+</div>
+    
+<a name="appendix"></a>
+<h2 class="h3">Appendix</h2>
+<div class="section">
+<p>Issues tracking the original implementations of <a href="https://issues.apache.org/jira/browse/HADOOP-2369">GridMix1</a>,
+      <a href="https://issues.apache.org/jira/browse/HADOOP-3770">GridMix2</a>,
+      and <a href="https://issues.apache.org/jira/browse/MAPREDUCE-776">GridMix3</a>
+      can be found on the Apache Hadoop MapReduce JIRA. Other issues tracking
+      the current development of GridMix can be found by searching <a href="https://issues.apache.org/jira/browse/MAPREDUCE/component/12313086">the
+      Apache Hadoop MapReduce JIRA</a>
+</p>
+</div>
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

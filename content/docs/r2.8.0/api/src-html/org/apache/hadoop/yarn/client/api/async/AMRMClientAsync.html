@@ -1,0 +1,522 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span>* Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span>* or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span>* distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span>* regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span>* to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span>* "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span>* with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span>*<a name="line.9"></a>
+<span class="sourceLineNo">010</span>*     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span>*<a name="line.11"></a>
+<span class="sourceLineNo">012</span>* Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span>* distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span>* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span>* See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span>* limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span>*/<a name="line.17"></a>
+<span class="sourceLineNo">018</span><a name="line.18"></a>
+<span class="sourceLineNo">019</span>package org.apache.hadoop.yarn.client.api.async;<a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>import com.google.common.base.Preconditions;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import com.google.common.base.Supplier;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.io.IOException;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.Collection;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.List;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.concurrent.atomic.AtomicInteger;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.apache.commons.logging.Log;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.apache.commons.logging.LogFactory;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.apache.hadoop.classification.InterfaceAudience.Private;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.apache.hadoop.classification.InterfaceAudience.Public;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.apache.hadoop.classification.InterfaceStability.Unstable;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.apache.hadoop.classification.InterfaceStability.Stable;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.apache.hadoop.service.AbstractService;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.apache.hadoop.yarn.api.protocolrecords.RegisterApplicationMasterResponse;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.apache.hadoop.yarn.api.records.Container;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.apache.hadoop.yarn.api.records.ContainerId;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.apache.hadoop.yarn.api.records.ContainerStatus;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.apache.hadoop.yarn.api.records.FinalApplicationStatus;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import org.apache.hadoop.yarn.api.records.NodeReport;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import org.apache.hadoop.yarn.api.records.Priority;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import org.apache.hadoop.yarn.api.records.Resource;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import org.apache.hadoop.yarn.api.records.UpdatedContainer;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import org.apache.hadoop.yarn.client.api.AMRMClient;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>import org.apache.hadoop.yarn.client.api.AMRMClient.ContainerRequest;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>import org.apache.hadoop.yarn.client.api.async.impl.AMRMClientAsyncImpl;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>import org.apache.hadoop.yarn.client.api.impl.AMRMClientImpl;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>import org.apache.hadoop.yarn.exceptions.YarnException;<a name="line.48"></a>
+<span class="sourceLineNo">049</span><a name="line.49"></a>
+<span class="sourceLineNo">050</span>import com.google.common.annotations.VisibleForTesting;<a name="line.50"></a>
+<span class="sourceLineNo">051</span><a name="line.51"></a>
+<span class="sourceLineNo">052</span>/**<a name="line.52"></a>
+<span class="sourceLineNo">053</span> * &lt;code&gt;AMRMClientAsync&lt;/code&gt; handles communication with the ResourceManager<a name="line.53"></a>
+<span class="sourceLineNo">054</span> * and provides asynchronous updates on events such as container allocations and<a name="line.54"></a>
+<span class="sourceLineNo">055</span> * completions.  It contains a thread that sends periodic heartbeats to the<a name="line.55"></a>
+<span class="sourceLineNo">056</span> * ResourceManager.<a name="line.56"></a>
+<span class="sourceLineNo">057</span> * <a name="line.57"></a>
+<span class="sourceLineNo">058</span> * It should be used by implementing a CallbackHandler:<a name="line.58"></a>
+<span class="sourceLineNo">059</span> * &lt;pre&gt;<a name="line.59"></a>
+<span class="sourceLineNo">060</span> * {@code<a name="line.60"></a>
+<span class="sourceLineNo">061</span> * class MyCallbackHandler extends AMRMClientAsync.AbstractCallbackHandler {<a name="line.61"></a>
+<span class="sourceLineNo">062</span> *   public void onContainersAllocated(List&lt;Container&gt; containers) {<a name="line.62"></a>
+<span class="sourceLineNo">063</span> *     [run tasks on the containers]<a name="line.63"></a>
+<span class="sourceLineNo">064</span> *   }<a name="line.64"></a>
+<span class="sourceLineNo">065</span> *<a name="line.65"></a>
+<span class="sourceLineNo">066</span> *   public void onContainersUpdated(List&lt;Container&gt; containers) {<a name="line.66"></a>
+<span class="sourceLineNo">067</span> *     [determine if resource allocation of containers have been increased in<a name="line.67"></a>
+<span class="sourceLineNo">068</span> *      the ResourceManager, and if so, inform the NodeManagers to increase the<a name="line.68"></a>
+<span class="sourceLineNo">069</span> *      resource monitor/enforcement on the containers]<a name="line.69"></a>
+<span class="sourceLineNo">070</span> *   }<a name="line.70"></a>
+<span class="sourceLineNo">071</span> *<a name="line.71"></a>
+<span class="sourceLineNo">072</span> *   public void onContainersCompleted(List&lt;ContainerStatus&gt; statuses) {<a name="line.72"></a>
+<span class="sourceLineNo">073</span> *     [update progress, check whether app is done]<a name="line.73"></a>
+<span class="sourceLineNo">074</span> *   }<a name="line.74"></a>
+<span class="sourceLineNo">075</span> *   <a name="line.75"></a>
+<span class="sourceLineNo">076</span> *   public void onNodesUpdated(List&lt;NodeReport&gt; updated) {}<a name="line.76"></a>
+<span class="sourceLineNo">077</span> *   <a name="line.77"></a>
+<span class="sourceLineNo">078</span> *   public void onReboot() {}<a name="line.78"></a>
+<span class="sourceLineNo">079</span> * }<a name="line.79"></a>
+<span class="sourceLineNo">080</span> * }<a name="line.80"></a>
+<span class="sourceLineNo">081</span> * &lt;/pre&gt;<a name="line.81"></a>
+<span class="sourceLineNo">082</span> * <a name="line.82"></a>
+<span class="sourceLineNo">083</span> * The client's lifecycle should be managed similarly to the following:<a name="line.83"></a>
+<span class="sourceLineNo">084</span> * <a name="line.84"></a>
+<span class="sourceLineNo">085</span> * &lt;pre&gt;<a name="line.85"></a>
+<span class="sourceLineNo">086</span> * {@code<a name="line.86"></a>
+<span class="sourceLineNo">087</span> * AMRMClientAsync asyncClient = <a name="line.87"></a>
+<span class="sourceLineNo">088</span> *     createAMRMClientAsync(appAttId, 1000, new MyCallbackhandler());<a name="line.88"></a>
+<span class="sourceLineNo">089</span> * asyncClient.init(conf);<a name="line.89"></a>
+<span class="sourceLineNo">090</span> * asyncClient.start();<a name="line.90"></a>
+<span class="sourceLineNo">091</span> * RegisterApplicationMasterResponse response = asyncClient<a name="line.91"></a>
+<span class="sourceLineNo">092</span> *    .registerApplicationMaster(appMasterHostname, appMasterRpcPort,<a name="line.92"></a>
+<span class="sourceLineNo">093</span> *       appMasterTrackingUrl);<a name="line.93"></a>
+<span class="sourceLineNo">094</span> * asyncClient.addContainerRequest(containerRequest);<a name="line.94"></a>
+<span class="sourceLineNo">095</span> * [... wait for application to complete]<a name="line.95"></a>
+<span class="sourceLineNo">096</span> * asyncClient.unregisterApplicationMaster(status, appMsg, trackingUrl);<a name="line.96"></a>
+<span class="sourceLineNo">097</span> * asyncClient.stop();<a name="line.97"></a>
+<span class="sourceLineNo">098</span> * }<a name="line.98"></a>
+<span class="sourceLineNo">099</span> * &lt;/pre&gt;<a name="line.99"></a>
+<span class="sourceLineNo">100</span> */<a name="line.100"></a>
+<span class="sourceLineNo">101</span>@Public<a name="line.101"></a>
+<span class="sourceLineNo">102</span>@Stable<a name="line.102"></a>
+<span class="sourceLineNo">103</span>public abstract class AMRMClientAsync&lt;T extends ContainerRequest&gt; <a name="line.103"></a>
+<span class="sourceLineNo">104</span>extends AbstractService {<a name="line.104"></a>
+<span class="sourceLineNo">105</span>  private static final Log LOG = LogFactory.getLog(AMRMClientAsync.class);<a name="line.105"></a>
+<span class="sourceLineNo">106</span>  <a name="line.106"></a>
+<span class="sourceLineNo">107</span>  protected final AMRMClient&lt;T&gt; client;<a name="line.107"></a>
+<span class="sourceLineNo">108</span>  protected final CallbackHandler handler;<a name="line.108"></a>
+<span class="sourceLineNo">109</span>  protected final AtomicInteger heartbeatIntervalMs = new AtomicInteger();<a name="line.109"></a>
+<span class="sourceLineNo">110</span><a name="line.110"></a>
+<span class="sourceLineNo">111</span>  /**<a name="line.111"></a>
+<span class="sourceLineNo">112</span>   * &lt;p&gt;Create a new instance of AMRMClientAsync.&lt;/p&gt;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>   *<a name="line.113"></a>
+<span class="sourceLineNo">114</span>   * @param intervalMs heartbeat interval in milliseconds between AM and RM<a name="line.114"></a>
+<span class="sourceLineNo">115</span>   * @param callbackHandler callback handler that processes responses from<a name="line.115"></a>
+<span class="sourceLineNo">116</span>   *                        the &lt;code&gt;ResourceManager&lt;/code&gt;<a name="line.116"></a>
+<span class="sourceLineNo">117</span>   */<a name="line.117"></a>
+<span class="sourceLineNo">118</span>  public static &lt;T extends ContainerRequest&gt; AMRMClientAsync&lt;T&gt;<a name="line.118"></a>
+<span class="sourceLineNo">119</span>      createAMRMClientAsync(<a name="line.119"></a>
+<span class="sourceLineNo">120</span>      int intervalMs, AbstractCallbackHandler callbackHandler) {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    return new AMRMClientAsyncImpl&lt;T&gt;(intervalMs, callbackHandler);<a name="line.121"></a>
+<span class="sourceLineNo">122</span>  }<a name="line.122"></a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span>  /**<a name="line.124"></a>
+<span class="sourceLineNo">125</span>   * &lt;p&gt;Create a new instance of AMRMClientAsync.&lt;/p&gt;<a name="line.125"></a>
+<span class="sourceLineNo">126</span>   *<a name="line.126"></a>
+<span class="sourceLineNo">127</span>   * @param client the AMRMClient instance<a name="line.127"></a>
+<span class="sourceLineNo">128</span>   * @param intervalMs heartbeat interval in milliseconds between AM and RM<a name="line.128"></a>
+<span class="sourceLineNo">129</span>   * @param callbackHandler callback handler that processes responses from<a name="line.129"></a>
+<span class="sourceLineNo">130</span>   *                        the &lt;code&gt;ResourceManager&lt;/code&gt;<a name="line.130"></a>
+<span class="sourceLineNo">131</span>   */<a name="line.131"></a>
+<span class="sourceLineNo">132</span>  public static &lt;T extends ContainerRequest&gt; AMRMClientAsync&lt;T&gt;<a name="line.132"></a>
+<span class="sourceLineNo">133</span>      createAMRMClientAsync(<a name="line.133"></a>
+<span class="sourceLineNo">134</span>      AMRMClient&lt;T&gt; client, int intervalMs,<a name="line.134"></a>
+<span class="sourceLineNo">135</span>      AbstractCallbackHandler callbackHandler) {<a name="line.135"></a>
+<span class="sourceLineNo">136</span>    return new AMRMClientAsyncImpl&lt;T&gt;(client, intervalMs, callbackHandler);<a name="line.136"></a>
+<span class="sourceLineNo">137</span>  }<a name="line.137"></a>
+<span class="sourceLineNo">138</span><a name="line.138"></a>
+<span class="sourceLineNo">139</span>  protected AMRMClientAsync(<a name="line.139"></a>
+<span class="sourceLineNo">140</span>      int intervalMs, AbstractCallbackHandler callbackHandler) {<a name="line.140"></a>
+<span class="sourceLineNo">141</span>    this(new AMRMClientImpl&lt;T&gt;(), intervalMs, callbackHandler);<a name="line.141"></a>
+<span class="sourceLineNo">142</span>  }<a name="line.142"></a>
+<span class="sourceLineNo">143</span><a name="line.143"></a>
+<span class="sourceLineNo">144</span>  @Private<a name="line.144"></a>
+<span class="sourceLineNo">145</span>  @VisibleForTesting<a name="line.145"></a>
+<span class="sourceLineNo">146</span>  protected AMRMClientAsync(AMRMClient&lt;T&gt; client, int intervalMs,<a name="line.146"></a>
+<span class="sourceLineNo">147</span>      AbstractCallbackHandler callbackHandler) {<a name="line.147"></a>
+<span class="sourceLineNo">148</span>    super(AMRMClientAsync.class.getName());<a name="line.148"></a>
+<span class="sourceLineNo">149</span>    this.client = client;<a name="line.149"></a>
+<span class="sourceLineNo">150</span>    this.heartbeatIntervalMs.set(intervalMs);<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    this.handler = callbackHandler;<a name="line.151"></a>
+<span class="sourceLineNo">152</span>  }<a name="line.152"></a>
+<span class="sourceLineNo">153</span><a name="line.153"></a>
+<span class="sourceLineNo">154</span>  /**<a name="line.154"></a>
+<span class="sourceLineNo">155</span>   *<a name="line.155"></a>
+<span class="sourceLineNo">156</span>   * @deprecated Use {@link #createAMRMClientAsync(int,<a name="line.156"></a>
+<span class="sourceLineNo">157</span>   *             AMRMClientAsync.AbstractCallbackHandler)} instead.<a name="line.157"></a>
+<span class="sourceLineNo">158</span>   */<a name="line.158"></a>
+<span class="sourceLineNo">159</span>  @Deprecated<a name="line.159"></a>
+<span class="sourceLineNo">160</span>  public static &lt;T extends ContainerRequest&gt; AMRMClientAsync&lt;T&gt;<a name="line.160"></a>
+<span class="sourceLineNo">161</span>      createAMRMClientAsync(int intervalMs, CallbackHandler callbackHandler) {<a name="line.161"></a>
+<span class="sourceLineNo">162</span>    return new AMRMClientAsyncImpl&lt;T&gt;(intervalMs, callbackHandler);<a name="line.162"></a>
+<span class="sourceLineNo">163</span>  }<a name="line.163"></a>
+<span class="sourceLineNo">164</span><a name="line.164"></a>
+<span class="sourceLineNo">165</span>  /**<a name="line.165"></a>
+<span class="sourceLineNo">166</span>   *<a name="line.166"></a>
+<span class="sourceLineNo">167</span>   * @deprecated Use {@link #createAMRMClientAsync(AMRMClient,<a name="line.167"></a>
+<span class="sourceLineNo">168</span>   *             int, AMRMClientAsync.AbstractCallbackHandler)} instead.<a name="line.168"></a>
+<span class="sourceLineNo">169</span>   */<a name="line.169"></a>
+<span class="sourceLineNo">170</span>  @Deprecated<a name="line.170"></a>
+<span class="sourceLineNo">171</span>  public static &lt;T extends ContainerRequest&gt; AMRMClientAsync&lt;T&gt;<a name="line.171"></a>
+<span class="sourceLineNo">172</span>      createAMRMClientAsync(AMRMClient&lt;T&gt; client, int intervalMs,<a name="line.172"></a>
+<span class="sourceLineNo">173</span>          CallbackHandler callbackHandler) {<a name="line.173"></a>
+<span class="sourceLineNo">174</span>    return new AMRMClientAsyncImpl&lt;T&gt;(client, intervalMs, callbackHandler);<a name="line.174"></a>
+<span class="sourceLineNo">175</span>  }<a name="line.175"></a>
+<span class="sourceLineNo">176</span><a name="line.176"></a>
+<span class="sourceLineNo">177</span>  @Deprecated<a name="line.177"></a>
+<span class="sourceLineNo">178</span>  protected AMRMClientAsync(int intervalMs, CallbackHandler callbackHandler) {<a name="line.178"></a>
+<span class="sourceLineNo">179</span>    this(new AMRMClientImpl&lt;T&gt;(), intervalMs, callbackHandler);<a name="line.179"></a>
+<span class="sourceLineNo">180</span>  }<a name="line.180"></a>
+<span class="sourceLineNo">181</span>  <a name="line.181"></a>
+<span class="sourceLineNo">182</span>  @Private<a name="line.182"></a>
+<span class="sourceLineNo">183</span>  @VisibleForTesting<a name="line.183"></a>
+<span class="sourceLineNo">184</span>  @Deprecated<a name="line.184"></a>
+<span class="sourceLineNo">185</span>  protected AMRMClientAsync(AMRMClient&lt;T&gt; client, int intervalMs,<a name="line.185"></a>
+<span class="sourceLineNo">186</span>      CallbackHandler callbackHandler) {<a name="line.186"></a>
+<span class="sourceLineNo">187</span>    super(AMRMClientAsync.class.getName());<a name="line.187"></a>
+<span class="sourceLineNo">188</span>    this.client = client;<a name="line.188"></a>
+<span class="sourceLineNo">189</span>    this.heartbeatIntervalMs.set(intervalMs);<a name="line.189"></a>
+<span class="sourceLineNo">190</span>    this.handler = callbackHandler;<a name="line.190"></a>
+<span class="sourceLineNo">191</span>  }<a name="line.191"></a>
+<span class="sourceLineNo">192</span>    <a name="line.192"></a>
+<span class="sourceLineNo">193</span>  public void setHeartbeatInterval(int interval) {<a name="line.193"></a>
+<span class="sourceLineNo">194</span>    heartbeatIntervalMs.set(interval);<a name="line.194"></a>
+<span class="sourceLineNo">195</span>  }<a name="line.195"></a>
+<span class="sourceLineNo">196</span>  <a name="line.196"></a>
+<span class="sourceLineNo">197</span>  public abstract List&lt;? extends Collection&lt;T&gt;&gt; getMatchingRequests(<a name="line.197"></a>
+<span class="sourceLineNo">198</span>                                                   Priority priority, <a name="line.198"></a>
+<span class="sourceLineNo">199</span>                                                   String resourceName, <a name="line.199"></a>
+<span class="sourceLineNo">200</span>                                                   Resource capability);<a name="line.200"></a>
+<span class="sourceLineNo">201</span>  <a name="line.201"></a>
+<span class="sourceLineNo">202</span>  /**<a name="line.202"></a>
+<span class="sourceLineNo">203</span>   * Registers this application master with the resource manager. On successful<a name="line.203"></a>
+<span class="sourceLineNo">204</span>   * registration, starts the heartbeating thread.<a name="line.204"></a>
+<span class="sourceLineNo">205</span>   * @throws YarnException<a name="line.205"></a>
+<span class="sourceLineNo">206</span>   * @throws IOException<a name="line.206"></a>
+<span class="sourceLineNo">207</span>   */<a name="line.207"></a>
+<span class="sourceLineNo">208</span>  public abstract RegisterApplicationMasterResponse registerApplicationMaster(<a name="line.208"></a>
+<span class="sourceLineNo">209</span>      String appHostName, int appHostPort, String appTrackingUrl)<a name="line.209"></a>
+<span class="sourceLineNo">210</span>      throws YarnException, IOException;<a name="line.210"></a>
+<span class="sourceLineNo">211</span><a name="line.211"></a>
+<span class="sourceLineNo">212</span>  /**<a name="line.212"></a>
+<span class="sourceLineNo">213</span>   * Unregister the application master. This must be called in the end.<a name="line.213"></a>
+<span class="sourceLineNo">214</span>   * @param appStatus Success/Failure status of the master<a name="line.214"></a>
+<span class="sourceLineNo">215</span>   * @param appMessage Diagnostics message on failure<a name="line.215"></a>
+<span class="sourceLineNo">216</span>   * @param appTrackingUrl New URL to get master info<a name="line.216"></a>
+<span class="sourceLineNo">217</span>   * @throws YarnException<a name="line.217"></a>
+<span class="sourceLineNo">218</span>   * @throws IOException<a name="line.218"></a>
+<span class="sourceLineNo">219</span>   */<a name="line.219"></a>
+<span class="sourceLineNo">220</span>  public abstract void unregisterApplicationMaster(<a name="line.220"></a>
+<span class="sourceLineNo">221</span>      FinalApplicationStatus appStatus, String appMessage, String appTrackingUrl) <a name="line.221"></a>
+<span class="sourceLineNo">222</span>  throws YarnException, IOException;<a name="line.222"></a>
+<span class="sourceLineNo">223</span><a name="line.223"></a>
+<span class="sourceLineNo">224</span>  /**<a name="line.224"></a>
+<span class="sourceLineNo">225</span>   * Request containers for resources before calling &lt;code&gt;allocate&lt;/code&gt;<a name="line.225"></a>
+<span class="sourceLineNo">226</span>   * @param req Resource request<a name="line.226"></a>
+<span class="sourceLineNo">227</span>   */<a name="line.227"></a>
+<span class="sourceLineNo">228</span>  public abstract void addContainerRequest(T req);<a name="line.228"></a>
+<span class="sourceLineNo">229</span><a name="line.229"></a>
+<span class="sourceLineNo">230</span>  /**<a name="line.230"></a>
+<span class="sourceLineNo">231</span>   * Remove previous container request. The previous container request may have <a name="line.231"></a>
+<span class="sourceLineNo">232</span>   * already been sent to the ResourceManager. So even after the remove request <a name="line.232"></a>
+<span class="sourceLineNo">233</span>   * the app must be prepared to receive an allocation for the previous request <a name="line.233"></a>
+<span class="sourceLineNo">234</span>   * even after the remove request<a name="line.234"></a>
+<span class="sourceLineNo">235</span>   * @param req Resource request<a name="line.235"></a>
+<span class="sourceLineNo">236</span>   */<a name="line.236"></a>
+<span class="sourceLineNo">237</span>  public abstract void removeContainerRequest(T req);<a name="line.237"></a>
+<span class="sourceLineNo">238</span><a name="line.238"></a>
+<span class="sourceLineNo">239</span>  /**<a name="line.239"></a>
+<span class="sourceLineNo">240</span>   * Request container resource change before calling &lt;code&gt;allocate&lt;/code&gt;.<a name="line.240"></a>
+<span class="sourceLineNo">241</span>   * Any previous pending resource change request of the same container will be<a name="line.241"></a>
+<span class="sourceLineNo">242</span>   * removed.<a name="line.242"></a>
+<span class="sourceLineNo">243</span>   *<a name="line.243"></a>
+<span class="sourceLineNo">244</span>   * Application that calls this method is expected to maintain the<a name="line.244"></a>
+<span class="sourceLineNo">245</span>   * &lt;code&gt;Container&lt;/code&gt;s that are returned from previous successful<a name="line.245"></a>
+<span class="sourceLineNo">246</span>   * allocations or resource changes. By passing in the existing container and a<a name="line.246"></a>
+<span class="sourceLineNo">247</span>   * target resource capability to this method, the application requests the<a name="line.247"></a>
+<span class="sourceLineNo">248</span>   * ResourceManager to change the existing resource allocation to the target<a name="line.248"></a>
+<span class="sourceLineNo">249</span>   * resource allocation.<a name="line.249"></a>
+<span class="sourceLineNo">250</span>   *<a name="line.250"></a>
+<span class="sourceLineNo">251</span>   * @param container The container returned from the last successful resource<a name="line.251"></a>
+<span class="sourceLineNo">252</span>   *                  allocation or resource change<a name="line.252"></a>
+<span class="sourceLineNo">253</span>   * @param capability  The target resource capability of the container<a name="line.253"></a>
+<span class="sourceLineNo">254</span>   */<a name="line.254"></a>
+<span class="sourceLineNo">255</span>  public abstract void requestContainerResourceChange(<a name="line.255"></a>
+<span class="sourceLineNo">256</span>      Container container, Resource capability);<a name="line.256"></a>
+<span class="sourceLineNo">257</span><a name="line.257"></a>
+<span class="sourceLineNo">258</span>  /**<a name="line.258"></a>
+<span class="sourceLineNo">259</span>   * Release containers assigned by the Resource Manager. If the app cannot use<a name="line.259"></a>
+<span class="sourceLineNo">260</span>   * the container or wants to give up the container then it can release them.<a name="line.260"></a>
+<span class="sourceLineNo">261</span>   * The app needs to make new requests for the released resource capability if<a name="line.261"></a>
+<span class="sourceLineNo">262</span>   * it still needs it. eg. it released non-local resources<a name="line.262"></a>
+<span class="sourceLineNo">263</span>   * @param containerId<a name="line.263"></a>
+<span class="sourceLineNo">264</span>   */<a name="line.264"></a>
+<span class="sourceLineNo">265</span>  public abstract void releaseAssignedContainer(ContainerId containerId);<a name="line.265"></a>
+<span class="sourceLineNo">266</span><a name="line.266"></a>
+<span class="sourceLineNo">267</span>  /**<a name="line.267"></a>
+<span class="sourceLineNo">268</span>   * Get the currently available resources in the cluster.<a name="line.268"></a>
+<span class="sourceLineNo">269</span>   * A valid value is available after a call to allocate has been made<a name="line.269"></a>
+<span class="sourceLineNo">270</span>   * @return Currently available resources<a name="line.270"></a>
+<span class="sourceLineNo">271</span>   */<a name="line.271"></a>
+<span class="sourceLineNo">272</span>  public abstract Resource getAvailableResources();<a name="line.272"></a>
+<span class="sourceLineNo">273</span><a name="line.273"></a>
+<span class="sourceLineNo">274</span>  /**<a name="line.274"></a>
+<span class="sourceLineNo">275</span>   * Get the current number of nodes in the cluster.<a name="line.275"></a>
+<span class="sourceLineNo">276</span>   * A valid values is available after a call to allocate has been made<a name="line.276"></a>
+<span class="sourceLineNo">277</span>   * @return Current number of nodes in the cluster<a name="line.277"></a>
+<span class="sourceLineNo">278</span>   */<a name="line.278"></a>
+<span class="sourceLineNo">279</span>  public abstract int getClusterNodeCount();<a name="line.279"></a>
+<span class="sourceLineNo">280</span><a name="line.280"></a>
+<span class="sourceLineNo">281</span>  /**<a name="line.281"></a>
+<span class="sourceLineNo">282</span>   * Update application's blacklist with addition or removal resources.<a name="line.282"></a>
+<span class="sourceLineNo">283</span>   *<a name="line.283"></a>
+<span class="sourceLineNo">284</span>   * @param blacklistAdditions list of resources which should be added to the<a name="line.284"></a>
+<span class="sourceLineNo">285</span>   *        application blacklist<a name="line.285"></a>
+<span class="sourceLineNo">286</span>   * @param blacklistRemovals list of resources which should be removed from the<a name="line.286"></a>
+<span class="sourceLineNo">287</span>   *        application blacklist<a name="line.287"></a>
+<span class="sourceLineNo">288</span>   */<a name="line.288"></a>
+<span class="sourceLineNo">289</span>  public abstract void updateBlacklist(List&lt;String&gt; blacklistAdditions,<a name="line.289"></a>
+<span class="sourceLineNo">290</span>                                       List&lt;String&gt; blacklistRemovals);<a name="line.290"></a>
+<span class="sourceLineNo">291</span><a name="line.291"></a>
+<span class="sourceLineNo">292</span>  /**<a name="line.292"></a>
+<span class="sourceLineNo">293</span>   * Wait for &lt;code&gt;check&lt;/code&gt; to return true for each 1000 ms.<a name="line.293"></a>
+<span class="sourceLineNo">294</span>   * See also {@link #waitFor(com.google.common.base.Supplier, int)}<a name="line.294"></a>
+<span class="sourceLineNo">295</span>   * and {@link #waitFor(com.google.common.base.Supplier, int, int)}<a name="line.295"></a>
+<span class="sourceLineNo">296</span>   * @param check<a name="line.296"></a>
+<span class="sourceLineNo">297</span>   */<a name="line.297"></a>
+<span class="sourceLineNo">298</span>  public void waitFor(Supplier&lt;Boolean&gt; check) throws InterruptedException {<a name="line.298"></a>
+<span class="sourceLineNo">299</span>    waitFor(check, 1000);<a name="line.299"></a>
+<span class="sourceLineNo">300</span>  }<a name="line.300"></a>
+<span class="sourceLineNo">301</span><a name="line.301"></a>
+<span class="sourceLineNo">302</span>  /**<a name="line.302"></a>
+<span class="sourceLineNo">303</span>   * Wait for &lt;code&gt;check&lt;/code&gt; to return true for each<a name="line.303"></a>
+<span class="sourceLineNo">304</span>   * &lt;code&gt;checkEveryMillis&lt;/code&gt; ms.<a name="line.304"></a>
+<span class="sourceLineNo">305</span>   * See also {@link #waitFor(com.google.common.base.Supplier, int, int)}<a name="line.305"></a>
+<span class="sourceLineNo">306</span>   * @param check user defined checker<a name="line.306"></a>
+<span class="sourceLineNo">307</span>   * @param checkEveryMillis interval to call &lt;code&gt;check&lt;/code&gt;<a name="line.307"></a>
+<span class="sourceLineNo">308</span>   */<a name="line.308"></a>
+<span class="sourceLineNo">309</span>  public void waitFor(Supplier&lt;Boolean&gt; check, int checkEveryMillis)<a name="line.309"></a>
+<span class="sourceLineNo">310</span>      throws InterruptedException {<a name="line.310"></a>
+<span class="sourceLineNo">311</span>    waitFor(check, checkEveryMillis, 1);<a name="line.311"></a>
+<span class="sourceLineNo">312</span>  };<a name="line.312"></a>
+<span class="sourceLineNo">313</span><a name="line.313"></a>
+<span class="sourceLineNo">314</span>  /**<a name="line.314"></a>
+<span class="sourceLineNo">315</span>   * Wait for &lt;code&gt;check&lt;/code&gt; to return true for each<a name="line.315"></a>
+<span class="sourceLineNo">316</span>   * &lt;code&gt;checkEveryMillis&lt;/code&gt; ms. In the main loop, this method will log<a name="line.316"></a>
+<span class="sourceLineNo">317</span>   * the message "waiting in main loop" for each &lt;code&gt;logInterval&lt;/code&gt; times<a name="line.317"></a>
+<span class="sourceLineNo">318</span>   * iteration to confirm the thread is alive.<a name="line.318"></a>
+<span class="sourceLineNo">319</span>   * @param check user defined checker<a name="line.319"></a>
+<span class="sourceLineNo">320</span>   * @param checkEveryMillis interval to call &lt;code&gt;check&lt;/code&gt;<a name="line.320"></a>
+<span class="sourceLineNo">321</span>   * @param logInterval interval to log for each<a name="line.321"></a>
+<span class="sourceLineNo">322</span>   */<a name="line.322"></a>
+<span class="sourceLineNo">323</span>  public void waitFor(Supplier&lt;Boolean&gt; check, int checkEveryMillis,<a name="line.323"></a>
+<span class="sourceLineNo">324</span>      int logInterval) throws InterruptedException {<a name="line.324"></a>
+<span class="sourceLineNo">325</span>    Preconditions.checkNotNull(check, "check should not be null");<a name="line.325"></a>
+<span class="sourceLineNo">326</span>    Preconditions.checkArgument(checkEveryMillis &gt;= 0,<a name="line.326"></a>
+<span class="sourceLineNo">327</span>        "checkEveryMillis should be positive value");<a name="line.327"></a>
+<span class="sourceLineNo">328</span>    Preconditions.checkArgument(logInterval &gt;= 0,<a name="line.328"></a>
+<span class="sourceLineNo">329</span>        "logInterval should be positive value");<a name="line.329"></a>
+<span class="sourceLineNo">330</span><a name="line.330"></a>
+<span class="sourceLineNo">331</span>    int loggingCounter = logInterval;<a name="line.331"></a>
+<span class="sourceLineNo">332</span>    do {<a name="line.332"></a>
+<span class="sourceLineNo">333</span>      if (LOG.isDebugEnabled()) {<a name="line.333"></a>
+<span class="sourceLineNo">334</span>        LOG.debug("Check the condition for main loop.");<a name="line.334"></a>
+<span class="sourceLineNo">335</span>      }<a name="line.335"></a>
+<span class="sourceLineNo">336</span><a name="line.336"></a>
+<span class="sourceLineNo">337</span>      boolean result = check.get();<a name="line.337"></a>
+<span class="sourceLineNo">338</span>      if (result) {<a name="line.338"></a>
+<span class="sourceLineNo">339</span>        LOG.info("Exits the main loop.");<a name="line.339"></a>
+<span class="sourceLineNo">340</span>        return;<a name="line.340"></a>
+<span class="sourceLineNo">341</span>      }<a name="line.341"></a>
+<span class="sourceLineNo">342</span>      if (--loggingCounter &lt;= 0) {<a name="line.342"></a>
+<span class="sourceLineNo">343</span>        LOG.info("Waiting in main loop.");<a name="line.343"></a>
+<span class="sourceLineNo">344</span>        loggingCounter = logInterval;<a name="line.344"></a>
+<span class="sourceLineNo">345</span>      }<a name="line.345"></a>
+<span class="sourceLineNo">346</span><a name="line.346"></a>
+<span class="sourceLineNo">347</span>      Thread.sleep(checkEveryMillis);<a name="line.347"></a>
+<span class="sourceLineNo">348</span>    } while (true);<a name="line.348"></a>
+<span class="sourceLineNo">349</span>  }<a name="line.349"></a>
+<span class="sourceLineNo">350</span><a name="line.350"></a>
+<span class="sourceLineNo">351</span>  /**<a name="line.351"></a>
+<span class="sourceLineNo">352</span>   * &lt;p&gt;<a name="line.352"></a>
+<span class="sourceLineNo">353</span>   * The callback abstract class. The callback functions need to be implemented<a name="line.353"></a>
+<span class="sourceLineNo">354</span>   * by {@link AMRMClientAsync} users. The APIs are called when responses from<a name="line.354"></a>
+<span class="sourceLineNo">355</span>   * the &lt;code&gt;ResourceManager&lt;/code&gt; are available.<a name="line.355"></a>
+<span class="sourceLineNo">356</span>   * &lt;/p&gt;<a name="line.356"></a>
+<span class="sourceLineNo">357</span>   */<a name="line.357"></a>
+<span class="sourceLineNo">358</span>  public abstract static class AbstractCallbackHandler<a name="line.358"></a>
+<span class="sourceLineNo">359</span>      implements CallbackHandler {<a name="line.359"></a>
+<span class="sourceLineNo">360</span><a name="line.360"></a>
+<span class="sourceLineNo">361</span>    /**<a name="line.361"></a>
+<span class="sourceLineNo">362</span>     * Called when the ResourceManager responds to a heartbeat with completed<a name="line.362"></a>
+<span class="sourceLineNo">363</span>     * containers. If the response contains both completed containers and<a name="line.363"></a>
+<span class="sourceLineNo">364</span>     * allocated containers, this will be called before containersAllocated.<a name="line.364"></a>
+<span class="sourceLineNo">365</span>     */<a name="line.365"></a>
+<span class="sourceLineNo">366</span>    public abstract void onContainersCompleted(List&lt;ContainerStatus&gt; statuses);<a name="line.366"></a>
+<span class="sourceLineNo">367</span><a name="line.367"></a>
+<span class="sourceLineNo">368</span>    /**<a name="line.368"></a>
+<span class="sourceLineNo">369</span>     * Called when the ResourceManager responds to a heartbeat with allocated<a name="line.369"></a>
+<span class="sourceLineNo">370</span>     * containers. If the response containers both completed containers and<a name="line.370"></a>
+<span class="sourceLineNo">371</span>     * allocated containers, this will be called after containersCompleted.<a name="line.371"></a>
+<span class="sourceLineNo">372</span>     */<a name="line.372"></a>
+<span class="sourceLineNo">373</span>    public abstract void onContainersAllocated(List&lt;Container&gt; containers);<a name="line.373"></a>
+<span class="sourceLineNo">374</span><a name="line.374"></a>
+<span class="sourceLineNo">375</span>    /**<a name="line.375"></a>
+<span class="sourceLineNo">376</span>     * Called when the ResourceManager responds to a heartbeat with containers<a name="line.376"></a>
+<span class="sourceLineNo">377</span>     * whose resource allocation has been changed.<a name="line.377"></a>
+<span class="sourceLineNo">378</span>     */<a name="line.378"></a>
+<span class="sourceLineNo">379</span>    @Public<a name="line.379"></a>
+<span class="sourceLineNo">380</span>    @Unstable<a name="line.380"></a>
+<span class="sourceLineNo">381</span>    public abstract void onContainersUpdated(List&lt;UpdatedContainer&gt; containers);<a name="line.381"></a>
+<span class="sourceLineNo">382</span><a name="line.382"></a>
+<span class="sourceLineNo">383</span>    /**<a name="line.383"></a>
+<span class="sourceLineNo">384</span>     * Called when the ResourceManager wants the ApplicationMaster to shutdown<a name="line.384"></a>
+<span class="sourceLineNo">385</span>     * for being out of sync etc. The ApplicationMaster should not unregister<a name="line.385"></a>
+<span class="sourceLineNo">386</span>     * with the RM unless the ApplicationMaster wants to be the last attempt.<a name="line.386"></a>
+<span class="sourceLineNo">387</span>     */<a name="line.387"></a>
+<span class="sourceLineNo">388</span>    public abstract void onShutdownRequest();<a name="line.388"></a>
+<span class="sourceLineNo">389</span><a name="line.389"></a>
+<span class="sourceLineNo">390</span>    /**<a name="line.390"></a>
+<span class="sourceLineNo">391</span>     * Called when nodes tracked by the ResourceManager have changed in health,<a name="line.391"></a>
+<span class="sourceLineNo">392</span>     * availability etc.<a name="line.392"></a>
+<span class="sourceLineNo">393</span>     */<a name="line.393"></a>
+<span class="sourceLineNo">394</span>    public abstract void onNodesUpdated(List&lt;NodeReport&gt; updatedNodes);<a name="line.394"></a>
+<span class="sourceLineNo">395</span><a name="line.395"></a>
+<span class="sourceLineNo">396</span>    public abstract float getProgress();<a name="line.396"></a>
+<span class="sourceLineNo">397</span><a name="line.397"></a>
+<span class="sourceLineNo">398</span>    /**<a name="line.398"></a>
+<span class="sourceLineNo">399</span>     * Called when error comes from RM communications as well as from errors in<a name="line.399"></a>
+<span class="sourceLineNo">400</span>     * the callback itself from the app. Calling<a name="line.400"></a>
+<span class="sourceLineNo">401</span>     * stop() is the recommended action.<a name="line.401"></a>
+<span class="sourceLineNo">402</span>     */<a name="line.402"></a>
+<span class="sourceLineNo">403</span>    public abstract void onError(Throwable e);<a name="line.403"></a>
+<span class="sourceLineNo">404</span>  }<a name="line.404"></a>
+<span class="sourceLineNo">405</span><a name="line.405"></a>
+<span class="sourceLineNo">406</span>  /**<a name="line.406"></a>
+<span class="sourceLineNo">407</span>   * @deprecated Use {@link AMRMClientAsync.AbstractCallbackHandler} instead.<a name="line.407"></a>
+<span class="sourceLineNo">408</span>   */<a name="line.408"></a>
+<span class="sourceLineNo">409</span>  @Deprecated<a name="line.409"></a>
+<span class="sourceLineNo">410</span>  public interface CallbackHandler {<a name="line.410"></a>
+<span class="sourceLineNo">411</span><a name="line.411"></a>
+<span class="sourceLineNo">412</span>    /**<a name="line.412"></a>
+<span class="sourceLineNo">413</span>     * Called when the ResourceManager responds to a heartbeat with completed<a name="line.413"></a>
+<span class="sourceLineNo">414</span>     * containers. If the response contains both completed containers and<a name="line.414"></a>
+<span class="sourceLineNo">415</span>     * allocated containers, this will be called before containersAllocated.<a name="line.415"></a>
+<span class="sourceLineNo">416</span>     */<a name="line.416"></a>
+<span class="sourceLineNo">417</span>    void onContainersCompleted(List&lt;ContainerStatus&gt; statuses);<a name="line.417"></a>
+<span class="sourceLineNo">418</span><a name="line.418"></a>
+<span class="sourceLineNo">419</span>    /**<a name="line.419"></a>
+<span class="sourceLineNo">420</span>     * Called when the ResourceManager responds to a heartbeat with allocated<a name="line.420"></a>
+<span class="sourceLineNo">421</span>     * containers. If the response containers both completed containers and<a name="line.421"></a>
+<span class="sourceLineNo">422</span>     * allocated containers, this will be called after containersCompleted.<a name="line.422"></a>
+<span class="sourceLineNo">423</span>     */<a name="line.423"></a>
+<span class="sourceLineNo">424</span>    void onContainersAllocated(List&lt;Container&gt; containers);<a name="line.424"></a>
+<span class="sourceLineNo">425</span><a name="line.425"></a>
+<span class="sourceLineNo">426</span>    /**<a name="line.426"></a>
+<span class="sourceLineNo">427</span>     * Called when the ResourceManager wants the ApplicationMaster to shutdown<a name="line.427"></a>
+<span class="sourceLineNo">428</span>     * for being out of sync etc. The ApplicationMaster should not unregister<a name="line.428"></a>
+<span class="sourceLineNo">429</span>     * with the RM unless the ApplicationMaster wants to be the last attempt.<a name="line.429"></a>
+<span class="sourceLineNo">430</span>     */<a name="line.430"></a>
+<span class="sourceLineNo">431</span>    void onShutdownRequest();<a name="line.431"></a>
+<span class="sourceLineNo">432</span><a name="line.432"></a>
+<span class="sourceLineNo">433</span>    /**<a name="line.433"></a>
+<span class="sourceLineNo">434</span>     * Called when nodes tracked by the ResourceManager have changed in health,<a name="line.434"></a>
+<span class="sourceLineNo">435</span>     * availability etc.<a name="line.435"></a>
+<span class="sourceLineNo">436</span>     */<a name="line.436"></a>
+<span class="sourceLineNo">437</span>    void onNodesUpdated(List&lt;NodeReport&gt; updatedNodes);<a name="line.437"></a>
+<span class="sourceLineNo">438</span><a name="line.438"></a>
+<span class="sourceLineNo">439</span>    float getProgress();<a name="line.439"></a>
+<span class="sourceLineNo">440</span><a name="line.440"></a>
+<span class="sourceLineNo">441</span>    /**<a name="line.441"></a>
+<span class="sourceLineNo">442</span>     * Called when error comes from RM communications as well as from errors in<a name="line.442"></a>
+<span class="sourceLineNo">443</span>     * the callback itself from the app. Calling<a name="line.443"></a>
+<span class="sourceLineNo">444</span>     * stop() is the recommended action.<a name="line.444"></a>
+<span class="sourceLineNo">445</span>     *<a name="line.445"></a>
+<span class="sourceLineNo">446</span>     * @param e<a name="line.446"></a>
+<span class="sourceLineNo">447</span>     */<a name="line.447"></a>
+<span class="sourceLineNo">448</span>    void onError(Throwable e);<a name="line.448"></a>
+<span class="sourceLineNo">449</span>  }<a name="line.449"></a>
+<span class="sourceLineNo">450</span>}<a name="line.450"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

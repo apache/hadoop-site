@@ -1,0 +1,832 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    <a name="line.18"></a>
+<FONT color="green">019</FONT>    package org.apache.hadoop.yarn.applications.distributedshell;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>    import java.io.IOException;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import java.nio.ByteBuffer;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import java.util.ArrayList;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import java.util.HashMap;<a name="line.24"></a>
+<FONT color="green">025</FONT>    import java.util.List;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import java.util.Map;<a name="line.26"></a>
+<FONT color="green">027</FONT>    import java.util.Vector;<a name="line.27"></a>
+<FONT color="green">028</FONT>    <a name="line.28"></a>
+<FONT color="green">029</FONT>    import org.apache.commons.cli.CommandLine;<a name="line.29"></a>
+<FONT color="green">030</FONT>    import org.apache.commons.cli.GnuParser;<a name="line.30"></a>
+<FONT color="green">031</FONT>    import org.apache.commons.cli.HelpFormatter;<a name="line.31"></a>
+<FONT color="green">032</FONT>    import org.apache.commons.cli.Option;<a name="line.32"></a>
+<FONT color="green">033</FONT>    import org.apache.commons.cli.Options;<a name="line.33"></a>
+<FONT color="green">034</FONT>    import org.apache.commons.cli.ParseException;<a name="line.34"></a>
+<FONT color="green">035</FONT>    import org.apache.commons.io.IOUtils;<a name="line.35"></a>
+<FONT color="green">036</FONT>    import org.apache.commons.lang.StringUtils;<a name="line.36"></a>
+<FONT color="green">037</FONT>    import org.apache.commons.logging.Log;<a name="line.37"></a>
+<FONT color="green">038</FONT>    import org.apache.commons.logging.LogFactory;<a name="line.38"></a>
+<FONT color="green">039</FONT>    import org.apache.hadoop.classification.InterfaceAudience;<a name="line.39"></a>
+<FONT color="green">040</FONT>    import org.apache.hadoop.classification.InterfaceStability;<a name="line.40"></a>
+<FONT color="green">041</FONT>    import org.apache.hadoop.conf.Configuration;<a name="line.41"></a>
+<FONT color="green">042</FONT>    import org.apache.hadoop.fs.FSDataOutputStream;<a name="line.42"></a>
+<FONT color="green">043</FONT>    import org.apache.hadoop.fs.FileStatus;<a name="line.43"></a>
+<FONT color="green">044</FONT>    import org.apache.hadoop.fs.FileSystem;<a name="line.44"></a>
+<FONT color="green">045</FONT>    import org.apache.hadoop.fs.Path;<a name="line.45"></a>
+<FONT color="green">046</FONT>    import org.apache.hadoop.fs.permission.FsPermission;<a name="line.46"></a>
+<FONT color="green">047</FONT>    import org.apache.hadoop.io.DataOutputBuffer;<a name="line.47"></a>
+<FONT color="green">048</FONT>    import org.apache.hadoop.security.Credentials;<a name="line.48"></a>
+<FONT color="green">049</FONT>    import org.apache.hadoop.security.UserGroupInformation;<a name="line.49"></a>
+<FONT color="green">050</FONT>    import org.apache.hadoop.security.token.Token;<a name="line.50"></a>
+<FONT color="green">051</FONT>    import org.apache.hadoop.yarn.api.ApplicationClientProtocol;<a name="line.51"></a>
+<FONT color="green">052</FONT>    import org.apache.hadoop.yarn.api.ApplicationConstants;<a name="line.52"></a>
+<FONT color="green">053</FONT>    import org.apache.hadoop.yarn.api.ApplicationConstants.Environment;<a name="line.53"></a>
+<FONT color="green">054</FONT>    import org.apache.hadoop.yarn.api.protocolrecords.GetNewApplicationResponse;<a name="line.54"></a>
+<FONT color="green">055</FONT>    import org.apache.hadoop.yarn.api.protocolrecords.KillApplicationRequest;<a name="line.55"></a>
+<FONT color="green">056</FONT>    import org.apache.hadoop.yarn.api.records.ApplicationId;<a name="line.56"></a>
+<FONT color="green">057</FONT>    import org.apache.hadoop.yarn.api.records.ApplicationReport;<a name="line.57"></a>
+<FONT color="green">058</FONT>    import org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext;<a name="line.58"></a>
+<FONT color="green">059</FONT>    import org.apache.hadoop.yarn.api.records.ContainerLaunchContext;<a name="line.59"></a>
+<FONT color="green">060</FONT>    import org.apache.hadoop.yarn.api.records.FinalApplicationStatus;<a name="line.60"></a>
+<FONT color="green">061</FONT>    import org.apache.hadoop.yarn.api.records.LocalResource;<a name="line.61"></a>
+<FONT color="green">062</FONT>    import org.apache.hadoop.yarn.api.records.LocalResourceType;<a name="line.62"></a>
+<FONT color="green">063</FONT>    import org.apache.hadoop.yarn.api.records.LocalResourceVisibility;<a name="line.63"></a>
+<FONT color="green">064</FONT>    import org.apache.hadoop.yarn.api.records.NodeReport;<a name="line.64"></a>
+<FONT color="green">065</FONT>    import org.apache.hadoop.yarn.api.records.NodeState;<a name="line.65"></a>
+<FONT color="green">066</FONT>    import org.apache.hadoop.yarn.api.records.Priority;<a name="line.66"></a>
+<FONT color="green">067</FONT>    import org.apache.hadoop.yarn.api.records.QueueACL;<a name="line.67"></a>
+<FONT color="green">068</FONT>    import org.apache.hadoop.yarn.api.records.QueueInfo;<a name="line.68"></a>
+<FONT color="green">069</FONT>    import org.apache.hadoop.yarn.api.records.QueueUserACLInfo;<a name="line.69"></a>
+<FONT color="green">070</FONT>    import org.apache.hadoop.yarn.api.records.Resource;<a name="line.70"></a>
+<FONT color="green">071</FONT>    import org.apache.hadoop.yarn.api.records.YarnApplicationState;<a name="line.71"></a>
+<FONT color="green">072</FONT>    import org.apache.hadoop.yarn.api.records.YarnClusterMetrics;<a name="line.72"></a>
+<FONT color="green">073</FONT>    import org.apache.hadoop.yarn.client.api.YarnClient;<a name="line.73"></a>
+<FONT color="green">074</FONT>    import org.apache.hadoop.yarn.client.api.YarnClientApplication;<a name="line.74"></a>
+<FONT color="green">075</FONT>    import org.apache.hadoop.yarn.conf.YarnConfiguration;<a name="line.75"></a>
+<FONT color="green">076</FONT>    import org.apache.hadoop.yarn.exceptions.YarnException;<a name="line.76"></a>
+<FONT color="green">077</FONT>    import org.apache.hadoop.yarn.util.ConverterUtils;<a name="line.77"></a>
+<FONT color="green">078</FONT>    import org.apache.hadoop.yarn.util.Records;<a name="line.78"></a>
+<FONT color="green">079</FONT>    <a name="line.79"></a>
+<FONT color="green">080</FONT>    /**<a name="line.80"></a>
+<FONT color="green">081</FONT>     * Client for Distributed Shell application submission to YARN.<a name="line.81"></a>
+<FONT color="green">082</FONT>     * <a name="line.82"></a>
+<FONT color="green">083</FONT>     * &lt;p&gt; The distributed shell client allows an application master to be launched that in turn would run <a name="line.83"></a>
+<FONT color="green">084</FONT>     * the provided shell command on a set of containers. &lt;/p&gt;<a name="line.84"></a>
+<FONT color="green">085</FONT>     * <a name="line.85"></a>
+<FONT color="green">086</FONT>     * &lt;p&gt;This client is meant to act as an example on how to write yarn-based applications. &lt;/p&gt;<a name="line.86"></a>
+<FONT color="green">087</FONT>     * <a name="line.87"></a>
+<FONT color="green">088</FONT>     * &lt;p&gt; To submit an application, a client first needs to connect to the &lt;code&gt;ResourceManager&lt;/code&gt; <a name="line.88"></a>
+<FONT color="green">089</FONT>     * aka ApplicationsManager or ASM via the {@link ApplicationClientProtocol}. The {@link ApplicationClientProtocol} <a name="line.89"></a>
+<FONT color="green">090</FONT>     * provides a way for the client to get access to cluster information and to request for a<a name="line.90"></a>
+<FONT color="green">091</FONT>     * new {@link ApplicationId}. &lt;p&gt;<a name="line.91"></a>
+<FONT color="green">092</FONT>     * <a name="line.92"></a>
+<FONT color="green">093</FONT>     * &lt;p&gt; For the actual job submission, the client first has to create an {@link ApplicationSubmissionContext}. <a name="line.93"></a>
+<FONT color="green">094</FONT>     * The {@link ApplicationSubmissionContext} defines the application details such as {@link ApplicationId} <a name="line.94"></a>
+<FONT color="green">095</FONT>     * and application name, the priority assigned to the application and the queue<a name="line.95"></a>
+<FONT color="green">096</FONT>     * to which this application needs to be assigned. In addition to this, the {@link ApplicationSubmissionContext}<a name="line.96"></a>
+<FONT color="green">097</FONT>     * also defines the {@link ContainerLaunchContext} which describes the &lt;code&gt;Container&lt;/code&gt; with which <a name="line.97"></a>
+<FONT color="green">098</FONT>     * the {@link ApplicationMaster} is launched. &lt;/p&gt;<a name="line.98"></a>
+<FONT color="green">099</FONT>     * <a name="line.99"></a>
+<FONT color="green">100</FONT>     * &lt;p&gt; The {@link ContainerLaunchContext} in this scenario defines the resources to be allocated for the <a name="line.100"></a>
+<FONT color="green">101</FONT>     * {@link ApplicationMaster}'s container, the local resources (jars, configuration files) to be made available <a name="line.101"></a>
+<FONT color="green">102</FONT>     * and the environment to be set for the {@link ApplicationMaster} and the commands to be executed to run the <a name="line.102"></a>
+<FONT color="green">103</FONT>     * {@link ApplicationMaster}. &lt;p&gt;<a name="line.103"></a>
+<FONT color="green">104</FONT>     * <a name="line.104"></a>
+<FONT color="green">105</FONT>     * &lt;p&gt; Using the {@link ApplicationSubmissionContext}, the client submits the application to the <a name="line.105"></a>
+<FONT color="green">106</FONT>     * &lt;code&gt;ResourceManager&lt;/code&gt; and then monitors the application by requesting the &lt;code&gt;ResourceManager&lt;/code&gt; <a name="line.106"></a>
+<FONT color="green">107</FONT>     * for an {@link ApplicationReport} at regular time intervals. In case of the application taking too long, the client <a name="line.107"></a>
+<FONT color="green">108</FONT>     * kills the application by submitting a {@link KillApplicationRequest} to the &lt;code&gt;ResourceManager&lt;/code&gt;. &lt;/p&gt;<a name="line.108"></a>
+<FONT color="green">109</FONT>     *<a name="line.109"></a>
+<FONT color="green">110</FONT>     */<a name="line.110"></a>
+<FONT color="green">111</FONT>    @InterfaceAudience.Public<a name="line.111"></a>
+<FONT color="green">112</FONT>    @InterfaceStability.Unstable<a name="line.112"></a>
+<FONT color="green">113</FONT>    public class Client {<a name="line.113"></a>
+<FONT color="green">114</FONT>    <a name="line.114"></a>
+<FONT color="green">115</FONT>      private static final Log LOG = LogFactory.getLog(Client.class);<a name="line.115"></a>
+<FONT color="green">116</FONT>    <a name="line.116"></a>
+<FONT color="green">117</FONT>      // Configuration<a name="line.117"></a>
+<FONT color="green">118</FONT>      private Configuration conf;<a name="line.118"></a>
+<FONT color="green">119</FONT>      private YarnClient yarnClient;<a name="line.119"></a>
+<FONT color="green">120</FONT>      // Application master specific info to register a new Application with RM/ASM<a name="line.120"></a>
+<FONT color="green">121</FONT>      private String appName = "";<a name="line.121"></a>
+<FONT color="green">122</FONT>      // App master priority<a name="line.122"></a>
+<FONT color="green">123</FONT>      private int amPriority = 0;<a name="line.123"></a>
+<FONT color="green">124</FONT>      // Queue for App master<a name="line.124"></a>
+<FONT color="green">125</FONT>      private String amQueue = "";<a name="line.125"></a>
+<FONT color="green">126</FONT>      // Amt. of memory resource to request for to run the App Master<a name="line.126"></a>
+<FONT color="green">127</FONT>      private int amMemory = 10; <a name="line.127"></a>
+<FONT color="green">128</FONT>      // Amt. of virtual core resource to request for to run the App Master<a name="line.128"></a>
+<FONT color="green">129</FONT>      private int amVCores = 1;<a name="line.129"></a>
+<FONT color="green">130</FONT>    <a name="line.130"></a>
+<FONT color="green">131</FONT>      // Application master jar file<a name="line.131"></a>
+<FONT color="green">132</FONT>      private String appMasterJar = ""; <a name="line.132"></a>
+<FONT color="green">133</FONT>      // Main class to invoke application master<a name="line.133"></a>
+<FONT color="green">134</FONT>      private final String appMasterMainClass;<a name="line.134"></a>
+<FONT color="green">135</FONT>    <a name="line.135"></a>
+<FONT color="green">136</FONT>      // Shell command to be executed <a name="line.136"></a>
+<FONT color="green">137</FONT>      private String shellCommand = ""; <a name="line.137"></a>
+<FONT color="green">138</FONT>      // Location of shell script <a name="line.138"></a>
+<FONT color="green">139</FONT>      private String shellScriptPath = ""; <a name="line.139"></a>
+<FONT color="green">140</FONT>      // Args to be passed to the shell command<a name="line.140"></a>
+<FONT color="green">141</FONT>      private String[] shellArgs = new String[] {};<a name="line.141"></a>
+<FONT color="green">142</FONT>      // Env variables to be setup for the shell command <a name="line.142"></a>
+<FONT color="green">143</FONT>      private Map&lt;String, String&gt; shellEnv = new HashMap&lt;String, String&gt;();<a name="line.143"></a>
+<FONT color="green">144</FONT>      // Shell Command Container priority <a name="line.144"></a>
+<FONT color="green">145</FONT>      private int shellCmdPriority = 0;<a name="line.145"></a>
+<FONT color="green">146</FONT>    <a name="line.146"></a>
+<FONT color="green">147</FONT>      // Amt of memory to request for container in which shell script will be executed<a name="line.147"></a>
+<FONT color="green">148</FONT>      private int containerMemory = 10; <a name="line.148"></a>
+<FONT color="green">149</FONT>      // Amt. of virtual cores to request for container in which shell script will be executed<a name="line.149"></a>
+<FONT color="green">150</FONT>      private int containerVirtualCores = 1;<a name="line.150"></a>
+<FONT color="green">151</FONT>      // No. of containers in which the shell script needs to be executed<a name="line.151"></a>
+<FONT color="green">152</FONT>      private int numContainers = 1;<a name="line.152"></a>
+<FONT color="green">153</FONT>    <a name="line.153"></a>
+<FONT color="green">154</FONT>      // log4j.properties file <a name="line.154"></a>
+<FONT color="green">155</FONT>      // if available, add to local resources and set into classpath <a name="line.155"></a>
+<FONT color="green">156</FONT>      private String log4jPropFile = "";    <a name="line.156"></a>
+<FONT color="green">157</FONT>    <a name="line.157"></a>
+<FONT color="green">158</FONT>      // Start time for client<a name="line.158"></a>
+<FONT color="green">159</FONT>      private final long clientStartTime = System.currentTimeMillis();<a name="line.159"></a>
+<FONT color="green">160</FONT>      // Timeout threshold for client. Kill app after time interval expires.<a name="line.160"></a>
+<FONT color="green">161</FONT>      private long clientTimeout = 600000;<a name="line.161"></a>
+<FONT color="green">162</FONT>    <a name="line.162"></a>
+<FONT color="green">163</FONT>      // flag to indicate whether to keep containers across application attempts.<a name="line.163"></a>
+<FONT color="green">164</FONT>      private boolean keepContainers = false;<a name="line.164"></a>
+<FONT color="green">165</FONT>    <a name="line.165"></a>
+<FONT color="green">166</FONT>      // Debug flag<a name="line.166"></a>
+<FONT color="green">167</FONT>      boolean debugFlag = false;    <a name="line.167"></a>
+<FONT color="green">168</FONT>    <a name="line.168"></a>
+<FONT color="green">169</FONT>      // Command line options<a name="line.169"></a>
+<FONT color="green">170</FONT>      private Options opts;<a name="line.170"></a>
+<FONT color="green">171</FONT>    <a name="line.171"></a>
+<FONT color="green">172</FONT>      private static final String shellCommandPath = "shellCommands";<a name="line.172"></a>
+<FONT color="green">173</FONT>      private static final String shellArgsPath = "shellArgs";<a name="line.173"></a>
+<FONT color="green">174</FONT>      private static final String appMasterJarPath = "AppMaster.jar";<a name="line.174"></a>
+<FONT color="green">175</FONT>      // Hardcoded path to custom log_properties<a name="line.175"></a>
+<FONT color="green">176</FONT>      private static final String log4jPath = "log4j.properties";<a name="line.176"></a>
+<FONT color="green">177</FONT>    <a name="line.177"></a>
+<FONT color="green">178</FONT>      public static final String SCRIPT_PATH = "ExecScript";<a name="line.178"></a>
+<FONT color="green">179</FONT>    <a name="line.179"></a>
+<FONT color="green">180</FONT>      /**<a name="line.180"></a>
+<FONT color="green">181</FONT>       * @param args Command line arguments <a name="line.181"></a>
+<FONT color="green">182</FONT>       */<a name="line.182"></a>
+<FONT color="green">183</FONT>      public static void main(String[] args) {<a name="line.183"></a>
+<FONT color="green">184</FONT>        boolean result = false;<a name="line.184"></a>
+<FONT color="green">185</FONT>        try {<a name="line.185"></a>
+<FONT color="green">186</FONT>          Client client = new Client();<a name="line.186"></a>
+<FONT color="green">187</FONT>          LOG.info("Initializing Client");<a name="line.187"></a>
+<FONT color="green">188</FONT>          try {<a name="line.188"></a>
+<FONT color="green">189</FONT>            boolean doRun = client.init(args);<a name="line.189"></a>
+<FONT color="green">190</FONT>            if (!doRun) {<a name="line.190"></a>
+<FONT color="green">191</FONT>              System.exit(0);<a name="line.191"></a>
+<FONT color="green">192</FONT>            }<a name="line.192"></a>
+<FONT color="green">193</FONT>          } catch (IllegalArgumentException e) {<a name="line.193"></a>
+<FONT color="green">194</FONT>            System.err.println(e.getLocalizedMessage());<a name="line.194"></a>
+<FONT color="green">195</FONT>            client.printUsage();<a name="line.195"></a>
+<FONT color="green">196</FONT>            System.exit(-1);<a name="line.196"></a>
+<FONT color="green">197</FONT>          }<a name="line.197"></a>
+<FONT color="green">198</FONT>          result = client.run();<a name="line.198"></a>
+<FONT color="green">199</FONT>        } catch (Throwable t) {<a name="line.199"></a>
+<FONT color="green">200</FONT>          LOG.fatal("Error running CLient", t);<a name="line.200"></a>
+<FONT color="green">201</FONT>          System.exit(1);<a name="line.201"></a>
+<FONT color="green">202</FONT>        }<a name="line.202"></a>
+<FONT color="green">203</FONT>        if (result) {<a name="line.203"></a>
+<FONT color="green">204</FONT>          LOG.info("Application completed successfully");<a name="line.204"></a>
+<FONT color="green">205</FONT>          System.exit(0);                   <a name="line.205"></a>
+<FONT color="green">206</FONT>        } <a name="line.206"></a>
+<FONT color="green">207</FONT>        LOG.error("Application failed to complete successfully");<a name="line.207"></a>
+<FONT color="green">208</FONT>        System.exit(2);<a name="line.208"></a>
+<FONT color="green">209</FONT>      }<a name="line.209"></a>
+<FONT color="green">210</FONT>    <a name="line.210"></a>
+<FONT color="green">211</FONT>      /**<a name="line.211"></a>
+<FONT color="green">212</FONT>       */<a name="line.212"></a>
+<FONT color="green">213</FONT>      public Client(Configuration conf) throws Exception  {<a name="line.213"></a>
+<FONT color="green">214</FONT>        this(<a name="line.214"></a>
+<FONT color="green">215</FONT>          "org.apache.hadoop.yarn.applications.distributedshell.ApplicationMaster",<a name="line.215"></a>
+<FONT color="green">216</FONT>          conf);<a name="line.216"></a>
+<FONT color="green">217</FONT>      }<a name="line.217"></a>
+<FONT color="green">218</FONT>    <a name="line.218"></a>
+<FONT color="green">219</FONT>      Client(String appMasterMainClass, Configuration conf) {<a name="line.219"></a>
+<FONT color="green">220</FONT>        this.conf = conf;<a name="line.220"></a>
+<FONT color="green">221</FONT>        this.appMasterMainClass = appMasterMainClass;<a name="line.221"></a>
+<FONT color="green">222</FONT>        yarnClient = YarnClient.createYarnClient();<a name="line.222"></a>
+<FONT color="green">223</FONT>        yarnClient.init(conf);<a name="line.223"></a>
+<FONT color="green">224</FONT>        opts = new Options();<a name="line.224"></a>
+<FONT color="green">225</FONT>        opts.addOption("appname", true, "Application Name. Default value - DistributedShell");<a name="line.225"></a>
+<FONT color="green">226</FONT>        opts.addOption("priority", true, "Application Priority. Default 0");<a name="line.226"></a>
+<FONT color="green">227</FONT>        opts.addOption("queue", true, "RM Queue in which this application is to be submitted");<a name="line.227"></a>
+<FONT color="green">228</FONT>        opts.addOption("timeout", true, "Application timeout in milliseconds");<a name="line.228"></a>
+<FONT color="green">229</FONT>        opts.addOption("master_memory", true, "Amount of memory in MB to be requested to run the application master");<a name="line.229"></a>
+<FONT color="green">230</FONT>        opts.addOption("master_vcores", true, "Amount of virtual cores to be requested to run the application master");<a name="line.230"></a>
+<FONT color="green">231</FONT>        opts.addOption("jar", true, "Jar file containing the application master");<a name="line.231"></a>
+<FONT color="green">232</FONT>        opts.addOption("shell_command", true, "Shell command to be executed by " +<a name="line.232"></a>
+<FONT color="green">233</FONT>            "the Application Master. Can only specify either --shell_command " +<a name="line.233"></a>
+<FONT color="green">234</FONT>            "or --shell_script");<a name="line.234"></a>
+<FONT color="green">235</FONT>        opts.addOption("shell_script", true, "Location of the shell script to be " +<a name="line.235"></a>
+<FONT color="green">236</FONT>            "executed. Can only specify either --shell_command or --shell_script");<a name="line.236"></a>
+<FONT color="green">237</FONT>        opts.addOption("shell_args", true, "Command line args for the shell script." +<a name="line.237"></a>
+<FONT color="green">238</FONT>            "Multiple args can be separated by empty space.");<a name="line.238"></a>
+<FONT color="green">239</FONT>        opts.getOption("shell_args").setArgs(Option.UNLIMITED_VALUES);<a name="line.239"></a>
+<FONT color="green">240</FONT>        opts.addOption("shell_env", true, "Environment for shell script. Specified as env_key=env_val pairs");<a name="line.240"></a>
+<FONT color="green">241</FONT>        opts.addOption("shell_cmd_priority", true, "Priority for the shell command containers");<a name="line.241"></a>
+<FONT color="green">242</FONT>        opts.addOption("container_memory", true, "Amount of memory in MB to be requested to run the shell command");<a name="line.242"></a>
+<FONT color="green">243</FONT>        opts.addOption("container_vcores", true, "Amount of virtual cores to be requested to run the shell command");<a name="line.243"></a>
+<FONT color="green">244</FONT>        opts.addOption("num_containers", true, "No. of containers on which the shell command needs to be executed");<a name="line.244"></a>
+<FONT color="green">245</FONT>        opts.addOption("log_properties", true, "log4j.properties file");<a name="line.245"></a>
+<FONT color="green">246</FONT>        opts.addOption("keep_containers_across_application_attempts", false,<a name="line.246"></a>
+<FONT color="green">247</FONT>          "Flag to indicate whether to keep containers across application attempts." +<a name="line.247"></a>
+<FONT color="green">248</FONT>          " If the flag is true, running containers will not be killed when" +<a name="line.248"></a>
+<FONT color="green">249</FONT>          " application attempt fails and these containers will be retrieved by" +<a name="line.249"></a>
+<FONT color="green">250</FONT>          " the new application attempt ");<a name="line.250"></a>
+<FONT color="green">251</FONT>        opts.addOption("debug", false, "Dump out debug information");<a name="line.251"></a>
+<FONT color="green">252</FONT>        opts.addOption("help", false, "Print usage");<a name="line.252"></a>
+<FONT color="green">253</FONT>    <a name="line.253"></a>
+<FONT color="green">254</FONT>      }<a name="line.254"></a>
+<FONT color="green">255</FONT>    <a name="line.255"></a>
+<FONT color="green">256</FONT>      /**<a name="line.256"></a>
+<FONT color="green">257</FONT>       */<a name="line.257"></a>
+<FONT color="green">258</FONT>      public Client() throws Exception  {<a name="line.258"></a>
+<FONT color="green">259</FONT>        this(new YarnConfiguration());<a name="line.259"></a>
+<FONT color="green">260</FONT>      }<a name="line.260"></a>
+<FONT color="green">261</FONT>    <a name="line.261"></a>
+<FONT color="green">262</FONT>      /**<a name="line.262"></a>
+<FONT color="green">263</FONT>       * Helper function to print out usage<a name="line.263"></a>
+<FONT color="green">264</FONT>       */<a name="line.264"></a>
+<FONT color="green">265</FONT>      private void printUsage() {<a name="line.265"></a>
+<FONT color="green">266</FONT>        new HelpFormatter().printHelp("Client", opts);<a name="line.266"></a>
+<FONT color="green">267</FONT>      }<a name="line.267"></a>
+<FONT color="green">268</FONT>    <a name="line.268"></a>
+<FONT color="green">269</FONT>      /**<a name="line.269"></a>
+<FONT color="green">270</FONT>       * Parse command line options<a name="line.270"></a>
+<FONT color="green">271</FONT>       * @param args Parsed command line options <a name="line.271"></a>
+<FONT color="green">272</FONT>       * @return Whether the init was successful to run the client<a name="line.272"></a>
+<FONT color="green">273</FONT>       * @throws ParseException<a name="line.273"></a>
+<FONT color="green">274</FONT>       */<a name="line.274"></a>
+<FONT color="green">275</FONT>      public boolean init(String[] args) throws ParseException {<a name="line.275"></a>
+<FONT color="green">276</FONT>    <a name="line.276"></a>
+<FONT color="green">277</FONT>        CommandLine cliParser = new GnuParser().parse(opts, args);<a name="line.277"></a>
+<FONT color="green">278</FONT>    <a name="line.278"></a>
+<FONT color="green">279</FONT>        if (args.length == 0) {<a name="line.279"></a>
+<FONT color="green">280</FONT>          throw new IllegalArgumentException("No args specified for client to initialize");<a name="line.280"></a>
+<FONT color="green">281</FONT>        }<a name="line.281"></a>
+<FONT color="green">282</FONT>    <a name="line.282"></a>
+<FONT color="green">283</FONT>        if (cliParser.hasOption("log_properties")) {<a name="line.283"></a>
+<FONT color="green">284</FONT>          String log4jPath = cliParser.getOptionValue("log_properties");<a name="line.284"></a>
+<FONT color="green">285</FONT>          try {<a name="line.285"></a>
+<FONT color="green">286</FONT>            Log4jPropertyHelper.updateLog4jConfiguration(Client.class, log4jPath);<a name="line.286"></a>
+<FONT color="green">287</FONT>          } catch (Exception e) {<a name="line.287"></a>
+<FONT color="green">288</FONT>            LOG.warn("Can not set up custom log4j properties. " + e);<a name="line.288"></a>
+<FONT color="green">289</FONT>          }<a name="line.289"></a>
+<FONT color="green">290</FONT>        }<a name="line.290"></a>
+<FONT color="green">291</FONT>    <a name="line.291"></a>
+<FONT color="green">292</FONT>        if (cliParser.hasOption("help")) {<a name="line.292"></a>
+<FONT color="green">293</FONT>          printUsage();<a name="line.293"></a>
+<FONT color="green">294</FONT>          return false;<a name="line.294"></a>
+<FONT color="green">295</FONT>        }<a name="line.295"></a>
+<FONT color="green">296</FONT>    <a name="line.296"></a>
+<FONT color="green">297</FONT>        if (cliParser.hasOption("debug")) {<a name="line.297"></a>
+<FONT color="green">298</FONT>          debugFlag = true;<a name="line.298"></a>
+<FONT color="green">299</FONT>    <a name="line.299"></a>
+<FONT color="green">300</FONT>        }<a name="line.300"></a>
+<FONT color="green">301</FONT>    <a name="line.301"></a>
+<FONT color="green">302</FONT>        if (cliParser.hasOption("keep_containers_across_application_attempts")) {<a name="line.302"></a>
+<FONT color="green">303</FONT>          LOG.info("keep_containers_across_application_attempts");<a name="line.303"></a>
+<FONT color="green">304</FONT>          keepContainers = true;<a name="line.304"></a>
+<FONT color="green">305</FONT>        }<a name="line.305"></a>
+<FONT color="green">306</FONT>    <a name="line.306"></a>
+<FONT color="green">307</FONT>        appName = cliParser.getOptionValue("appname", "DistributedShell");<a name="line.307"></a>
+<FONT color="green">308</FONT>        amPriority = Integer.parseInt(cliParser.getOptionValue("priority", "0"));<a name="line.308"></a>
+<FONT color="green">309</FONT>        amQueue = cliParser.getOptionValue("queue", "default");<a name="line.309"></a>
+<FONT color="green">310</FONT>        amMemory = Integer.parseInt(cliParser.getOptionValue("master_memory", "10"));               <a name="line.310"></a>
+<FONT color="green">311</FONT>        amVCores = Integer.parseInt(cliParser.getOptionValue("master_vcores", "1"));<a name="line.311"></a>
+<FONT color="green">312</FONT>    <a name="line.312"></a>
+<FONT color="green">313</FONT>        if (amMemory &lt; 0) {<a name="line.313"></a>
+<FONT color="green">314</FONT>          throw new IllegalArgumentException("Invalid memory specified for application master, exiting."<a name="line.314"></a>
+<FONT color="green">315</FONT>              + " Specified memory=" + amMemory);<a name="line.315"></a>
+<FONT color="green">316</FONT>        }<a name="line.316"></a>
+<FONT color="green">317</FONT>        if (amVCores &lt; 0) {<a name="line.317"></a>
+<FONT color="green">318</FONT>          throw new IllegalArgumentException("Invalid virtual cores specified for application master, exiting."<a name="line.318"></a>
+<FONT color="green">319</FONT>              + " Specified virtual cores=" + amVCores);<a name="line.319"></a>
+<FONT color="green">320</FONT>        }<a name="line.320"></a>
+<FONT color="green">321</FONT>    <a name="line.321"></a>
+<FONT color="green">322</FONT>        if (!cliParser.hasOption("jar")) {<a name="line.322"></a>
+<FONT color="green">323</FONT>          throw new IllegalArgumentException("No jar file specified for application master");<a name="line.323"></a>
+<FONT color="green">324</FONT>        }           <a name="line.324"></a>
+<FONT color="green">325</FONT>    <a name="line.325"></a>
+<FONT color="green">326</FONT>        appMasterJar = cliParser.getOptionValue("jar");<a name="line.326"></a>
+<FONT color="green">327</FONT>    <a name="line.327"></a>
+<FONT color="green">328</FONT>        if (!cliParser.hasOption("shell_command") &amp;&amp; !cliParser.hasOption("shell_script")) {<a name="line.328"></a>
+<FONT color="green">329</FONT>          throw new IllegalArgumentException(<a name="line.329"></a>
+<FONT color="green">330</FONT>              "No shell command or shell script specified to be executed by application master");<a name="line.330"></a>
+<FONT color="green">331</FONT>        } else if (cliParser.hasOption("shell_command") &amp;&amp; cliParser.hasOption("shell_script")) {<a name="line.331"></a>
+<FONT color="green">332</FONT>          throw new IllegalArgumentException("Can not specify shell_command option " +<a name="line.332"></a>
+<FONT color="green">333</FONT>              "and shell_script option at the same time");<a name="line.333"></a>
+<FONT color="green">334</FONT>        } else if (cliParser.hasOption("shell_command")) {<a name="line.334"></a>
+<FONT color="green">335</FONT>          shellCommand = cliParser.getOptionValue("shell_command");<a name="line.335"></a>
+<FONT color="green">336</FONT>        } else {<a name="line.336"></a>
+<FONT color="green">337</FONT>          shellScriptPath = cliParser.getOptionValue("shell_script");<a name="line.337"></a>
+<FONT color="green">338</FONT>        }<a name="line.338"></a>
+<FONT color="green">339</FONT>        if (cliParser.hasOption("shell_args")) {<a name="line.339"></a>
+<FONT color="green">340</FONT>          shellArgs = cliParser.getOptionValues("shell_args");<a name="line.340"></a>
+<FONT color="green">341</FONT>        }<a name="line.341"></a>
+<FONT color="green">342</FONT>        if (cliParser.hasOption("shell_env")) { <a name="line.342"></a>
+<FONT color="green">343</FONT>          String envs[] = cliParser.getOptionValues("shell_env");<a name="line.343"></a>
+<FONT color="green">344</FONT>          for (String env : envs) {<a name="line.344"></a>
+<FONT color="green">345</FONT>            env = env.trim();<a name="line.345"></a>
+<FONT color="green">346</FONT>            int index = env.indexOf('=');<a name="line.346"></a>
+<FONT color="green">347</FONT>            if (index == -1) {<a name="line.347"></a>
+<FONT color="green">348</FONT>              shellEnv.put(env, "");<a name="line.348"></a>
+<FONT color="green">349</FONT>              continue;<a name="line.349"></a>
+<FONT color="green">350</FONT>            }<a name="line.350"></a>
+<FONT color="green">351</FONT>            String key = env.substring(0, index);<a name="line.351"></a>
+<FONT color="green">352</FONT>            String val = "";<a name="line.352"></a>
+<FONT color="green">353</FONT>            if (index &lt; (env.length()-1)) {<a name="line.353"></a>
+<FONT color="green">354</FONT>              val = env.substring(index+1);<a name="line.354"></a>
+<FONT color="green">355</FONT>            }<a name="line.355"></a>
+<FONT color="green">356</FONT>            shellEnv.put(key, val);<a name="line.356"></a>
+<FONT color="green">357</FONT>          }<a name="line.357"></a>
+<FONT color="green">358</FONT>        }<a name="line.358"></a>
+<FONT color="green">359</FONT>        shellCmdPriority = Integer.parseInt(cliParser.getOptionValue("shell_cmd_priority", "0"));<a name="line.359"></a>
+<FONT color="green">360</FONT>    <a name="line.360"></a>
+<FONT color="green">361</FONT>        containerMemory = Integer.parseInt(cliParser.getOptionValue("container_memory", "10"));<a name="line.361"></a>
+<FONT color="green">362</FONT>        containerVirtualCores = Integer.parseInt(cliParser.getOptionValue("container_vcores", "1"));<a name="line.362"></a>
+<FONT color="green">363</FONT>        numContainers = Integer.parseInt(cliParser.getOptionValue("num_containers", "1"));<a name="line.363"></a>
+<FONT color="green">364</FONT>    <a name="line.364"></a>
+<FONT color="green">365</FONT>        if (containerMemory &lt; 0 || containerVirtualCores &lt; 0 || numContainers &lt; 1) {<a name="line.365"></a>
+<FONT color="green">366</FONT>          throw new IllegalArgumentException("Invalid no. of containers or container memory/vcores specified,"<a name="line.366"></a>
+<FONT color="green">367</FONT>              + " exiting."<a name="line.367"></a>
+<FONT color="green">368</FONT>              + " Specified containerMemory=" + containerMemory<a name="line.368"></a>
+<FONT color="green">369</FONT>              + ", containerVirtualCores=" + containerVirtualCores<a name="line.369"></a>
+<FONT color="green">370</FONT>              + ", numContainer=" + numContainers);<a name="line.370"></a>
+<FONT color="green">371</FONT>        }<a name="line.371"></a>
+<FONT color="green">372</FONT>    <a name="line.372"></a>
+<FONT color="green">373</FONT>        clientTimeout = Integer.parseInt(cliParser.getOptionValue("timeout", "600000"));<a name="line.373"></a>
+<FONT color="green">374</FONT>    <a name="line.374"></a>
+<FONT color="green">375</FONT>        log4jPropFile = cliParser.getOptionValue("log_properties", "");<a name="line.375"></a>
+<FONT color="green">376</FONT>    <a name="line.376"></a>
+<FONT color="green">377</FONT>        return true;<a name="line.377"></a>
+<FONT color="green">378</FONT>      }<a name="line.378"></a>
+<FONT color="green">379</FONT>    <a name="line.379"></a>
+<FONT color="green">380</FONT>      /**<a name="line.380"></a>
+<FONT color="green">381</FONT>       * Main run function for the client<a name="line.381"></a>
+<FONT color="green">382</FONT>       * @return true if application completed successfully<a name="line.382"></a>
+<FONT color="green">383</FONT>       * @throws IOException<a name="line.383"></a>
+<FONT color="green">384</FONT>       * @throws YarnException<a name="line.384"></a>
+<FONT color="green">385</FONT>       */<a name="line.385"></a>
+<FONT color="green">386</FONT>      public boolean run() throws IOException, YarnException {<a name="line.386"></a>
+<FONT color="green">387</FONT>    <a name="line.387"></a>
+<FONT color="green">388</FONT>        LOG.info("Running Client");<a name="line.388"></a>
+<FONT color="green">389</FONT>        yarnClient.start();<a name="line.389"></a>
+<FONT color="green">390</FONT>    <a name="line.390"></a>
+<FONT color="green">391</FONT>        YarnClusterMetrics clusterMetrics = yarnClient.getYarnClusterMetrics();<a name="line.391"></a>
+<FONT color="green">392</FONT>        LOG.info("Got Cluster metric info from ASM" <a name="line.392"></a>
+<FONT color="green">393</FONT>            + ", numNodeManagers=" + clusterMetrics.getNumNodeManagers());<a name="line.393"></a>
+<FONT color="green">394</FONT>    <a name="line.394"></a>
+<FONT color="green">395</FONT>        List&lt;NodeReport&gt; clusterNodeReports = yarnClient.getNodeReports(<a name="line.395"></a>
+<FONT color="green">396</FONT>            NodeState.RUNNING);<a name="line.396"></a>
+<FONT color="green">397</FONT>        LOG.info("Got Cluster node info from ASM");<a name="line.397"></a>
+<FONT color="green">398</FONT>        for (NodeReport node : clusterNodeReports) {<a name="line.398"></a>
+<FONT color="green">399</FONT>          LOG.info("Got node report from ASM for"<a name="line.399"></a>
+<FONT color="green">400</FONT>              + ", nodeId=" + node.getNodeId() <a name="line.400"></a>
+<FONT color="green">401</FONT>              + ", nodeAddress" + node.getHttpAddress()<a name="line.401"></a>
+<FONT color="green">402</FONT>              + ", nodeRackName" + node.getRackName()<a name="line.402"></a>
+<FONT color="green">403</FONT>              + ", nodeNumContainers" + node.getNumContainers());<a name="line.403"></a>
+<FONT color="green">404</FONT>        }<a name="line.404"></a>
+<FONT color="green">405</FONT>    <a name="line.405"></a>
+<FONT color="green">406</FONT>        QueueInfo queueInfo = yarnClient.getQueueInfo(this.amQueue);<a name="line.406"></a>
+<FONT color="green">407</FONT>        LOG.info("Queue info"<a name="line.407"></a>
+<FONT color="green">408</FONT>            + ", queueName=" + queueInfo.getQueueName()<a name="line.408"></a>
+<FONT color="green">409</FONT>            + ", queueCurrentCapacity=" + queueInfo.getCurrentCapacity()<a name="line.409"></a>
+<FONT color="green">410</FONT>            + ", queueMaxCapacity=" + queueInfo.getMaximumCapacity()<a name="line.410"></a>
+<FONT color="green">411</FONT>            + ", queueApplicationCount=" + queueInfo.getApplications().size()<a name="line.411"></a>
+<FONT color="green">412</FONT>            + ", queueChildQueueCount=" + queueInfo.getChildQueues().size());               <a name="line.412"></a>
+<FONT color="green">413</FONT>    <a name="line.413"></a>
+<FONT color="green">414</FONT>        List&lt;QueueUserACLInfo&gt; listAclInfo = yarnClient.getQueueAclsInfo();<a name="line.414"></a>
+<FONT color="green">415</FONT>        for (QueueUserACLInfo aclInfo : listAclInfo) {<a name="line.415"></a>
+<FONT color="green">416</FONT>          for (QueueACL userAcl : aclInfo.getUserAcls()) {<a name="line.416"></a>
+<FONT color="green">417</FONT>            LOG.info("User ACL Info for Queue"<a name="line.417"></a>
+<FONT color="green">418</FONT>                + ", queueName=" + aclInfo.getQueueName()                   <a name="line.418"></a>
+<FONT color="green">419</FONT>                + ", userAcl=" + userAcl.name());<a name="line.419"></a>
+<FONT color="green">420</FONT>          }<a name="line.420"></a>
+<FONT color="green">421</FONT>        }           <a name="line.421"></a>
+<FONT color="green">422</FONT>    <a name="line.422"></a>
+<FONT color="green">423</FONT>        // Get a new application id<a name="line.423"></a>
+<FONT color="green">424</FONT>        YarnClientApplication app = yarnClient.createApplication();<a name="line.424"></a>
+<FONT color="green">425</FONT>        GetNewApplicationResponse appResponse = app.getNewApplicationResponse();<a name="line.425"></a>
+<FONT color="green">426</FONT>        // TODO get min/max resource capabilities from RM and change memory ask if needed<a name="line.426"></a>
+<FONT color="green">427</FONT>        // If we do not have min/max, we may not be able to correctly request <a name="line.427"></a>
+<FONT color="green">428</FONT>        // the required resources from the RM for the app master<a name="line.428"></a>
+<FONT color="green">429</FONT>        // Memory ask has to be a multiple of min and less than max. <a name="line.429"></a>
+<FONT color="green">430</FONT>        // Dump out information about cluster capability as seen by the resource manager<a name="line.430"></a>
+<FONT color="green">431</FONT>        int maxMem = appResponse.getMaximumResourceCapability().getMemory();<a name="line.431"></a>
+<FONT color="green">432</FONT>        LOG.info("Max mem capabililty of resources in this cluster " + maxMem);<a name="line.432"></a>
+<FONT color="green">433</FONT>    <a name="line.433"></a>
+<FONT color="green">434</FONT>        // A resource ask cannot exceed the max. <a name="line.434"></a>
+<FONT color="green">435</FONT>        if (amMemory &gt; maxMem) {<a name="line.435"></a>
+<FONT color="green">436</FONT>          LOG.info("AM memory specified above max threshold of cluster. Using max value."<a name="line.436"></a>
+<FONT color="green">437</FONT>              + ", specified=" + amMemory<a name="line.437"></a>
+<FONT color="green">438</FONT>              + ", max=" + maxMem);<a name="line.438"></a>
+<FONT color="green">439</FONT>          amMemory = maxMem;<a name="line.439"></a>
+<FONT color="green">440</FONT>        }                           <a name="line.440"></a>
+<FONT color="green">441</FONT>    <a name="line.441"></a>
+<FONT color="green">442</FONT>        int maxVCores = appResponse.getMaximumResourceCapability().getVirtualCores();<a name="line.442"></a>
+<FONT color="green">443</FONT>        LOG.info("Max virtual cores capabililty of resources in this cluster " + maxVCores);<a name="line.443"></a>
+<FONT color="green">444</FONT>        <a name="line.444"></a>
+<FONT color="green">445</FONT>        if (amVCores &gt; maxVCores) {<a name="line.445"></a>
+<FONT color="green">446</FONT>          LOG.info("AM virtual cores specified above max threshold of cluster. " <a name="line.446"></a>
+<FONT color="green">447</FONT>              + "Using max value." + ", specified=" + amVCores <a name="line.447"></a>
+<FONT color="green">448</FONT>              + ", max=" + maxVCores);<a name="line.448"></a>
+<FONT color="green">449</FONT>          amVCores = maxVCores;<a name="line.449"></a>
+<FONT color="green">450</FONT>        }<a name="line.450"></a>
+<FONT color="green">451</FONT>        <a name="line.451"></a>
+<FONT color="green">452</FONT>        // set the application name<a name="line.452"></a>
+<FONT color="green">453</FONT>        ApplicationSubmissionContext appContext = app.getApplicationSubmissionContext();<a name="line.453"></a>
+<FONT color="green">454</FONT>        ApplicationId appId = appContext.getApplicationId();<a name="line.454"></a>
+<FONT color="green">455</FONT>    <a name="line.455"></a>
+<FONT color="green">456</FONT>        appContext.setKeepContainersAcrossApplicationAttempts(keepContainers);<a name="line.456"></a>
+<FONT color="green">457</FONT>        appContext.setApplicationName(appName);<a name="line.457"></a>
+<FONT color="green">458</FONT>    <a name="line.458"></a>
+<FONT color="green">459</FONT>        // Set up the container launch context for the application master<a name="line.459"></a>
+<FONT color="green">460</FONT>        ContainerLaunchContext amContainer = Records.newRecord(ContainerLaunchContext.class);<a name="line.460"></a>
+<FONT color="green">461</FONT>    <a name="line.461"></a>
+<FONT color="green">462</FONT>        // set local resources for the application master<a name="line.462"></a>
+<FONT color="green">463</FONT>        // local files or archives as needed<a name="line.463"></a>
+<FONT color="green">464</FONT>        // In this scenario, the jar file for the application master is part of the local resources                 <a name="line.464"></a>
+<FONT color="green">465</FONT>        Map&lt;String, LocalResource&gt; localResources = new HashMap&lt;String, LocalResource&gt;();<a name="line.465"></a>
+<FONT color="green">466</FONT>    <a name="line.466"></a>
+<FONT color="green">467</FONT>        LOG.info("Copy App Master jar from local filesystem and add to local environment");<a name="line.467"></a>
+<FONT color="green">468</FONT>        // Copy the application master jar to the filesystem <a name="line.468"></a>
+<FONT color="green">469</FONT>        // Create a local resource to point to the destination jar path <a name="line.469"></a>
+<FONT color="green">470</FONT>        FileSystem fs = FileSystem.get(conf);<a name="line.470"></a>
+<FONT color="green">471</FONT>        addToLocalResources(fs, appMasterJar, appMasterJarPath, appId.toString(),<a name="line.471"></a>
+<FONT color="green">472</FONT>            localResources, null);<a name="line.472"></a>
+<FONT color="green">473</FONT>    <a name="line.473"></a>
+<FONT color="green">474</FONT>        // Set the log4j properties if needed <a name="line.474"></a>
+<FONT color="green">475</FONT>        if (!log4jPropFile.isEmpty()) {<a name="line.475"></a>
+<FONT color="green">476</FONT>          addToLocalResources(fs, log4jPropFile, log4jPath, appId.toString(),<a name="line.476"></a>
+<FONT color="green">477</FONT>              localResources, null);<a name="line.477"></a>
+<FONT color="green">478</FONT>        }                   <a name="line.478"></a>
+<FONT color="green">479</FONT>    <a name="line.479"></a>
+<FONT color="green">480</FONT>        // The shell script has to be made available on the final container(s)<a name="line.480"></a>
+<FONT color="green">481</FONT>        // where it will be executed. <a name="line.481"></a>
+<FONT color="green">482</FONT>        // To do this, we need to first copy into the filesystem that is visible <a name="line.482"></a>
+<FONT color="green">483</FONT>        // to the yarn framework. <a name="line.483"></a>
+<FONT color="green">484</FONT>        // We do not need to set this as a local resource for the application <a name="line.484"></a>
+<FONT color="green">485</FONT>        // master as the application master does not need it.               <a name="line.485"></a>
+<FONT color="green">486</FONT>        String hdfsShellScriptLocation = ""; <a name="line.486"></a>
+<FONT color="green">487</FONT>        long hdfsShellScriptLen = 0;<a name="line.487"></a>
+<FONT color="green">488</FONT>        long hdfsShellScriptTimestamp = 0;<a name="line.488"></a>
+<FONT color="green">489</FONT>        if (!shellScriptPath.isEmpty()) {<a name="line.489"></a>
+<FONT color="green">490</FONT>          Path shellSrc = new Path(shellScriptPath);<a name="line.490"></a>
+<FONT color="green">491</FONT>          String shellPathSuffix =<a name="line.491"></a>
+<FONT color="green">492</FONT>              appName + "/" + appId.toString() + "/" + SCRIPT_PATH;<a name="line.492"></a>
+<FONT color="green">493</FONT>          Path shellDst =<a name="line.493"></a>
+<FONT color="green">494</FONT>              new Path(fs.getHomeDirectory(), shellPathSuffix);<a name="line.494"></a>
+<FONT color="green">495</FONT>          fs.copyFromLocalFile(false, true, shellSrc, shellDst);<a name="line.495"></a>
+<FONT color="green">496</FONT>          hdfsShellScriptLocation = shellDst.toUri().toString(); <a name="line.496"></a>
+<FONT color="green">497</FONT>          FileStatus shellFileStatus = fs.getFileStatus(shellDst);<a name="line.497"></a>
+<FONT color="green">498</FONT>          hdfsShellScriptLen = shellFileStatus.getLen();<a name="line.498"></a>
+<FONT color="green">499</FONT>          hdfsShellScriptTimestamp = shellFileStatus.getModificationTime();<a name="line.499"></a>
+<FONT color="green">500</FONT>        }<a name="line.500"></a>
+<FONT color="green">501</FONT>    <a name="line.501"></a>
+<FONT color="green">502</FONT>        if (!shellCommand.isEmpty()) {<a name="line.502"></a>
+<FONT color="green">503</FONT>          addToLocalResources(fs, null, shellCommandPath, appId.toString(),<a name="line.503"></a>
+<FONT color="green">504</FONT>              localResources, shellCommand);<a name="line.504"></a>
+<FONT color="green">505</FONT>        }<a name="line.505"></a>
+<FONT color="green">506</FONT>    <a name="line.506"></a>
+<FONT color="green">507</FONT>        if (shellArgs.length &gt; 0) {<a name="line.507"></a>
+<FONT color="green">508</FONT>          addToLocalResources(fs, null, shellArgsPath, appId.toString(),<a name="line.508"></a>
+<FONT color="green">509</FONT>              localResources, StringUtils.join(shellArgs, " "));<a name="line.509"></a>
+<FONT color="green">510</FONT>        }<a name="line.510"></a>
+<FONT color="green">511</FONT>        // Set local resource info into app master container launch context<a name="line.511"></a>
+<FONT color="green">512</FONT>        amContainer.setLocalResources(localResources);<a name="line.512"></a>
+<FONT color="green">513</FONT>    <a name="line.513"></a>
+<FONT color="green">514</FONT>        // Set the necessary security tokens as needed<a name="line.514"></a>
+<FONT color="green">515</FONT>        //amContainer.setContainerTokens(containerToken);<a name="line.515"></a>
+<FONT color="green">516</FONT>    <a name="line.516"></a>
+<FONT color="green">517</FONT>        // Set the env variables to be setup in the env where the application master will be run<a name="line.517"></a>
+<FONT color="green">518</FONT>        LOG.info("Set the environment for the application master");<a name="line.518"></a>
+<FONT color="green">519</FONT>        Map&lt;String, String&gt; env = new HashMap&lt;String, String&gt;();<a name="line.519"></a>
+<FONT color="green">520</FONT>    <a name="line.520"></a>
+<FONT color="green">521</FONT>        // put location of shell script into env<a name="line.521"></a>
+<FONT color="green">522</FONT>        // using the env info, the application master will create the correct local resource for the <a name="line.522"></a>
+<FONT color="green">523</FONT>        // eventual containers that will be launched to execute the shell scripts<a name="line.523"></a>
+<FONT color="green">524</FONT>        env.put(DSConstants.DISTRIBUTEDSHELLSCRIPTLOCATION, hdfsShellScriptLocation);<a name="line.524"></a>
+<FONT color="green">525</FONT>        env.put(DSConstants.DISTRIBUTEDSHELLSCRIPTTIMESTAMP, Long.toString(hdfsShellScriptTimestamp));<a name="line.525"></a>
+<FONT color="green">526</FONT>        env.put(DSConstants.DISTRIBUTEDSHELLSCRIPTLEN, Long.toString(hdfsShellScriptLen));<a name="line.526"></a>
+<FONT color="green">527</FONT>    <a name="line.527"></a>
+<FONT color="green">528</FONT>        // Add AppMaster.jar location to classpath          <a name="line.528"></a>
+<FONT color="green">529</FONT>        // At some point we should not be required to add <a name="line.529"></a>
+<FONT color="green">530</FONT>        // the hadoop specific classpaths to the env. <a name="line.530"></a>
+<FONT color="green">531</FONT>        // It should be provided out of the box. <a name="line.531"></a>
+<FONT color="green">532</FONT>        // For now setting all required classpaths including<a name="line.532"></a>
+<FONT color="green">533</FONT>        // the classpath to "." for the application jar<a name="line.533"></a>
+<FONT color="green">534</FONT>        StringBuilder classPathEnv = new StringBuilder(Environment.CLASSPATH.$$())<a name="line.534"></a>
+<FONT color="green">535</FONT>          .append(ApplicationConstants.CLASS_PATH_SEPARATOR).append("./*");<a name="line.535"></a>
+<FONT color="green">536</FONT>        for (String c : conf.getStrings(<a name="line.536"></a>
+<FONT color="green">537</FONT>            YarnConfiguration.YARN_APPLICATION_CLASSPATH,<a name="line.537"></a>
+<FONT color="green">538</FONT>            YarnConfiguration.DEFAULT_YARN_CROSS_PLATFORM_APPLICATION_CLASSPATH)) {<a name="line.538"></a>
+<FONT color="green">539</FONT>          classPathEnv.append(ApplicationConstants.CLASS_PATH_SEPARATOR);<a name="line.539"></a>
+<FONT color="green">540</FONT>          classPathEnv.append(c.trim());<a name="line.540"></a>
+<FONT color="green">541</FONT>        }<a name="line.541"></a>
+<FONT color="green">542</FONT>        classPathEnv.append(ApplicationConstants.CLASS_PATH_SEPARATOR).append(<a name="line.542"></a>
+<FONT color="green">543</FONT>          "./log4j.properties");<a name="line.543"></a>
+<FONT color="green">544</FONT>    <a name="line.544"></a>
+<FONT color="green">545</FONT>        // add the runtime classpath needed for tests to work<a name="line.545"></a>
+<FONT color="green">546</FONT>        if (conf.getBoolean(YarnConfiguration.IS_MINI_YARN_CLUSTER, false)) {<a name="line.546"></a>
+<FONT color="green">547</FONT>          classPathEnv.append(':');<a name="line.547"></a>
+<FONT color="green">548</FONT>          classPathEnv.append(System.getProperty("java.class.path"));<a name="line.548"></a>
+<FONT color="green">549</FONT>        }<a name="line.549"></a>
+<FONT color="green">550</FONT>    <a name="line.550"></a>
+<FONT color="green">551</FONT>        env.put("CLASSPATH", classPathEnv.toString());<a name="line.551"></a>
+<FONT color="green">552</FONT>    <a name="line.552"></a>
+<FONT color="green">553</FONT>        amContainer.setEnvironment(env);<a name="line.553"></a>
+<FONT color="green">554</FONT>    <a name="line.554"></a>
+<FONT color="green">555</FONT>        // Set the necessary command to execute the application master <a name="line.555"></a>
+<FONT color="green">556</FONT>        Vector&lt;CharSequence&gt; vargs = new Vector&lt;CharSequence&gt;(30);<a name="line.556"></a>
+<FONT color="green">557</FONT>    <a name="line.557"></a>
+<FONT color="green">558</FONT>        // Set java executable command <a name="line.558"></a>
+<FONT color="green">559</FONT>        LOG.info("Setting up app master command");<a name="line.559"></a>
+<FONT color="green">560</FONT>        vargs.add(Environment.JAVA_HOME.$$() + "/bin/java");<a name="line.560"></a>
+<FONT color="green">561</FONT>        // Set Xmx based on am memory size<a name="line.561"></a>
+<FONT color="green">562</FONT>        vargs.add("-Xmx" + amMemory + "m");<a name="line.562"></a>
+<FONT color="green">563</FONT>        // Set class name <a name="line.563"></a>
+<FONT color="green">564</FONT>        vargs.add(appMasterMainClass);<a name="line.564"></a>
+<FONT color="green">565</FONT>        // Set params for Application Master<a name="line.565"></a>
+<FONT color="green">566</FONT>        vargs.add("--container_memory " + String.valueOf(containerMemory));<a name="line.566"></a>
+<FONT color="green">567</FONT>        vargs.add("--container_vcores " + String.valueOf(containerVirtualCores));<a name="line.567"></a>
+<FONT color="green">568</FONT>        vargs.add("--num_containers " + String.valueOf(numContainers));<a name="line.568"></a>
+<FONT color="green">569</FONT>        vargs.add("--priority " + String.valueOf(shellCmdPriority));<a name="line.569"></a>
+<FONT color="green">570</FONT>    <a name="line.570"></a>
+<FONT color="green">571</FONT>        for (Map.Entry&lt;String, String&gt; entry : shellEnv.entrySet()) {<a name="line.571"></a>
+<FONT color="green">572</FONT>          vargs.add("--shell_env " + entry.getKey() + "=" + entry.getValue());<a name="line.572"></a>
+<FONT color="green">573</FONT>        }                   <a name="line.573"></a>
+<FONT color="green">574</FONT>        if (debugFlag) {<a name="line.574"></a>
+<FONT color="green">575</FONT>          vargs.add("--debug");<a name="line.575"></a>
+<FONT color="green">576</FONT>        }<a name="line.576"></a>
+<FONT color="green">577</FONT>    <a name="line.577"></a>
+<FONT color="green">578</FONT>        vargs.add("1&gt;" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/AppMaster.stdout");<a name="line.578"></a>
+<FONT color="green">579</FONT>        vargs.add("2&gt;" + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/AppMaster.stderr");<a name="line.579"></a>
+<FONT color="green">580</FONT>    <a name="line.580"></a>
+<FONT color="green">581</FONT>        // Get final commmand<a name="line.581"></a>
+<FONT color="green">582</FONT>        StringBuilder command = new StringBuilder();<a name="line.582"></a>
+<FONT color="green">583</FONT>        for (CharSequence str : vargs) {<a name="line.583"></a>
+<FONT color="green">584</FONT>          command.append(str).append(" ");<a name="line.584"></a>
+<FONT color="green">585</FONT>        }<a name="line.585"></a>
+<FONT color="green">586</FONT>    <a name="line.586"></a>
+<FONT color="green">587</FONT>        LOG.info("Completed setting up app master command " + command.toString());     <a name="line.587"></a>
+<FONT color="green">588</FONT>        List&lt;String&gt; commands = new ArrayList&lt;String&gt;();<a name="line.588"></a>
+<FONT color="green">589</FONT>        commands.add(command.toString());           <a name="line.589"></a>
+<FONT color="green">590</FONT>        amContainer.setCommands(commands);<a name="line.590"></a>
+<FONT color="green">591</FONT>    <a name="line.591"></a>
+<FONT color="green">592</FONT>        // Set up resource type requirements<a name="line.592"></a>
+<FONT color="green">593</FONT>        // For now, both memory and vcores are supported, so we set memory and <a name="line.593"></a>
+<FONT color="green">594</FONT>        // vcores requirements<a name="line.594"></a>
+<FONT color="green">595</FONT>        Resource capability = Records.newRecord(Resource.class);<a name="line.595"></a>
+<FONT color="green">596</FONT>        capability.setMemory(amMemory);<a name="line.596"></a>
+<FONT color="green">597</FONT>        capability.setVirtualCores(amVCores);<a name="line.597"></a>
+<FONT color="green">598</FONT>        appContext.setResource(capability);<a name="line.598"></a>
+<FONT color="green">599</FONT>    <a name="line.599"></a>
+<FONT color="green">600</FONT>        // Service data is a binary blob that can be passed to the application<a name="line.600"></a>
+<FONT color="green">601</FONT>        // Not needed in this scenario<a name="line.601"></a>
+<FONT color="green">602</FONT>        // amContainer.setServiceData(serviceData);<a name="line.602"></a>
+<FONT color="green">603</FONT>    <a name="line.603"></a>
+<FONT color="green">604</FONT>        // Setup security tokens<a name="line.604"></a>
+<FONT color="green">605</FONT>        if (UserGroupInformation.isSecurityEnabled()) {<a name="line.605"></a>
+<FONT color="green">606</FONT>          Credentials credentials = new Credentials();<a name="line.606"></a>
+<FONT color="green">607</FONT>          String tokenRenewer = conf.get(YarnConfiguration.RM_PRINCIPAL);<a name="line.607"></a>
+<FONT color="green">608</FONT>          if (tokenRenewer == null || tokenRenewer.length() == 0) {<a name="line.608"></a>
+<FONT color="green">609</FONT>            throw new IOException(<a name="line.609"></a>
+<FONT color="green">610</FONT>              "Can't get Master Kerberos principal for the RM to use as renewer");<a name="line.610"></a>
+<FONT color="green">611</FONT>          }<a name="line.611"></a>
+<FONT color="green">612</FONT>    <a name="line.612"></a>
+<FONT color="green">613</FONT>          // For now, only getting tokens for the default file-system.<a name="line.613"></a>
+<FONT color="green">614</FONT>          final Token&lt;?&gt; tokens[] =<a name="line.614"></a>
+<FONT color="green">615</FONT>              fs.addDelegationTokens(tokenRenewer, credentials);<a name="line.615"></a>
+<FONT color="green">616</FONT>          if (tokens != null) {<a name="line.616"></a>
+<FONT color="green">617</FONT>            for (Token&lt;?&gt; token : tokens) {<a name="line.617"></a>
+<FONT color="green">618</FONT>              LOG.info("Got dt for " + fs.getUri() + "; " + token);<a name="line.618"></a>
+<FONT color="green">619</FONT>            }<a name="line.619"></a>
+<FONT color="green">620</FONT>          }<a name="line.620"></a>
+<FONT color="green">621</FONT>          DataOutputBuffer dob = new DataOutputBuffer();<a name="line.621"></a>
+<FONT color="green">622</FONT>          credentials.writeTokenStorageToStream(dob);<a name="line.622"></a>
+<FONT color="green">623</FONT>          ByteBuffer fsTokens = ByteBuffer.wrap(dob.getData(), 0, dob.getLength());<a name="line.623"></a>
+<FONT color="green">624</FONT>          amContainer.setTokens(fsTokens);<a name="line.624"></a>
+<FONT color="green">625</FONT>        }<a name="line.625"></a>
+<FONT color="green">626</FONT>    <a name="line.626"></a>
+<FONT color="green">627</FONT>        appContext.setAMContainerSpec(amContainer);<a name="line.627"></a>
+<FONT color="green">628</FONT>    <a name="line.628"></a>
+<FONT color="green">629</FONT>        // Set the priority for the application master<a name="line.629"></a>
+<FONT color="green">630</FONT>        Priority pri = Records.newRecord(Priority.class);<a name="line.630"></a>
+<FONT color="green">631</FONT>        // TODO - what is the range for priority? how to decide? <a name="line.631"></a>
+<FONT color="green">632</FONT>        pri.setPriority(amPriority);<a name="line.632"></a>
+<FONT color="green">633</FONT>        appContext.setPriority(pri);<a name="line.633"></a>
+<FONT color="green">634</FONT>    <a name="line.634"></a>
+<FONT color="green">635</FONT>        // Set the queue to which this application is to be submitted in the RM<a name="line.635"></a>
+<FONT color="green">636</FONT>        appContext.setQueue(amQueue);<a name="line.636"></a>
+<FONT color="green">637</FONT>    <a name="line.637"></a>
+<FONT color="green">638</FONT>        // Submit the application to the applications manager<a name="line.638"></a>
+<FONT color="green">639</FONT>        // SubmitApplicationResponse submitResp = applicationsManager.submitApplication(appRequest);<a name="line.639"></a>
+<FONT color="green">640</FONT>        // Ignore the response as either a valid response object is returned on success <a name="line.640"></a>
+<FONT color="green">641</FONT>        // or an exception thrown to denote some form of a failure<a name="line.641"></a>
+<FONT color="green">642</FONT>        LOG.info("Submitting application to ASM");<a name="line.642"></a>
+<FONT color="green">643</FONT>    <a name="line.643"></a>
+<FONT color="green">644</FONT>        yarnClient.submitApplication(appContext);<a name="line.644"></a>
+<FONT color="green">645</FONT>    <a name="line.645"></a>
+<FONT color="green">646</FONT>        // TODO<a name="line.646"></a>
+<FONT color="green">647</FONT>        // Try submitting the same request again<a name="line.647"></a>
+<FONT color="green">648</FONT>        // app submission failure?<a name="line.648"></a>
+<FONT color="green">649</FONT>    <a name="line.649"></a>
+<FONT color="green">650</FONT>        // Monitor the application<a name="line.650"></a>
+<FONT color="green">651</FONT>        return monitorApplication(appId);<a name="line.651"></a>
+<FONT color="green">652</FONT>    <a name="line.652"></a>
+<FONT color="green">653</FONT>      }<a name="line.653"></a>
+<FONT color="green">654</FONT>    <a name="line.654"></a>
+<FONT color="green">655</FONT>      /**<a name="line.655"></a>
+<FONT color="green">656</FONT>       * Monitor the submitted application for completion. <a name="line.656"></a>
+<FONT color="green">657</FONT>       * Kill application if time expires. <a name="line.657"></a>
+<FONT color="green">658</FONT>       * @param appId Application Id of application to be monitored<a name="line.658"></a>
+<FONT color="green">659</FONT>       * @return true if application completed successfully<a name="line.659"></a>
+<FONT color="green">660</FONT>       * @throws YarnException<a name="line.660"></a>
+<FONT color="green">661</FONT>       * @throws IOException<a name="line.661"></a>
+<FONT color="green">662</FONT>       */<a name="line.662"></a>
+<FONT color="green">663</FONT>      private boolean monitorApplication(ApplicationId appId)<a name="line.663"></a>
+<FONT color="green">664</FONT>          throws YarnException, IOException {<a name="line.664"></a>
+<FONT color="green">665</FONT>    <a name="line.665"></a>
+<FONT color="green">666</FONT>        while (true) {<a name="line.666"></a>
+<FONT color="green">667</FONT>    <a name="line.667"></a>
+<FONT color="green">668</FONT>          // Check app status every 1 second.<a name="line.668"></a>
+<FONT color="green">669</FONT>          try {<a name="line.669"></a>
+<FONT color="green">670</FONT>            Thread.sleep(1000);<a name="line.670"></a>
+<FONT color="green">671</FONT>          } catch (InterruptedException e) {<a name="line.671"></a>
+<FONT color="green">672</FONT>            LOG.debug("Thread sleep in monitoring loop interrupted");<a name="line.672"></a>
+<FONT color="green">673</FONT>          }<a name="line.673"></a>
+<FONT color="green">674</FONT>    <a name="line.674"></a>
+<FONT color="green">675</FONT>          // Get application report for the appId we are interested in <a name="line.675"></a>
+<FONT color="green">676</FONT>          ApplicationReport report = yarnClient.getApplicationReport(appId);<a name="line.676"></a>
+<FONT color="green">677</FONT>    <a name="line.677"></a>
+<FONT color="green">678</FONT>          LOG.info("Got application report from ASM for"<a name="line.678"></a>
+<FONT color="green">679</FONT>              + ", appId=" + appId.getId()<a name="line.679"></a>
+<FONT color="green">680</FONT>              + ", clientToAMToken=" + report.getClientToAMToken()<a name="line.680"></a>
+<FONT color="green">681</FONT>              + ", appDiagnostics=" + report.getDiagnostics()<a name="line.681"></a>
+<FONT color="green">682</FONT>              + ", appMasterHost=" + report.getHost()<a name="line.682"></a>
+<FONT color="green">683</FONT>              + ", appQueue=" + report.getQueue()<a name="line.683"></a>
+<FONT color="green">684</FONT>              + ", appMasterRpcPort=" + report.getRpcPort()<a name="line.684"></a>
+<FONT color="green">685</FONT>              + ", appStartTime=" + report.getStartTime()<a name="line.685"></a>
+<FONT color="green">686</FONT>              + ", yarnAppState=" + report.getYarnApplicationState().toString()<a name="line.686"></a>
+<FONT color="green">687</FONT>              + ", distributedFinalState=" + report.getFinalApplicationStatus().toString()<a name="line.687"></a>
+<FONT color="green">688</FONT>              + ", appTrackingUrl=" + report.getTrackingUrl()<a name="line.688"></a>
+<FONT color="green">689</FONT>              + ", appUser=" + report.getUser());<a name="line.689"></a>
+<FONT color="green">690</FONT>    <a name="line.690"></a>
+<FONT color="green">691</FONT>          YarnApplicationState state = report.getYarnApplicationState();<a name="line.691"></a>
+<FONT color="green">692</FONT>          FinalApplicationStatus dsStatus = report.getFinalApplicationStatus();<a name="line.692"></a>
+<FONT color="green">693</FONT>          if (YarnApplicationState.FINISHED == state) {<a name="line.693"></a>
+<FONT color="green">694</FONT>            if (FinalApplicationStatus.SUCCEEDED == dsStatus) {<a name="line.694"></a>
+<FONT color="green">695</FONT>              LOG.info("Application has completed successfully. Breaking monitoring loop");<a name="line.695"></a>
+<FONT color="green">696</FONT>              return true;        <a name="line.696"></a>
+<FONT color="green">697</FONT>            }<a name="line.697"></a>
+<FONT color="green">698</FONT>            else {<a name="line.698"></a>
+<FONT color="green">699</FONT>              LOG.info("Application did finished unsuccessfully."<a name="line.699"></a>
+<FONT color="green">700</FONT>                  + " YarnState=" + state.toString() + ", DSFinalStatus=" + dsStatus.toString()<a name="line.700"></a>
+<FONT color="green">701</FONT>                  + ". Breaking monitoring loop");<a name="line.701"></a>
+<FONT color="green">702</FONT>              return false;<a name="line.702"></a>
+<FONT color="green">703</FONT>            }                         <a name="line.703"></a>
+<FONT color="green">704</FONT>          }<a name="line.704"></a>
+<FONT color="green">705</FONT>          else if (YarnApplicationState.KILLED == state     <a name="line.705"></a>
+<FONT color="green">706</FONT>              || YarnApplicationState.FAILED == state) {<a name="line.706"></a>
+<FONT color="green">707</FONT>            LOG.info("Application did not finish."<a name="line.707"></a>
+<FONT color="green">708</FONT>                + " YarnState=" + state.toString() + ", DSFinalStatus=" + dsStatus.toString()<a name="line.708"></a>
+<FONT color="green">709</FONT>                + ". Breaking monitoring loop");<a name="line.709"></a>
+<FONT color="green">710</FONT>            return false;<a name="line.710"></a>
+<FONT color="green">711</FONT>          }                 <a name="line.711"></a>
+<FONT color="green">712</FONT>    <a name="line.712"></a>
+<FONT color="green">713</FONT>          if (System.currentTimeMillis() &gt; (clientStartTime + clientTimeout)) {<a name="line.713"></a>
+<FONT color="green">714</FONT>            LOG.info("Reached client specified timeout for application. Killing application");<a name="line.714"></a>
+<FONT color="green">715</FONT>            forceKillApplication(appId);<a name="line.715"></a>
+<FONT color="green">716</FONT>            return false;                           <a name="line.716"></a>
+<FONT color="green">717</FONT>          }<a name="line.717"></a>
+<FONT color="green">718</FONT>        }                   <a name="line.718"></a>
+<FONT color="green">719</FONT>    <a name="line.719"></a>
+<FONT color="green">720</FONT>      }<a name="line.720"></a>
+<FONT color="green">721</FONT>    <a name="line.721"></a>
+<FONT color="green">722</FONT>      /**<a name="line.722"></a>
+<FONT color="green">723</FONT>       * Kill a submitted application by sending a call to the ASM<a name="line.723"></a>
+<FONT color="green">724</FONT>       * @param appId Application Id to be killed. <a name="line.724"></a>
+<FONT color="green">725</FONT>       * @throws YarnException<a name="line.725"></a>
+<FONT color="green">726</FONT>       * @throws IOException<a name="line.726"></a>
+<FONT color="green">727</FONT>       */<a name="line.727"></a>
+<FONT color="green">728</FONT>      private void forceKillApplication(ApplicationId appId)<a name="line.728"></a>
+<FONT color="green">729</FONT>          throws YarnException, IOException {<a name="line.729"></a>
+<FONT color="green">730</FONT>        // TODO clarify whether multiple jobs with the same app id can be submitted and be running at <a name="line.730"></a>
+<FONT color="green">731</FONT>        // the same time. <a name="line.731"></a>
+<FONT color="green">732</FONT>        // If yes, can we kill a particular attempt only?<a name="line.732"></a>
+<FONT color="green">733</FONT>    <a name="line.733"></a>
+<FONT color="green">734</FONT>        // Response can be ignored as it is non-null on success or <a name="line.734"></a>
+<FONT color="green">735</FONT>        // throws an exception in case of failures<a name="line.735"></a>
+<FONT color="green">736</FONT>        yarnClient.killApplication(appId);  <a name="line.736"></a>
+<FONT color="green">737</FONT>      }<a name="line.737"></a>
+<FONT color="green">738</FONT>    <a name="line.738"></a>
+<FONT color="green">739</FONT>      private void addToLocalResources(FileSystem fs, String fileSrcPath,<a name="line.739"></a>
+<FONT color="green">740</FONT>          String fileDstPath, String appId, Map&lt;String, LocalResource&gt; localResources,<a name="line.740"></a>
+<FONT color="green">741</FONT>          String resources) throws IOException {<a name="line.741"></a>
+<FONT color="green">742</FONT>        String suffix =<a name="line.742"></a>
+<FONT color="green">743</FONT>            appName + "/" + appId + "/" + fileDstPath;<a name="line.743"></a>
+<FONT color="green">744</FONT>        Path dst =<a name="line.744"></a>
+<FONT color="green">745</FONT>            new Path(fs.getHomeDirectory(), suffix);<a name="line.745"></a>
+<FONT color="green">746</FONT>        if (fileSrcPath == null) {<a name="line.746"></a>
+<FONT color="green">747</FONT>          FSDataOutputStream ostream = null;<a name="line.747"></a>
+<FONT color="green">748</FONT>          try {<a name="line.748"></a>
+<FONT color="green">749</FONT>            ostream = FileSystem<a name="line.749"></a>
+<FONT color="green">750</FONT>                .create(fs, dst, new FsPermission((short) 0710));<a name="line.750"></a>
+<FONT color="green">751</FONT>            ostream.writeUTF(resources);<a name="line.751"></a>
+<FONT color="green">752</FONT>          } finally {<a name="line.752"></a>
+<FONT color="green">753</FONT>            IOUtils.closeQuietly(ostream);<a name="line.753"></a>
+<FONT color="green">754</FONT>          }<a name="line.754"></a>
+<FONT color="green">755</FONT>        } else {<a name="line.755"></a>
+<FONT color="green">756</FONT>          fs.copyFromLocalFile(new Path(fileSrcPath), dst);<a name="line.756"></a>
+<FONT color="green">757</FONT>        }<a name="line.757"></a>
+<FONT color="green">758</FONT>        FileStatus scFileStatus = fs.getFileStatus(dst);<a name="line.758"></a>
+<FONT color="green">759</FONT>        LocalResource scRsrc =<a name="line.759"></a>
+<FONT color="green">760</FONT>            LocalResource.newInstance(<a name="line.760"></a>
+<FONT color="green">761</FONT>                ConverterUtils.getYarnUrlFromURI(dst.toUri()),<a name="line.761"></a>
+<FONT color="green">762</FONT>                LocalResourceType.FILE, LocalResourceVisibility.APPLICATION,<a name="line.762"></a>
+<FONT color="green">763</FONT>                scFileStatus.getLen(), scFileStatus.getModificationTime());<a name="line.763"></a>
+<FONT color="green">764</FONT>        localResources.put(fileDstPath, scRsrc);<a name="line.764"></a>
+<FONT color="green">765</FONT>      }<a name="line.765"></a>
+<FONT color="green">766</FONT>    }<a name="line.766"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

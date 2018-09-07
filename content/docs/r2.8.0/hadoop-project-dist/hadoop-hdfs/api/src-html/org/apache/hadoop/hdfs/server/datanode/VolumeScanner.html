@@ -1,0 +1,822 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span><a name="line.18"></a>
+<span class="sourceLineNo">019</span>package org.apache.hadoop.hdfs.server.datanode;<a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>import java.io.DataOutputStream;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import java.io.FileNotFoundException;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.io.IOException;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.Iterator;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.LinkedHashSet;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.LinkedList;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import java.util.List;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.util.concurrent.TimeUnit;<a name="line.28"></a>
+<span class="sourceLineNo">029</span><a name="line.29"></a>
+<span class="sourceLineNo">030</span>import com.google.common.annotations.VisibleForTesting;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import com.google.common.base.Preconditions;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import com.google.common.cache.Cache;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import com.google.common.cache.CacheBuilder;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.apache.hadoop.hdfs.protocol.Block;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.apache.hadoop.hdfs.protocol.ExtendedBlock;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.apache.hadoop.hdfs.server.datanode.BlockScanner.Conf;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.apache.hadoop.hdfs.server.datanode.fsdataset.FsVolumeReference;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.apache.hadoop.hdfs.server.datanode.fsdataset.FsVolumeSpi.BlockIterator;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.apache.hadoop.hdfs.server.datanode.fsdataset.FsVolumeSpi;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import org.apache.hadoop.hdfs.util.DataTransferThrottler;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import org.apache.hadoop.io.IOUtils;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import org.apache.hadoop.util.Time;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import org.slf4j.Logger;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import org.slf4j.LoggerFactory;<a name="line.44"></a>
+<span class="sourceLineNo">045</span><a name="line.45"></a>
+<span class="sourceLineNo">046</span>/**<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * VolumeScanner scans a single volume.  Each VolumeScanner has its own thread.&lt;p/&gt;<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * They are all managed by the DataNode's BlockScanner.<a name="line.48"></a>
+<span class="sourceLineNo">049</span> */<a name="line.49"></a>
+<span class="sourceLineNo">050</span>public class VolumeScanner extends Thread {<a name="line.50"></a>
+<span class="sourceLineNo">051</span>  public static final Logger LOG =<a name="line.51"></a>
+<span class="sourceLineNo">052</span>      LoggerFactory.getLogger(VolumeScanner.class);<a name="line.52"></a>
+<span class="sourceLineNo">053</span><a name="line.53"></a>
+<span class="sourceLineNo">054</span>  /**<a name="line.54"></a>
+<span class="sourceLineNo">055</span>   * Number of seconds in a minute.<a name="line.55"></a>
+<span class="sourceLineNo">056</span>   */<a name="line.56"></a>
+<span class="sourceLineNo">057</span>  private final static int SECONDS_PER_MINUTE = 60;<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>  /**<a name="line.59"></a>
+<span class="sourceLineNo">060</span>   * Number of minutes in an hour.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>   */<a name="line.61"></a>
+<span class="sourceLineNo">062</span>  private final static int MINUTES_PER_HOUR = 60;<a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span>  /**<a name="line.64"></a>
+<span class="sourceLineNo">065</span>   * Name of the block iterator used by this scanner.<a name="line.65"></a>
+<span class="sourceLineNo">066</span>   */<a name="line.66"></a>
+<span class="sourceLineNo">067</span>  private final static String BLOCK_ITERATOR_NAME = "scanner";<a name="line.67"></a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span>  /**<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   * The configuration.<a name="line.70"></a>
+<span class="sourceLineNo">071</span>   */<a name="line.71"></a>
+<span class="sourceLineNo">072</span>  private Conf conf;<a name="line.72"></a>
+<span class="sourceLineNo">073</span><a name="line.73"></a>
+<span class="sourceLineNo">074</span>  @VisibleForTesting<a name="line.74"></a>
+<span class="sourceLineNo">075</span>  void setConf(Conf conf) {<a name="line.75"></a>
+<span class="sourceLineNo">076</span>    this.conf = conf;<a name="line.76"></a>
+<span class="sourceLineNo">077</span>  }<a name="line.77"></a>
+<span class="sourceLineNo">078</span><a name="line.78"></a>
+<span class="sourceLineNo">079</span>  /**<a name="line.79"></a>
+<span class="sourceLineNo">080</span>   * The DataNode this VolumEscanner is associated with.<a name="line.80"></a>
+<span class="sourceLineNo">081</span>   */<a name="line.81"></a>
+<span class="sourceLineNo">082</span>  private final DataNode datanode;<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>  /**<a name="line.84"></a>
+<span class="sourceLineNo">085</span>   * A reference to the volume that we're scanning.<a name="line.85"></a>
+<span class="sourceLineNo">086</span>   */<a name="line.86"></a>
+<span class="sourceLineNo">087</span>  private final FsVolumeReference ref;<a name="line.87"></a>
+<span class="sourceLineNo">088</span><a name="line.88"></a>
+<span class="sourceLineNo">089</span>  /**<a name="line.89"></a>
+<span class="sourceLineNo">090</span>   * The volume that we're scanning.<a name="line.90"></a>
+<span class="sourceLineNo">091</span>   */<a name="line.91"></a>
+<span class="sourceLineNo">092</span>  final FsVolumeSpi volume;<a name="line.92"></a>
+<span class="sourceLineNo">093</span><a name="line.93"></a>
+<span class="sourceLineNo">094</span>  /**<a name="line.94"></a>
+<span class="sourceLineNo">095</span>   * The number of scanned bytes in each minute of the last hour.&lt;p/&gt;<a name="line.95"></a>
+<span class="sourceLineNo">096</span>   *<a name="line.96"></a>
+<span class="sourceLineNo">097</span>   * This array is managed as a circular buffer.  We take the monotonic time and<a name="line.97"></a>
+<span class="sourceLineNo">098</span>   * divide it up into one-minute periods.  Each entry in the array represents<a name="line.98"></a>
+<span class="sourceLineNo">099</span>   * how many bytes were scanned during that period.<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   */<a name="line.100"></a>
+<span class="sourceLineNo">101</span>  private final long scannedBytes[] = new long[MINUTES_PER_HOUR];<a name="line.101"></a>
+<span class="sourceLineNo">102</span><a name="line.102"></a>
+<span class="sourceLineNo">103</span>  /**<a name="line.103"></a>
+<span class="sourceLineNo">104</span>   * The sum of all the values of scannedBytes.<a name="line.104"></a>
+<span class="sourceLineNo">105</span>   */<a name="line.105"></a>
+<span class="sourceLineNo">106</span>  private long scannedBytesSum = 0;<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>  /**<a name="line.108"></a>
+<span class="sourceLineNo">109</span>   * The throttler to use with BlockSender objects.<a name="line.109"></a>
+<span class="sourceLineNo">110</span>   */<a name="line.110"></a>
+<span class="sourceLineNo">111</span>  private final DataTransferThrottler throttler = new DataTransferThrottler(1);<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>  /**<a name="line.113"></a>
+<span class="sourceLineNo">114</span>   * The null output stream to use with BlockSender objects.<a name="line.114"></a>
+<span class="sourceLineNo">115</span>   */<a name="line.115"></a>
+<span class="sourceLineNo">116</span>  private final DataOutputStream nullStream =<a name="line.116"></a>
+<span class="sourceLineNo">117</span>      new DataOutputStream(new IOUtils.NullOutputStream());<a name="line.117"></a>
+<span class="sourceLineNo">118</span><a name="line.118"></a>
+<span class="sourceLineNo">119</span>  /**<a name="line.119"></a>
+<span class="sourceLineNo">120</span>   * The block iterators associated with this VolumeScanner.&lt;p/&gt;<a name="line.120"></a>
+<span class="sourceLineNo">121</span>   *<a name="line.121"></a>
+<span class="sourceLineNo">122</span>   * Each block pool has its own BlockIterator.<a name="line.122"></a>
+<span class="sourceLineNo">123</span>   */<a name="line.123"></a>
+<span class="sourceLineNo">124</span>  private final List&lt;BlockIterator&gt; blockIters =<a name="line.124"></a>
+<span class="sourceLineNo">125</span>      new LinkedList&lt;BlockIterator&gt;();<a name="line.125"></a>
+<span class="sourceLineNo">126</span><a name="line.126"></a>
+<span class="sourceLineNo">127</span>  /**<a name="line.127"></a>
+<span class="sourceLineNo">128</span>   * Blocks which are suspect.<a name="line.128"></a>
+<span class="sourceLineNo">129</span>   * The scanner prioritizes scanning these blocks.<a name="line.129"></a>
+<span class="sourceLineNo">130</span>   */<a name="line.130"></a>
+<span class="sourceLineNo">131</span>  private final LinkedHashSet&lt;ExtendedBlock&gt; suspectBlocks =<a name="line.131"></a>
+<span class="sourceLineNo">132</span>      new LinkedHashSet&lt;ExtendedBlock&gt;();<a name="line.132"></a>
+<span class="sourceLineNo">133</span><a name="line.133"></a>
+<span class="sourceLineNo">134</span>  /**<a name="line.134"></a>
+<span class="sourceLineNo">135</span>   * Blocks which were suspect which we have scanned.<a name="line.135"></a>
+<span class="sourceLineNo">136</span>   * This is used to avoid scanning the same suspect block over and over.<a name="line.136"></a>
+<span class="sourceLineNo">137</span>   */<a name="line.137"></a>
+<span class="sourceLineNo">138</span>  private final Cache&lt;ExtendedBlock, Boolean&gt; recentSuspectBlocks =<a name="line.138"></a>
+<span class="sourceLineNo">139</span>      CacheBuilder.newBuilder().maximumSize(1000)<a name="line.139"></a>
+<span class="sourceLineNo">140</span>        .expireAfterAccess(10, TimeUnit.MINUTES).build();<a name="line.140"></a>
+<span class="sourceLineNo">141</span><a name="line.141"></a>
+<span class="sourceLineNo">142</span>  /**<a name="line.142"></a>
+<span class="sourceLineNo">143</span>   * The current block iterator, or null if there is none.<a name="line.143"></a>
+<span class="sourceLineNo">144</span>   */<a name="line.144"></a>
+<span class="sourceLineNo">145</span>  private BlockIterator curBlockIter = null;<a name="line.145"></a>
+<span class="sourceLineNo">146</span><a name="line.146"></a>
+<span class="sourceLineNo">147</span>  /**<a name="line.147"></a>
+<span class="sourceLineNo">148</span>   * True if the thread is stopping.&lt;p/&gt;<a name="line.148"></a>
+<span class="sourceLineNo">149</span>   * Protected by this object's lock.<a name="line.149"></a>
+<span class="sourceLineNo">150</span>   */<a name="line.150"></a>
+<span class="sourceLineNo">151</span>  private boolean stopping = false;<a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152"></a>
+<span class="sourceLineNo">153</span>  /**<a name="line.153"></a>
+<span class="sourceLineNo">154</span>   * The monotonic minute that the volume scanner was started on.<a name="line.154"></a>
+<span class="sourceLineNo">155</span>   */<a name="line.155"></a>
+<span class="sourceLineNo">156</span>  private long startMinute = 0;<a name="line.156"></a>
+<span class="sourceLineNo">157</span><a name="line.157"></a>
+<span class="sourceLineNo">158</span>  /**<a name="line.158"></a>
+<span class="sourceLineNo">159</span>   * The current minute, in monotonic terms.<a name="line.159"></a>
+<span class="sourceLineNo">160</span>   */<a name="line.160"></a>
+<span class="sourceLineNo">161</span>  private long curMinute = 0;<a name="line.161"></a>
+<span class="sourceLineNo">162</span><a name="line.162"></a>
+<span class="sourceLineNo">163</span>  /**<a name="line.163"></a>
+<span class="sourceLineNo">164</span>   * Handles scan results.<a name="line.164"></a>
+<span class="sourceLineNo">165</span>   */<a name="line.165"></a>
+<span class="sourceLineNo">166</span>  private final ScanResultHandler resultHandler;<a name="line.166"></a>
+<span class="sourceLineNo">167</span><a name="line.167"></a>
+<span class="sourceLineNo">168</span>  private final Statistics stats = new Statistics();<a name="line.168"></a>
+<span class="sourceLineNo">169</span><a name="line.169"></a>
+<span class="sourceLineNo">170</span>  static class Statistics {<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    long bytesScannedInPastHour = 0;<a name="line.171"></a>
+<span class="sourceLineNo">172</span>    long blocksScannedInCurrentPeriod = 0;<a name="line.172"></a>
+<span class="sourceLineNo">173</span>    long blocksScannedSinceRestart = 0;<a name="line.173"></a>
+<span class="sourceLineNo">174</span>    long scansSinceRestart = 0;<a name="line.174"></a>
+<span class="sourceLineNo">175</span>    long scanErrorsSinceRestart = 0;<a name="line.175"></a>
+<span class="sourceLineNo">176</span>    long nextBlockPoolScanStartMs = -1;<a name="line.176"></a>
+<span class="sourceLineNo">177</span>    long blockPoolPeriodEndsMs = -1;<a name="line.177"></a>
+<span class="sourceLineNo">178</span>    ExtendedBlock lastBlockScanned = null;<a name="line.178"></a>
+<span class="sourceLineNo">179</span>    boolean eof = false;<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>    Statistics() {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>    }<a name="line.182"></a>
+<span class="sourceLineNo">183</span><a name="line.183"></a>
+<span class="sourceLineNo">184</span>    Statistics(Statistics other) {<a name="line.184"></a>
+<span class="sourceLineNo">185</span>      this.bytesScannedInPastHour = other.bytesScannedInPastHour;<a name="line.185"></a>
+<span class="sourceLineNo">186</span>      this.blocksScannedInCurrentPeriod = other.blocksScannedInCurrentPeriod;<a name="line.186"></a>
+<span class="sourceLineNo">187</span>      this.blocksScannedSinceRestart = other.blocksScannedSinceRestart;<a name="line.187"></a>
+<span class="sourceLineNo">188</span>      this.scansSinceRestart = other.scansSinceRestart;<a name="line.188"></a>
+<span class="sourceLineNo">189</span>      this.scanErrorsSinceRestart = other.scanErrorsSinceRestart;<a name="line.189"></a>
+<span class="sourceLineNo">190</span>      this.nextBlockPoolScanStartMs = other.nextBlockPoolScanStartMs;<a name="line.190"></a>
+<span class="sourceLineNo">191</span>      this.blockPoolPeriodEndsMs = other.blockPoolPeriodEndsMs;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>      this.lastBlockScanned = other.lastBlockScanned;<a name="line.192"></a>
+<span class="sourceLineNo">193</span>      this.eof = other.eof;<a name="line.193"></a>
+<span class="sourceLineNo">194</span>    }<a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span>    @Override<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    public String toString() {<a name="line.197"></a>
+<span class="sourceLineNo">198</span>      return new StringBuilder().<a name="line.198"></a>
+<span class="sourceLineNo">199</span>          append("Statistics{").<a name="line.199"></a>
+<span class="sourceLineNo">200</span>          append("bytesScannedInPastHour=").append(bytesScannedInPastHour).<a name="line.200"></a>
+<span class="sourceLineNo">201</span>          append(", blocksScannedInCurrentPeriod=").<a name="line.201"></a>
+<span class="sourceLineNo">202</span>              append(blocksScannedInCurrentPeriod).<a name="line.202"></a>
+<span class="sourceLineNo">203</span>          append(", blocksScannedSinceRestart=").<a name="line.203"></a>
+<span class="sourceLineNo">204</span>              append(blocksScannedSinceRestart).<a name="line.204"></a>
+<span class="sourceLineNo">205</span>          append(", scansSinceRestart=").append(scansSinceRestart).<a name="line.205"></a>
+<span class="sourceLineNo">206</span>          append(", scanErrorsSinceRestart=").append(scanErrorsSinceRestart).<a name="line.206"></a>
+<span class="sourceLineNo">207</span>          append(", nextBlockPoolScanStartMs=").append(nextBlockPoolScanStartMs).<a name="line.207"></a>
+<span class="sourceLineNo">208</span>          append(", blockPoolPeriodEndsMs=").append(blockPoolPeriodEndsMs).<a name="line.208"></a>
+<span class="sourceLineNo">209</span>          append(", lastBlockScanned=").append(lastBlockScanned).<a name="line.209"></a>
+<span class="sourceLineNo">210</span>          append(", eof=").append(eof).<a name="line.210"></a>
+<span class="sourceLineNo">211</span>          append("}").toString();<a name="line.211"></a>
+<span class="sourceLineNo">212</span>    }<a name="line.212"></a>
+<span class="sourceLineNo">213</span>  }<a name="line.213"></a>
+<span class="sourceLineNo">214</span><a name="line.214"></a>
+<span class="sourceLineNo">215</span>  private static double positiveMsToHours(long ms) {<a name="line.215"></a>
+<span class="sourceLineNo">216</span>    if (ms &lt;= 0) {<a name="line.216"></a>
+<span class="sourceLineNo">217</span>      return 0;<a name="line.217"></a>
+<span class="sourceLineNo">218</span>    } else {<a name="line.218"></a>
+<span class="sourceLineNo">219</span>      return TimeUnit.HOURS.convert(ms, TimeUnit.MILLISECONDS);<a name="line.219"></a>
+<span class="sourceLineNo">220</span>    }<a name="line.220"></a>
+<span class="sourceLineNo">221</span>  }<a name="line.221"></a>
+<span class="sourceLineNo">222</span><a name="line.222"></a>
+<span class="sourceLineNo">223</span>  public void printStats(StringBuilder p) {<a name="line.223"></a>
+<span class="sourceLineNo">224</span>    p.append(String.format("Block scanner information for volume %s with base" +<a name="line.224"></a>
+<span class="sourceLineNo">225</span>        " path %s%n", volume.getStorageID(), volume.getBasePath()));<a name="line.225"></a>
+<span class="sourceLineNo">226</span>    synchronized (stats) {<a name="line.226"></a>
+<span class="sourceLineNo">227</span>      p.append(String.format("Bytes verified in last hour       : %57d%n",<a name="line.227"></a>
+<span class="sourceLineNo">228</span>          stats.bytesScannedInPastHour));<a name="line.228"></a>
+<span class="sourceLineNo">229</span>      p.append(String.format("Blocks scanned in current period  : %57d%n",<a name="line.229"></a>
+<span class="sourceLineNo">230</span>          stats.blocksScannedInCurrentPeriod));<a name="line.230"></a>
+<span class="sourceLineNo">231</span>      p.append(String.format("Blocks scanned since restart      : %57d%n",<a name="line.231"></a>
+<span class="sourceLineNo">232</span>          stats.blocksScannedSinceRestart));<a name="line.232"></a>
+<span class="sourceLineNo">233</span>      p.append(String.format("Block pool scans since restart    : %57d%n",<a name="line.233"></a>
+<span class="sourceLineNo">234</span>          stats.scansSinceRestart));<a name="line.234"></a>
+<span class="sourceLineNo">235</span>      p.append(String.format("Block scan errors since restart   : %57d%n",<a name="line.235"></a>
+<span class="sourceLineNo">236</span>          stats.scanErrorsSinceRestart));<a name="line.236"></a>
+<span class="sourceLineNo">237</span>      if (stats.nextBlockPoolScanStartMs &gt; 0) {<a name="line.237"></a>
+<span class="sourceLineNo">238</span>        p.append(String.format("Hours until next block pool scan  : %57.3f%n",<a name="line.238"></a>
+<span class="sourceLineNo">239</span>            positiveMsToHours(stats.nextBlockPoolScanStartMs -<a name="line.239"></a>
+<span class="sourceLineNo">240</span>                Time.monotonicNow())));<a name="line.240"></a>
+<span class="sourceLineNo">241</span>      }<a name="line.241"></a>
+<span class="sourceLineNo">242</span>      if (stats.blockPoolPeriodEndsMs &gt; 0) {<a name="line.242"></a>
+<span class="sourceLineNo">243</span>        p.append(String.format("Hours until possible pool rescan  : %57.3f%n",<a name="line.243"></a>
+<span class="sourceLineNo">244</span>            positiveMsToHours(stats.blockPoolPeriodEndsMs -<a name="line.244"></a>
+<span class="sourceLineNo">245</span>                Time.now())));<a name="line.245"></a>
+<span class="sourceLineNo">246</span>      }<a name="line.246"></a>
+<span class="sourceLineNo">247</span>      p.append(String.format("Last block scanned                : %57s%n",<a name="line.247"></a>
+<span class="sourceLineNo">248</span>          ((stats.lastBlockScanned == null) ? "none" :<a name="line.248"></a>
+<span class="sourceLineNo">249</span>          stats.lastBlockScanned.toString())));<a name="line.249"></a>
+<span class="sourceLineNo">250</span>      p.append(String.format("More blocks to scan in period     : %57s%n",<a name="line.250"></a>
+<span class="sourceLineNo">251</span>          !stats.eof));<a name="line.251"></a>
+<span class="sourceLineNo">252</span>      p.append(System.lineSeparator());<a name="line.252"></a>
+<span class="sourceLineNo">253</span>    }<a name="line.253"></a>
+<span class="sourceLineNo">254</span>  }<a name="line.254"></a>
+<span class="sourceLineNo">255</span><a name="line.255"></a>
+<span class="sourceLineNo">256</span>  static class ScanResultHandler {<a name="line.256"></a>
+<span class="sourceLineNo">257</span>    private VolumeScanner scanner;<a name="line.257"></a>
+<span class="sourceLineNo">258</span><a name="line.258"></a>
+<span class="sourceLineNo">259</span>    public void setup(VolumeScanner scanner) {<a name="line.259"></a>
+<span class="sourceLineNo">260</span>      LOG.trace("Starting VolumeScanner {}",<a name="line.260"></a>
+<span class="sourceLineNo">261</span>          scanner.volume.getBasePath());<a name="line.261"></a>
+<span class="sourceLineNo">262</span>      this.scanner = scanner;<a name="line.262"></a>
+<span class="sourceLineNo">263</span>    }<a name="line.263"></a>
+<span class="sourceLineNo">264</span><a name="line.264"></a>
+<span class="sourceLineNo">265</span>    public void handle(ExtendedBlock block, IOException e) {<a name="line.265"></a>
+<span class="sourceLineNo">266</span>      FsVolumeSpi volume = scanner.volume;<a name="line.266"></a>
+<span class="sourceLineNo">267</span>      if (e == null) {<a name="line.267"></a>
+<span class="sourceLineNo">268</span>        LOG.trace("Successfully scanned {} on {}", block, volume.getBasePath());<a name="line.268"></a>
+<span class="sourceLineNo">269</span>        return;<a name="line.269"></a>
+<span class="sourceLineNo">270</span>      }<a name="line.270"></a>
+<span class="sourceLineNo">271</span>      // If the block does not exist anymore, then it's not an error.<a name="line.271"></a>
+<span class="sourceLineNo">272</span>      if (!volume.getDataset().contains(block)) {<a name="line.272"></a>
+<span class="sourceLineNo">273</span>        LOG.debug("Volume {}: block {} is no longer in the dataset.",<a name="line.273"></a>
+<span class="sourceLineNo">274</span>            volume.getBasePath(), block);<a name="line.274"></a>
+<span class="sourceLineNo">275</span>        return;<a name="line.275"></a>
+<span class="sourceLineNo">276</span>      }<a name="line.276"></a>
+<span class="sourceLineNo">277</span>      // If the block exists, the exception may due to a race with write:<a name="line.277"></a>
+<span class="sourceLineNo">278</span>      // The BlockSender got an old block path in rbw. BlockReceiver removed<a name="line.278"></a>
+<span class="sourceLineNo">279</span>      // the rbw block from rbw to finalized but BlockSender tried to open the<a name="line.279"></a>
+<span class="sourceLineNo">280</span>      // file before BlockReceiver updated the VolumeMap. The state of the<a name="line.280"></a>
+<span class="sourceLineNo">281</span>      // block can be changed again now, so ignore this error here. If there<a name="line.281"></a>
+<span class="sourceLineNo">282</span>      // is a block really deleted by mistake, DirectoryScan should catch it.<a name="line.282"></a>
+<span class="sourceLineNo">283</span>      if (e instanceof FileNotFoundException ) {<a name="line.283"></a>
+<span class="sourceLineNo">284</span>        LOG.info("Volume {}: verification failed for {} because of " +<a name="line.284"></a>
+<span class="sourceLineNo">285</span>                "FileNotFoundException.  This may be due to a race with write.",<a name="line.285"></a>
+<span class="sourceLineNo">286</span>            volume.getBasePath(), block);<a name="line.286"></a>
+<span class="sourceLineNo">287</span>        return;<a name="line.287"></a>
+<span class="sourceLineNo">288</span>      }<a name="line.288"></a>
+<span class="sourceLineNo">289</span>      LOG.warn("Reporting bad " + block + " with volume "<a name="line.289"></a>
+<span class="sourceLineNo">290</span>          + volume.getBasePath(), e);<a name="line.290"></a>
+<span class="sourceLineNo">291</span>      try {<a name="line.291"></a>
+<span class="sourceLineNo">292</span>        scanner.datanode.reportBadBlocks(block, volume);<a name="line.292"></a>
+<span class="sourceLineNo">293</span>      } catch (IOException ie) {<a name="line.293"></a>
+<span class="sourceLineNo">294</span>        // This is bad, but not bad enough to shut down the scanner.<a name="line.294"></a>
+<span class="sourceLineNo">295</span>        LOG.warn("Cannot report bad block " + block, ie);<a name="line.295"></a>
+<span class="sourceLineNo">296</span>      }<a name="line.296"></a>
+<span class="sourceLineNo">297</span>    }<a name="line.297"></a>
+<span class="sourceLineNo">298</span>  }<a name="line.298"></a>
+<span class="sourceLineNo">299</span><a name="line.299"></a>
+<span class="sourceLineNo">300</span>  VolumeScanner(Conf conf, DataNode datanode, FsVolumeReference ref) {<a name="line.300"></a>
+<span class="sourceLineNo">301</span>    this.conf = conf;<a name="line.301"></a>
+<span class="sourceLineNo">302</span>    this.datanode = datanode;<a name="line.302"></a>
+<span class="sourceLineNo">303</span>    this.ref = ref;<a name="line.303"></a>
+<span class="sourceLineNo">304</span>    this.volume = ref.getVolume();<a name="line.304"></a>
+<span class="sourceLineNo">305</span>    ScanResultHandler handler;<a name="line.305"></a>
+<span class="sourceLineNo">306</span>    try {<a name="line.306"></a>
+<span class="sourceLineNo">307</span>      handler = conf.resultHandler.newInstance();<a name="line.307"></a>
+<span class="sourceLineNo">308</span>    } catch (Throwable e) {<a name="line.308"></a>
+<span class="sourceLineNo">309</span>      LOG.error("unable to instantiate {}", conf.resultHandler, e);<a name="line.309"></a>
+<span class="sourceLineNo">310</span>      handler = new ScanResultHandler();<a name="line.310"></a>
+<span class="sourceLineNo">311</span>    }<a name="line.311"></a>
+<span class="sourceLineNo">312</span>    this.resultHandler = handler;<a name="line.312"></a>
+<span class="sourceLineNo">313</span>    setName("VolumeScannerThread(" + volume.getBasePath() + ")");<a name="line.313"></a>
+<span class="sourceLineNo">314</span>    setDaemon(true);<a name="line.314"></a>
+<span class="sourceLineNo">315</span>  }<a name="line.315"></a>
+<span class="sourceLineNo">316</span><a name="line.316"></a>
+<span class="sourceLineNo">317</span>  private void saveBlockIterator(BlockIterator iter) {<a name="line.317"></a>
+<span class="sourceLineNo">318</span>    try {<a name="line.318"></a>
+<span class="sourceLineNo">319</span>      iter.save();<a name="line.319"></a>
+<span class="sourceLineNo">320</span>    } catch (IOException e) {<a name="line.320"></a>
+<span class="sourceLineNo">321</span>      LOG.warn("{}: error saving {}.", this, iter, e);<a name="line.321"></a>
+<span class="sourceLineNo">322</span>    }<a name="line.322"></a>
+<span class="sourceLineNo">323</span>  }<a name="line.323"></a>
+<span class="sourceLineNo">324</span><a name="line.324"></a>
+<span class="sourceLineNo">325</span>  private void expireOldScannedBytesRecords(long monotonicMs) {<a name="line.325"></a>
+<span class="sourceLineNo">326</span>    long newMinute =<a name="line.326"></a>
+<span class="sourceLineNo">327</span>        TimeUnit.MINUTES.convert(monotonicMs, TimeUnit.MILLISECONDS);<a name="line.327"></a>
+<span class="sourceLineNo">328</span>    if (curMinute == newMinute) {<a name="line.328"></a>
+<span class="sourceLineNo">329</span>      return;<a name="line.329"></a>
+<span class="sourceLineNo">330</span>    }<a name="line.330"></a>
+<span class="sourceLineNo">331</span>    // If a minute or more has gone past since we last updated the scannedBytes<a name="line.331"></a>
+<span class="sourceLineNo">332</span>    // array, zero out the slots corresponding to those minutes.<a name="line.332"></a>
+<span class="sourceLineNo">333</span>    for (long m = curMinute + 1; m &lt;= newMinute; m++) {<a name="line.333"></a>
+<span class="sourceLineNo">334</span>      int slotIdx = (int)(m % MINUTES_PER_HOUR);<a name="line.334"></a>
+<span class="sourceLineNo">335</span>      LOG.trace("{}: updateScannedBytes is zeroing out slotIdx {}.  " +<a name="line.335"></a>
+<span class="sourceLineNo">336</span>              "curMinute = {}; newMinute = {}", this, slotIdx,<a name="line.336"></a>
+<span class="sourceLineNo">337</span>              curMinute, newMinute);<a name="line.337"></a>
+<span class="sourceLineNo">338</span>      scannedBytesSum -= scannedBytes[slotIdx];<a name="line.338"></a>
+<span class="sourceLineNo">339</span>      scannedBytes[slotIdx] = 0;<a name="line.339"></a>
+<span class="sourceLineNo">340</span>    }<a name="line.340"></a>
+<span class="sourceLineNo">341</span>    curMinute = newMinute;<a name="line.341"></a>
+<span class="sourceLineNo">342</span>  }<a name="line.342"></a>
+<span class="sourceLineNo">343</span><a name="line.343"></a>
+<span class="sourceLineNo">344</span>  /**<a name="line.344"></a>
+<span class="sourceLineNo">345</span>   * Find a usable block iterator.&lt;p/&gt;<a name="line.345"></a>
+<span class="sourceLineNo">346</span>   *<a name="line.346"></a>
+<span class="sourceLineNo">347</span>   * We will consider available block iterators in order.  This property is<a name="line.347"></a>
+<span class="sourceLineNo">348</span>   * important so that we don't keep rescanning the same block pool id over<a name="line.348"></a>
+<span class="sourceLineNo">349</span>   * and over, while other block pools stay unscanned.&lt;p/&gt;<a name="line.349"></a>
+<span class="sourceLineNo">350</span>   *<a name="line.350"></a>
+<span class="sourceLineNo">351</span>   * A block pool is always ready to scan if the iterator is not at EOF.  If<a name="line.351"></a>
+<span class="sourceLineNo">352</span>   * the iterator is at EOF, the block pool will be ready to scan when<a name="line.352"></a>
+<span class="sourceLineNo">353</span>   * conf.scanPeriodMs milliseconds have elapsed since the iterator was last<a name="line.353"></a>
+<span class="sourceLineNo">354</span>   * rewound.&lt;p/&gt;<a name="line.354"></a>
+<span class="sourceLineNo">355</span>   *<a name="line.355"></a>
+<span class="sourceLineNo">356</span>   * @return                     0 if we found a usable block iterator; the<a name="line.356"></a>
+<span class="sourceLineNo">357</span>   *                               length of time we should delay before<a name="line.357"></a>
+<span class="sourceLineNo">358</span>   *                               checking again otherwise.<a name="line.358"></a>
+<span class="sourceLineNo">359</span>   */<a name="line.359"></a>
+<span class="sourceLineNo">360</span>  private synchronized long findNextUsableBlockIter() {<a name="line.360"></a>
+<span class="sourceLineNo">361</span>    int numBlockIters = blockIters.size();<a name="line.361"></a>
+<span class="sourceLineNo">362</span>    if (numBlockIters == 0) {<a name="line.362"></a>
+<span class="sourceLineNo">363</span>      LOG.debug("{}: no block pools are registered.", this);<a name="line.363"></a>
+<span class="sourceLineNo">364</span>      return Long.MAX_VALUE;<a name="line.364"></a>
+<span class="sourceLineNo">365</span>    }<a name="line.365"></a>
+<span class="sourceLineNo">366</span>    int curIdx;<a name="line.366"></a>
+<span class="sourceLineNo">367</span>    if (curBlockIter == null) {<a name="line.367"></a>
+<span class="sourceLineNo">368</span>      curIdx = 0;<a name="line.368"></a>
+<span class="sourceLineNo">369</span>    } else {<a name="line.369"></a>
+<span class="sourceLineNo">370</span>      curIdx = blockIters.indexOf(curBlockIter);<a name="line.370"></a>
+<span class="sourceLineNo">371</span>      Preconditions.checkState(curIdx &gt;= 0);<a name="line.371"></a>
+<span class="sourceLineNo">372</span>    }<a name="line.372"></a>
+<span class="sourceLineNo">373</span>    // Note that this has to be wall-clock time, not monotonic time.  This is<a name="line.373"></a>
+<span class="sourceLineNo">374</span>    // because the time saved in the cursor file is a wall-clock time.  We do<a name="line.374"></a>
+<span class="sourceLineNo">375</span>    // not want to save a monotonic time in the cursor file, because it resets<a name="line.375"></a>
+<span class="sourceLineNo">376</span>    // every time the machine reboots (on most platforms).<a name="line.376"></a>
+<span class="sourceLineNo">377</span>    long nowMs = Time.now();<a name="line.377"></a>
+<span class="sourceLineNo">378</span>    long minTimeoutMs = Long.MAX_VALUE;<a name="line.378"></a>
+<span class="sourceLineNo">379</span>    for (int i = 0; i &lt; numBlockIters; i++) {<a name="line.379"></a>
+<span class="sourceLineNo">380</span>      int idx = (curIdx + i + 1) % numBlockIters;<a name="line.380"></a>
+<span class="sourceLineNo">381</span>      BlockIterator iter = blockIters.get(idx);<a name="line.381"></a>
+<span class="sourceLineNo">382</span>      if (!iter.atEnd()) {<a name="line.382"></a>
+<span class="sourceLineNo">383</span>        LOG.info("Now scanning bpid {} on volume {}",<a name="line.383"></a>
+<span class="sourceLineNo">384</span>            iter.getBlockPoolId(), volume.getBasePath());<a name="line.384"></a>
+<span class="sourceLineNo">385</span>        curBlockIter = iter;<a name="line.385"></a>
+<span class="sourceLineNo">386</span>        return 0L;<a name="line.386"></a>
+<span class="sourceLineNo">387</span>      }<a name="line.387"></a>
+<span class="sourceLineNo">388</span>      long iterStartMs = iter.getIterStartMs();<a name="line.388"></a>
+<span class="sourceLineNo">389</span>      long waitMs = (iterStartMs + conf.scanPeriodMs) - nowMs;<a name="line.389"></a>
+<span class="sourceLineNo">390</span>      if (waitMs &lt;= 0) {<a name="line.390"></a>
+<span class="sourceLineNo">391</span>        iter.rewind();<a name="line.391"></a>
+<span class="sourceLineNo">392</span>        LOG.info("Now rescanning bpid {} on volume {}, after more than " +<a name="line.392"></a>
+<span class="sourceLineNo">393</span>            "{} hour(s)", iter.getBlockPoolId(), volume.getBasePath(),<a name="line.393"></a>
+<span class="sourceLineNo">394</span>            TimeUnit.HOURS.convert(conf.scanPeriodMs, TimeUnit.MILLISECONDS));<a name="line.394"></a>
+<span class="sourceLineNo">395</span>        curBlockIter = iter;<a name="line.395"></a>
+<span class="sourceLineNo">396</span>        return 0L;<a name="line.396"></a>
+<span class="sourceLineNo">397</span>      }<a name="line.397"></a>
+<span class="sourceLineNo">398</span>      minTimeoutMs = Math.min(minTimeoutMs, waitMs);<a name="line.398"></a>
+<span class="sourceLineNo">399</span>    }<a name="line.399"></a>
+<span class="sourceLineNo">400</span>    LOG.info("{}: no suitable block pools found to scan.  Waiting {} ms.",<a name="line.400"></a>
+<span class="sourceLineNo">401</span>        this, minTimeoutMs);<a name="line.401"></a>
+<span class="sourceLineNo">402</span>    return minTimeoutMs;<a name="line.402"></a>
+<span class="sourceLineNo">403</span>  }<a name="line.403"></a>
+<span class="sourceLineNo">404</span><a name="line.404"></a>
+<span class="sourceLineNo">405</span>  /**<a name="line.405"></a>
+<span class="sourceLineNo">406</span>   * Scan a block.<a name="line.406"></a>
+<span class="sourceLineNo">407</span>   *<a name="line.407"></a>
+<span class="sourceLineNo">408</span>   * @param cblock               The block to scan.<a name="line.408"></a>
+<span class="sourceLineNo">409</span>   * @param bytesPerSec          The bytes per second to scan at.<a name="line.409"></a>
+<span class="sourceLineNo">410</span>   *<a name="line.410"></a>
+<span class="sourceLineNo">411</span>   * @return                     The length of the block that was scanned, or<a name="line.411"></a>
+<span class="sourceLineNo">412</span>   *                               -1 if the block could not be scanned.<a name="line.412"></a>
+<span class="sourceLineNo">413</span>   */<a name="line.413"></a>
+<span class="sourceLineNo">414</span>  private long scanBlock(ExtendedBlock cblock, long bytesPerSec) {<a name="line.414"></a>
+<span class="sourceLineNo">415</span>    // 'cblock' has a valid blockId and block pool id, but we don't yet know the<a name="line.415"></a>
+<span class="sourceLineNo">416</span>    // genstamp the block is supposed to have.  Ask the FsDatasetImpl for this<a name="line.416"></a>
+<span class="sourceLineNo">417</span>    // information.<a name="line.417"></a>
+<span class="sourceLineNo">418</span>    ExtendedBlock block = null;<a name="line.418"></a>
+<span class="sourceLineNo">419</span>    try {<a name="line.419"></a>
+<span class="sourceLineNo">420</span>      Block b = volume.getDataset().getStoredBlock(<a name="line.420"></a>
+<span class="sourceLineNo">421</span>          cblock.getBlockPoolId(), cblock.getBlockId());<a name="line.421"></a>
+<span class="sourceLineNo">422</span>      if (b == null) {<a name="line.422"></a>
+<span class="sourceLineNo">423</span>        LOG.info("FileNotFound while finding block {} on volume {}",<a name="line.423"></a>
+<span class="sourceLineNo">424</span>            cblock, volume.getBasePath());<a name="line.424"></a>
+<span class="sourceLineNo">425</span>      } else {<a name="line.425"></a>
+<span class="sourceLineNo">426</span>        block = new ExtendedBlock(cblock.getBlockPoolId(), b);<a name="line.426"></a>
+<span class="sourceLineNo">427</span>      }<a name="line.427"></a>
+<span class="sourceLineNo">428</span>    } catch (FileNotFoundException e) {<a name="line.428"></a>
+<span class="sourceLineNo">429</span>      LOG.info("FileNotFoundException while finding block {} on volume {}",<a name="line.429"></a>
+<span class="sourceLineNo">430</span>          cblock, volume.getBasePath());<a name="line.430"></a>
+<span class="sourceLineNo">431</span>    } catch (IOException e) {<a name="line.431"></a>
+<span class="sourceLineNo">432</span>      LOG.warn("I/O error while finding block {} on volume {}",<a name="line.432"></a>
+<span class="sourceLineNo">433</span>            cblock, volume.getBasePath());<a name="line.433"></a>
+<span class="sourceLineNo">434</span>    }<a name="line.434"></a>
+<span class="sourceLineNo">435</span>    if (block == null) {<a name="line.435"></a>
+<span class="sourceLineNo">436</span>      return -1; // block not found.<a name="line.436"></a>
+<span class="sourceLineNo">437</span>    }<a name="line.437"></a>
+<span class="sourceLineNo">438</span>    LOG.debug("start scanning block {}", block);<a name="line.438"></a>
+<span class="sourceLineNo">439</span>    BlockSender blockSender = null;<a name="line.439"></a>
+<span class="sourceLineNo">440</span>    try {<a name="line.440"></a>
+<span class="sourceLineNo">441</span>      blockSender = new BlockSender(block, 0, -1,<a name="line.441"></a>
+<span class="sourceLineNo">442</span>          false, true, true, datanode, null,<a name="line.442"></a>
+<span class="sourceLineNo">443</span>          CachingStrategy.newDropBehind());<a name="line.443"></a>
+<span class="sourceLineNo">444</span>      throttler.setBandwidth(bytesPerSec);<a name="line.444"></a>
+<span class="sourceLineNo">445</span>      long bytesRead = blockSender.sendBlock(nullStream, null, throttler);<a name="line.445"></a>
+<span class="sourceLineNo">446</span>      resultHandler.handle(block, null);<a name="line.446"></a>
+<span class="sourceLineNo">447</span>      return bytesRead;<a name="line.447"></a>
+<span class="sourceLineNo">448</span>    } catch (IOException e) {<a name="line.448"></a>
+<span class="sourceLineNo">449</span>      resultHandler.handle(block, e);<a name="line.449"></a>
+<span class="sourceLineNo">450</span>    } finally {<a name="line.450"></a>
+<span class="sourceLineNo">451</span>      IOUtils.cleanup(null, blockSender);<a name="line.451"></a>
+<span class="sourceLineNo">452</span>    }<a name="line.452"></a>
+<span class="sourceLineNo">453</span>    return -1;<a name="line.453"></a>
+<span class="sourceLineNo">454</span>  }<a name="line.454"></a>
+<span class="sourceLineNo">455</span><a name="line.455"></a>
+<span class="sourceLineNo">456</span>  @VisibleForTesting<a name="line.456"></a>
+<span class="sourceLineNo">457</span>  static boolean calculateShouldScan(String storageId, long targetBytesPerSec,<a name="line.457"></a>
+<span class="sourceLineNo">458</span>                   long scannedBytesSum, long startMinute, long curMinute) {<a name="line.458"></a>
+<span class="sourceLineNo">459</span>    long runMinutes = curMinute - startMinute;<a name="line.459"></a>
+<span class="sourceLineNo">460</span>    long effectiveBytesPerSec;<a name="line.460"></a>
+<span class="sourceLineNo">461</span>    if (runMinutes &lt;= 0) {<a name="line.461"></a>
+<span class="sourceLineNo">462</span>      // avoid division by zero<a name="line.462"></a>
+<span class="sourceLineNo">463</span>      effectiveBytesPerSec = scannedBytesSum;<a name="line.463"></a>
+<span class="sourceLineNo">464</span>    } else {<a name="line.464"></a>
+<span class="sourceLineNo">465</span>      if (runMinutes &gt; MINUTES_PER_HOUR) {<a name="line.465"></a>
+<span class="sourceLineNo">466</span>        // we only keep an hour's worth of rate information<a name="line.466"></a>
+<span class="sourceLineNo">467</span>        runMinutes = MINUTES_PER_HOUR;<a name="line.467"></a>
+<span class="sourceLineNo">468</span>      }<a name="line.468"></a>
+<span class="sourceLineNo">469</span>      effectiveBytesPerSec = scannedBytesSum /<a name="line.469"></a>
+<span class="sourceLineNo">470</span>          (SECONDS_PER_MINUTE * runMinutes);<a name="line.470"></a>
+<span class="sourceLineNo">471</span>    }<a name="line.471"></a>
+<span class="sourceLineNo">472</span><a name="line.472"></a>
+<span class="sourceLineNo">473</span>    boolean shouldScan = effectiveBytesPerSec &lt;= targetBytesPerSec;<a name="line.473"></a>
+<span class="sourceLineNo">474</span>    LOG.trace("{}: calculateShouldScan: effectiveBytesPerSec = {}, and " +<a name="line.474"></a>
+<span class="sourceLineNo">475</span>        "targetBytesPerSec = {}.  startMinute = {}, curMinute = {}, " +<a name="line.475"></a>
+<span class="sourceLineNo">476</span>        "shouldScan = {}",<a name="line.476"></a>
+<span class="sourceLineNo">477</span>        storageId, effectiveBytesPerSec, targetBytesPerSec,<a name="line.477"></a>
+<span class="sourceLineNo">478</span>        startMinute, curMinute, shouldScan);<a name="line.478"></a>
+<span class="sourceLineNo">479</span>    return shouldScan;<a name="line.479"></a>
+<span class="sourceLineNo">480</span>  }<a name="line.480"></a>
+<span class="sourceLineNo">481</span><a name="line.481"></a>
+<span class="sourceLineNo">482</span>  /**<a name="line.482"></a>
+<span class="sourceLineNo">483</span>   * Run an iteration of the VolumeScanner loop.<a name="line.483"></a>
+<span class="sourceLineNo">484</span>   *<a name="line.484"></a>
+<span class="sourceLineNo">485</span>   * @param suspectBlock   A suspect block which we should scan, or null to<a name="line.485"></a>
+<span class="sourceLineNo">486</span>   *                       scan the next regularly scheduled block.<a name="line.486"></a>
+<span class="sourceLineNo">487</span>   *<a name="line.487"></a>
+<span class="sourceLineNo">488</span>   * @return     The number of milliseconds to delay before running the loop<a name="line.488"></a>
+<span class="sourceLineNo">489</span>   *               again, or 0 to re-run the loop immediately.<a name="line.489"></a>
+<span class="sourceLineNo">490</span>   */<a name="line.490"></a>
+<span class="sourceLineNo">491</span>  private long runLoop(ExtendedBlock suspectBlock) {<a name="line.491"></a>
+<span class="sourceLineNo">492</span>    long bytesScanned = -1;<a name="line.492"></a>
+<span class="sourceLineNo">493</span>    boolean scanError = false;<a name="line.493"></a>
+<span class="sourceLineNo">494</span>    ExtendedBlock block = null;<a name="line.494"></a>
+<span class="sourceLineNo">495</span>    try {<a name="line.495"></a>
+<span class="sourceLineNo">496</span>      long monotonicMs = Time.monotonicNow();<a name="line.496"></a>
+<span class="sourceLineNo">497</span>      expireOldScannedBytesRecords(monotonicMs);<a name="line.497"></a>
+<span class="sourceLineNo">498</span><a name="line.498"></a>
+<span class="sourceLineNo">499</span>      if (!calculateShouldScan(volume.getStorageID(), conf.targetBytesPerSec,<a name="line.499"></a>
+<span class="sourceLineNo">500</span>          scannedBytesSum, startMinute, curMinute)) {<a name="line.500"></a>
+<span class="sourceLineNo">501</span>        // If neededBytesPerSec is too low, then wait few seconds for some old<a name="line.501"></a>
+<span class="sourceLineNo">502</span>        // scannedBytes records to expire.<a name="line.502"></a>
+<span class="sourceLineNo">503</span>        return 30000L;<a name="line.503"></a>
+<span class="sourceLineNo">504</span>      }<a name="line.504"></a>
+<span class="sourceLineNo">505</span><a name="line.505"></a>
+<span class="sourceLineNo">506</span>      // Find a usable block pool to scan.<a name="line.506"></a>
+<span class="sourceLineNo">507</span>      if (suspectBlock != null) {<a name="line.507"></a>
+<span class="sourceLineNo">508</span>        block = suspectBlock;<a name="line.508"></a>
+<span class="sourceLineNo">509</span>      } else {<a name="line.509"></a>
+<span class="sourceLineNo">510</span>        if ((curBlockIter == null) || curBlockIter.atEnd()) {<a name="line.510"></a>
+<span class="sourceLineNo">511</span>          long timeout = findNextUsableBlockIter();<a name="line.511"></a>
+<span class="sourceLineNo">512</span>          if (timeout &gt; 0) {<a name="line.512"></a>
+<span class="sourceLineNo">513</span>            LOG.trace("{}: no block pools are ready to scan yet.  Waiting " +<a name="line.513"></a>
+<span class="sourceLineNo">514</span>                "{} ms.", this, timeout);<a name="line.514"></a>
+<span class="sourceLineNo">515</span>            synchronized (stats) {<a name="line.515"></a>
+<span class="sourceLineNo">516</span>              stats.nextBlockPoolScanStartMs = Time.monotonicNow() + timeout;<a name="line.516"></a>
+<span class="sourceLineNo">517</span>            }<a name="line.517"></a>
+<span class="sourceLineNo">518</span>            return timeout;<a name="line.518"></a>
+<span class="sourceLineNo">519</span>          }<a name="line.519"></a>
+<span class="sourceLineNo">520</span>          synchronized (stats) {<a name="line.520"></a>
+<span class="sourceLineNo">521</span>            stats.scansSinceRestart++;<a name="line.521"></a>
+<span class="sourceLineNo">522</span>            stats.blocksScannedInCurrentPeriod = 0;<a name="line.522"></a>
+<span class="sourceLineNo">523</span>            stats.nextBlockPoolScanStartMs = -1;<a name="line.523"></a>
+<span class="sourceLineNo">524</span>          }<a name="line.524"></a>
+<span class="sourceLineNo">525</span>          return 0L;<a name="line.525"></a>
+<span class="sourceLineNo">526</span>        }<a name="line.526"></a>
+<span class="sourceLineNo">527</span>        try {<a name="line.527"></a>
+<span class="sourceLineNo">528</span>          block = curBlockIter.nextBlock();<a name="line.528"></a>
+<span class="sourceLineNo">529</span>        } catch (IOException e) {<a name="line.529"></a>
+<span class="sourceLineNo">530</span>          // There was an error listing the next block in the volume.  This is a<a name="line.530"></a>
+<span class="sourceLineNo">531</span>          // serious issue.<a name="line.531"></a>
+<span class="sourceLineNo">532</span>          LOG.warn("{}: nextBlock error on {}", this, curBlockIter);<a name="line.532"></a>
+<span class="sourceLineNo">533</span>          // On the next loop iteration, curBlockIter#eof will be set to true, and<a name="line.533"></a>
+<span class="sourceLineNo">534</span>          // we will pick a different block iterator.<a name="line.534"></a>
+<span class="sourceLineNo">535</span>          return 0L;<a name="line.535"></a>
+<span class="sourceLineNo">536</span>        }<a name="line.536"></a>
+<span class="sourceLineNo">537</span>        if (block == null) {<a name="line.537"></a>
+<span class="sourceLineNo">538</span>          // The BlockIterator is at EOF.<a name="line.538"></a>
+<span class="sourceLineNo">539</span>          LOG.info("{}: finished scanning block pool {}",<a name="line.539"></a>
+<span class="sourceLineNo">540</span>              this, curBlockIter.getBlockPoolId());<a name="line.540"></a>
+<span class="sourceLineNo">541</span>          saveBlockIterator(curBlockIter);<a name="line.541"></a>
+<span class="sourceLineNo">542</span>          return 0;<a name="line.542"></a>
+<span class="sourceLineNo">543</span>        }<a name="line.543"></a>
+<span class="sourceLineNo">544</span>      }<a name="line.544"></a>
+<span class="sourceLineNo">545</span>      if (curBlockIter != null) {<a name="line.545"></a>
+<span class="sourceLineNo">546</span>        long saveDelta = monotonicMs - curBlockIter.getLastSavedMs();<a name="line.546"></a>
+<span class="sourceLineNo">547</span>        if (saveDelta &gt;= conf.cursorSaveMs) {<a name="line.547"></a>
+<span class="sourceLineNo">548</span>          LOG.debug("{}: saving block iterator {} after {} ms.",<a name="line.548"></a>
+<span class="sourceLineNo">549</span>              this, curBlockIter, saveDelta);<a name="line.549"></a>
+<span class="sourceLineNo">550</span>          saveBlockIterator(curBlockIter);<a name="line.550"></a>
+<span class="sourceLineNo">551</span>        }<a name="line.551"></a>
+<span class="sourceLineNo">552</span>      }<a name="line.552"></a>
+<span class="sourceLineNo">553</span>      bytesScanned = scanBlock(block, conf.targetBytesPerSec);<a name="line.553"></a>
+<span class="sourceLineNo">554</span>      if (bytesScanned &gt;= 0) {<a name="line.554"></a>
+<span class="sourceLineNo">555</span>        scannedBytesSum += bytesScanned;<a name="line.555"></a>
+<span class="sourceLineNo">556</span>        scannedBytes[(int)(curMinute % MINUTES_PER_HOUR)] += bytesScanned;<a name="line.556"></a>
+<span class="sourceLineNo">557</span>      } else {<a name="line.557"></a>
+<span class="sourceLineNo">558</span>        scanError = true;<a name="line.558"></a>
+<span class="sourceLineNo">559</span>      }<a name="line.559"></a>
+<span class="sourceLineNo">560</span>      return 0L;<a name="line.560"></a>
+<span class="sourceLineNo">561</span>    } finally {<a name="line.561"></a>
+<span class="sourceLineNo">562</span>      synchronized (stats) {<a name="line.562"></a>
+<span class="sourceLineNo">563</span>        stats.bytesScannedInPastHour = scannedBytesSum;<a name="line.563"></a>
+<span class="sourceLineNo">564</span>        if (bytesScanned &gt; 0) {<a name="line.564"></a>
+<span class="sourceLineNo">565</span>          stats.blocksScannedInCurrentPeriod++;<a name="line.565"></a>
+<span class="sourceLineNo">566</span>          stats.blocksScannedSinceRestart++;<a name="line.566"></a>
+<span class="sourceLineNo">567</span>        }<a name="line.567"></a>
+<span class="sourceLineNo">568</span>        if (scanError) {<a name="line.568"></a>
+<span class="sourceLineNo">569</span>          stats.scanErrorsSinceRestart++;<a name="line.569"></a>
+<span class="sourceLineNo">570</span>        }<a name="line.570"></a>
+<span class="sourceLineNo">571</span>        if (block != null) {<a name="line.571"></a>
+<span class="sourceLineNo">572</span>          stats.lastBlockScanned = block;<a name="line.572"></a>
+<span class="sourceLineNo">573</span>        }<a name="line.573"></a>
+<span class="sourceLineNo">574</span>        if (curBlockIter == null) {<a name="line.574"></a>
+<span class="sourceLineNo">575</span>          stats.eof = true;<a name="line.575"></a>
+<span class="sourceLineNo">576</span>          stats.blockPoolPeriodEndsMs = -1;<a name="line.576"></a>
+<span class="sourceLineNo">577</span>        } else {<a name="line.577"></a>
+<span class="sourceLineNo">578</span>          stats.eof = curBlockIter.atEnd();<a name="line.578"></a>
+<span class="sourceLineNo">579</span>          stats.blockPoolPeriodEndsMs =<a name="line.579"></a>
+<span class="sourceLineNo">580</span>              curBlockIter.getIterStartMs() + conf.scanPeriodMs;<a name="line.580"></a>
+<span class="sourceLineNo">581</span>        }<a name="line.581"></a>
+<span class="sourceLineNo">582</span>      }<a name="line.582"></a>
+<span class="sourceLineNo">583</span>    }<a name="line.583"></a>
+<span class="sourceLineNo">584</span>  }<a name="line.584"></a>
+<span class="sourceLineNo">585</span><a name="line.585"></a>
+<span class="sourceLineNo">586</span>  /**<a name="line.586"></a>
+<span class="sourceLineNo">587</span>   * If there are elements in the suspectBlocks list, removes<a name="line.587"></a>
+<span class="sourceLineNo">588</span>   * and returns the first one.  Otherwise, returns null.<a name="line.588"></a>
+<span class="sourceLineNo">589</span>   */<a name="line.589"></a>
+<span class="sourceLineNo">590</span>  private synchronized ExtendedBlock popNextSuspectBlock() {<a name="line.590"></a>
+<span class="sourceLineNo">591</span>    Iterator&lt;ExtendedBlock&gt; iter = suspectBlocks.iterator();<a name="line.591"></a>
+<span class="sourceLineNo">592</span>    if (!iter.hasNext()) {<a name="line.592"></a>
+<span class="sourceLineNo">593</span>      return null;<a name="line.593"></a>
+<span class="sourceLineNo">594</span>    }<a name="line.594"></a>
+<span class="sourceLineNo">595</span>    ExtendedBlock block = iter.next();<a name="line.595"></a>
+<span class="sourceLineNo">596</span>    iter.remove();<a name="line.596"></a>
+<span class="sourceLineNo">597</span>    return block;<a name="line.597"></a>
+<span class="sourceLineNo">598</span>  }<a name="line.598"></a>
+<span class="sourceLineNo">599</span><a name="line.599"></a>
+<span class="sourceLineNo">600</span>  @Override<a name="line.600"></a>
+<span class="sourceLineNo">601</span>  public void run() {<a name="line.601"></a>
+<span class="sourceLineNo">602</span>    // Record the minute on which the scanner started.<a name="line.602"></a>
+<span class="sourceLineNo">603</span>    this.startMinute =<a name="line.603"></a>
+<span class="sourceLineNo">604</span>        TimeUnit.MINUTES.convert(Time.monotonicNow(), TimeUnit.MILLISECONDS);<a name="line.604"></a>
+<span class="sourceLineNo">605</span>    this.curMinute = startMinute;<a name="line.605"></a>
+<span class="sourceLineNo">606</span>    try {<a name="line.606"></a>
+<span class="sourceLineNo">607</span>      LOG.trace("{}: thread starting.", this);<a name="line.607"></a>
+<span class="sourceLineNo">608</span>      resultHandler.setup(this);<a name="line.608"></a>
+<span class="sourceLineNo">609</span>      try {<a name="line.609"></a>
+<span class="sourceLineNo">610</span>        long timeout = 0;<a name="line.610"></a>
+<span class="sourceLineNo">611</span>        while (true) {<a name="line.611"></a>
+<span class="sourceLineNo">612</span>          ExtendedBlock suspectBlock = null;<a name="line.612"></a>
+<span class="sourceLineNo">613</span>          // Take the lock to check if we should stop, and access the<a name="line.613"></a>
+<span class="sourceLineNo">614</span>          // suspect block list.<a name="line.614"></a>
+<span class="sourceLineNo">615</span>          synchronized (this) {<a name="line.615"></a>
+<span class="sourceLineNo">616</span>            if (stopping) {<a name="line.616"></a>
+<span class="sourceLineNo">617</span>              break;<a name="line.617"></a>
+<span class="sourceLineNo">618</span>            }<a name="line.618"></a>
+<span class="sourceLineNo">619</span>            if (timeout &gt; 0) {<a name="line.619"></a>
+<span class="sourceLineNo">620</span>              LOG.debug("{}: wait for {} milliseconds", this, timeout);<a name="line.620"></a>
+<span class="sourceLineNo">621</span>              wait(timeout);<a name="line.621"></a>
+<span class="sourceLineNo">622</span>              if (stopping) {<a name="line.622"></a>
+<span class="sourceLineNo">623</span>                break;<a name="line.623"></a>
+<span class="sourceLineNo">624</span>              }<a name="line.624"></a>
+<span class="sourceLineNo">625</span>            }<a name="line.625"></a>
+<span class="sourceLineNo">626</span>            suspectBlock = popNextSuspectBlock();<a name="line.626"></a>
+<span class="sourceLineNo">627</span>          }<a name="line.627"></a>
+<span class="sourceLineNo">628</span>          timeout = runLoop(suspectBlock);<a name="line.628"></a>
+<span class="sourceLineNo">629</span>        }<a name="line.629"></a>
+<span class="sourceLineNo">630</span>      } catch (InterruptedException e) {<a name="line.630"></a>
+<span class="sourceLineNo">631</span>        // We are exiting because of an InterruptedException,<a name="line.631"></a>
+<span class="sourceLineNo">632</span>        // probably sent by VolumeScanner#shutdown.<a name="line.632"></a>
+<span class="sourceLineNo">633</span>        LOG.trace("{} exiting because of InterruptedException.", this);<a name="line.633"></a>
+<span class="sourceLineNo">634</span>      } catch (Throwable e) {<a name="line.634"></a>
+<span class="sourceLineNo">635</span>        LOG.error("{} exiting because of exception ", this, e);<a name="line.635"></a>
+<span class="sourceLineNo">636</span>      }<a name="line.636"></a>
+<span class="sourceLineNo">637</span>      LOG.info("{} exiting.", this);<a name="line.637"></a>
+<span class="sourceLineNo">638</span>      // Save the current position of all block iterators and close them.<a name="line.638"></a>
+<span class="sourceLineNo">639</span>      for (BlockIterator iter : blockIters) {<a name="line.639"></a>
+<span class="sourceLineNo">640</span>        saveBlockIterator(iter);<a name="line.640"></a>
+<span class="sourceLineNo">641</span>        IOUtils.cleanup(null, iter);<a name="line.641"></a>
+<span class="sourceLineNo">642</span>      }<a name="line.642"></a>
+<span class="sourceLineNo">643</span>    } finally {<a name="line.643"></a>
+<span class="sourceLineNo">644</span>      // When the VolumeScanner exits, release the reference we were holding<a name="line.644"></a>
+<span class="sourceLineNo">645</span>      // on the volume.  This will allow the volume to be removed later.<a name="line.645"></a>
+<span class="sourceLineNo">646</span>      IOUtils.cleanup(null, ref);<a name="line.646"></a>
+<span class="sourceLineNo">647</span>    }<a name="line.647"></a>
+<span class="sourceLineNo">648</span>  }<a name="line.648"></a>
+<span class="sourceLineNo">649</span><a name="line.649"></a>
+<span class="sourceLineNo">650</span>  @Override<a name="line.650"></a>
+<span class="sourceLineNo">651</span>  public String toString() {<a name="line.651"></a>
+<span class="sourceLineNo">652</span>    return "VolumeScanner(" + volume.getBasePath() +<a name="line.652"></a>
+<span class="sourceLineNo">653</span>        ", " + volume.getStorageID() + ")";<a name="line.653"></a>
+<span class="sourceLineNo">654</span>  }<a name="line.654"></a>
+<span class="sourceLineNo">655</span><a name="line.655"></a>
+<span class="sourceLineNo">656</span>  /**<a name="line.656"></a>
+<span class="sourceLineNo">657</span>   * Shut down this scanner.<a name="line.657"></a>
+<span class="sourceLineNo">658</span>   */<a name="line.658"></a>
+<span class="sourceLineNo">659</span>  public synchronized void shutdown() {<a name="line.659"></a>
+<span class="sourceLineNo">660</span>    stopping = true;<a name="line.660"></a>
+<span class="sourceLineNo">661</span>    notify();<a name="line.661"></a>
+<span class="sourceLineNo">662</span>    this.interrupt();<a name="line.662"></a>
+<span class="sourceLineNo">663</span>  }<a name="line.663"></a>
+<span class="sourceLineNo">664</span><a name="line.664"></a>
+<span class="sourceLineNo">665</span><a name="line.665"></a>
+<span class="sourceLineNo">666</span>  public synchronized void markSuspectBlock(ExtendedBlock block) {<a name="line.666"></a>
+<span class="sourceLineNo">667</span>    if (stopping) {<a name="line.667"></a>
+<span class="sourceLineNo">668</span>      LOG.debug("{}: Not scheduling suspect block {} for " +<a name="line.668"></a>
+<span class="sourceLineNo">669</span>          "rescanning, because this volume scanner is stopping.", this, block);<a name="line.669"></a>
+<span class="sourceLineNo">670</span>      return;<a name="line.670"></a>
+<span class="sourceLineNo">671</span>    }<a name="line.671"></a>
+<span class="sourceLineNo">672</span>    Boolean recent = recentSuspectBlocks.getIfPresent(block);<a name="line.672"></a>
+<span class="sourceLineNo">673</span>    if (recent != null) {<a name="line.673"></a>
+<span class="sourceLineNo">674</span>      LOG.debug("{}: Not scheduling suspect block {} for " +<a name="line.674"></a>
+<span class="sourceLineNo">675</span>          "rescanning, because we rescanned it recently.", this, block);<a name="line.675"></a>
+<span class="sourceLineNo">676</span>      return;<a name="line.676"></a>
+<span class="sourceLineNo">677</span>    }<a name="line.677"></a>
+<span class="sourceLineNo">678</span>    if (suspectBlocks.contains(block)) {<a name="line.678"></a>
+<span class="sourceLineNo">679</span>      LOG.debug("{}: suspect block {} is already queued for " +<a name="line.679"></a>
+<span class="sourceLineNo">680</span>          "rescanning.", this, block);<a name="line.680"></a>
+<span class="sourceLineNo">681</span>      return;<a name="line.681"></a>
+<span class="sourceLineNo">682</span>    }<a name="line.682"></a>
+<span class="sourceLineNo">683</span>    suspectBlocks.add(block);<a name="line.683"></a>
+<span class="sourceLineNo">684</span>    recentSuspectBlocks.put(block, true);<a name="line.684"></a>
+<span class="sourceLineNo">685</span>    LOG.debug("{}: Scheduling suspect block {} for rescanning.", this, block);<a name="line.685"></a>
+<span class="sourceLineNo">686</span>    notify(); // wake scanner thread.<a name="line.686"></a>
+<span class="sourceLineNo">687</span>  }<a name="line.687"></a>
+<span class="sourceLineNo">688</span><a name="line.688"></a>
+<span class="sourceLineNo">689</span>  /**<a name="line.689"></a>
+<span class="sourceLineNo">690</span>   * Allow the scanner to scan the given block pool.<a name="line.690"></a>
+<span class="sourceLineNo">691</span>   *<a name="line.691"></a>
+<span class="sourceLineNo">692</span>   * @param bpid       The block pool id.<a name="line.692"></a>
+<span class="sourceLineNo">693</span>   */<a name="line.693"></a>
+<span class="sourceLineNo">694</span>  public synchronized void enableBlockPoolId(String bpid) {<a name="line.694"></a>
+<span class="sourceLineNo">695</span>    for (BlockIterator iter : blockIters) {<a name="line.695"></a>
+<span class="sourceLineNo">696</span>      if (iter.getBlockPoolId().equals(bpid)) {<a name="line.696"></a>
+<span class="sourceLineNo">697</span>        LOG.warn("{}: already enabled scanning on block pool {}", this, bpid);<a name="line.697"></a>
+<span class="sourceLineNo">698</span>        return;<a name="line.698"></a>
+<span class="sourceLineNo">699</span>      }<a name="line.699"></a>
+<span class="sourceLineNo">700</span>    }<a name="line.700"></a>
+<span class="sourceLineNo">701</span>    BlockIterator iter = null;<a name="line.701"></a>
+<span class="sourceLineNo">702</span>    try {<a name="line.702"></a>
+<span class="sourceLineNo">703</span>      // Load a block iterator for the next block pool on the volume.<a name="line.703"></a>
+<span class="sourceLineNo">704</span>      iter = volume.loadBlockIterator(bpid, BLOCK_ITERATOR_NAME);<a name="line.704"></a>
+<span class="sourceLineNo">705</span>      LOG.trace("{}: loaded block iterator for {}.", this, bpid);<a name="line.705"></a>
+<span class="sourceLineNo">706</span>    } catch (FileNotFoundException e) {<a name="line.706"></a>
+<span class="sourceLineNo">707</span>      LOG.debug("{}: failed to load block iterator: " + e.getMessage(), this);<a name="line.707"></a>
+<span class="sourceLineNo">708</span>    } catch (IOException e) {<a name="line.708"></a>
+<span class="sourceLineNo">709</span>      LOG.warn("{}: failed to load block iterator.", this, e);<a name="line.709"></a>
+<span class="sourceLineNo">710</span>    }<a name="line.710"></a>
+<span class="sourceLineNo">711</span>    if (iter == null) {<a name="line.711"></a>
+<span class="sourceLineNo">712</span>      iter = volume.newBlockIterator(bpid, BLOCK_ITERATOR_NAME);<a name="line.712"></a>
+<span class="sourceLineNo">713</span>      LOG.trace("{}: created new block iterator for {}.", this, bpid);<a name="line.713"></a>
+<span class="sourceLineNo">714</span>    }<a name="line.714"></a>
+<span class="sourceLineNo">715</span>    iter.setMaxStalenessMs(conf.maxStalenessMs);<a name="line.715"></a>
+<span class="sourceLineNo">716</span>    blockIters.add(iter);<a name="line.716"></a>
+<span class="sourceLineNo">717</span>    notify();<a name="line.717"></a>
+<span class="sourceLineNo">718</span>  }<a name="line.718"></a>
+<span class="sourceLineNo">719</span><a name="line.719"></a>
+<span class="sourceLineNo">720</span>  /**<a name="line.720"></a>
+<span class="sourceLineNo">721</span>   * Disallow the scanner from scanning the given block pool.<a name="line.721"></a>
+<span class="sourceLineNo">722</span>   *<a name="line.722"></a>
+<span class="sourceLineNo">723</span>   * @param bpid       The block pool id.<a name="line.723"></a>
+<span class="sourceLineNo">724</span>   */<a name="line.724"></a>
+<span class="sourceLineNo">725</span>  public synchronized void disableBlockPoolId(String bpid) {<a name="line.725"></a>
+<span class="sourceLineNo">726</span>    Iterator&lt;BlockIterator&gt; i = blockIters.iterator();<a name="line.726"></a>
+<span class="sourceLineNo">727</span>    while (i.hasNext()) {<a name="line.727"></a>
+<span class="sourceLineNo">728</span>      BlockIterator iter = i.next();<a name="line.728"></a>
+<span class="sourceLineNo">729</span>      if (iter.getBlockPoolId().equals(bpid)) {<a name="line.729"></a>
+<span class="sourceLineNo">730</span>        LOG.trace("{}: disabling scanning on block pool {}", this, bpid);<a name="line.730"></a>
+<span class="sourceLineNo">731</span>        i.remove();<a name="line.731"></a>
+<span class="sourceLineNo">732</span>        IOUtils.cleanup(null, iter);<a name="line.732"></a>
+<span class="sourceLineNo">733</span>        if (curBlockIter == iter) {<a name="line.733"></a>
+<span class="sourceLineNo">734</span>          curBlockIter = null;<a name="line.734"></a>
+<span class="sourceLineNo">735</span>        }<a name="line.735"></a>
+<span class="sourceLineNo">736</span>        notify();<a name="line.736"></a>
+<span class="sourceLineNo">737</span>        return;<a name="line.737"></a>
+<span class="sourceLineNo">738</span>      }<a name="line.738"></a>
+<span class="sourceLineNo">739</span>    }<a name="line.739"></a>
+<span class="sourceLineNo">740</span>    LOG.warn("{}: can't remove block pool {}, because it was never " +<a name="line.740"></a>
+<span class="sourceLineNo">741</span>        "added.", this, bpid);<a name="line.741"></a>
+<span class="sourceLineNo">742</span>  }<a name="line.742"></a>
+<span class="sourceLineNo">743</span><a name="line.743"></a>
+<span class="sourceLineNo">744</span>  @VisibleForTesting<a name="line.744"></a>
+<span class="sourceLineNo">745</span>  Statistics getStatistics() {<a name="line.745"></a>
+<span class="sourceLineNo">746</span>    synchronized (stats) {<a name="line.746"></a>
+<span class="sourceLineNo">747</span>      return new Statistics(stats);<a name="line.747"></a>
+<span class="sourceLineNo">748</span>    }<a name="line.748"></a>
+<span class="sourceLineNo">749</span>  }<a name="line.749"></a>
+<span class="sourceLineNo">750</span>}<a name="line.750"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

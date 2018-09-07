@@ -1,0 +1,1687 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    package org.apache.hadoop.security;<a name="line.18"></a>
+<FONT color="green">019</FONT>    <a name="line.19"></a>
+<FONT color="green">020</FONT>    import static org.apache.hadoop.fs.CommonConfigurationKeys.HADOOP_USER_GROUP_METRICS_PERCENTILES_INTERVALS;<a name="line.20"></a>
+<FONT color="green">021</FONT>    <a name="line.21"></a>
+<FONT color="green">022</FONT>    import java.io.File;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import java.io.IOException;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import java.lang.reflect.UndeclaredThrowableException;<a name="line.24"></a>
+<FONT color="green">025</FONT>    import java.security.AccessControlContext;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import java.security.AccessController;<a name="line.26"></a>
+<FONT color="green">027</FONT>    import java.security.Principal;<a name="line.27"></a>
+<FONT color="green">028</FONT>    import java.security.PrivilegedAction;<a name="line.28"></a>
+<FONT color="green">029</FONT>    import java.security.PrivilegedActionException;<a name="line.29"></a>
+<FONT color="green">030</FONT>    import java.security.PrivilegedExceptionAction;<a name="line.30"></a>
+<FONT color="green">031</FONT>    import java.util.Arrays;<a name="line.31"></a>
+<FONT color="green">032</FONT>    import java.util.Collection;<a name="line.32"></a>
+<FONT color="green">033</FONT>    import java.util.Collections;<a name="line.33"></a>
+<FONT color="green">034</FONT>    import java.util.HashMap;<a name="line.34"></a>
+<FONT color="green">035</FONT>    import java.util.Iterator;<a name="line.35"></a>
+<FONT color="green">036</FONT>    import java.util.List;<a name="line.36"></a>
+<FONT color="green">037</FONT>    import java.util.Map;<a name="line.37"></a>
+<FONT color="green">038</FONT>    import java.util.Set;<a name="line.38"></a>
+<FONT color="green">039</FONT>    <a name="line.39"></a>
+<FONT color="green">040</FONT>    import javax.security.auth.Subject;<a name="line.40"></a>
+<FONT color="green">041</FONT>    import javax.security.auth.callback.CallbackHandler;<a name="line.41"></a>
+<FONT color="green">042</FONT>    import javax.security.auth.kerberos.KerberosKey;<a name="line.42"></a>
+<FONT color="green">043</FONT>    import javax.security.auth.kerberos.KerberosPrincipal;<a name="line.43"></a>
+<FONT color="green">044</FONT>    import javax.security.auth.kerberos.KerberosTicket;<a name="line.44"></a>
+<FONT color="green">045</FONT>    import javax.security.auth.login.AppConfigurationEntry;<a name="line.45"></a>
+<FONT color="green">046</FONT>    import javax.security.auth.login.LoginContext;<a name="line.46"></a>
+<FONT color="green">047</FONT>    import javax.security.auth.login.LoginException;<a name="line.47"></a>
+<FONT color="green">048</FONT>    import javax.security.auth.login.AppConfigurationEntry.LoginModuleControlFlag;<a name="line.48"></a>
+<FONT color="green">049</FONT>    import javax.security.auth.spi.LoginModule;<a name="line.49"></a>
+<FONT color="green">050</FONT>    <a name="line.50"></a>
+<FONT color="green">051</FONT>    import org.apache.commons.logging.Log;<a name="line.51"></a>
+<FONT color="green">052</FONT>    import org.apache.commons.logging.LogFactory;<a name="line.52"></a>
+<FONT color="green">053</FONT>    import org.apache.hadoop.classification.InterfaceAudience;<a name="line.53"></a>
+<FONT color="green">054</FONT>    import org.apache.hadoop.classification.InterfaceStability;<a name="line.54"></a>
+<FONT color="green">055</FONT>    import org.apache.hadoop.conf.Configuration;<a name="line.55"></a>
+<FONT color="green">056</FONT>    import org.apache.hadoop.io.Text;<a name="line.56"></a>
+<FONT color="green">057</FONT>    import org.apache.hadoop.metrics2.annotation.Metric;<a name="line.57"></a>
+<FONT color="green">058</FONT>    import org.apache.hadoop.metrics2.annotation.Metrics;<a name="line.58"></a>
+<FONT color="green">059</FONT>    import org.apache.hadoop.metrics2.lib.DefaultMetricsSystem;<a name="line.59"></a>
+<FONT color="green">060</FONT>    import org.apache.hadoop.metrics2.lib.MetricsRegistry;<a name="line.60"></a>
+<FONT color="green">061</FONT>    import org.apache.hadoop.metrics2.lib.MutableQuantiles;<a name="line.61"></a>
+<FONT color="green">062</FONT>    import org.apache.hadoop.metrics2.lib.MutableRate;<a name="line.62"></a>
+<FONT color="green">063</FONT>    import org.apache.hadoop.security.SaslRpcServer.AuthMethod;<a name="line.63"></a>
+<FONT color="green">064</FONT>    import org.apache.hadoop.security.authentication.util.KerberosUtil;<a name="line.64"></a>
+<FONT color="green">065</FONT>    import org.apache.hadoop.security.token.Token;<a name="line.65"></a>
+<FONT color="green">066</FONT>    import org.apache.hadoop.security.token.TokenIdentifier;<a name="line.66"></a>
+<FONT color="green">067</FONT>    import org.apache.hadoop.util.Shell;<a name="line.67"></a>
+<FONT color="green">068</FONT>    import org.apache.hadoop.util.Time;<a name="line.68"></a>
+<FONT color="green">069</FONT>    import static org.apache.hadoop.util.PlatformName.IBM_JAVA;<a name="line.69"></a>
+<FONT color="green">070</FONT>    <a name="line.70"></a>
+<FONT color="green">071</FONT>    import com.google.common.annotations.VisibleForTesting;<a name="line.71"></a>
+<FONT color="green">072</FONT>    <a name="line.72"></a>
+<FONT color="green">073</FONT>    /**<a name="line.73"></a>
+<FONT color="green">074</FONT>     * User and group information for Hadoop.<a name="line.74"></a>
+<FONT color="green">075</FONT>     * This class wraps around a JAAS Subject and provides methods to determine the<a name="line.75"></a>
+<FONT color="green">076</FONT>     * user's username and groups. It supports both the Windows, Unix and Kerberos <a name="line.76"></a>
+<FONT color="green">077</FONT>     * login modules.<a name="line.77"></a>
+<FONT color="green">078</FONT>     */<a name="line.78"></a>
+<FONT color="green">079</FONT>    @InterfaceAudience.LimitedPrivate({"HDFS", "MapReduce", "HBase", "Hive", "Oozie"})<a name="line.79"></a>
+<FONT color="green">080</FONT>    @InterfaceStability.Evolving<a name="line.80"></a>
+<FONT color="green">081</FONT>    public class UserGroupInformation {<a name="line.81"></a>
+<FONT color="green">082</FONT>      private static final Log LOG =  LogFactory.getLog(UserGroupInformation.class);<a name="line.82"></a>
+<FONT color="green">083</FONT>      /**<a name="line.83"></a>
+<FONT color="green">084</FONT>       * Percentage of the ticket window to use before we renew ticket.<a name="line.84"></a>
+<FONT color="green">085</FONT>       */<a name="line.85"></a>
+<FONT color="green">086</FONT>      private static final float TICKET_RENEW_WINDOW = 0.80f;<a name="line.86"></a>
+<FONT color="green">087</FONT>      static final String HADOOP_USER_NAME = "HADOOP_USER_NAME";<a name="line.87"></a>
+<FONT color="green">088</FONT>      static final String HADOOP_PROXY_USER = "HADOOP_PROXY_USER";<a name="line.88"></a>
+<FONT color="green">089</FONT>      <a name="line.89"></a>
+<FONT color="green">090</FONT>      /** <a name="line.90"></a>
+<FONT color="green">091</FONT>       * UgiMetrics maintains UGI activity statistics<a name="line.91"></a>
+<FONT color="green">092</FONT>       * and publishes them through the metrics interfaces.<a name="line.92"></a>
+<FONT color="green">093</FONT>       */<a name="line.93"></a>
+<FONT color="green">094</FONT>      @Metrics(about="User and group related metrics", context="ugi")<a name="line.94"></a>
+<FONT color="green">095</FONT>      static class UgiMetrics {<a name="line.95"></a>
+<FONT color="green">096</FONT>        final MetricsRegistry registry = new MetricsRegistry("UgiMetrics");<a name="line.96"></a>
+<FONT color="green">097</FONT>    <a name="line.97"></a>
+<FONT color="green">098</FONT>        @Metric("Rate of successful kerberos logins and latency (milliseconds)")<a name="line.98"></a>
+<FONT color="green">099</FONT>        MutableRate loginSuccess;<a name="line.99"></a>
+<FONT color="green">100</FONT>        @Metric("Rate of failed kerberos logins and latency (milliseconds)")<a name="line.100"></a>
+<FONT color="green">101</FONT>        MutableRate loginFailure;<a name="line.101"></a>
+<FONT color="green">102</FONT>        @Metric("GetGroups") MutableRate getGroups;<a name="line.102"></a>
+<FONT color="green">103</FONT>        MutableQuantiles[] getGroupsQuantiles;<a name="line.103"></a>
+<FONT color="green">104</FONT>    <a name="line.104"></a>
+<FONT color="green">105</FONT>        static UgiMetrics create() {<a name="line.105"></a>
+<FONT color="green">106</FONT>          return DefaultMetricsSystem.instance().register(new UgiMetrics());<a name="line.106"></a>
+<FONT color="green">107</FONT>        }<a name="line.107"></a>
+<FONT color="green">108</FONT>    <a name="line.108"></a>
+<FONT color="green">109</FONT>        void addGetGroups(long latency) {<a name="line.109"></a>
+<FONT color="green">110</FONT>          getGroups.add(latency);<a name="line.110"></a>
+<FONT color="green">111</FONT>          if (getGroupsQuantiles != null) {<a name="line.111"></a>
+<FONT color="green">112</FONT>            for (MutableQuantiles q : getGroupsQuantiles) {<a name="line.112"></a>
+<FONT color="green">113</FONT>              q.add(latency);<a name="line.113"></a>
+<FONT color="green">114</FONT>            }<a name="line.114"></a>
+<FONT color="green">115</FONT>          }<a name="line.115"></a>
+<FONT color="green">116</FONT>        }<a name="line.116"></a>
+<FONT color="green">117</FONT>      }<a name="line.117"></a>
+<FONT color="green">118</FONT>      <a name="line.118"></a>
+<FONT color="green">119</FONT>      /**<a name="line.119"></a>
+<FONT color="green">120</FONT>       * A login module that looks at the Kerberos, Unix, or Windows principal and<a name="line.120"></a>
+<FONT color="green">121</FONT>       * adds the corresponding UserName.<a name="line.121"></a>
+<FONT color="green">122</FONT>       */<a name="line.122"></a>
+<FONT color="green">123</FONT>      @InterfaceAudience.Private<a name="line.123"></a>
+<FONT color="green">124</FONT>      public static class HadoopLoginModule implements LoginModule {<a name="line.124"></a>
+<FONT color="green">125</FONT>        private Subject subject;<a name="line.125"></a>
+<FONT color="green">126</FONT>    <a name="line.126"></a>
+<FONT color="green">127</FONT>        @Override<a name="line.127"></a>
+<FONT color="green">128</FONT>        public boolean abort() throws LoginException {<a name="line.128"></a>
+<FONT color="green">129</FONT>          return true;<a name="line.129"></a>
+<FONT color="green">130</FONT>        }<a name="line.130"></a>
+<FONT color="green">131</FONT>    <a name="line.131"></a>
+<FONT color="green">132</FONT>        private &lt;T extends Principal&gt; T getCanonicalUser(Class&lt;T&gt; cls) {<a name="line.132"></a>
+<FONT color="green">133</FONT>          for(T user: subject.getPrincipals(cls)) {<a name="line.133"></a>
+<FONT color="green">134</FONT>            return user;<a name="line.134"></a>
+<FONT color="green">135</FONT>          }<a name="line.135"></a>
+<FONT color="green">136</FONT>          return null;<a name="line.136"></a>
+<FONT color="green">137</FONT>        }<a name="line.137"></a>
+<FONT color="green">138</FONT>    <a name="line.138"></a>
+<FONT color="green">139</FONT>        @Override<a name="line.139"></a>
+<FONT color="green">140</FONT>        public boolean commit() throws LoginException {<a name="line.140"></a>
+<FONT color="green">141</FONT>          if (LOG.isDebugEnabled()) {<a name="line.141"></a>
+<FONT color="green">142</FONT>            LOG.debug("hadoop login commit");<a name="line.142"></a>
+<FONT color="green">143</FONT>          }<a name="line.143"></a>
+<FONT color="green">144</FONT>          // if we already have a user, we are done.<a name="line.144"></a>
+<FONT color="green">145</FONT>          if (!subject.getPrincipals(User.class).isEmpty()) {<a name="line.145"></a>
+<FONT color="green">146</FONT>            if (LOG.isDebugEnabled()) {<a name="line.146"></a>
+<FONT color="green">147</FONT>              LOG.debug("using existing subject:"+subject.getPrincipals());<a name="line.147"></a>
+<FONT color="green">148</FONT>            }<a name="line.148"></a>
+<FONT color="green">149</FONT>            return true;<a name="line.149"></a>
+<FONT color="green">150</FONT>          }<a name="line.150"></a>
+<FONT color="green">151</FONT>          Principal user = null;<a name="line.151"></a>
+<FONT color="green">152</FONT>          // if we are using kerberos, try it out<a name="line.152"></a>
+<FONT color="green">153</FONT>          if (isAuthenticationMethodEnabled(AuthenticationMethod.KERBEROS)) {<a name="line.153"></a>
+<FONT color="green">154</FONT>            user = getCanonicalUser(KerberosPrincipal.class);<a name="line.154"></a>
+<FONT color="green">155</FONT>            if (LOG.isDebugEnabled()) {<a name="line.155"></a>
+<FONT color="green">156</FONT>              LOG.debug("using kerberos user:"+user);<a name="line.156"></a>
+<FONT color="green">157</FONT>            }<a name="line.157"></a>
+<FONT color="green">158</FONT>          }<a name="line.158"></a>
+<FONT color="green">159</FONT>          //If we don't have a kerberos user and security is disabled, check<a name="line.159"></a>
+<FONT color="green">160</FONT>          //if user is specified in the environment or properties<a name="line.160"></a>
+<FONT color="green">161</FONT>          if (!isSecurityEnabled() &amp;&amp; (user == null)) {<a name="line.161"></a>
+<FONT color="green">162</FONT>            String envUser = System.getenv(HADOOP_USER_NAME);<a name="line.162"></a>
+<FONT color="green">163</FONT>            if (envUser == null) {<a name="line.163"></a>
+<FONT color="green">164</FONT>              envUser = System.getProperty(HADOOP_USER_NAME);<a name="line.164"></a>
+<FONT color="green">165</FONT>            }<a name="line.165"></a>
+<FONT color="green">166</FONT>            user = envUser == null ? null : new User(envUser);<a name="line.166"></a>
+<FONT color="green">167</FONT>          }<a name="line.167"></a>
+<FONT color="green">168</FONT>          // use the OS user<a name="line.168"></a>
+<FONT color="green">169</FONT>          if (user == null) {<a name="line.169"></a>
+<FONT color="green">170</FONT>            user = getCanonicalUser(OS_PRINCIPAL_CLASS);<a name="line.170"></a>
+<FONT color="green">171</FONT>            if (LOG.isDebugEnabled()) {<a name="line.171"></a>
+<FONT color="green">172</FONT>              LOG.debug("using local user:"+user);<a name="line.172"></a>
+<FONT color="green">173</FONT>            }<a name="line.173"></a>
+<FONT color="green">174</FONT>          }<a name="line.174"></a>
+<FONT color="green">175</FONT>          // if we found the user, add our principal<a name="line.175"></a>
+<FONT color="green">176</FONT>          if (user != null) {<a name="line.176"></a>
+<FONT color="green">177</FONT>            subject.getPrincipals().add(new User(user.getName()));<a name="line.177"></a>
+<FONT color="green">178</FONT>            return true;<a name="line.178"></a>
+<FONT color="green">179</FONT>          }<a name="line.179"></a>
+<FONT color="green">180</FONT>          LOG.error("Can't find user in " + subject);<a name="line.180"></a>
+<FONT color="green">181</FONT>          throw new LoginException("Can't find user name");<a name="line.181"></a>
+<FONT color="green">182</FONT>        }<a name="line.182"></a>
+<FONT color="green">183</FONT>    <a name="line.183"></a>
+<FONT color="green">184</FONT>        @Override<a name="line.184"></a>
+<FONT color="green">185</FONT>        public void initialize(Subject subject, CallbackHandler callbackHandler,<a name="line.185"></a>
+<FONT color="green">186</FONT>                               Map&lt;String, ?&gt; sharedState, Map&lt;String, ?&gt; options) {<a name="line.186"></a>
+<FONT color="green">187</FONT>          this.subject = subject;<a name="line.187"></a>
+<FONT color="green">188</FONT>        }<a name="line.188"></a>
+<FONT color="green">189</FONT>    <a name="line.189"></a>
+<FONT color="green">190</FONT>        @Override<a name="line.190"></a>
+<FONT color="green">191</FONT>        public boolean login() throws LoginException {<a name="line.191"></a>
+<FONT color="green">192</FONT>          if (LOG.isDebugEnabled()) {<a name="line.192"></a>
+<FONT color="green">193</FONT>            LOG.debug("hadoop login");<a name="line.193"></a>
+<FONT color="green">194</FONT>          }<a name="line.194"></a>
+<FONT color="green">195</FONT>          return true;<a name="line.195"></a>
+<FONT color="green">196</FONT>        }<a name="line.196"></a>
+<FONT color="green">197</FONT>    <a name="line.197"></a>
+<FONT color="green">198</FONT>        @Override<a name="line.198"></a>
+<FONT color="green">199</FONT>        public boolean logout() throws LoginException {<a name="line.199"></a>
+<FONT color="green">200</FONT>          if (LOG.isDebugEnabled()) {<a name="line.200"></a>
+<FONT color="green">201</FONT>            LOG.debug("hadoop logout");<a name="line.201"></a>
+<FONT color="green">202</FONT>          }<a name="line.202"></a>
+<FONT color="green">203</FONT>          return true;<a name="line.203"></a>
+<FONT color="green">204</FONT>        }<a name="line.204"></a>
+<FONT color="green">205</FONT>      }<a name="line.205"></a>
+<FONT color="green">206</FONT>    <a name="line.206"></a>
+<FONT color="green">207</FONT>      /** Metrics to track UGI activity */<a name="line.207"></a>
+<FONT color="green">208</FONT>      static UgiMetrics metrics = UgiMetrics.create();<a name="line.208"></a>
+<FONT color="green">209</FONT>      /** The auth method to use */<a name="line.209"></a>
+<FONT color="green">210</FONT>      private static AuthenticationMethod authenticationMethod;<a name="line.210"></a>
+<FONT color="green">211</FONT>      /** Server-side groups fetching service */<a name="line.211"></a>
+<FONT color="green">212</FONT>      private static Groups groups;<a name="line.212"></a>
+<FONT color="green">213</FONT>      /** The configuration to use */<a name="line.213"></a>
+<FONT color="green">214</FONT>      private static Configuration conf;<a name="line.214"></a>
+<FONT color="green">215</FONT>    <a name="line.215"></a>
+<FONT color="green">216</FONT>      <a name="line.216"></a>
+<FONT color="green">217</FONT>      /** Leave 10 minutes between relogin attempts. */<a name="line.217"></a>
+<FONT color="green">218</FONT>      private static final long MIN_TIME_BEFORE_RELOGIN = 10 * 60 * 1000L;<a name="line.218"></a>
+<FONT color="green">219</FONT>      <a name="line.219"></a>
+<FONT color="green">220</FONT>      /**Environment variable pointing to the token cache file*/<a name="line.220"></a>
+<FONT color="green">221</FONT>      public static final String HADOOP_TOKEN_FILE_LOCATION = <a name="line.221"></a>
+<FONT color="green">222</FONT>        "HADOOP_TOKEN_FILE_LOCATION";<a name="line.222"></a>
+<FONT color="green">223</FONT>      <a name="line.223"></a>
+<FONT color="green">224</FONT>      /** <a name="line.224"></a>
+<FONT color="green">225</FONT>       * A method to initialize the fields that depend on a configuration.<a name="line.225"></a>
+<FONT color="green">226</FONT>       * Must be called before useKerberos or groups is used.<a name="line.226"></a>
+<FONT color="green">227</FONT>       */<a name="line.227"></a>
+<FONT color="green">228</FONT>      private static void ensureInitialized() {<a name="line.228"></a>
+<FONT color="green">229</FONT>        if (conf == null) {<a name="line.229"></a>
+<FONT color="green">230</FONT>          synchronized(UserGroupInformation.class) {<a name="line.230"></a>
+<FONT color="green">231</FONT>            if (conf == null) { // someone might have beat us<a name="line.231"></a>
+<FONT color="green">232</FONT>              initialize(new Configuration(), false);<a name="line.232"></a>
+<FONT color="green">233</FONT>            }<a name="line.233"></a>
+<FONT color="green">234</FONT>          }<a name="line.234"></a>
+<FONT color="green">235</FONT>        }<a name="line.235"></a>
+<FONT color="green">236</FONT>      }<a name="line.236"></a>
+<FONT color="green">237</FONT>    <a name="line.237"></a>
+<FONT color="green">238</FONT>      /**<a name="line.238"></a>
+<FONT color="green">239</FONT>       * Initialize UGI and related classes.<a name="line.239"></a>
+<FONT color="green">240</FONT>       * @param conf the configuration to use<a name="line.240"></a>
+<FONT color="green">241</FONT>       */<a name="line.241"></a>
+<FONT color="green">242</FONT>      private static synchronized void initialize(Configuration conf,<a name="line.242"></a>
+<FONT color="green">243</FONT>                                                  boolean overrideNameRules) {<a name="line.243"></a>
+<FONT color="green">244</FONT>        authenticationMethod = SecurityUtil.getAuthenticationMethod(conf);<a name="line.244"></a>
+<FONT color="green">245</FONT>        if (overrideNameRules || !HadoopKerberosName.hasRulesBeenSet()) {<a name="line.245"></a>
+<FONT color="green">246</FONT>          try {<a name="line.246"></a>
+<FONT color="green">247</FONT>            HadoopKerberosName.setConfiguration(conf);<a name="line.247"></a>
+<FONT color="green">248</FONT>          } catch (IOException ioe) {<a name="line.248"></a>
+<FONT color="green">249</FONT>            throw new RuntimeException(<a name="line.249"></a>
+<FONT color="green">250</FONT>                "Problem with Kerberos auth_to_local name configuration", ioe);<a name="line.250"></a>
+<FONT color="green">251</FONT>          }<a name="line.251"></a>
+<FONT color="green">252</FONT>        }<a name="line.252"></a>
+<FONT color="green">253</FONT>        // If we haven't set up testing groups, use the configuration to find it<a name="line.253"></a>
+<FONT color="green">254</FONT>        if (!(groups instanceof TestingGroups)) {<a name="line.254"></a>
+<FONT color="green">255</FONT>          groups = Groups.getUserToGroupsMappingService(conf);<a name="line.255"></a>
+<FONT color="green">256</FONT>        }<a name="line.256"></a>
+<FONT color="green">257</FONT>        UserGroupInformation.conf = conf;<a name="line.257"></a>
+<FONT color="green">258</FONT>    <a name="line.258"></a>
+<FONT color="green">259</FONT>        if (metrics.getGroupsQuantiles == null) {<a name="line.259"></a>
+<FONT color="green">260</FONT>          int[] intervals = conf.getInts(HADOOP_USER_GROUP_METRICS_PERCENTILES_INTERVALS);<a name="line.260"></a>
+<FONT color="green">261</FONT>          if (intervals != null &amp;&amp; intervals.length &gt; 0) {<a name="line.261"></a>
+<FONT color="green">262</FONT>            final int length = intervals.length;<a name="line.262"></a>
+<FONT color="green">263</FONT>            MutableQuantiles[] getGroupsQuantiles = new MutableQuantiles[length];<a name="line.263"></a>
+<FONT color="green">264</FONT>            for (int i = 0; i &lt; length; i++) {<a name="line.264"></a>
+<FONT color="green">265</FONT>              getGroupsQuantiles[i] = metrics.registry.newQuantiles(<a name="line.265"></a>
+<FONT color="green">266</FONT>                "getGroups" + intervals[i] + "s",<a name="line.266"></a>
+<FONT color="green">267</FONT>                "Get groups", "ops", "latency", intervals[i]);<a name="line.267"></a>
+<FONT color="green">268</FONT>            }<a name="line.268"></a>
+<FONT color="green">269</FONT>            metrics.getGroupsQuantiles = getGroupsQuantiles;<a name="line.269"></a>
+<FONT color="green">270</FONT>          }<a name="line.270"></a>
+<FONT color="green">271</FONT>        }<a name="line.271"></a>
+<FONT color="green">272</FONT>      }<a name="line.272"></a>
+<FONT color="green">273</FONT>    <a name="line.273"></a>
+<FONT color="green">274</FONT>      /**<a name="line.274"></a>
+<FONT color="green">275</FONT>       * Set the static configuration for UGI.<a name="line.275"></a>
+<FONT color="green">276</FONT>       * In particular, set the security authentication mechanism and the<a name="line.276"></a>
+<FONT color="green">277</FONT>       * group look up service.<a name="line.277"></a>
+<FONT color="green">278</FONT>       * @param conf the configuration to use<a name="line.278"></a>
+<FONT color="green">279</FONT>       */<a name="line.279"></a>
+<FONT color="green">280</FONT>      @InterfaceAudience.Public<a name="line.280"></a>
+<FONT color="green">281</FONT>      @InterfaceStability.Evolving<a name="line.281"></a>
+<FONT color="green">282</FONT>      public static void setConfiguration(Configuration conf) {<a name="line.282"></a>
+<FONT color="green">283</FONT>        initialize(conf, true);<a name="line.283"></a>
+<FONT color="green">284</FONT>      }<a name="line.284"></a>
+<FONT color="green">285</FONT>      <a name="line.285"></a>
+<FONT color="green">286</FONT>      @InterfaceAudience.Private<a name="line.286"></a>
+<FONT color="green">287</FONT>      @VisibleForTesting<a name="line.287"></a>
+<FONT color="green">288</FONT>      static void reset() {<a name="line.288"></a>
+<FONT color="green">289</FONT>        authenticationMethod = null;<a name="line.289"></a>
+<FONT color="green">290</FONT>        conf = null;<a name="line.290"></a>
+<FONT color="green">291</FONT>        groups = null;<a name="line.291"></a>
+<FONT color="green">292</FONT>        setLoginUser(null);<a name="line.292"></a>
+<FONT color="green">293</FONT>        HadoopKerberosName.setRules(null);<a name="line.293"></a>
+<FONT color="green">294</FONT>      }<a name="line.294"></a>
+<FONT color="green">295</FONT>      <a name="line.295"></a>
+<FONT color="green">296</FONT>      /**<a name="line.296"></a>
+<FONT color="green">297</FONT>       * Determine if UserGroupInformation is using Kerberos to determine<a name="line.297"></a>
+<FONT color="green">298</FONT>       * user identities or is relying on simple authentication<a name="line.298"></a>
+<FONT color="green">299</FONT>       * <a name="line.299"></a>
+<FONT color="green">300</FONT>       * @return true if UGI is working in a secure environment<a name="line.300"></a>
+<FONT color="green">301</FONT>       */<a name="line.301"></a>
+<FONT color="green">302</FONT>      public static boolean isSecurityEnabled() {<a name="line.302"></a>
+<FONT color="green">303</FONT>        return !isAuthenticationMethodEnabled(AuthenticationMethod.SIMPLE);<a name="line.303"></a>
+<FONT color="green">304</FONT>      }<a name="line.304"></a>
+<FONT color="green">305</FONT>      <a name="line.305"></a>
+<FONT color="green">306</FONT>      @InterfaceAudience.Private<a name="line.306"></a>
+<FONT color="green">307</FONT>      @InterfaceStability.Evolving<a name="line.307"></a>
+<FONT color="green">308</FONT>      private static boolean isAuthenticationMethodEnabled(AuthenticationMethod method) {<a name="line.308"></a>
+<FONT color="green">309</FONT>        ensureInitialized();<a name="line.309"></a>
+<FONT color="green">310</FONT>        return (authenticationMethod == method);<a name="line.310"></a>
+<FONT color="green">311</FONT>      }<a name="line.311"></a>
+<FONT color="green">312</FONT>      <a name="line.312"></a>
+<FONT color="green">313</FONT>      /**<a name="line.313"></a>
+<FONT color="green">314</FONT>       * Information about the logged in user.<a name="line.314"></a>
+<FONT color="green">315</FONT>       */<a name="line.315"></a>
+<FONT color="green">316</FONT>      private static UserGroupInformation loginUser = null;<a name="line.316"></a>
+<FONT color="green">317</FONT>      private static String keytabPrincipal = null;<a name="line.317"></a>
+<FONT color="green">318</FONT>      private static String keytabFile = null;<a name="line.318"></a>
+<FONT color="green">319</FONT>    <a name="line.319"></a>
+<FONT color="green">320</FONT>      private final Subject subject;<a name="line.320"></a>
+<FONT color="green">321</FONT>      // All non-static fields must be read-only caches that come from the subject.<a name="line.321"></a>
+<FONT color="green">322</FONT>      private final User user;<a name="line.322"></a>
+<FONT color="green">323</FONT>      private final boolean isKeytab;<a name="line.323"></a>
+<FONT color="green">324</FONT>      private final boolean isKrbTkt;<a name="line.324"></a>
+<FONT color="green">325</FONT>      <a name="line.325"></a>
+<FONT color="green">326</FONT>      private static String OS_LOGIN_MODULE_NAME;<a name="line.326"></a>
+<FONT color="green">327</FONT>      private static Class&lt;? extends Principal&gt; OS_PRINCIPAL_CLASS;<a name="line.327"></a>
+<FONT color="green">328</FONT>      <a name="line.328"></a>
+<FONT color="green">329</FONT>      private static final boolean windows =<a name="line.329"></a>
+<FONT color="green">330</FONT>          System.getProperty("os.name").startsWith("Windows");<a name="line.330"></a>
+<FONT color="green">331</FONT>      private static final boolean is64Bit =<a name="line.331"></a>
+<FONT color="green">332</FONT>          System.getProperty("os.arch").contains("64");<a name="line.332"></a>
+<FONT color="green">333</FONT>      private static final boolean aix = System.getProperty("os.name").equals("AIX");<a name="line.333"></a>
+<FONT color="green">334</FONT>    <a name="line.334"></a>
+<FONT color="green">335</FONT>      /* Return the OS login module class name */<a name="line.335"></a>
+<FONT color="green">336</FONT>      private static String getOSLoginModuleName() {<a name="line.336"></a>
+<FONT color="green">337</FONT>        if (IBM_JAVA) {<a name="line.337"></a>
+<FONT color="green">338</FONT>          if (windows) {<a name="line.338"></a>
+<FONT color="green">339</FONT>            return is64Bit ? "com.ibm.security.auth.module.Win64LoginModule"<a name="line.339"></a>
+<FONT color="green">340</FONT>                : "com.ibm.security.auth.module.NTLoginModule";<a name="line.340"></a>
+<FONT color="green">341</FONT>          } else if (aix) {<a name="line.341"></a>
+<FONT color="green">342</FONT>            return is64Bit ? "com.ibm.security.auth.module.AIX64LoginModule"<a name="line.342"></a>
+<FONT color="green">343</FONT>                : "com.ibm.security.auth.module.AIXLoginModule";<a name="line.343"></a>
+<FONT color="green">344</FONT>          } else {<a name="line.344"></a>
+<FONT color="green">345</FONT>            return "com.ibm.security.auth.module.LinuxLoginModule";<a name="line.345"></a>
+<FONT color="green">346</FONT>          }<a name="line.346"></a>
+<FONT color="green">347</FONT>        } else {<a name="line.347"></a>
+<FONT color="green">348</FONT>          return windows ? "com.sun.security.auth.module.NTLoginModule"<a name="line.348"></a>
+<FONT color="green">349</FONT>            : "com.sun.security.auth.module.UnixLoginModule";<a name="line.349"></a>
+<FONT color="green">350</FONT>        }<a name="line.350"></a>
+<FONT color="green">351</FONT>      }<a name="line.351"></a>
+<FONT color="green">352</FONT>    <a name="line.352"></a>
+<FONT color="green">353</FONT>      /* Return the OS principal class */<a name="line.353"></a>
+<FONT color="green">354</FONT>      @SuppressWarnings("unchecked")<a name="line.354"></a>
+<FONT color="green">355</FONT>      private static Class&lt;? extends Principal&gt; getOsPrincipalClass() {<a name="line.355"></a>
+<FONT color="green">356</FONT>        ClassLoader cl = ClassLoader.getSystemClassLoader();<a name="line.356"></a>
+<FONT color="green">357</FONT>        try {<a name="line.357"></a>
+<FONT color="green">358</FONT>          String principalClass = null;<a name="line.358"></a>
+<FONT color="green">359</FONT>          if (IBM_JAVA) {<a name="line.359"></a>
+<FONT color="green">360</FONT>            if (is64Bit) {<a name="line.360"></a>
+<FONT color="green">361</FONT>              principalClass = "com.ibm.security.auth.UsernamePrincipal";<a name="line.361"></a>
+<FONT color="green">362</FONT>            } else {<a name="line.362"></a>
+<FONT color="green">363</FONT>              if (windows) {<a name="line.363"></a>
+<FONT color="green">364</FONT>                principalClass = "com.ibm.security.auth.NTUserPrincipal";<a name="line.364"></a>
+<FONT color="green">365</FONT>              } else if (aix) {<a name="line.365"></a>
+<FONT color="green">366</FONT>                principalClass = "com.ibm.security.auth.AIXPrincipal";<a name="line.366"></a>
+<FONT color="green">367</FONT>              } else {<a name="line.367"></a>
+<FONT color="green">368</FONT>                principalClass = "com.ibm.security.auth.LinuxPrincipal";<a name="line.368"></a>
+<FONT color="green">369</FONT>              }<a name="line.369"></a>
+<FONT color="green">370</FONT>            }<a name="line.370"></a>
+<FONT color="green">371</FONT>          } else {<a name="line.371"></a>
+<FONT color="green">372</FONT>            principalClass = windows ? "com.sun.security.auth.NTUserPrincipal"<a name="line.372"></a>
+<FONT color="green">373</FONT>                : "com.sun.security.auth.UnixPrincipal";<a name="line.373"></a>
+<FONT color="green">374</FONT>          }<a name="line.374"></a>
+<FONT color="green">375</FONT>          return (Class&lt;? extends Principal&gt;) cl.loadClass(principalClass);<a name="line.375"></a>
+<FONT color="green">376</FONT>        } catch (ClassNotFoundException e) {<a name="line.376"></a>
+<FONT color="green">377</FONT>          LOG.error("Unable to find JAAS classes:" + e.getMessage());<a name="line.377"></a>
+<FONT color="green">378</FONT>        }<a name="line.378"></a>
+<FONT color="green">379</FONT>        return null;<a name="line.379"></a>
+<FONT color="green">380</FONT>      }<a name="line.380"></a>
+<FONT color="green">381</FONT>      static {<a name="line.381"></a>
+<FONT color="green">382</FONT>        OS_LOGIN_MODULE_NAME = getOSLoginModuleName();<a name="line.382"></a>
+<FONT color="green">383</FONT>        OS_PRINCIPAL_CLASS = getOsPrincipalClass();<a name="line.383"></a>
+<FONT color="green">384</FONT>      }<a name="line.384"></a>
+<FONT color="green">385</FONT>    <a name="line.385"></a>
+<FONT color="green">386</FONT>      private static class RealUser implements Principal {<a name="line.386"></a>
+<FONT color="green">387</FONT>        private final UserGroupInformation realUser;<a name="line.387"></a>
+<FONT color="green">388</FONT>        <a name="line.388"></a>
+<FONT color="green">389</FONT>        RealUser(UserGroupInformation realUser) {<a name="line.389"></a>
+<FONT color="green">390</FONT>          this.realUser = realUser;<a name="line.390"></a>
+<FONT color="green">391</FONT>        }<a name="line.391"></a>
+<FONT color="green">392</FONT>        <a name="line.392"></a>
+<FONT color="green">393</FONT>        @Override<a name="line.393"></a>
+<FONT color="green">394</FONT>        public String getName() {<a name="line.394"></a>
+<FONT color="green">395</FONT>          return realUser.getUserName();<a name="line.395"></a>
+<FONT color="green">396</FONT>        }<a name="line.396"></a>
+<FONT color="green">397</FONT>        <a name="line.397"></a>
+<FONT color="green">398</FONT>        public UserGroupInformation getRealUser() {<a name="line.398"></a>
+<FONT color="green">399</FONT>          return realUser;<a name="line.399"></a>
+<FONT color="green">400</FONT>        }<a name="line.400"></a>
+<FONT color="green">401</FONT>        <a name="line.401"></a>
+<FONT color="green">402</FONT>        @Override<a name="line.402"></a>
+<FONT color="green">403</FONT>        public boolean equals(Object o) {<a name="line.403"></a>
+<FONT color="green">404</FONT>          if (this == o) {<a name="line.404"></a>
+<FONT color="green">405</FONT>            return true;<a name="line.405"></a>
+<FONT color="green">406</FONT>          } else if (o == null || getClass() != o.getClass()) {<a name="line.406"></a>
+<FONT color="green">407</FONT>            return false;<a name="line.407"></a>
+<FONT color="green">408</FONT>          } else {<a name="line.408"></a>
+<FONT color="green">409</FONT>            return realUser.equals(((RealUser) o).realUser);<a name="line.409"></a>
+<FONT color="green">410</FONT>          }<a name="line.410"></a>
+<FONT color="green">411</FONT>        }<a name="line.411"></a>
+<FONT color="green">412</FONT>        <a name="line.412"></a>
+<FONT color="green">413</FONT>        @Override<a name="line.413"></a>
+<FONT color="green">414</FONT>        public int hashCode() {<a name="line.414"></a>
+<FONT color="green">415</FONT>          return realUser.hashCode();<a name="line.415"></a>
+<FONT color="green">416</FONT>        }<a name="line.416"></a>
+<FONT color="green">417</FONT>        <a name="line.417"></a>
+<FONT color="green">418</FONT>        @Override<a name="line.418"></a>
+<FONT color="green">419</FONT>        public String toString() {<a name="line.419"></a>
+<FONT color="green">420</FONT>          return realUser.toString();<a name="line.420"></a>
+<FONT color="green">421</FONT>        }<a name="line.421"></a>
+<FONT color="green">422</FONT>      }<a name="line.422"></a>
+<FONT color="green">423</FONT>      <a name="line.423"></a>
+<FONT color="green">424</FONT>      /**<a name="line.424"></a>
+<FONT color="green">425</FONT>       * A JAAS configuration that defines the login modules that we want<a name="line.425"></a>
+<FONT color="green">426</FONT>       * to use for login.<a name="line.426"></a>
+<FONT color="green">427</FONT>       */<a name="line.427"></a>
+<FONT color="green">428</FONT>      private static class HadoopConfiguration <a name="line.428"></a>
+<FONT color="green">429</FONT>          extends javax.security.auth.login.Configuration {<a name="line.429"></a>
+<FONT color="green">430</FONT>        private static final String SIMPLE_CONFIG_NAME = "hadoop-simple";<a name="line.430"></a>
+<FONT color="green">431</FONT>        private static final String USER_KERBEROS_CONFIG_NAME = <a name="line.431"></a>
+<FONT color="green">432</FONT>          "hadoop-user-kerberos";<a name="line.432"></a>
+<FONT color="green">433</FONT>        private static final String KEYTAB_KERBEROS_CONFIG_NAME = <a name="line.433"></a>
+<FONT color="green">434</FONT>          "hadoop-keytab-kerberos";<a name="line.434"></a>
+<FONT color="green">435</FONT>    <a name="line.435"></a>
+<FONT color="green">436</FONT>        private static final Map&lt;String, String&gt; BASIC_JAAS_OPTIONS =<a name="line.436"></a>
+<FONT color="green">437</FONT>          new HashMap&lt;String,String&gt;();<a name="line.437"></a>
+<FONT color="green">438</FONT>        static {<a name="line.438"></a>
+<FONT color="green">439</FONT>          String jaasEnvVar = System.getenv("HADOOP_JAAS_DEBUG");<a name="line.439"></a>
+<FONT color="green">440</FONT>          if (jaasEnvVar != null &amp;&amp; "true".equalsIgnoreCase(jaasEnvVar)) {<a name="line.440"></a>
+<FONT color="green">441</FONT>            BASIC_JAAS_OPTIONS.put("debug", "true");<a name="line.441"></a>
+<FONT color="green">442</FONT>          }<a name="line.442"></a>
+<FONT color="green">443</FONT>        }<a name="line.443"></a>
+<FONT color="green">444</FONT>        <a name="line.444"></a>
+<FONT color="green">445</FONT>        private static final AppConfigurationEntry OS_SPECIFIC_LOGIN =<a name="line.445"></a>
+<FONT color="green">446</FONT>          new AppConfigurationEntry(OS_LOGIN_MODULE_NAME,<a name="line.446"></a>
+<FONT color="green">447</FONT>                                    LoginModuleControlFlag.REQUIRED,<a name="line.447"></a>
+<FONT color="green">448</FONT>                                    BASIC_JAAS_OPTIONS);<a name="line.448"></a>
+<FONT color="green">449</FONT>        private static final AppConfigurationEntry HADOOP_LOGIN =<a name="line.449"></a>
+<FONT color="green">450</FONT>          new AppConfigurationEntry(HadoopLoginModule.class.getName(),<a name="line.450"></a>
+<FONT color="green">451</FONT>                                    LoginModuleControlFlag.REQUIRED,<a name="line.451"></a>
+<FONT color="green">452</FONT>                                    BASIC_JAAS_OPTIONS);<a name="line.452"></a>
+<FONT color="green">453</FONT>        private static final Map&lt;String,String&gt; USER_KERBEROS_OPTIONS = <a name="line.453"></a>
+<FONT color="green">454</FONT>          new HashMap&lt;String,String&gt;();<a name="line.454"></a>
+<FONT color="green">455</FONT>        static {<a name="line.455"></a>
+<FONT color="green">456</FONT>          if (IBM_JAVA) {<a name="line.456"></a>
+<FONT color="green">457</FONT>            USER_KERBEROS_OPTIONS.put("useDefaultCcache", "true");<a name="line.457"></a>
+<FONT color="green">458</FONT>          } else {<a name="line.458"></a>
+<FONT color="green">459</FONT>            USER_KERBEROS_OPTIONS.put("doNotPrompt", "true");<a name="line.459"></a>
+<FONT color="green">460</FONT>            USER_KERBEROS_OPTIONS.put("useTicketCache", "true");<a name="line.460"></a>
+<FONT color="green">461</FONT>          }<a name="line.461"></a>
+<FONT color="green">462</FONT>          String ticketCache = System.getenv("KRB5CCNAME");<a name="line.462"></a>
+<FONT color="green">463</FONT>          if (ticketCache != null) {<a name="line.463"></a>
+<FONT color="green">464</FONT>            if (IBM_JAVA) {<a name="line.464"></a>
+<FONT color="green">465</FONT>              // The first value searched when "useDefaultCcache" is used.<a name="line.465"></a>
+<FONT color="green">466</FONT>              System.setProperty("KRB5CCNAME", ticketCache);<a name="line.466"></a>
+<FONT color="green">467</FONT>            } else {<a name="line.467"></a>
+<FONT color="green">468</FONT>              USER_KERBEROS_OPTIONS.put("ticketCache", ticketCache);<a name="line.468"></a>
+<FONT color="green">469</FONT>            }<a name="line.469"></a>
+<FONT color="green">470</FONT>          }<a name="line.470"></a>
+<FONT color="green">471</FONT>          USER_KERBEROS_OPTIONS.put("renewTGT", "true");<a name="line.471"></a>
+<FONT color="green">472</FONT>          USER_KERBEROS_OPTIONS.putAll(BASIC_JAAS_OPTIONS);<a name="line.472"></a>
+<FONT color="green">473</FONT>        }<a name="line.473"></a>
+<FONT color="green">474</FONT>        private static final AppConfigurationEntry USER_KERBEROS_LOGIN =<a name="line.474"></a>
+<FONT color="green">475</FONT>          new AppConfigurationEntry(KerberosUtil.getKrb5LoginModuleName(),<a name="line.475"></a>
+<FONT color="green">476</FONT>                                    LoginModuleControlFlag.OPTIONAL,<a name="line.476"></a>
+<FONT color="green">477</FONT>                                    USER_KERBEROS_OPTIONS);<a name="line.477"></a>
+<FONT color="green">478</FONT>        private static final Map&lt;String,String&gt; KEYTAB_KERBEROS_OPTIONS = <a name="line.478"></a>
+<FONT color="green">479</FONT>          new HashMap&lt;String,String&gt;();<a name="line.479"></a>
+<FONT color="green">480</FONT>        static {<a name="line.480"></a>
+<FONT color="green">481</FONT>          if (IBM_JAVA) {<a name="line.481"></a>
+<FONT color="green">482</FONT>            KEYTAB_KERBEROS_OPTIONS.put("credsType", "both");<a name="line.482"></a>
+<FONT color="green">483</FONT>          } else {<a name="line.483"></a>
+<FONT color="green">484</FONT>            KEYTAB_KERBEROS_OPTIONS.put("doNotPrompt", "true");<a name="line.484"></a>
+<FONT color="green">485</FONT>            KEYTAB_KERBEROS_OPTIONS.put("useKeyTab", "true");<a name="line.485"></a>
+<FONT color="green">486</FONT>            KEYTAB_KERBEROS_OPTIONS.put("storeKey", "true");<a name="line.486"></a>
+<FONT color="green">487</FONT>          }<a name="line.487"></a>
+<FONT color="green">488</FONT>          KEYTAB_KERBEROS_OPTIONS.put("refreshKrb5Config", "true");<a name="line.488"></a>
+<FONT color="green">489</FONT>          KEYTAB_KERBEROS_OPTIONS.putAll(BASIC_JAAS_OPTIONS);      <a name="line.489"></a>
+<FONT color="green">490</FONT>        }<a name="line.490"></a>
+<FONT color="green">491</FONT>        private static final AppConfigurationEntry KEYTAB_KERBEROS_LOGIN =<a name="line.491"></a>
+<FONT color="green">492</FONT>          new AppConfigurationEntry(KerberosUtil.getKrb5LoginModuleName(),<a name="line.492"></a>
+<FONT color="green">493</FONT>                                    LoginModuleControlFlag.REQUIRED,<a name="line.493"></a>
+<FONT color="green">494</FONT>                                    KEYTAB_KERBEROS_OPTIONS);<a name="line.494"></a>
+<FONT color="green">495</FONT>        <a name="line.495"></a>
+<FONT color="green">496</FONT>        private static final AppConfigurationEntry[] SIMPLE_CONF = <a name="line.496"></a>
+<FONT color="green">497</FONT>          new AppConfigurationEntry[]{OS_SPECIFIC_LOGIN, HADOOP_LOGIN};<a name="line.497"></a>
+<FONT color="green">498</FONT>        <a name="line.498"></a>
+<FONT color="green">499</FONT>        private static final AppConfigurationEntry[] USER_KERBEROS_CONF =<a name="line.499"></a>
+<FONT color="green">500</FONT>          new AppConfigurationEntry[]{OS_SPECIFIC_LOGIN, USER_KERBEROS_LOGIN,<a name="line.500"></a>
+<FONT color="green">501</FONT>                                      HADOOP_LOGIN};<a name="line.501"></a>
+<FONT color="green">502</FONT>    <a name="line.502"></a>
+<FONT color="green">503</FONT>        private static final AppConfigurationEntry[] KEYTAB_KERBEROS_CONF =<a name="line.503"></a>
+<FONT color="green">504</FONT>          new AppConfigurationEntry[]{KEYTAB_KERBEROS_LOGIN, HADOOP_LOGIN};<a name="line.504"></a>
+<FONT color="green">505</FONT>    <a name="line.505"></a>
+<FONT color="green">506</FONT>        @Override<a name="line.506"></a>
+<FONT color="green">507</FONT>        public AppConfigurationEntry[] getAppConfigurationEntry(String appName) {<a name="line.507"></a>
+<FONT color="green">508</FONT>          if (SIMPLE_CONFIG_NAME.equals(appName)) {<a name="line.508"></a>
+<FONT color="green">509</FONT>            return SIMPLE_CONF;<a name="line.509"></a>
+<FONT color="green">510</FONT>          } else if (USER_KERBEROS_CONFIG_NAME.equals(appName)) {<a name="line.510"></a>
+<FONT color="green">511</FONT>            return USER_KERBEROS_CONF;<a name="line.511"></a>
+<FONT color="green">512</FONT>          } else if (KEYTAB_KERBEROS_CONFIG_NAME.equals(appName)) {<a name="line.512"></a>
+<FONT color="green">513</FONT>            if (IBM_JAVA) {<a name="line.513"></a>
+<FONT color="green">514</FONT>              KEYTAB_KERBEROS_OPTIONS.put("useKeytab",<a name="line.514"></a>
+<FONT color="green">515</FONT>                  prependFileAuthority(keytabFile));<a name="line.515"></a>
+<FONT color="green">516</FONT>            } else {<a name="line.516"></a>
+<FONT color="green">517</FONT>              KEYTAB_KERBEROS_OPTIONS.put("keyTab", keytabFile);<a name="line.517"></a>
+<FONT color="green">518</FONT>            }<a name="line.518"></a>
+<FONT color="green">519</FONT>            KEYTAB_KERBEROS_OPTIONS.put("principal", keytabPrincipal);<a name="line.519"></a>
+<FONT color="green">520</FONT>            return KEYTAB_KERBEROS_CONF;<a name="line.520"></a>
+<FONT color="green">521</FONT>          }<a name="line.521"></a>
+<FONT color="green">522</FONT>          return null;<a name="line.522"></a>
+<FONT color="green">523</FONT>        }<a name="line.523"></a>
+<FONT color="green">524</FONT>      }<a name="line.524"></a>
+<FONT color="green">525</FONT>    <a name="line.525"></a>
+<FONT color="green">526</FONT>      private static String prependFileAuthority(String keytabPath) {<a name="line.526"></a>
+<FONT color="green">527</FONT>        return keytabPath.startsWith("file://") ? keytabPath<a name="line.527"></a>
+<FONT color="green">528</FONT>            : "file://" + keytabPath;<a name="line.528"></a>
+<FONT color="green">529</FONT>      }<a name="line.529"></a>
+<FONT color="green">530</FONT>    <a name="line.530"></a>
+<FONT color="green">531</FONT>      /**<a name="line.531"></a>
+<FONT color="green">532</FONT>       * Represents a javax.security configuration that is created at runtime.<a name="line.532"></a>
+<FONT color="green">533</FONT>       */<a name="line.533"></a>
+<FONT color="green">534</FONT>      private static class DynamicConfiguration<a name="line.534"></a>
+<FONT color="green">535</FONT>          extends javax.security.auth.login.Configuration {<a name="line.535"></a>
+<FONT color="green">536</FONT>        private AppConfigurationEntry[] ace;<a name="line.536"></a>
+<FONT color="green">537</FONT>        <a name="line.537"></a>
+<FONT color="green">538</FONT>        DynamicConfiguration(AppConfigurationEntry[] ace) {<a name="line.538"></a>
+<FONT color="green">539</FONT>          this.ace = ace;<a name="line.539"></a>
+<FONT color="green">540</FONT>        }<a name="line.540"></a>
+<FONT color="green">541</FONT>        <a name="line.541"></a>
+<FONT color="green">542</FONT>        @Override<a name="line.542"></a>
+<FONT color="green">543</FONT>        public AppConfigurationEntry[] getAppConfigurationEntry(String appName) {<a name="line.543"></a>
+<FONT color="green">544</FONT>          return ace;<a name="line.544"></a>
+<FONT color="green">545</FONT>        }<a name="line.545"></a>
+<FONT color="green">546</FONT>      }<a name="line.546"></a>
+<FONT color="green">547</FONT>    <a name="line.547"></a>
+<FONT color="green">548</FONT>      private static LoginContext<a name="line.548"></a>
+<FONT color="green">549</FONT>      newLoginContext(String appName, Subject subject,<a name="line.549"></a>
+<FONT color="green">550</FONT>        javax.security.auth.login.Configuration loginConf)<a name="line.550"></a>
+<FONT color="green">551</FONT>          throws LoginException {<a name="line.551"></a>
+<FONT color="green">552</FONT>        // Temporarily switch the thread's ContextClassLoader to match this<a name="line.552"></a>
+<FONT color="green">553</FONT>        // class's classloader, so that we can properly load HadoopLoginModule<a name="line.553"></a>
+<FONT color="green">554</FONT>        // from the JAAS libraries.<a name="line.554"></a>
+<FONT color="green">555</FONT>        Thread t = Thread.currentThread();<a name="line.555"></a>
+<FONT color="green">556</FONT>        ClassLoader oldCCL = t.getContextClassLoader();<a name="line.556"></a>
+<FONT color="green">557</FONT>        t.setContextClassLoader(HadoopLoginModule.class.getClassLoader());<a name="line.557"></a>
+<FONT color="green">558</FONT>        try {<a name="line.558"></a>
+<FONT color="green">559</FONT>          return new LoginContext(appName, subject, null, loginConf);<a name="line.559"></a>
+<FONT color="green">560</FONT>        } finally {<a name="line.560"></a>
+<FONT color="green">561</FONT>          t.setContextClassLoader(oldCCL);<a name="line.561"></a>
+<FONT color="green">562</FONT>        }<a name="line.562"></a>
+<FONT color="green">563</FONT>      }<a name="line.563"></a>
+<FONT color="green">564</FONT>    <a name="line.564"></a>
+<FONT color="green">565</FONT>      private LoginContext getLogin() {<a name="line.565"></a>
+<FONT color="green">566</FONT>        return user.getLogin();<a name="line.566"></a>
+<FONT color="green">567</FONT>      }<a name="line.567"></a>
+<FONT color="green">568</FONT>      <a name="line.568"></a>
+<FONT color="green">569</FONT>      private void setLogin(LoginContext login) {<a name="line.569"></a>
+<FONT color="green">570</FONT>        user.setLogin(login);<a name="line.570"></a>
+<FONT color="green">571</FONT>      }<a name="line.571"></a>
+<FONT color="green">572</FONT>    <a name="line.572"></a>
+<FONT color="green">573</FONT>      /**<a name="line.573"></a>
+<FONT color="green">574</FONT>       * Create a UserGroupInformation for the given subject.<a name="line.574"></a>
+<FONT color="green">575</FONT>       * This does not change the subject or acquire new credentials.<a name="line.575"></a>
+<FONT color="green">576</FONT>       * @param subject the user's subject<a name="line.576"></a>
+<FONT color="green">577</FONT>       */<a name="line.577"></a>
+<FONT color="green">578</FONT>      UserGroupInformation(Subject subject) {<a name="line.578"></a>
+<FONT color="green">579</FONT>        this.subject = subject;<a name="line.579"></a>
+<FONT color="green">580</FONT>        this.user = subject.getPrincipals(User.class).iterator().next();<a name="line.580"></a>
+<FONT color="green">581</FONT>        this.isKeytab = !subject.getPrivateCredentials(KerberosKey.class).isEmpty();<a name="line.581"></a>
+<FONT color="green">582</FONT>        this.isKrbTkt = !subject.getPrivateCredentials(KerberosTicket.class).isEmpty();<a name="line.582"></a>
+<FONT color="green">583</FONT>      }<a name="line.583"></a>
+<FONT color="green">584</FONT>      <a name="line.584"></a>
+<FONT color="green">585</FONT>      /**<a name="line.585"></a>
+<FONT color="green">586</FONT>       * checks if logged in using kerberos<a name="line.586"></a>
+<FONT color="green">587</FONT>       * @return true if the subject logged via keytab or has a Kerberos TGT<a name="line.587"></a>
+<FONT color="green">588</FONT>       */<a name="line.588"></a>
+<FONT color="green">589</FONT>      public boolean hasKerberosCredentials() {<a name="line.589"></a>
+<FONT color="green">590</FONT>        return isKeytab || isKrbTkt;<a name="line.590"></a>
+<FONT color="green">591</FONT>      }<a name="line.591"></a>
+<FONT color="green">592</FONT>    <a name="line.592"></a>
+<FONT color="green">593</FONT>      /**<a name="line.593"></a>
+<FONT color="green">594</FONT>       * Return the current user, including any doAs in the current stack.<a name="line.594"></a>
+<FONT color="green">595</FONT>       * @return the current user<a name="line.595"></a>
+<FONT color="green">596</FONT>       * @throws IOException if login fails<a name="line.596"></a>
+<FONT color="green">597</FONT>       */<a name="line.597"></a>
+<FONT color="green">598</FONT>      @InterfaceAudience.Public<a name="line.598"></a>
+<FONT color="green">599</FONT>      @InterfaceStability.Evolving<a name="line.599"></a>
+<FONT color="green">600</FONT>      public synchronized<a name="line.600"></a>
+<FONT color="green">601</FONT>      static UserGroupInformation getCurrentUser() throws IOException {<a name="line.601"></a>
+<FONT color="green">602</FONT>        AccessControlContext context = AccessController.getContext();<a name="line.602"></a>
+<FONT color="green">603</FONT>        Subject subject = Subject.getSubject(context);<a name="line.603"></a>
+<FONT color="green">604</FONT>        if (subject == null || subject.getPrincipals(User.class).isEmpty()) {<a name="line.604"></a>
+<FONT color="green">605</FONT>          return getLoginUser();<a name="line.605"></a>
+<FONT color="green">606</FONT>        } else {<a name="line.606"></a>
+<FONT color="green">607</FONT>          return new UserGroupInformation(subject);<a name="line.607"></a>
+<FONT color="green">608</FONT>        }<a name="line.608"></a>
+<FONT color="green">609</FONT>      }<a name="line.609"></a>
+<FONT color="green">610</FONT>    <a name="line.610"></a>
+<FONT color="green">611</FONT>      /**<a name="line.611"></a>
+<FONT color="green">612</FONT>       * Find the most appropriate UserGroupInformation to use<a name="line.612"></a>
+<FONT color="green">613</FONT>       *<a name="line.613"></a>
+<FONT color="green">614</FONT>       * @param ticketCachePath    The Kerberos ticket cache path, or NULL<a name="line.614"></a>
+<FONT color="green">615</FONT>       *                           if none is specfied<a name="line.615"></a>
+<FONT color="green">616</FONT>       * @param user               The user name, or NULL if none is specified.<a name="line.616"></a>
+<FONT color="green">617</FONT>       *<a name="line.617"></a>
+<FONT color="green">618</FONT>       * @return                   The most appropriate UserGroupInformation<a name="line.618"></a>
+<FONT color="green">619</FONT>       */ <a name="line.619"></a>
+<FONT color="green">620</FONT>      public static UserGroupInformation getBestUGI(<a name="line.620"></a>
+<FONT color="green">621</FONT>          String ticketCachePath, String user) throws IOException {<a name="line.621"></a>
+<FONT color="green">622</FONT>        if (ticketCachePath != null) {<a name="line.622"></a>
+<FONT color="green">623</FONT>          return getUGIFromTicketCache(ticketCachePath, user);<a name="line.623"></a>
+<FONT color="green">624</FONT>        } else if (user == null) {<a name="line.624"></a>
+<FONT color="green">625</FONT>          return getCurrentUser();<a name="line.625"></a>
+<FONT color="green">626</FONT>        } else {<a name="line.626"></a>
+<FONT color="green">627</FONT>          return createRemoteUser(user);<a name="line.627"></a>
+<FONT color="green">628</FONT>        }    <a name="line.628"></a>
+<FONT color="green">629</FONT>      }<a name="line.629"></a>
+<FONT color="green">630</FONT>    <a name="line.630"></a>
+<FONT color="green">631</FONT>      /**<a name="line.631"></a>
+<FONT color="green">632</FONT>       * Create a UserGroupInformation from a Kerberos ticket cache.<a name="line.632"></a>
+<FONT color="green">633</FONT>       * <a name="line.633"></a>
+<FONT color="green">634</FONT>       * @param user                The principal name to load from the ticket<a name="line.634"></a>
+<FONT color="green">635</FONT>       *                            cache<a name="line.635"></a>
+<FONT color="green">636</FONT>       * @param ticketCachePath     the path to the ticket cache file<a name="line.636"></a>
+<FONT color="green">637</FONT>       *<a name="line.637"></a>
+<FONT color="green">638</FONT>       * @throws IOException        if the kerberos login fails<a name="line.638"></a>
+<FONT color="green">639</FONT>       */<a name="line.639"></a>
+<FONT color="green">640</FONT>      @InterfaceAudience.Public<a name="line.640"></a>
+<FONT color="green">641</FONT>      @InterfaceStability.Evolving<a name="line.641"></a>
+<FONT color="green">642</FONT>      public static UserGroupInformation getUGIFromTicketCache(<a name="line.642"></a>
+<FONT color="green">643</FONT>                String ticketCache, String user) throws IOException {<a name="line.643"></a>
+<FONT color="green">644</FONT>        if (!isAuthenticationMethodEnabled(AuthenticationMethod.KERBEROS)) {<a name="line.644"></a>
+<FONT color="green">645</FONT>          return getBestUGI(null, user);<a name="line.645"></a>
+<FONT color="green">646</FONT>        }<a name="line.646"></a>
+<FONT color="green">647</FONT>        try {<a name="line.647"></a>
+<FONT color="green">648</FONT>          Map&lt;String,String&gt; krbOptions = new HashMap&lt;String,String&gt;();<a name="line.648"></a>
+<FONT color="green">649</FONT>          if (IBM_JAVA) {<a name="line.649"></a>
+<FONT color="green">650</FONT>            krbOptions.put("useDefaultCcache", "true");<a name="line.650"></a>
+<FONT color="green">651</FONT>            // The first value searched when "useDefaultCcache" is used.<a name="line.651"></a>
+<FONT color="green">652</FONT>            System.setProperty("KRB5CCNAME", ticketCache);<a name="line.652"></a>
+<FONT color="green">653</FONT>          } else {<a name="line.653"></a>
+<FONT color="green">654</FONT>            krbOptions.put("doNotPrompt", "true");<a name="line.654"></a>
+<FONT color="green">655</FONT>            krbOptions.put("useTicketCache", "true");<a name="line.655"></a>
+<FONT color="green">656</FONT>            krbOptions.put("useKeyTab", "false");<a name="line.656"></a>
+<FONT color="green">657</FONT>            krbOptions.put("ticketCache", ticketCache);<a name="line.657"></a>
+<FONT color="green">658</FONT>          }<a name="line.658"></a>
+<FONT color="green">659</FONT>          krbOptions.put("renewTGT", "false");<a name="line.659"></a>
+<FONT color="green">660</FONT>          krbOptions.putAll(HadoopConfiguration.BASIC_JAAS_OPTIONS);<a name="line.660"></a>
+<FONT color="green">661</FONT>          AppConfigurationEntry ace = new AppConfigurationEntry(<a name="line.661"></a>
+<FONT color="green">662</FONT>              KerberosUtil.getKrb5LoginModuleName(),<a name="line.662"></a>
+<FONT color="green">663</FONT>              LoginModuleControlFlag.REQUIRED,<a name="line.663"></a>
+<FONT color="green">664</FONT>              krbOptions);<a name="line.664"></a>
+<FONT color="green">665</FONT>          DynamicConfiguration dynConf =<a name="line.665"></a>
+<FONT color="green">666</FONT>              new DynamicConfiguration(new AppConfigurationEntry[]{ ace });<a name="line.666"></a>
+<FONT color="green">667</FONT>          LoginContext login = newLoginContext(<a name="line.667"></a>
+<FONT color="green">668</FONT>              HadoopConfiguration.USER_KERBEROS_CONFIG_NAME, null, dynConf);<a name="line.668"></a>
+<FONT color="green">669</FONT>          login.login();<a name="line.669"></a>
+<FONT color="green">670</FONT>    <a name="line.670"></a>
+<FONT color="green">671</FONT>          Subject loginSubject = login.getSubject();<a name="line.671"></a>
+<FONT color="green">672</FONT>          Set&lt;Principal&gt; loginPrincipals = loginSubject.getPrincipals();<a name="line.672"></a>
+<FONT color="green">673</FONT>          if (loginPrincipals.isEmpty()) {<a name="line.673"></a>
+<FONT color="green">674</FONT>            throw new RuntimeException("No login principals found!");<a name="line.674"></a>
+<FONT color="green">675</FONT>          }<a name="line.675"></a>
+<FONT color="green">676</FONT>          if (loginPrincipals.size() != 1) {<a name="line.676"></a>
+<FONT color="green">677</FONT>            LOG.warn("found more than one principal in the ticket cache file " +<a name="line.677"></a>
+<FONT color="green">678</FONT>              ticketCache);<a name="line.678"></a>
+<FONT color="green">679</FONT>          }<a name="line.679"></a>
+<FONT color="green">680</FONT>          User ugiUser = new User(loginPrincipals.iterator().next().getName(),<a name="line.680"></a>
+<FONT color="green">681</FONT>              AuthenticationMethod.KERBEROS, login);<a name="line.681"></a>
+<FONT color="green">682</FONT>          loginSubject.getPrincipals().add(ugiUser);<a name="line.682"></a>
+<FONT color="green">683</FONT>          UserGroupInformation ugi = new UserGroupInformation(loginSubject);<a name="line.683"></a>
+<FONT color="green">684</FONT>          ugi.setLogin(login);<a name="line.684"></a>
+<FONT color="green">685</FONT>          ugi.setAuthenticationMethod(AuthenticationMethod.KERBEROS);<a name="line.685"></a>
+<FONT color="green">686</FONT>          return ugi;<a name="line.686"></a>
+<FONT color="green">687</FONT>        } catch (LoginException le) {<a name="line.687"></a>
+<FONT color="green">688</FONT>          throw new IOException("failure to login using ticket cache file " +<a name="line.688"></a>
+<FONT color="green">689</FONT>              ticketCache, le);<a name="line.689"></a>
+<FONT color="green">690</FONT>        }<a name="line.690"></a>
+<FONT color="green">691</FONT>      }<a name="line.691"></a>
+<FONT color="green">692</FONT>    <a name="line.692"></a>
+<FONT color="green">693</FONT>      /**<a name="line.693"></a>
+<FONT color="green">694</FONT>       * Get the currently logged in user.<a name="line.694"></a>
+<FONT color="green">695</FONT>       * @return the logged in user<a name="line.695"></a>
+<FONT color="green">696</FONT>       * @throws IOException if login fails<a name="line.696"></a>
+<FONT color="green">697</FONT>       */<a name="line.697"></a>
+<FONT color="green">698</FONT>      @InterfaceAudience.Public<a name="line.698"></a>
+<FONT color="green">699</FONT>      @InterfaceStability.Evolving<a name="line.699"></a>
+<FONT color="green">700</FONT>      public synchronized <a name="line.700"></a>
+<FONT color="green">701</FONT>      static UserGroupInformation getLoginUser() throws IOException {<a name="line.701"></a>
+<FONT color="green">702</FONT>        if (loginUser == null) {<a name="line.702"></a>
+<FONT color="green">703</FONT>          loginUserFromSubject(null);<a name="line.703"></a>
+<FONT color="green">704</FONT>        }<a name="line.704"></a>
+<FONT color="green">705</FONT>        return loginUser;<a name="line.705"></a>
+<FONT color="green">706</FONT>      }<a name="line.706"></a>
+<FONT color="green">707</FONT>      <a name="line.707"></a>
+<FONT color="green">708</FONT>      /**<a name="line.708"></a>
+<FONT color="green">709</FONT>       * Log in a user using the given subject<a name="line.709"></a>
+<FONT color="green">710</FONT>       * @parma subject the subject to use when logging in a user, or null to <a name="line.710"></a>
+<FONT color="green">711</FONT>       * create a new subject.<a name="line.711"></a>
+<FONT color="green">712</FONT>       * @throws IOException if login fails<a name="line.712"></a>
+<FONT color="green">713</FONT>       */<a name="line.713"></a>
+<FONT color="green">714</FONT>      @InterfaceAudience.Public<a name="line.714"></a>
+<FONT color="green">715</FONT>      @InterfaceStability.Evolving<a name="line.715"></a>
+<FONT color="green">716</FONT>      public synchronized <a name="line.716"></a>
+<FONT color="green">717</FONT>      static void loginUserFromSubject(Subject subject) throws IOException {<a name="line.717"></a>
+<FONT color="green">718</FONT>        ensureInitialized();<a name="line.718"></a>
+<FONT color="green">719</FONT>        try {<a name="line.719"></a>
+<FONT color="green">720</FONT>          if (subject == null) {<a name="line.720"></a>
+<FONT color="green">721</FONT>            subject = new Subject();<a name="line.721"></a>
+<FONT color="green">722</FONT>          }<a name="line.722"></a>
+<FONT color="green">723</FONT>          LoginContext login =<a name="line.723"></a>
+<FONT color="green">724</FONT>              newLoginContext(authenticationMethod.getLoginAppName(), <a name="line.724"></a>
+<FONT color="green">725</FONT>                              subject, new HadoopConfiguration());<a name="line.725"></a>
+<FONT color="green">726</FONT>          login.login();<a name="line.726"></a>
+<FONT color="green">727</FONT>          UserGroupInformation realUser = new UserGroupInformation(subject);<a name="line.727"></a>
+<FONT color="green">728</FONT>          realUser.setLogin(login);<a name="line.728"></a>
+<FONT color="green">729</FONT>          realUser.setAuthenticationMethod(authenticationMethod);<a name="line.729"></a>
+<FONT color="green">730</FONT>          realUser = new UserGroupInformation(login.getSubject());<a name="line.730"></a>
+<FONT color="green">731</FONT>          // If the HADOOP_PROXY_USER environment variable or property<a name="line.731"></a>
+<FONT color="green">732</FONT>          // is specified, create a proxy user as the logged in user.<a name="line.732"></a>
+<FONT color="green">733</FONT>          String proxyUser = System.getenv(HADOOP_PROXY_USER);<a name="line.733"></a>
+<FONT color="green">734</FONT>          if (proxyUser == null) {<a name="line.734"></a>
+<FONT color="green">735</FONT>            proxyUser = System.getProperty(HADOOP_PROXY_USER);<a name="line.735"></a>
+<FONT color="green">736</FONT>          }<a name="line.736"></a>
+<FONT color="green">737</FONT>          loginUser = proxyUser == null ? realUser : createProxyUser(proxyUser, realUser);<a name="line.737"></a>
+<FONT color="green">738</FONT>    <a name="line.738"></a>
+<FONT color="green">739</FONT>          String fileLocation = System.getenv(HADOOP_TOKEN_FILE_LOCATION);<a name="line.739"></a>
+<FONT color="green">740</FONT>          if (fileLocation != null) {<a name="line.740"></a>
+<FONT color="green">741</FONT>            // Load the token storage file and put all of the tokens into the<a name="line.741"></a>
+<FONT color="green">742</FONT>            // user. Don't use the FileSystem API for reading since it has a lock<a name="line.742"></a>
+<FONT color="green">743</FONT>            // cycle (HADOOP-9212).<a name="line.743"></a>
+<FONT color="green">744</FONT>            Credentials cred = Credentials.readTokenStorageFile(<a name="line.744"></a>
+<FONT color="green">745</FONT>                new File(fileLocation), conf);<a name="line.745"></a>
+<FONT color="green">746</FONT>            loginUser.addCredentials(cred);<a name="line.746"></a>
+<FONT color="green">747</FONT>          }<a name="line.747"></a>
+<FONT color="green">748</FONT>          loginUser.spawnAutoRenewalThreadForUserCreds();<a name="line.748"></a>
+<FONT color="green">749</FONT>        } catch (LoginException le) {<a name="line.749"></a>
+<FONT color="green">750</FONT>          LOG.debug("failure to login", le);<a name="line.750"></a>
+<FONT color="green">751</FONT>          throw new IOException("failure to login", le);<a name="line.751"></a>
+<FONT color="green">752</FONT>        }<a name="line.752"></a>
+<FONT color="green">753</FONT>        if (LOG.isDebugEnabled()) {<a name="line.753"></a>
+<FONT color="green">754</FONT>          LOG.debug("UGI loginUser:"+loginUser);<a name="line.754"></a>
+<FONT color="green">755</FONT>        } <a name="line.755"></a>
+<FONT color="green">756</FONT>      }<a name="line.756"></a>
+<FONT color="green">757</FONT>    <a name="line.757"></a>
+<FONT color="green">758</FONT>      @InterfaceAudience.Private<a name="line.758"></a>
+<FONT color="green">759</FONT>      @InterfaceStability.Unstable<a name="line.759"></a>
+<FONT color="green">760</FONT>      @VisibleForTesting<a name="line.760"></a>
+<FONT color="green">761</FONT>      public synchronized static void setLoginUser(UserGroupInformation ugi) {<a name="line.761"></a>
+<FONT color="green">762</FONT>        // if this is to become stable, should probably logout the currently<a name="line.762"></a>
+<FONT color="green">763</FONT>        // logged in ugi if it's different<a name="line.763"></a>
+<FONT color="green">764</FONT>        loginUser = ugi;<a name="line.764"></a>
+<FONT color="green">765</FONT>      }<a name="line.765"></a>
+<FONT color="green">766</FONT>      <a name="line.766"></a>
+<FONT color="green">767</FONT>      /**<a name="line.767"></a>
+<FONT color="green">768</FONT>       * Is this user logged in from a keytab file?<a name="line.768"></a>
+<FONT color="green">769</FONT>       * @return true if the credentials are from a keytab file.<a name="line.769"></a>
+<FONT color="green">770</FONT>       */<a name="line.770"></a>
+<FONT color="green">771</FONT>      public boolean isFromKeytab() {<a name="line.771"></a>
+<FONT color="green">772</FONT>        return isKeytab;<a name="line.772"></a>
+<FONT color="green">773</FONT>      }<a name="line.773"></a>
+<FONT color="green">774</FONT>      <a name="line.774"></a>
+<FONT color="green">775</FONT>      /**<a name="line.775"></a>
+<FONT color="green">776</FONT>       * Get the Kerberos TGT<a name="line.776"></a>
+<FONT color="green">777</FONT>       * @return the user's TGT or null if none was found<a name="line.777"></a>
+<FONT color="green">778</FONT>       */<a name="line.778"></a>
+<FONT color="green">779</FONT>      private synchronized KerberosTicket getTGT() {<a name="line.779"></a>
+<FONT color="green">780</FONT>        Set&lt;KerberosTicket&gt; tickets = subject<a name="line.780"></a>
+<FONT color="green">781</FONT>            .getPrivateCredentials(KerberosTicket.class);<a name="line.781"></a>
+<FONT color="green">782</FONT>        for (KerberosTicket ticket : tickets) {<a name="line.782"></a>
+<FONT color="green">783</FONT>          if (SecurityUtil.isOriginalTGT(ticket)) {<a name="line.783"></a>
+<FONT color="green">784</FONT>            if (LOG.isDebugEnabled()) {<a name="line.784"></a>
+<FONT color="green">785</FONT>              LOG.debug("Found tgt " + ticket);<a name="line.785"></a>
+<FONT color="green">786</FONT>            }<a name="line.786"></a>
+<FONT color="green">787</FONT>            return ticket;<a name="line.787"></a>
+<FONT color="green">788</FONT>          }<a name="line.788"></a>
+<FONT color="green">789</FONT>        }<a name="line.789"></a>
+<FONT color="green">790</FONT>        return null;<a name="line.790"></a>
+<FONT color="green">791</FONT>      }<a name="line.791"></a>
+<FONT color="green">792</FONT>      <a name="line.792"></a>
+<FONT color="green">793</FONT>      private long getRefreshTime(KerberosTicket tgt) {<a name="line.793"></a>
+<FONT color="green">794</FONT>        long start = tgt.getStartTime().getTime();<a name="line.794"></a>
+<FONT color="green">795</FONT>        long end = tgt.getEndTime().getTime();<a name="line.795"></a>
+<FONT color="green">796</FONT>        return start + (long) ((end - start) * TICKET_RENEW_WINDOW);<a name="line.796"></a>
+<FONT color="green">797</FONT>      }<a name="line.797"></a>
+<FONT color="green">798</FONT>    <a name="line.798"></a>
+<FONT color="green">799</FONT>      /**Spawn a thread to do periodic renewals of kerberos credentials*/<a name="line.799"></a>
+<FONT color="green">800</FONT>      private void spawnAutoRenewalThreadForUserCreds() {<a name="line.800"></a>
+<FONT color="green">801</FONT>        if (isSecurityEnabled()) {<a name="line.801"></a>
+<FONT color="green">802</FONT>          //spawn thread only if we have kerb credentials<a name="line.802"></a>
+<FONT color="green">803</FONT>          if (user.getAuthenticationMethod() == AuthenticationMethod.KERBEROS &amp;&amp;<a name="line.803"></a>
+<FONT color="green">804</FONT>              !isKeytab) {<a name="line.804"></a>
+<FONT color="green">805</FONT>            Thread t = new Thread(new Runnable() {<a name="line.805"></a>
+<FONT color="green">806</FONT>              <a name="line.806"></a>
+<FONT color="green">807</FONT>              @Override<a name="line.807"></a>
+<FONT color="green">808</FONT>              public void run() {<a name="line.808"></a>
+<FONT color="green">809</FONT>                String cmd = conf.get("hadoop.kerberos.kinit.command",<a name="line.809"></a>
+<FONT color="green">810</FONT>                                      "kinit");<a name="line.810"></a>
+<FONT color="green">811</FONT>                KerberosTicket tgt = getTGT();<a name="line.811"></a>
+<FONT color="green">812</FONT>                if (tgt == null) {<a name="line.812"></a>
+<FONT color="green">813</FONT>                  return;<a name="line.813"></a>
+<FONT color="green">814</FONT>                }<a name="line.814"></a>
+<FONT color="green">815</FONT>                long nextRefresh = getRefreshTime(tgt);<a name="line.815"></a>
+<FONT color="green">816</FONT>                while (true) {<a name="line.816"></a>
+<FONT color="green">817</FONT>                  try {<a name="line.817"></a>
+<FONT color="green">818</FONT>                    long now = Time.now();<a name="line.818"></a>
+<FONT color="green">819</FONT>                    if(LOG.isDebugEnabled()) {<a name="line.819"></a>
+<FONT color="green">820</FONT>                      LOG.debug("Current time is " + now);<a name="line.820"></a>
+<FONT color="green">821</FONT>                      LOG.debug("Next refresh is " + nextRefresh);<a name="line.821"></a>
+<FONT color="green">822</FONT>                    }<a name="line.822"></a>
+<FONT color="green">823</FONT>                    if (now &lt; nextRefresh) {<a name="line.823"></a>
+<FONT color="green">824</FONT>                      Thread.sleep(nextRefresh - now);<a name="line.824"></a>
+<FONT color="green">825</FONT>                    }<a name="line.825"></a>
+<FONT color="green">826</FONT>                    Shell.execCommand(cmd, "-R");<a name="line.826"></a>
+<FONT color="green">827</FONT>                    if(LOG.isDebugEnabled()) {<a name="line.827"></a>
+<FONT color="green">828</FONT>                      LOG.debug("renewed ticket");<a name="line.828"></a>
+<FONT color="green">829</FONT>                    }<a name="line.829"></a>
+<FONT color="green">830</FONT>                    reloginFromTicketCache();<a name="line.830"></a>
+<FONT color="green">831</FONT>                    tgt = getTGT();<a name="line.831"></a>
+<FONT color="green">832</FONT>                    if (tgt == null) {<a name="line.832"></a>
+<FONT color="green">833</FONT>                      LOG.warn("No TGT after renewal. Aborting renew thread for " +<a name="line.833"></a>
+<FONT color="green">834</FONT>                               getUserName());<a name="line.834"></a>
+<FONT color="green">835</FONT>                      return;<a name="line.835"></a>
+<FONT color="green">836</FONT>                    }<a name="line.836"></a>
+<FONT color="green">837</FONT>                    nextRefresh = Math.max(getRefreshTime(tgt),<a name="line.837"></a>
+<FONT color="green">838</FONT>                                           now + MIN_TIME_BEFORE_RELOGIN);<a name="line.838"></a>
+<FONT color="green">839</FONT>                  } catch (InterruptedException ie) {<a name="line.839"></a>
+<FONT color="green">840</FONT>                    LOG.warn("Terminating renewal thread");<a name="line.840"></a>
+<FONT color="green">841</FONT>                    return;<a name="line.841"></a>
+<FONT color="green">842</FONT>                  } catch (IOException ie) {<a name="line.842"></a>
+<FONT color="green">843</FONT>                    LOG.warn("Exception encountered while running the" +<a name="line.843"></a>
+<FONT color="green">844</FONT>                        " renewal command. Aborting renew thread. " + ie);<a name="line.844"></a>
+<FONT color="green">845</FONT>                    return;<a name="line.845"></a>
+<FONT color="green">846</FONT>                  }<a name="line.846"></a>
+<FONT color="green">847</FONT>                }<a name="line.847"></a>
+<FONT color="green">848</FONT>              }<a name="line.848"></a>
+<FONT color="green">849</FONT>            });<a name="line.849"></a>
+<FONT color="green">850</FONT>            t.setDaemon(true);<a name="line.850"></a>
+<FONT color="green">851</FONT>            t.setName("TGT Renewer for " + getUserName());<a name="line.851"></a>
+<FONT color="green">852</FONT>            t.start();<a name="line.852"></a>
+<FONT color="green">853</FONT>          }<a name="line.853"></a>
+<FONT color="green">854</FONT>        }<a name="line.854"></a>
+<FONT color="green">855</FONT>      }<a name="line.855"></a>
+<FONT color="green">856</FONT>      /**<a name="line.856"></a>
+<FONT color="green">857</FONT>       * Log a user in from a keytab file. Loads a user identity from a keytab<a name="line.857"></a>
+<FONT color="green">858</FONT>       * file and logs them in. They become the currently logged-in user.<a name="line.858"></a>
+<FONT color="green">859</FONT>       * @param user the principal name to load from the keytab<a name="line.859"></a>
+<FONT color="green">860</FONT>       * @param path the path to the keytab file<a name="line.860"></a>
+<FONT color="green">861</FONT>       * @throws IOException if the keytab file can't be read<a name="line.861"></a>
+<FONT color="green">862</FONT>       */<a name="line.862"></a>
+<FONT color="green">863</FONT>      @InterfaceAudience.Public<a name="line.863"></a>
+<FONT color="green">864</FONT>      @InterfaceStability.Evolving<a name="line.864"></a>
+<FONT color="green">865</FONT>      public synchronized<a name="line.865"></a>
+<FONT color="green">866</FONT>      static void loginUserFromKeytab(String user,<a name="line.866"></a>
+<FONT color="green">867</FONT>                                      String path<a name="line.867"></a>
+<FONT color="green">868</FONT>                                      ) throws IOException {<a name="line.868"></a>
+<FONT color="green">869</FONT>        if (!isSecurityEnabled())<a name="line.869"></a>
+<FONT color="green">870</FONT>          return;<a name="line.870"></a>
+<FONT color="green">871</FONT>    <a name="line.871"></a>
+<FONT color="green">872</FONT>        keytabFile = path;<a name="line.872"></a>
+<FONT color="green">873</FONT>        keytabPrincipal = user;<a name="line.873"></a>
+<FONT color="green">874</FONT>        Subject subject = new Subject();<a name="line.874"></a>
+<FONT color="green">875</FONT>        LoginContext login; <a name="line.875"></a>
+<FONT color="green">876</FONT>        long start = 0;<a name="line.876"></a>
+<FONT color="green">877</FONT>        try {<a name="line.877"></a>
+<FONT color="green">878</FONT>          login = newLoginContext(HadoopConfiguration.KEYTAB_KERBEROS_CONFIG_NAME,<a name="line.878"></a>
+<FONT color="green">879</FONT>                subject, new HadoopConfiguration());<a name="line.879"></a>
+<FONT color="green">880</FONT>          start = Time.now();<a name="line.880"></a>
+<FONT color="green">881</FONT>          login.login();<a name="line.881"></a>
+<FONT color="green">882</FONT>          metrics.loginSuccess.add(Time.now() - start);<a name="line.882"></a>
+<FONT color="green">883</FONT>          loginUser = new UserGroupInformation(subject);<a name="line.883"></a>
+<FONT color="green">884</FONT>          loginUser.setLogin(login);<a name="line.884"></a>
+<FONT color="green">885</FONT>          loginUser.setAuthenticationMethod(AuthenticationMethod.KERBEROS);<a name="line.885"></a>
+<FONT color="green">886</FONT>        } catch (LoginException le) {<a name="line.886"></a>
+<FONT color="green">887</FONT>          if (start &gt; 0) {<a name="line.887"></a>
+<FONT color="green">888</FONT>            metrics.loginFailure.add(Time.now() - start);<a name="line.888"></a>
+<FONT color="green">889</FONT>          }<a name="line.889"></a>
+<FONT color="green">890</FONT>          throw new IOException("Login failure for " + user + " from keytab " + <a name="line.890"></a>
+<FONT color="green">891</FONT>                                path, le);<a name="line.891"></a>
+<FONT color="green">892</FONT>        }<a name="line.892"></a>
+<FONT color="green">893</FONT>        LOG.info("Login successful for user " + keytabPrincipal<a name="line.893"></a>
+<FONT color="green">894</FONT>            + " using keytab file " + keytabFile);<a name="line.894"></a>
+<FONT color="green">895</FONT>      }<a name="line.895"></a>
+<FONT color="green">896</FONT>      <a name="line.896"></a>
+<FONT color="green">897</FONT>      /**<a name="line.897"></a>
+<FONT color="green">898</FONT>       * Re-login a user from keytab if TGT is expired or is close to expiry.<a name="line.898"></a>
+<FONT color="green">899</FONT>       * <a name="line.899"></a>
+<FONT color="green">900</FONT>       * @throws IOException<a name="line.900"></a>
+<FONT color="green">901</FONT>       */<a name="line.901"></a>
+<FONT color="green">902</FONT>      public synchronized void checkTGTAndReloginFromKeytab() throws IOException {<a name="line.902"></a>
+<FONT color="green">903</FONT>        if (!isSecurityEnabled()<a name="line.903"></a>
+<FONT color="green">904</FONT>            || user.getAuthenticationMethod() != AuthenticationMethod.KERBEROS<a name="line.904"></a>
+<FONT color="green">905</FONT>            || !isKeytab)<a name="line.905"></a>
+<FONT color="green">906</FONT>          return;<a name="line.906"></a>
+<FONT color="green">907</FONT>        KerberosTicket tgt = getTGT();<a name="line.907"></a>
+<FONT color="green">908</FONT>        if (tgt != null &amp;&amp; Time.now() &lt; getRefreshTime(tgt)) {<a name="line.908"></a>
+<FONT color="green">909</FONT>          return;<a name="line.909"></a>
+<FONT color="green">910</FONT>        }<a name="line.910"></a>
+<FONT color="green">911</FONT>        reloginFromKeytab();<a name="line.911"></a>
+<FONT color="green">912</FONT>      }<a name="line.912"></a>
+<FONT color="green">913</FONT>    <a name="line.913"></a>
+<FONT color="green">914</FONT>      /**<a name="line.914"></a>
+<FONT color="green">915</FONT>       * Re-Login a user in from a keytab file. Loads a user identity from a keytab<a name="line.915"></a>
+<FONT color="green">916</FONT>       * file and logs them in. They become the currently logged-in user. This<a name="line.916"></a>
+<FONT color="green">917</FONT>       * method assumes that {@link #loginUserFromKeytab(String, String)} had <a name="line.917"></a>
+<FONT color="green">918</FONT>       * happened already.<a name="line.918"></a>
+<FONT color="green">919</FONT>       * The Subject field of this UserGroupInformation object is updated to have<a name="line.919"></a>
+<FONT color="green">920</FONT>       * the new credentials.<a name="line.920"></a>
+<FONT color="green">921</FONT>       * @throws IOException on a failure<a name="line.921"></a>
+<FONT color="green">922</FONT>       */<a name="line.922"></a>
+<FONT color="green">923</FONT>      @InterfaceAudience.Public<a name="line.923"></a>
+<FONT color="green">924</FONT>      @InterfaceStability.Evolving<a name="line.924"></a>
+<FONT color="green">925</FONT>      public synchronized void reloginFromKeytab()<a name="line.925"></a>
+<FONT color="green">926</FONT>      throws IOException {<a name="line.926"></a>
+<FONT color="green">927</FONT>        if (!isSecurityEnabled() ||<a name="line.927"></a>
+<FONT color="green">928</FONT>             user.getAuthenticationMethod() != AuthenticationMethod.KERBEROS ||<a name="line.928"></a>
+<FONT color="green">929</FONT>             !isKeytab)<a name="line.929"></a>
+<FONT color="green">930</FONT>          return;<a name="line.930"></a>
+<FONT color="green">931</FONT>        <a name="line.931"></a>
+<FONT color="green">932</FONT>        long now = Time.now();<a name="line.932"></a>
+<FONT color="green">933</FONT>        if (!hasSufficientTimeElapsed(now)) {<a name="line.933"></a>
+<FONT color="green">934</FONT>          return;<a name="line.934"></a>
+<FONT color="green">935</FONT>        }<a name="line.935"></a>
+<FONT color="green">936</FONT>    <a name="line.936"></a>
+<FONT color="green">937</FONT>        KerberosTicket tgt = getTGT();<a name="line.937"></a>
+<FONT color="green">938</FONT>        //Return if TGT is valid and is not going to expire soon.<a name="line.938"></a>
+<FONT color="green">939</FONT>        if (tgt != null &amp;&amp; now &lt; getRefreshTime(tgt)) {<a name="line.939"></a>
+<FONT color="green">940</FONT>          return;<a name="line.940"></a>
+<FONT color="green">941</FONT>        }<a name="line.941"></a>
+<FONT color="green">942</FONT>        <a name="line.942"></a>
+<FONT color="green">943</FONT>        LoginContext login = getLogin();<a name="line.943"></a>
+<FONT color="green">944</FONT>        if (login == null || keytabFile == null) {<a name="line.944"></a>
+<FONT color="green">945</FONT>          throw new IOException("loginUserFromKeyTab must be done first");<a name="line.945"></a>
+<FONT color="green">946</FONT>        }<a name="line.946"></a>
+<FONT color="green">947</FONT>        <a name="line.947"></a>
+<FONT color="green">948</FONT>        long start = 0;<a name="line.948"></a>
+<FONT color="green">949</FONT>        // register most recent relogin attempt<a name="line.949"></a>
+<FONT color="green">950</FONT>        user.setLastLogin(now);<a name="line.950"></a>
+<FONT color="green">951</FONT>        try {<a name="line.951"></a>
+<FONT color="green">952</FONT>          if (LOG.isDebugEnabled()) {<a name="line.952"></a>
+<FONT color="green">953</FONT>            LOG.debug("Initiating logout for " + getUserName());<a name="line.953"></a>
+<FONT color="green">954</FONT>          }<a name="line.954"></a>
+<FONT color="green">955</FONT>          synchronized (UserGroupInformation.class) {<a name="line.955"></a>
+<FONT color="green">956</FONT>            // clear up the kerberos state. But the tokens are not cleared! As per<a name="line.956"></a>
+<FONT color="green">957</FONT>            // the Java kerberos login module code, only the kerberos credentials<a name="line.957"></a>
+<FONT color="green">958</FONT>            // are cleared<a name="line.958"></a>
+<FONT color="green">959</FONT>            login.logout();<a name="line.959"></a>
+<FONT color="green">960</FONT>            // login and also update the subject field of this instance to<a name="line.960"></a>
+<FONT color="green">961</FONT>            // have the new credentials (pass it to the LoginContext constructor)<a name="line.961"></a>
+<FONT color="green">962</FONT>            login = newLoginContext(<a name="line.962"></a>
+<FONT color="green">963</FONT>                HadoopConfiguration.KEYTAB_KERBEROS_CONFIG_NAME, getSubject(),<a name="line.963"></a>
+<FONT color="green">964</FONT>                new HadoopConfiguration());<a name="line.964"></a>
+<FONT color="green">965</FONT>            if (LOG.isDebugEnabled()) {<a name="line.965"></a>
+<FONT color="green">966</FONT>              LOG.debug("Initiating re-login for " + keytabPrincipal);<a name="line.966"></a>
+<FONT color="green">967</FONT>            }<a name="line.967"></a>
+<FONT color="green">968</FONT>            start = Time.now();<a name="line.968"></a>
+<FONT color="green">969</FONT>            login.login();<a name="line.969"></a>
+<FONT color="green">970</FONT>            metrics.loginSuccess.add(Time.now() - start);<a name="line.970"></a>
+<FONT color="green">971</FONT>            setLogin(login);<a name="line.971"></a>
+<FONT color="green">972</FONT>          }<a name="line.972"></a>
+<FONT color="green">973</FONT>        } catch (LoginException le) {<a name="line.973"></a>
+<FONT color="green">974</FONT>          if (start &gt; 0) {<a name="line.974"></a>
+<FONT color="green">975</FONT>            metrics.loginFailure.add(Time.now() - start);<a name="line.975"></a>
+<FONT color="green">976</FONT>          }<a name="line.976"></a>
+<FONT color="green">977</FONT>          throw new IOException("Login failure for " + keytabPrincipal + <a name="line.977"></a>
+<FONT color="green">978</FONT>              " from keytab " + keytabFile, le);<a name="line.978"></a>
+<FONT color="green">979</FONT>        } <a name="line.979"></a>
+<FONT color="green">980</FONT>      }<a name="line.980"></a>
+<FONT color="green">981</FONT>    <a name="line.981"></a>
+<FONT color="green">982</FONT>      /**<a name="line.982"></a>
+<FONT color="green">983</FONT>       * Re-Login a user in from the ticket cache.  This<a name="line.983"></a>
+<FONT color="green">984</FONT>       * method assumes that login had happened already.<a name="line.984"></a>
+<FONT color="green">985</FONT>       * The Subject field of this UserGroupInformation object is updated to have<a name="line.985"></a>
+<FONT color="green">986</FONT>       * the new credentials.<a name="line.986"></a>
+<FONT color="green">987</FONT>       * @throws IOException on a failure<a name="line.987"></a>
+<FONT color="green">988</FONT>       */<a name="line.988"></a>
+<FONT color="green">989</FONT>      @InterfaceAudience.Public<a name="line.989"></a>
+<FONT color="green">990</FONT>      @InterfaceStability.Evolving<a name="line.990"></a>
+<FONT color="green">991</FONT>      public synchronized void reloginFromTicketCache()<a name="line.991"></a>
+<FONT color="green">992</FONT>      throws IOException {<a name="line.992"></a>
+<FONT color="green">993</FONT>        if (!isSecurityEnabled() || <a name="line.993"></a>
+<FONT color="green">994</FONT>            user.getAuthenticationMethod() != AuthenticationMethod.KERBEROS ||<a name="line.994"></a>
+<FONT color="green">995</FONT>            !isKrbTkt)<a name="line.995"></a>
+<FONT color="green">996</FONT>          return;<a name="line.996"></a>
+<FONT color="green">997</FONT>        LoginContext login = getLogin();<a name="line.997"></a>
+<FONT color="green">998</FONT>        if (login == null) {<a name="line.998"></a>
+<FONT color="green">999</FONT>          throw new IOException("login must be done first");<a name="line.999"></a>
+<FONT color="green">1000</FONT>        }<a name="line.1000"></a>
+<FONT color="green">1001</FONT>        long now = Time.now();<a name="line.1001"></a>
+<FONT color="green">1002</FONT>        if (!hasSufficientTimeElapsed(now)) {<a name="line.1002"></a>
+<FONT color="green">1003</FONT>          return;<a name="line.1003"></a>
+<FONT color="green">1004</FONT>        }<a name="line.1004"></a>
+<FONT color="green">1005</FONT>        // register most recent relogin attempt<a name="line.1005"></a>
+<FONT color="green">1006</FONT>        user.setLastLogin(now);<a name="line.1006"></a>
+<FONT color="green">1007</FONT>        try {<a name="line.1007"></a>
+<FONT color="green">1008</FONT>          if (LOG.isDebugEnabled()) {<a name="line.1008"></a>
+<FONT color="green">1009</FONT>            LOG.debug("Initiating logout for " + getUserName());<a name="line.1009"></a>
+<FONT color="green">1010</FONT>          }<a name="line.1010"></a>
+<FONT color="green">1011</FONT>          //clear up the kerberos state. But the tokens are not cleared! As per <a name="line.1011"></a>
+<FONT color="green">1012</FONT>          //the Java kerberos login module code, only the kerberos credentials<a name="line.1012"></a>
+<FONT color="green">1013</FONT>          //are cleared<a name="line.1013"></a>
+<FONT color="green">1014</FONT>          login.logout();<a name="line.1014"></a>
+<FONT color="green">1015</FONT>          //login and also update the subject field of this instance to <a name="line.1015"></a>
+<FONT color="green">1016</FONT>          //have the new credentials (pass it to the LoginContext constructor)<a name="line.1016"></a>
+<FONT color="green">1017</FONT>          login = <a name="line.1017"></a>
+<FONT color="green">1018</FONT>            newLoginContext(HadoopConfiguration.USER_KERBEROS_CONFIG_NAME, <a name="line.1018"></a>
+<FONT color="green">1019</FONT>                getSubject(), new HadoopConfiguration());<a name="line.1019"></a>
+<FONT color="green">1020</FONT>          if (LOG.isDebugEnabled()) {<a name="line.1020"></a>
+<FONT color="green">1021</FONT>            LOG.debug("Initiating re-login for " + getUserName());<a name="line.1021"></a>
+<FONT color="green">1022</FONT>          }<a name="line.1022"></a>
+<FONT color="green">1023</FONT>          login.login();<a name="line.1023"></a>
+<FONT color="green">1024</FONT>          setLogin(login);<a name="line.1024"></a>
+<FONT color="green">1025</FONT>        } catch (LoginException le) {<a name="line.1025"></a>
+<FONT color="green">1026</FONT>          throw new IOException("Login failure for " + getUserName(), le);<a name="line.1026"></a>
+<FONT color="green">1027</FONT>        } <a name="line.1027"></a>
+<FONT color="green">1028</FONT>      }<a name="line.1028"></a>
+<FONT color="green">1029</FONT>    <a name="line.1029"></a>
+<FONT color="green">1030</FONT>    <a name="line.1030"></a>
+<FONT color="green">1031</FONT>      /**<a name="line.1031"></a>
+<FONT color="green">1032</FONT>       * Log a user in from a keytab file. Loads a user identity from a keytab<a name="line.1032"></a>
+<FONT color="green">1033</FONT>       * file and login them in. This new user does not affect the currently<a name="line.1033"></a>
+<FONT color="green">1034</FONT>       * logged-in user.<a name="line.1034"></a>
+<FONT color="green">1035</FONT>       * @param user the principal name to load from the keytab<a name="line.1035"></a>
+<FONT color="green">1036</FONT>       * @param path the path to the keytab file<a name="line.1036"></a>
+<FONT color="green">1037</FONT>       * @throws IOException if the keytab file can't be read<a name="line.1037"></a>
+<FONT color="green">1038</FONT>       */<a name="line.1038"></a>
+<FONT color="green">1039</FONT>      public synchronized<a name="line.1039"></a>
+<FONT color="green">1040</FONT>      static UserGroupInformation loginUserFromKeytabAndReturnUGI(String user,<a name="line.1040"></a>
+<FONT color="green">1041</FONT>                                      String path<a name="line.1041"></a>
+<FONT color="green">1042</FONT>                                      ) throws IOException {<a name="line.1042"></a>
+<FONT color="green">1043</FONT>        if (!isSecurityEnabled())<a name="line.1043"></a>
+<FONT color="green">1044</FONT>          return UserGroupInformation.getCurrentUser();<a name="line.1044"></a>
+<FONT color="green">1045</FONT>        String oldKeytabFile = null;<a name="line.1045"></a>
+<FONT color="green">1046</FONT>        String oldKeytabPrincipal = null;<a name="line.1046"></a>
+<FONT color="green">1047</FONT>    <a name="line.1047"></a>
+<FONT color="green">1048</FONT>        long start = 0;<a name="line.1048"></a>
+<FONT color="green">1049</FONT>        try {<a name="line.1049"></a>
+<FONT color="green">1050</FONT>          oldKeytabFile = keytabFile;<a name="line.1050"></a>
+<FONT color="green">1051</FONT>          oldKeytabPrincipal = keytabPrincipal;<a name="line.1051"></a>
+<FONT color="green">1052</FONT>          keytabFile = path;<a name="line.1052"></a>
+<FONT color="green">1053</FONT>          keytabPrincipal = user;<a name="line.1053"></a>
+<FONT color="green">1054</FONT>          Subject subject = new Subject();<a name="line.1054"></a>
+<FONT color="green">1055</FONT>          <a name="line.1055"></a>
+<FONT color="green">1056</FONT>          LoginContext login = newLoginContext(<a name="line.1056"></a>
+<FONT color="green">1057</FONT>              HadoopConfiguration.KEYTAB_KERBEROS_CONFIG_NAME, subject,<a name="line.1057"></a>
+<FONT color="green">1058</FONT>              new HadoopConfiguration());<a name="line.1058"></a>
+<FONT color="green">1059</FONT>           <a name="line.1059"></a>
+<FONT color="green">1060</FONT>          start = Time.now();<a name="line.1060"></a>
+<FONT color="green">1061</FONT>          login.login();<a name="line.1061"></a>
+<FONT color="green">1062</FONT>          metrics.loginSuccess.add(Time.now() - start);<a name="line.1062"></a>
+<FONT color="green">1063</FONT>          UserGroupInformation newLoginUser = new UserGroupInformation(subject);<a name="line.1063"></a>
+<FONT color="green">1064</FONT>          newLoginUser.setLogin(login);<a name="line.1064"></a>
+<FONT color="green">1065</FONT>          newLoginUser.setAuthenticationMethod(AuthenticationMethod.KERBEROS);<a name="line.1065"></a>
+<FONT color="green">1066</FONT>          <a name="line.1066"></a>
+<FONT color="green">1067</FONT>          return newLoginUser;<a name="line.1067"></a>
+<FONT color="green">1068</FONT>        } catch (LoginException le) {<a name="line.1068"></a>
+<FONT color="green">1069</FONT>          if (start &gt; 0) {<a name="line.1069"></a>
+<FONT color="green">1070</FONT>            metrics.loginFailure.add(Time.now() - start);<a name="line.1070"></a>
+<FONT color="green">1071</FONT>          }<a name="line.1071"></a>
+<FONT color="green">1072</FONT>          throw new IOException("Login failure for " + user + " from keytab " + <a name="line.1072"></a>
+<FONT color="green">1073</FONT>                                path, le);<a name="line.1073"></a>
+<FONT color="green">1074</FONT>        } finally {<a name="line.1074"></a>
+<FONT color="green">1075</FONT>          if(oldKeytabFile != null) keytabFile = oldKeytabFile;<a name="line.1075"></a>
+<FONT color="green">1076</FONT>          if(oldKeytabPrincipal != null) keytabPrincipal = oldKeytabPrincipal;<a name="line.1076"></a>
+<FONT color="green">1077</FONT>        }<a name="line.1077"></a>
+<FONT color="green">1078</FONT>      }<a name="line.1078"></a>
+<FONT color="green">1079</FONT>    <a name="line.1079"></a>
+<FONT color="green">1080</FONT>      private boolean hasSufficientTimeElapsed(long now) {<a name="line.1080"></a>
+<FONT color="green">1081</FONT>        if (now - user.getLastLogin() &lt; MIN_TIME_BEFORE_RELOGIN ) {<a name="line.1081"></a>
+<FONT color="green">1082</FONT>          LOG.warn("Not attempting to re-login since the last re-login was " +<a name="line.1082"></a>
+<FONT color="green">1083</FONT>              "attempted less than " + (MIN_TIME_BEFORE_RELOGIN/1000) + " seconds"+<a name="line.1083"></a>
+<FONT color="green">1084</FONT>              " before.");<a name="line.1084"></a>
+<FONT color="green">1085</FONT>          return false;<a name="line.1085"></a>
+<FONT color="green">1086</FONT>        }<a name="line.1086"></a>
+<FONT color="green">1087</FONT>        return true;<a name="line.1087"></a>
+<FONT color="green">1088</FONT>      }<a name="line.1088"></a>
+<FONT color="green">1089</FONT>      <a name="line.1089"></a>
+<FONT color="green">1090</FONT>      /**<a name="line.1090"></a>
+<FONT color="green">1091</FONT>       * Did the login happen via keytab<a name="line.1091"></a>
+<FONT color="green">1092</FONT>       * @return true or false<a name="line.1092"></a>
+<FONT color="green">1093</FONT>       */<a name="line.1093"></a>
+<FONT color="green">1094</FONT>      @InterfaceAudience.Public<a name="line.1094"></a>
+<FONT color="green">1095</FONT>      @InterfaceStability.Evolving<a name="line.1095"></a>
+<FONT color="green">1096</FONT>      public synchronized static boolean isLoginKeytabBased() throws IOException {<a name="line.1096"></a>
+<FONT color="green">1097</FONT>        return getLoginUser().isKeytab;<a name="line.1097"></a>
+<FONT color="green">1098</FONT>      }<a name="line.1098"></a>
+<FONT color="green">1099</FONT>    <a name="line.1099"></a>
+<FONT color="green">1100</FONT>      /**<a name="line.1100"></a>
+<FONT color="green">1101</FONT>       * Create a user from a login name. It is intended to be used for remote<a name="line.1101"></a>
+<FONT color="green">1102</FONT>       * users in RPC, since it won't have any credentials.<a name="line.1102"></a>
+<FONT color="green">1103</FONT>       * @param user the full user principal name, must not be empty or null<a name="line.1103"></a>
+<FONT color="green">1104</FONT>       * @return the UserGroupInformation for the remote user.<a name="line.1104"></a>
+<FONT color="green">1105</FONT>       */<a name="line.1105"></a>
+<FONT color="green">1106</FONT>      @InterfaceAudience.Public<a name="line.1106"></a>
+<FONT color="green">1107</FONT>      @InterfaceStability.Evolving<a name="line.1107"></a>
+<FONT color="green">1108</FONT>      public static UserGroupInformation createRemoteUser(String user) {<a name="line.1108"></a>
+<FONT color="green">1109</FONT>        if (user == null || user.isEmpty()) {<a name="line.1109"></a>
+<FONT color="green">1110</FONT>          throw new IllegalArgumentException("Null user");<a name="line.1110"></a>
+<FONT color="green">1111</FONT>        }<a name="line.1111"></a>
+<FONT color="green">1112</FONT>        Subject subject = new Subject();<a name="line.1112"></a>
+<FONT color="green">1113</FONT>        subject.getPrincipals().add(new User(user));<a name="line.1113"></a>
+<FONT color="green">1114</FONT>        UserGroupInformation result = new UserGroupInformation(subject);<a name="line.1114"></a>
+<FONT color="green">1115</FONT>        result.setAuthenticationMethod(AuthenticationMethod.SIMPLE);<a name="line.1115"></a>
+<FONT color="green">1116</FONT>        return result;<a name="line.1116"></a>
+<FONT color="green">1117</FONT>      }<a name="line.1117"></a>
+<FONT color="green">1118</FONT>    <a name="line.1118"></a>
+<FONT color="green">1119</FONT>      /**<a name="line.1119"></a>
+<FONT color="green">1120</FONT>       * existing types of authentications' methods<a name="line.1120"></a>
+<FONT color="green">1121</FONT>       */<a name="line.1121"></a>
+<FONT color="green">1122</FONT>      @InterfaceAudience.Public<a name="line.1122"></a>
+<FONT color="green">1123</FONT>      @InterfaceStability.Evolving<a name="line.1123"></a>
+<FONT color="green">1124</FONT>      public static enum AuthenticationMethod {<a name="line.1124"></a>
+<FONT color="green">1125</FONT>        // currently we support only one auth per method, but eventually a <a name="line.1125"></a>
+<FONT color="green">1126</FONT>        // subtype is needed to differentiate, ex. if digest is token or ldap<a name="line.1126"></a>
+<FONT color="green">1127</FONT>        SIMPLE(AuthMethod.SIMPLE,<a name="line.1127"></a>
+<FONT color="green">1128</FONT>            HadoopConfiguration.SIMPLE_CONFIG_NAME),<a name="line.1128"></a>
+<FONT color="green">1129</FONT>        KERBEROS(AuthMethod.KERBEROS,<a name="line.1129"></a>
+<FONT color="green">1130</FONT>            HadoopConfiguration.USER_KERBEROS_CONFIG_NAME),<a name="line.1130"></a>
+<FONT color="green">1131</FONT>        TOKEN(AuthMethod.TOKEN),<a name="line.1131"></a>
+<FONT color="green">1132</FONT>        CERTIFICATE(null),<a name="line.1132"></a>
+<FONT color="green">1133</FONT>        KERBEROS_SSL(null),<a name="line.1133"></a>
+<FONT color="green">1134</FONT>        PROXY(null);<a name="line.1134"></a>
+<FONT color="green">1135</FONT>        <a name="line.1135"></a>
+<FONT color="green">1136</FONT>        private final AuthMethod authMethod;<a name="line.1136"></a>
+<FONT color="green">1137</FONT>        private final String loginAppName;<a name="line.1137"></a>
+<FONT color="green">1138</FONT>        <a name="line.1138"></a>
+<FONT color="green">1139</FONT>        private AuthenticationMethod(AuthMethod authMethod) {<a name="line.1139"></a>
+<FONT color="green">1140</FONT>          this(authMethod, null);<a name="line.1140"></a>
+<FONT color="green">1141</FONT>        }<a name="line.1141"></a>
+<FONT color="green">1142</FONT>        private AuthenticationMethod(AuthMethod authMethod, String loginAppName) {<a name="line.1142"></a>
+<FONT color="green">1143</FONT>          this.authMethod = authMethod;<a name="line.1143"></a>
+<FONT color="green">1144</FONT>          this.loginAppName = loginAppName;<a name="line.1144"></a>
+<FONT color="green">1145</FONT>        }<a name="line.1145"></a>
+<FONT color="green">1146</FONT>        <a name="line.1146"></a>
+<FONT color="green">1147</FONT>        public AuthMethod getAuthMethod() {<a name="line.1147"></a>
+<FONT color="green">1148</FONT>          return authMethod;<a name="line.1148"></a>
+<FONT color="green">1149</FONT>        }<a name="line.1149"></a>
+<FONT color="green">1150</FONT>        <a name="line.1150"></a>
+<FONT color="green">1151</FONT>        String getLoginAppName() {<a name="line.1151"></a>
+<FONT color="green">1152</FONT>          if (loginAppName == null) {<a name="line.1152"></a>
+<FONT color="green">1153</FONT>            throw new UnsupportedOperationException(<a name="line.1153"></a>
+<FONT color="green">1154</FONT>                this + " login authentication is not supported");<a name="line.1154"></a>
+<FONT color="green">1155</FONT>          }<a name="line.1155"></a>
+<FONT color="green">1156</FONT>          return loginAppName;<a name="line.1156"></a>
+<FONT color="green">1157</FONT>        }<a name="line.1157"></a>
+<FONT color="green">1158</FONT>        <a name="line.1158"></a>
+<FONT color="green">1159</FONT>        public static AuthenticationMethod valueOf(AuthMethod authMethod) {<a name="line.1159"></a>
+<FONT color="green">1160</FONT>          for (AuthenticationMethod value : values()) {<a name="line.1160"></a>
+<FONT color="green">1161</FONT>            if (value.getAuthMethod() == authMethod) {<a name="line.1161"></a>
+<FONT color="green">1162</FONT>              return value;<a name="line.1162"></a>
+<FONT color="green">1163</FONT>            }<a name="line.1163"></a>
+<FONT color="green">1164</FONT>          }<a name="line.1164"></a>
+<FONT color="green">1165</FONT>          throw new IllegalArgumentException(<a name="line.1165"></a>
+<FONT color="green">1166</FONT>              "no authentication method for " + authMethod);<a name="line.1166"></a>
+<FONT color="green">1167</FONT>        }<a name="line.1167"></a>
+<FONT color="green">1168</FONT>      };<a name="line.1168"></a>
+<FONT color="green">1169</FONT>    <a name="line.1169"></a>
+<FONT color="green">1170</FONT>      /**<a name="line.1170"></a>
+<FONT color="green">1171</FONT>       * Create a proxy user using username of the effective user and the ugi of the<a name="line.1171"></a>
+<FONT color="green">1172</FONT>       * real user.<a name="line.1172"></a>
+<FONT color="green">1173</FONT>       * @param user<a name="line.1173"></a>
+<FONT color="green">1174</FONT>       * @param realUser<a name="line.1174"></a>
+<FONT color="green">1175</FONT>       * @return proxyUser ugi<a name="line.1175"></a>
+<FONT color="green">1176</FONT>       */<a name="line.1176"></a>
+<FONT color="green">1177</FONT>      @InterfaceAudience.Public<a name="line.1177"></a>
+<FONT color="green">1178</FONT>      @InterfaceStability.Evolving<a name="line.1178"></a>
+<FONT color="green">1179</FONT>      public static UserGroupInformation createProxyUser(String user,<a name="line.1179"></a>
+<FONT color="green">1180</FONT>          UserGroupInformation realUser) {<a name="line.1180"></a>
+<FONT color="green">1181</FONT>        if (user == null || user.isEmpty()) {<a name="line.1181"></a>
+<FONT color="green">1182</FONT>          throw new IllegalArgumentException("Null user");<a name="line.1182"></a>
+<FONT color="green">1183</FONT>        }<a name="line.1183"></a>
+<FONT color="green">1184</FONT>        if (realUser == null) {<a name="line.1184"></a>
+<FONT color="green">1185</FONT>          throw new IllegalArgumentException("Null real user");<a name="line.1185"></a>
+<FONT color="green">1186</FONT>        }<a name="line.1186"></a>
+<FONT color="green">1187</FONT>        Subject subject = new Subject();<a name="line.1187"></a>
+<FONT color="green">1188</FONT>        Set&lt;Principal&gt; principals = subject.getPrincipals();<a name="line.1188"></a>
+<FONT color="green">1189</FONT>        principals.add(new User(user));<a name="line.1189"></a>
+<FONT color="green">1190</FONT>        principals.add(new RealUser(realUser));<a name="line.1190"></a>
+<FONT color="green">1191</FONT>        UserGroupInformation result =new UserGroupInformation(subject);<a name="line.1191"></a>
+<FONT color="green">1192</FONT>        result.setAuthenticationMethod(AuthenticationMethod.PROXY);<a name="line.1192"></a>
+<FONT color="green">1193</FONT>        return result;<a name="line.1193"></a>
+<FONT color="green">1194</FONT>      }<a name="line.1194"></a>
+<FONT color="green">1195</FONT>    <a name="line.1195"></a>
+<FONT color="green">1196</FONT>      /**<a name="line.1196"></a>
+<FONT color="green">1197</FONT>       * get RealUser (vs. EffectiveUser)<a name="line.1197"></a>
+<FONT color="green">1198</FONT>       * @return realUser running over proxy user<a name="line.1198"></a>
+<FONT color="green">1199</FONT>       */<a name="line.1199"></a>
+<FONT color="green">1200</FONT>      @InterfaceAudience.Public<a name="line.1200"></a>
+<FONT color="green">1201</FONT>      @InterfaceStability.Evolving<a name="line.1201"></a>
+<FONT color="green">1202</FONT>      public UserGroupInformation getRealUser() {<a name="line.1202"></a>
+<FONT color="green">1203</FONT>        for (RealUser p: subject.getPrincipals(RealUser.class)) {<a name="line.1203"></a>
+<FONT color="green">1204</FONT>          return p.getRealUser();<a name="line.1204"></a>
+<FONT color="green">1205</FONT>        }<a name="line.1205"></a>
+<FONT color="green">1206</FONT>        return null;<a name="line.1206"></a>
+<FONT color="green">1207</FONT>      }<a name="line.1207"></a>
+<FONT color="green">1208</FONT>    <a name="line.1208"></a>
+<FONT color="green">1209</FONT>    <a name="line.1209"></a>
+<FONT color="green">1210</FONT>      <a name="line.1210"></a>
+<FONT color="green">1211</FONT>      /**<a name="line.1211"></a>
+<FONT color="green">1212</FONT>       * This class is used for storing the groups for testing. It stores a local<a name="line.1212"></a>
+<FONT color="green">1213</FONT>       * map that has the translation of usernames to groups.<a name="line.1213"></a>
+<FONT color="green">1214</FONT>       */<a name="line.1214"></a>
+<FONT color="green">1215</FONT>      private static class TestingGroups extends Groups {<a name="line.1215"></a>
+<FONT color="green">1216</FONT>        private final Map&lt;String, List&lt;String&gt;&gt; userToGroupsMapping = <a name="line.1216"></a>
+<FONT color="green">1217</FONT>          new HashMap&lt;String,List&lt;String&gt;&gt;();<a name="line.1217"></a>
+<FONT color="green">1218</FONT>        private Groups underlyingImplementation;<a name="line.1218"></a>
+<FONT color="green">1219</FONT>        <a name="line.1219"></a>
+<FONT color="green">1220</FONT>        private TestingGroups(Groups underlyingImplementation) {<a name="line.1220"></a>
+<FONT color="green">1221</FONT>          super(new org.apache.hadoop.conf.Configuration());<a name="line.1221"></a>
+<FONT color="green">1222</FONT>          this.underlyingImplementation = underlyingImplementation;<a name="line.1222"></a>
+<FONT color="green">1223</FONT>        }<a name="line.1223"></a>
+<FONT color="green">1224</FONT>        <a name="line.1224"></a>
+<FONT color="green">1225</FONT>        @Override<a name="line.1225"></a>
+<FONT color="green">1226</FONT>        public List&lt;String&gt; getGroups(String user) throws IOException {<a name="line.1226"></a>
+<FONT color="green">1227</FONT>          List&lt;String&gt; result = userToGroupsMapping.get(user);<a name="line.1227"></a>
+<FONT color="green">1228</FONT>          <a name="line.1228"></a>
+<FONT color="green">1229</FONT>          if (result == null) {<a name="line.1229"></a>
+<FONT color="green">1230</FONT>            result = underlyingImplementation.getGroups(user);<a name="line.1230"></a>
+<FONT color="green">1231</FONT>          }<a name="line.1231"></a>
+<FONT color="green">1232</FONT>    <a name="line.1232"></a>
+<FONT color="green">1233</FONT>          return result;<a name="line.1233"></a>
+<FONT color="green">1234</FONT>        }<a name="line.1234"></a>
+<FONT color="green">1235</FONT>    <a name="line.1235"></a>
+<FONT color="green">1236</FONT>        private void setUserGroups(String user, String[] groups) {<a name="line.1236"></a>
+<FONT color="green">1237</FONT>          userToGroupsMapping.put(user, Arrays.asList(groups));<a name="line.1237"></a>
+<FONT color="green">1238</FONT>        }<a name="line.1238"></a>
+<FONT color="green">1239</FONT>      }<a name="line.1239"></a>
+<FONT color="green">1240</FONT>    <a name="line.1240"></a>
+<FONT color="green">1241</FONT>      /**<a name="line.1241"></a>
+<FONT color="green">1242</FONT>       * Create a UGI for testing HDFS and MapReduce<a name="line.1242"></a>
+<FONT color="green">1243</FONT>       * @param user the full user principal name<a name="line.1243"></a>
+<FONT color="green">1244</FONT>       * @param userGroups the names of the groups that the user belongs to<a name="line.1244"></a>
+<FONT color="green">1245</FONT>       * @return a fake user for running unit tests<a name="line.1245"></a>
+<FONT color="green">1246</FONT>       */<a name="line.1246"></a>
+<FONT color="green">1247</FONT>      @InterfaceAudience.Public<a name="line.1247"></a>
+<FONT color="green">1248</FONT>      @InterfaceStability.Evolving<a name="line.1248"></a>
+<FONT color="green">1249</FONT>      public static UserGroupInformation createUserForTesting(String user, <a name="line.1249"></a>
+<FONT color="green">1250</FONT>                                                              String[] userGroups) {<a name="line.1250"></a>
+<FONT color="green">1251</FONT>        ensureInitialized();<a name="line.1251"></a>
+<FONT color="green">1252</FONT>        UserGroupInformation ugi = createRemoteUser(user);<a name="line.1252"></a>
+<FONT color="green">1253</FONT>        // make sure that the testing object is setup<a name="line.1253"></a>
+<FONT color="green">1254</FONT>        if (!(groups instanceof TestingGroups)) {<a name="line.1254"></a>
+<FONT color="green">1255</FONT>          groups = new TestingGroups(groups);<a name="line.1255"></a>
+<FONT color="green">1256</FONT>        }<a name="line.1256"></a>
+<FONT color="green">1257</FONT>        // add the user groups<a name="line.1257"></a>
+<FONT color="green">1258</FONT>        ((TestingGroups) groups).setUserGroups(ugi.getShortUserName(), userGroups);<a name="line.1258"></a>
+<FONT color="green">1259</FONT>        return ugi;<a name="line.1259"></a>
+<FONT color="green">1260</FONT>      }<a name="line.1260"></a>
+<FONT color="green">1261</FONT>    <a name="line.1261"></a>
+<FONT color="green">1262</FONT>    <a name="line.1262"></a>
+<FONT color="green">1263</FONT>      /**<a name="line.1263"></a>
+<FONT color="green">1264</FONT>       * Create a proxy user UGI for testing HDFS and MapReduce<a name="line.1264"></a>
+<FONT color="green">1265</FONT>       * <a name="line.1265"></a>
+<FONT color="green">1266</FONT>       * @param user<a name="line.1266"></a>
+<FONT color="green">1267</FONT>       *          the full user principal name for effective user<a name="line.1267"></a>
+<FONT color="green">1268</FONT>       * @param realUser<a name="line.1268"></a>
+<FONT color="green">1269</FONT>       *          UGI of the real user<a name="line.1269"></a>
+<FONT color="green">1270</FONT>       * @param userGroups<a name="line.1270"></a>
+<FONT color="green">1271</FONT>       *          the names of the groups that the user belongs to<a name="line.1271"></a>
+<FONT color="green">1272</FONT>       * @return a fake user for running unit tests<a name="line.1272"></a>
+<FONT color="green">1273</FONT>       */<a name="line.1273"></a>
+<FONT color="green">1274</FONT>      public static UserGroupInformation createProxyUserForTesting(String user,<a name="line.1274"></a>
+<FONT color="green">1275</FONT>          UserGroupInformation realUser, String[] userGroups) {<a name="line.1275"></a>
+<FONT color="green">1276</FONT>        ensureInitialized();<a name="line.1276"></a>
+<FONT color="green">1277</FONT>        UserGroupInformation ugi = createProxyUser(user, realUser);<a name="line.1277"></a>
+<FONT color="green">1278</FONT>        // make sure that the testing object is setup<a name="line.1278"></a>
+<FONT color="green">1279</FONT>        if (!(groups instanceof TestingGroups)) {<a name="line.1279"></a>
+<FONT color="green">1280</FONT>          groups = new TestingGroups(groups);<a name="line.1280"></a>
+<FONT color="green">1281</FONT>        }<a name="line.1281"></a>
+<FONT color="green">1282</FONT>        // add the user groups<a name="line.1282"></a>
+<FONT color="green">1283</FONT>        ((TestingGroups) groups).setUserGroups(ugi.getShortUserName(), userGroups);<a name="line.1283"></a>
+<FONT color="green">1284</FONT>        return ugi;<a name="line.1284"></a>
+<FONT color="green">1285</FONT>      }<a name="line.1285"></a>
+<FONT color="green">1286</FONT>      <a name="line.1286"></a>
+<FONT color="green">1287</FONT>      /**<a name="line.1287"></a>
+<FONT color="green">1288</FONT>       * Get the user's login name.<a name="line.1288"></a>
+<FONT color="green">1289</FONT>       * @return the user's name up to the first '/' or '@'.<a name="line.1289"></a>
+<FONT color="green">1290</FONT>       */<a name="line.1290"></a>
+<FONT color="green">1291</FONT>      public String getShortUserName() {<a name="line.1291"></a>
+<FONT color="green">1292</FONT>        for (User p: subject.getPrincipals(User.class)) {<a name="line.1292"></a>
+<FONT color="green">1293</FONT>          return p.getShortName();<a name="line.1293"></a>
+<FONT color="green">1294</FONT>        }<a name="line.1294"></a>
+<FONT color="green">1295</FONT>        return null;<a name="line.1295"></a>
+<FONT color="green">1296</FONT>      }<a name="line.1296"></a>
+<FONT color="green">1297</FONT>    <a name="line.1297"></a>
+<FONT color="green">1298</FONT>      public String getPrimaryGroupName() throws IOException {<a name="line.1298"></a>
+<FONT color="green">1299</FONT>        String[] groups = getGroupNames();<a name="line.1299"></a>
+<FONT color="green">1300</FONT>        if (groups.length == 0) {<a name="line.1300"></a>
+<FONT color="green">1301</FONT>          throw new IOException("There is no primary group for UGI " + this);<a name="line.1301"></a>
+<FONT color="green">1302</FONT>        }<a name="line.1302"></a>
+<FONT color="green">1303</FONT>        return groups[0];<a name="line.1303"></a>
+<FONT color="green">1304</FONT>      }<a name="line.1304"></a>
+<FONT color="green">1305</FONT>    <a name="line.1305"></a>
+<FONT color="green">1306</FONT>      /**<a name="line.1306"></a>
+<FONT color="green">1307</FONT>       * Get the user's full principal name.<a name="line.1307"></a>
+<FONT color="green">1308</FONT>       * @return the user's full principal name.<a name="line.1308"></a>
+<FONT color="green">1309</FONT>       */<a name="line.1309"></a>
+<FONT color="green">1310</FONT>      @InterfaceAudience.Public<a name="line.1310"></a>
+<FONT color="green">1311</FONT>      @InterfaceStability.Evolving<a name="line.1311"></a>
+<FONT color="green">1312</FONT>      public String getUserName() {<a name="line.1312"></a>
+<FONT color="green">1313</FONT>        return user.getName();<a name="line.1313"></a>
+<FONT color="green">1314</FONT>      }<a name="line.1314"></a>
+<FONT color="green">1315</FONT>    <a name="line.1315"></a>
+<FONT color="green">1316</FONT>      /**<a name="line.1316"></a>
+<FONT color="green">1317</FONT>       * Add a TokenIdentifier to this UGI. The TokenIdentifier has typically been<a name="line.1317"></a>
+<FONT color="green">1318</FONT>       * authenticated by the RPC layer as belonging to the user represented by this<a name="line.1318"></a>
+<FONT color="green">1319</FONT>       * UGI.<a name="line.1319"></a>
+<FONT color="green">1320</FONT>       * <a name="line.1320"></a>
+<FONT color="green">1321</FONT>       * @param tokenId<a name="line.1321"></a>
+<FONT color="green">1322</FONT>       *          tokenIdentifier to be added<a name="line.1322"></a>
+<FONT color="green">1323</FONT>       * @return true on successful add of new tokenIdentifier<a name="line.1323"></a>
+<FONT color="green">1324</FONT>       */<a name="line.1324"></a>
+<FONT color="green">1325</FONT>      public synchronized boolean addTokenIdentifier(TokenIdentifier tokenId) {<a name="line.1325"></a>
+<FONT color="green">1326</FONT>        return subject.getPublicCredentials().add(tokenId);<a name="line.1326"></a>
+<FONT color="green">1327</FONT>      }<a name="line.1327"></a>
+<FONT color="green">1328</FONT>    <a name="line.1328"></a>
+<FONT color="green">1329</FONT>      /**<a name="line.1329"></a>
+<FONT color="green">1330</FONT>       * Get the set of TokenIdentifiers belonging to this UGI<a name="line.1330"></a>
+<FONT color="green">1331</FONT>       * <a name="line.1331"></a>
+<FONT color="green">1332</FONT>       * @return the set of TokenIdentifiers belonging to this UGI<a name="line.1332"></a>
+<FONT color="green">1333</FONT>       */<a name="line.1333"></a>
+<FONT color="green">1334</FONT>      public synchronized Set&lt;TokenIdentifier&gt; getTokenIdentifiers() {<a name="line.1334"></a>
+<FONT color="green">1335</FONT>        return subject.getPublicCredentials(TokenIdentifier.class);<a name="line.1335"></a>
+<FONT color="green">1336</FONT>      }<a name="line.1336"></a>
+<FONT color="green">1337</FONT>      <a name="line.1337"></a>
+<FONT color="green">1338</FONT>      /**<a name="line.1338"></a>
+<FONT color="green">1339</FONT>       * Add a token to this UGI<a name="line.1339"></a>
+<FONT color="green">1340</FONT>       * <a name="line.1340"></a>
+<FONT color="green">1341</FONT>       * @param token Token to be added<a name="line.1341"></a>
+<FONT color="green">1342</FONT>       * @return true on successful add of new token<a name="line.1342"></a>
+<FONT color="green">1343</FONT>       */<a name="line.1343"></a>
+<FONT color="green">1344</FONT>      public synchronized boolean addToken(Token&lt;? extends TokenIdentifier&gt; token) {<a name="line.1344"></a>
+<FONT color="green">1345</FONT>        return (token != null) ? addToken(token.getService(), token) : false;<a name="line.1345"></a>
+<FONT color="green">1346</FONT>      }<a name="line.1346"></a>
+<FONT color="green">1347</FONT>    <a name="line.1347"></a>
+<FONT color="green">1348</FONT>      /**<a name="line.1348"></a>
+<FONT color="green">1349</FONT>       * Add a named token to this UGI<a name="line.1349"></a>
+<FONT color="green">1350</FONT>       * <a name="line.1350"></a>
+<FONT color="green">1351</FONT>       * @param alias Name of the token<a name="line.1351"></a>
+<FONT color="green">1352</FONT>       * @param token Token to be added<a name="line.1352"></a>
+<FONT color="green">1353</FONT>       * @return true on successful add of new token<a name="line.1353"></a>
+<FONT color="green">1354</FONT>       */<a name="line.1354"></a>
+<FONT color="green">1355</FONT>      public synchronized boolean addToken(Text alias,<a name="line.1355"></a>
+<FONT color="green">1356</FONT>                                           Token&lt;? extends TokenIdentifier&gt; token) {<a name="line.1356"></a>
+<FONT color="green">1357</FONT>        getCredentialsInternal().addToken(alias, token);<a name="line.1357"></a>
+<FONT color="green">1358</FONT>        return true;<a name="line.1358"></a>
+<FONT color="green">1359</FONT>      }<a name="line.1359"></a>
+<FONT color="green">1360</FONT>      <a name="line.1360"></a>
+<FONT color="green">1361</FONT>      /**<a name="line.1361"></a>
+<FONT color="green">1362</FONT>       * Obtain the collection of tokens associated with this user.<a name="line.1362"></a>
+<FONT color="green">1363</FONT>       * <a name="line.1363"></a>
+<FONT color="green">1364</FONT>       * @return an unmodifiable collection of tokens associated with user<a name="line.1364"></a>
+<FONT color="green">1365</FONT>       */<a name="line.1365"></a>
+<FONT color="green">1366</FONT>      public synchronized<a name="line.1366"></a>
+<FONT color="green">1367</FONT>      Collection&lt;Token&lt;? extends TokenIdentifier&gt;&gt; getTokens() {<a name="line.1367"></a>
+<FONT color="green">1368</FONT>        return Collections.unmodifiableCollection(<a name="line.1368"></a>
+<FONT color="green">1369</FONT>            getCredentialsInternal().getAllTokens());<a name="line.1369"></a>
+<FONT color="green">1370</FONT>      }<a name="line.1370"></a>
+<FONT color="green">1371</FONT>    <a name="line.1371"></a>
+<FONT color="green">1372</FONT>      /**<a name="line.1372"></a>
+<FONT color="green">1373</FONT>       * Obtain the tokens in credentials form associated with this user.<a name="line.1373"></a>
+<FONT color="green">1374</FONT>       * <a name="line.1374"></a>
+<FONT color="green">1375</FONT>       * @return Credentials of tokens associated with this user<a name="line.1375"></a>
+<FONT color="green">1376</FONT>       */<a name="line.1376"></a>
+<FONT color="green">1377</FONT>      public synchronized Credentials getCredentials() {<a name="line.1377"></a>
+<FONT color="green">1378</FONT>        Credentials creds = new Credentials(getCredentialsInternal());<a name="line.1378"></a>
+<FONT color="green">1379</FONT>        Iterator&lt;Token&lt;?&gt;&gt; iter = creds.getAllTokens().iterator();<a name="line.1379"></a>
+<FONT color="green">1380</FONT>        while (iter.hasNext()) {<a name="line.1380"></a>
+<FONT color="green">1381</FONT>          if (iter.next() instanceof Token.PrivateToken) {<a name="line.1381"></a>
+<FONT color="green">1382</FONT>            iter.remove();<a name="line.1382"></a>
+<FONT color="green">1383</FONT>          }<a name="line.1383"></a>
+<FONT color="green">1384</FONT>        }<a name="line.1384"></a>
+<FONT color="green">1385</FONT>        return creds;<a name="line.1385"></a>
+<FONT color="green">1386</FONT>      }<a name="line.1386"></a>
+<FONT color="green">1387</FONT>      <a name="line.1387"></a>
+<FONT color="green">1388</FONT>      /**<a name="line.1388"></a>
+<FONT color="green">1389</FONT>       * Add the given Credentials to this user.<a name="line.1389"></a>
+<FONT color="green">1390</FONT>       * @param credentials of tokens and secrets<a name="line.1390"></a>
+<FONT color="green">1391</FONT>       */<a name="line.1391"></a>
+<FONT color="green">1392</FONT>      public synchronized void addCredentials(Credentials credentials) {<a name="line.1392"></a>
+<FONT color="green">1393</FONT>        getCredentialsInternal().addAll(credentials);<a name="line.1393"></a>
+<FONT color="green">1394</FONT>      }<a name="line.1394"></a>
+<FONT color="green">1395</FONT>    <a name="line.1395"></a>
+<FONT color="green">1396</FONT>      private synchronized Credentials getCredentialsInternal() {<a name="line.1396"></a>
+<FONT color="green">1397</FONT>        final Credentials credentials;<a name="line.1397"></a>
+<FONT color="green">1398</FONT>        final Set&lt;Credentials&gt; credentialsSet =<a name="line.1398"></a>
+<FONT color="green">1399</FONT>          subject.getPrivateCredentials(Credentials.class);<a name="line.1399"></a>
+<FONT color="green">1400</FONT>        if (!credentialsSet.isEmpty()){<a name="line.1400"></a>
+<FONT color="green">1401</FONT>          credentials = credentialsSet.iterator().next();<a name="line.1401"></a>
+<FONT color="green">1402</FONT>        } else {<a name="line.1402"></a>
+<FONT color="green">1403</FONT>          credentials = new Credentials();<a name="line.1403"></a>
+<FONT color="green">1404</FONT>          subject.getPrivateCredentials().add(credentials);<a name="line.1404"></a>
+<FONT color="green">1405</FONT>        }<a name="line.1405"></a>
+<FONT color="green">1406</FONT>        return credentials;<a name="line.1406"></a>
+<FONT color="green">1407</FONT>      }<a name="line.1407"></a>
+<FONT color="green">1408</FONT>    <a name="line.1408"></a>
+<FONT color="green">1409</FONT>      /**<a name="line.1409"></a>
+<FONT color="green">1410</FONT>       * Get the group names for this user.<a name="line.1410"></a>
+<FONT color="green">1411</FONT>       * @return the list of users with the primary group first. If the command<a name="line.1411"></a>
+<FONT color="green">1412</FONT>       *    fails, it returns an empty list.<a name="line.1412"></a>
+<FONT color="green">1413</FONT>       */<a name="line.1413"></a>
+<FONT color="green">1414</FONT>      public synchronized String[] getGroupNames() {<a name="line.1414"></a>
+<FONT color="green">1415</FONT>        ensureInitialized();<a name="line.1415"></a>
+<FONT color="green">1416</FONT>        try {<a name="line.1416"></a>
+<FONT color="green">1417</FONT>          List&lt;String&gt; result = groups.getGroups(getShortUserName());<a name="line.1417"></a>
+<FONT color="green">1418</FONT>          return result.toArray(new String[result.size()]);<a name="line.1418"></a>
+<FONT color="green">1419</FONT>        } catch (IOException ie) {<a name="line.1419"></a>
+<FONT color="green">1420</FONT>          LOG.warn("No groups available for user " + getShortUserName());<a name="line.1420"></a>
+<FONT color="green">1421</FONT>          return new String[0];<a name="line.1421"></a>
+<FONT color="green">1422</FONT>        }<a name="line.1422"></a>
+<FONT color="green">1423</FONT>      }<a name="line.1423"></a>
+<FONT color="green">1424</FONT>      <a name="line.1424"></a>
+<FONT color="green">1425</FONT>      /**<a name="line.1425"></a>
+<FONT color="green">1426</FONT>       * Return the username.<a name="line.1426"></a>
+<FONT color="green">1427</FONT>       */<a name="line.1427"></a>
+<FONT color="green">1428</FONT>      @Override<a name="line.1428"></a>
+<FONT color="green">1429</FONT>      public String toString() {<a name="line.1429"></a>
+<FONT color="green">1430</FONT>        StringBuilder sb = new StringBuilder(getUserName());<a name="line.1430"></a>
+<FONT color="green">1431</FONT>        sb.append(" (auth:"+getAuthenticationMethod()+")");<a name="line.1431"></a>
+<FONT color="green">1432</FONT>        if (getRealUser() != null) {<a name="line.1432"></a>
+<FONT color="green">1433</FONT>          sb.append(" via ").append(getRealUser().toString());<a name="line.1433"></a>
+<FONT color="green">1434</FONT>        }<a name="line.1434"></a>
+<FONT color="green">1435</FONT>        return sb.toString();<a name="line.1435"></a>
+<FONT color="green">1436</FONT>      }<a name="line.1436"></a>
+<FONT color="green">1437</FONT>    <a name="line.1437"></a>
+<FONT color="green">1438</FONT>      /**<a name="line.1438"></a>
+<FONT color="green">1439</FONT>       * Sets the authentication method in the subject<a name="line.1439"></a>
+<FONT color="green">1440</FONT>       * <a name="line.1440"></a>
+<FONT color="green">1441</FONT>       * @param authMethod<a name="line.1441"></a>
+<FONT color="green">1442</FONT>       */<a name="line.1442"></a>
+<FONT color="green">1443</FONT>      public synchronized <a name="line.1443"></a>
+<FONT color="green">1444</FONT>      void setAuthenticationMethod(AuthenticationMethod authMethod) {<a name="line.1444"></a>
+<FONT color="green">1445</FONT>        user.setAuthenticationMethod(authMethod);<a name="line.1445"></a>
+<FONT color="green">1446</FONT>      }<a name="line.1446"></a>
+<FONT color="green">1447</FONT>    <a name="line.1447"></a>
+<FONT color="green">1448</FONT>      /**<a name="line.1448"></a>
+<FONT color="green">1449</FONT>       * Sets the authentication method in the subject<a name="line.1449"></a>
+<FONT color="green">1450</FONT>       * <a name="line.1450"></a>
+<FONT color="green">1451</FONT>       * @param authMethod<a name="line.1451"></a>
+<FONT color="green">1452</FONT>       */<a name="line.1452"></a>
+<FONT color="green">1453</FONT>      public void setAuthenticationMethod(AuthMethod authMethod) {<a name="line.1453"></a>
+<FONT color="green">1454</FONT>        user.setAuthenticationMethod(AuthenticationMethod.valueOf(authMethod));<a name="line.1454"></a>
+<FONT color="green">1455</FONT>      }<a name="line.1455"></a>
+<FONT color="green">1456</FONT>    <a name="line.1456"></a>
+<FONT color="green">1457</FONT>      /**<a name="line.1457"></a>
+<FONT color="green">1458</FONT>       * Get the authentication method from the subject<a name="line.1458"></a>
+<FONT color="green">1459</FONT>       * <a name="line.1459"></a>
+<FONT color="green">1460</FONT>       * @return AuthenticationMethod in the subject, null if not present.<a name="line.1460"></a>
+<FONT color="green">1461</FONT>       */<a name="line.1461"></a>
+<FONT color="green">1462</FONT>      public synchronized AuthenticationMethod getAuthenticationMethod() {<a name="line.1462"></a>
+<FONT color="green">1463</FONT>        return user.getAuthenticationMethod();<a name="line.1463"></a>
+<FONT color="green">1464</FONT>      }<a name="line.1464"></a>
+<FONT color="green">1465</FONT>    <a name="line.1465"></a>
+<FONT color="green">1466</FONT>      /**<a name="line.1466"></a>
+<FONT color="green">1467</FONT>       * Get the authentication method from the real user's subject.  If there<a name="line.1467"></a>
+<FONT color="green">1468</FONT>       * is no real user, return the given user's authentication method.<a name="line.1468"></a>
+<FONT color="green">1469</FONT>       * <a name="line.1469"></a>
+<FONT color="green">1470</FONT>       * @return AuthenticationMethod in the subject, null if not present.<a name="line.1470"></a>
+<FONT color="green">1471</FONT>       */<a name="line.1471"></a>
+<FONT color="green">1472</FONT>      public synchronized AuthenticationMethod getRealAuthenticationMethod() {<a name="line.1472"></a>
+<FONT color="green">1473</FONT>        UserGroupInformation ugi = getRealUser();<a name="line.1473"></a>
+<FONT color="green">1474</FONT>        if (ugi == null) {<a name="line.1474"></a>
+<FONT color="green">1475</FONT>          ugi = this;<a name="line.1475"></a>
+<FONT color="green">1476</FONT>        }<a name="line.1476"></a>
+<FONT color="green">1477</FONT>        return ugi.getAuthenticationMethod();<a name="line.1477"></a>
+<FONT color="green">1478</FONT>      }<a name="line.1478"></a>
+<FONT color="green">1479</FONT>    <a name="line.1479"></a>
+<FONT color="green">1480</FONT>      /**<a name="line.1480"></a>
+<FONT color="green">1481</FONT>       * Returns the authentication method of a ugi. If the authentication method is<a name="line.1481"></a>
+<FONT color="green">1482</FONT>       * PROXY, returns the authentication method of the real user.<a name="line.1482"></a>
+<FONT color="green">1483</FONT>       * <a name="line.1483"></a>
+<FONT color="green">1484</FONT>       * @param ugi<a name="line.1484"></a>
+<FONT color="green">1485</FONT>       * @return AuthenticationMethod<a name="line.1485"></a>
+<FONT color="green">1486</FONT>       */<a name="line.1486"></a>
+<FONT color="green">1487</FONT>      public static AuthenticationMethod getRealAuthenticationMethod(<a name="line.1487"></a>
+<FONT color="green">1488</FONT>          UserGroupInformation ugi) {<a name="line.1488"></a>
+<FONT color="green">1489</FONT>        AuthenticationMethod authMethod = ugi.getAuthenticationMethod();<a name="line.1489"></a>
+<FONT color="green">1490</FONT>        if (authMethod == AuthenticationMethod.PROXY) {<a name="line.1490"></a>
+<FONT color="green">1491</FONT>          authMethod = ugi.getRealUser().getAuthenticationMethod();<a name="line.1491"></a>
+<FONT color="green">1492</FONT>        }<a name="line.1492"></a>
+<FONT color="green">1493</FONT>        return authMethod;<a name="line.1493"></a>
+<FONT color="green">1494</FONT>      }<a name="line.1494"></a>
+<FONT color="green">1495</FONT>    <a name="line.1495"></a>
+<FONT color="green">1496</FONT>      /**<a name="line.1496"></a>
+<FONT color="green">1497</FONT>       * Compare the subjects to see if they are equal to each other.<a name="line.1497"></a>
+<FONT color="green">1498</FONT>       */<a name="line.1498"></a>
+<FONT color="green">1499</FONT>      @Override<a name="line.1499"></a>
+<FONT color="green">1500</FONT>      public boolean equals(Object o) {<a name="line.1500"></a>
+<FONT color="green">1501</FONT>        if (o == this) {<a name="line.1501"></a>
+<FONT color="green">1502</FONT>          return true;<a name="line.1502"></a>
+<FONT color="green">1503</FONT>        } else if (o == null || getClass() != o.getClass()) {<a name="line.1503"></a>
+<FONT color="green">1504</FONT>          return false;<a name="line.1504"></a>
+<FONT color="green">1505</FONT>        } else {<a name="line.1505"></a>
+<FONT color="green">1506</FONT>          return subject == ((UserGroupInformation) o).subject;<a name="line.1506"></a>
+<FONT color="green">1507</FONT>        }<a name="line.1507"></a>
+<FONT color="green">1508</FONT>      }<a name="line.1508"></a>
+<FONT color="green">1509</FONT>    <a name="line.1509"></a>
+<FONT color="green">1510</FONT>      /**<a name="line.1510"></a>
+<FONT color="green">1511</FONT>       * Return the hash of the subject.<a name="line.1511"></a>
+<FONT color="green">1512</FONT>       */<a name="line.1512"></a>
+<FONT color="green">1513</FONT>      @Override<a name="line.1513"></a>
+<FONT color="green">1514</FONT>      public int hashCode() {<a name="line.1514"></a>
+<FONT color="green">1515</FONT>        return System.identityHashCode(subject);<a name="line.1515"></a>
+<FONT color="green">1516</FONT>      }<a name="line.1516"></a>
+<FONT color="green">1517</FONT>    <a name="line.1517"></a>
+<FONT color="green">1518</FONT>      /**<a name="line.1518"></a>
+<FONT color="green">1519</FONT>       * Get the underlying subject from this ugi.<a name="line.1519"></a>
+<FONT color="green">1520</FONT>       * @return the subject that represents this user.<a name="line.1520"></a>
+<FONT color="green">1521</FONT>       */<a name="line.1521"></a>
+<FONT color="green">1522</FONT>      protected Subject getSubject() {<a name="line.1522"></a>
+<FONT color="green">1523</FONT>        return subject;<a name="line.1523"></a>
+<FONT color="green">1524</FONT>      }<a name="line.1524"></a>
+<FONT color="green">1525</FONT>    <a name="line.1525"></a>
+<FONT color="green">1526</FONT>      /**<a name="line.1526"></a>
+<FONT color="green">1527</FONT>       * Run the given action as the user.<a name="line.1527"></a>
+<FONT color="green">1528</FONT>       * @param &lt;T&gt; the return type of the run method<a name="line.1528"></a>
+<FONT color="green">1529</FONT>       * @param action the method to execute<a name="line.1529"></a>
+<FONT color="green">1530</FONT>       * @return the value from the run method<a name="line.1530"></a>
+<FONT color="green">1531</FONT>       */<a name="line.1531"></a>
+<FONT color="green">1532</FONT>      @InterfaceAudience.Public<a name="line.1532"></a>
+<FONT color="green">1533</FONT>      @InterfaceStability.Evolving<a name="line.1533"></a>
+<FONT color="green">1534</FONT>      public &lt;T&gt; T doAs(PrivilegedAction&lt;T&gt; action) {<a name="line.1534"></a>
+<FONT color="green">1535</FONT>        logPrivilegedAction(subject, action);<a name="line.1535"></a>
+<FONT color="green">1536</FONT>        return Subject.doAs(subject, action);<a name="line.1536"></a>
+<FONT color="green">1537</FONT>      }<a name="line.1537"></a>
+<FONT color="green">1538</FONT>      <a name="line.1538"></a>
+<FONT color="green">1539</FONT>      /**<a name="line.1539"></a>
+<FONT color="green">1540</FONT>       * Run the given action as the user, potentially throwing an exception.<a name="line.1540"></a>
+<FONT color="green">1541</FONT>       * @param &lt;T&gt; the return type of the run method<a name="line.1541"></a>
+<FONT color="green">1542</FONT>       * @param action the method to execute<a name="line.1542"></a>
+<FONT color="green">1543</FONT>       * @return the value from the run method<a name="line.1543"></a>
+<FONT color="green">1544</FONT>       * @throws IOException if the action throws an IOException<a name="line.1544"></a>
+<FONT color="green">1545</FONT>       * @throws Error if the action throws an Error<a name="line.1545"></a>
+<FONT color="green">1546</FONT>       * @throws RuntimeException if the action throws a RuntimeException<a name="line.1546"></a>
+<FONT color="green">1547</FONT>       * @throws InterruptedException if the action throws an InterruptedException<a name="line.1547"></a>
+<FONT color="green">1548</FONT>       * @throws UndeclaredThrowableException if the action throws something else<a name="line.1548"></a>
+<FONT color="green">1549</FONT>       */<a name="line.1549"></a>
+<FONT color="green">1550</FONT>      @InterfaceAudience.Public<a name="line.1550"></a>
+<FONT color="green">1551</FONT>      @InterfaceStability.Evolving<a name="line.1551"></a>
+<FONT color="green">1552</FONT>      public &lt;T&gt; T doAs(PrivilegedExceptionAction&lt;T&gt; action<a name="line.1552"></a>
+<FONT color="green">1553</FONT>                        ) throws IOException, InterruptedException {<a name="line.1553"></a>
+<FONT color="green">1554</FONT>        try {<a name="line.1554"></a>
+<FONT color="green">1555</FONT>          logPrivilegedAction(subject, action);<a name="line.1555"></a>
+<FONT color="green">1556</FONT>          return Subject.doAs(subject, action);<a name="line.1556"></a>
+<FONT color="green">1557</FONT>        } catch (PrivilegedActionException pae) {<a name="line.1557"></a>
+<FONT color="green">1558</FONT>          Throwable cause = pae.getCause();<a name="line.1558"></a>
+<FONT color="green">1559</FONT>          if (LOG.isDebugEnabled()) {<a name="line.1559"></a>
+<FONT color="green">1560</FONT>            LOG.debug("PrivilegedActionException as:" + this + " cause:" + cause);<a name="line.1560"></a>
+<FONT color="green">1561</FONT>          }<a name="line.1561"></a>
+<FONT color="green">1562</FONT>          if (cause instanceof IOException) {<a name="line.1562"></a>
+<FONT color="green">1563</FONT>            throw (IOException) cause;<a name="line.1563"></a>
+<FONT color="green">1564</FONT>          } else if (cause instanceof Error) {<a name="line.1564"></a>
+<FONT color="green">1565</FONT>            throw (Error) cause;<a name="line.1565"></a>
+<FONT color="green">1566</FONT>          } else if (cause instanceof RuntimeException) {<a name="line.1566"></a>
+<FONT color="green">1567</FONT>            throw (RuntimeException) cause;<a name="line.1567"></a>
+<FONT color="green">1568</FONT>          } else if (cause instanceof InterruptedException) {<a name="line.1568"></a>
+<FONT color="green">1569</FONT>            throw (InterruptedException) cause;<a name="line.1569"></a>
+<FONT color="green">1570</FONT>          } else {<a name="line.1570"></a>
+<FONT color="green">1571</FONT>            throw new UndeclaredThrowableException(cause);<a name="line.1571"></a>
+<FONT color="green">1572</FONT>          }<a name="line.1572"></a>
+<FONT color="green">1573</FONT>        }<a name="line.1573"></a>
+<FONT color="green">1574</FONT>      }<a name="line.1574"></a>
+<FONT color="green">1575</FONT>    <a name="line.1575"></a>
+<FONT color="green">1576</FONT>      private void logPrivilegedAction(Subject subject, Object action) {<a name="line.1576"></a>
+<FONT color="green">1577</FONT>        if (LOG.isDebugEnabled()) {<a name="line.1577"></a>
+<FONT color="green">1578</FONT>          // would be nice if action included a descriptive toString()<a name="line.1578"></a>
+<FONT color="green">1579</FONT>          String where = new Throwable().getStackTrace()[2].toString();<a name="line.1579"></a>
+<FONT color="green">1580</FONT>          LOG.debug("PrivilegedAction as:"+this+" from:"+where);<a name="line.1580"></a>
+<FONT color="green">1581</FONT>        }<a name="line.1581"></a>
+<FONT color="green">1582</FONT>      }<a name="line.1582"></a>
+<FONT color="green">1583</FONT>    <a name="line.1583"></a>
+<FONT color="green">1584</FONT>      private void print() throws IOException {<a name="line.1584"></a>
+<FONT color="green">1585</FONT>        System.out.println("User: " + getUserName());<a name="line.1585"></a>
+<FONT color="green">1586</FONT>        System.out.print("Group Ids: ");<a name="line.1586"></a>
+<FONT color="green">1587</FONT>        System.out.println();<a name="line.1587"></a>
+<FONT color="green">1588</FONT>        String[] groups = getGroupNames();<a name="line.1588"></a>
+<FONT color="green">1589</FONT>        System.out.print("Groups: ");<a name="line.1589"></a>
+<FONT color="green">1590</FONT>        for(int i=0; i &lt; groups.length; i++) {<a name="line.1590"></a>
+<FONT color="green">1591</FONT>          System.out.print(groups[i] + " ");<a name="line.1591"></a>
+<FONT color="green">1592</FONT>        }<a name="line.1592"></a>
+<FONT color="green">1593</FONT>        System.out.println();    <a name="line.1593"></a>
+<FONT color="green">1594</FONT>      }<a name="line.1594"></a>
+<FONT color="green">1595</FONT>    <a name="line.1595"></a>
+<FONT color="green">1596</FONT>      /**<a name="line.1596"></a>
+<FONT color="green">1597</FONT>       * A test method to print out the current user's UGI.<a name="line.1597"></a>
+<FONT color="green">1598</FONT>       * @param args if there are two arguments, read the user from the keytab<a name="line.1598"></a>
+<FONT color="green">1599</FONT>       * and print it out.<a name="line.1599"></a>
+<FONT color="green">1600</FONT>       * @throws Exception<a name="line.1600"></a>
+<FONT color="green">1601</FONT>       */<a name="line.1601"></a>
+<FONT color="green">1602</FONT>      public static void main(String [] args) throws Exception {<a name="line.1602"></a>
+<FONT color="green">1603</FONT>      System.out.println("Getting UGI for current user");<a name="line.1603"></a>
+<FONT color="green">1604</FONT>        UserGroupInformation ugi = getCurrentUser();<a name="line.1604"></a>
+<FONT color="green">1605</FONT>        ugi.print();<a name="line.1605"></a>
+<FONT color="green">1606</FONT>        System.out.println("UGI: " + ugi);<a name="line.1606"></a>
+<FONT color="green">1607</FONT>        System.out.println("Auth method " + ugi.user.getAuthenticationMethod());<a name="line.1607"></a>
+<FONT color="green">1608</FONT>        System.out.println("Keytab " + ugi.isKeytab);<a name="line.1608"></a>
+<FONT color="green">1609</FONT>        System.out.println("============================================================");<a name="line.1609"></a>
+<FONT color="green">1610</FONT>        <a name="line.1610"></a>
+<FONT color="green">1611</FONT>        if (args.length == 2) {<a name="line.1611"></a>
+<FONT color="green">1612</FONT>          System.out.println("Getting UGI from keytab....");<a name="line.1612"></a>
+<FONT color="green">1613</FONT>          loginUserFromKeytab(args[0], args[1]);<a name="line.1613"></a>
+<FONT color="green">1614</FONT>          getCurrentUser().print();<a name="line.1614"></a>
+<FONT color="green">1615</FONT>          System.out.println("Keytab: " + ugi);<a name="line.1615"></a>
+<FONT color="green">1616</FONT>          System.out.println("Auth method " + loginUser.user.getAuthenticationMethod());<a name="line.1616"></a>
+<FONT color="green">1617</FONT>          System.out.println("Keytab " + loginUser.isKeytab);<a name="line.1617"></a>
+<FONT color="green">1618</FONT>        }<a name="line.1618"></a>
+<FONT color="green">1619</FONT>      }<a name="line.1619"></a>
+<FONT color="green">1620</FONT>    <a name="line.1620"></a>
+<FONT color="green">1621</FONT>    }<a name="line.1621"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

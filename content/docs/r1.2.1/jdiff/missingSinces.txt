@@ -1,0 +1,3 @@
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getCacheSize()
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeys Field IPC_CLIENT_FALLBACK_TO_SIMPLE_AUTH_ALLOWED_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeys Field IPC_CLIENT_FALLBACK_TO_SIMPLE_AUTH_ALLOWED_KEY

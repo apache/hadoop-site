@@ -1,0 +1,458 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    <a name="line.18"></a>
+<FONT color="green">019</FONT>    package org.apache.hadoop.fs.s3;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>    import java.io.FileNotFoundException;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import java.io.IOException;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import java.net.URI;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import java.util.ArrayList;<a name="line.24"></a>
+<FONT color="green">025</FONT>    import java.util.HashMap;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import java.util.List;<a name="line.26"></a>
+<FONT color="green">027</FONT>    import java.util.Map;<a name="line.27"></a>
+<FONT color="green">028</FONT>    import java.util.concurrent.TimeUnit;<a name="line.28"></a>
+<FONT color="green">029</FONT>    <a name="line.29"></a>
+<FONT color="green">030</FONT>    import org.apache.hadoop.classification.InterfaceAudience;<a name="line.30"></a>
+<FONT color="green">031</FONT>    import org.apache.hadoop.classification.InterfaceStability;<a name="line.31"></a>
+<FONT color="green">032</FONT>    import org.apache.hadoop.conf.Configuration;<a name="line.32"></a>
+<FONT color="green">033</FONT>    import org.apache.hadoop.fs.FSDataInputStream;<a name="line.33"></a>
+<FONT color="green">034</FONT>    import org.apache.hadoop.fs.FSDataOutputStream;<a name="line.34"></a>
+<FONT color="green">035</FONT>    import org.apache.hadoop.fs.FileStatus;<a name="line.35"></a>
+<FONT color="green">036</FONT>    import org.apache.hadoop.fs.FileSystem;<a name="line.36"></a>
+<FONT color="green">037</FONT>    import org.apache.hadoop.fs.Path;<a name="line.37"></a>
+<FONT color="green">038</FONT>    import org.apache.hadoop.fs.permission.FsPermission;<a name="line.38"></a>
+<FONT color="green">039</FONT>    import org.apache.hadoop.fs.s3native.NativeS3FileSystem;<a name="line.39"></a>
+<FONT color="green">040</FONT>    import org.apache.hadoop.io.retry.RetryPolicies;<a name="line.40"></a>
+<FONT color="green">041</FONT>    import org.apache.hadoop.io.retry.RetryPolicy;<a name="line.41"></a>
+<FONT color="green">042</FONT>    import org.apache.hadoop.io.retry.RetryProxy;<a name="line.42"></a>
+<FONT color="green">043</FONT>    import org.apache.hadoop.util.Progressable;<a name="line.43"></a>
+<FONT color="green">044</FONT>    <a name="line.44"></a>
+<FONT color="green">045</FONT>    /**<a name="line.45"></a>
+<FONT color="green">046</FONT>     * &lt;p&gt;<a name="line.46"></a>
+<FONT color="green">047</FONT>     * A block-based {@link FileSystem} backed by<a name="line.47"></a>
+<FONT color="green">048</FONT>     * &lt;a href="http://aws.amazon.com/s3"&gt;Amazon S3&lt;/a&gt;.<a name="line.48"></a>
+<FONT color="green">049</FONT>     * &lt;/p&gt;<a name="line.49"></a>
+<FONT color="green">050</FONT>     * @see NativeS3FileSystem<a name="line.50"></a>
+<FONT color="green">051</FONT>     */<a name="line.51"></a>
+<FONT color="green">052</FONT>    @InterfaceAudience.Public<a name="line.52"></a>
+<FONT color="green">053</FONT>    @InterfaceStability.Stable<a name="line.53"></a>
+<FONT color="green">054</FONT>    public class S3FileSystem extends FileSystem {<a name="line.54"></a>
+<FONT color="green">055</FONT>    <a name="line.55"></a>
+<FONT color="green">056</FONT>      private URI uri;<a name="line.56"></a>
+<FONT color="green">057</FONT>    <a name="line.57"></a>
+<FONT color="green">058</FONT>      private FileSystemStore store;<a name="line.58"></a>
+<FONT color="green">059</FONT>    <a name="line.59"></a>
+<FONT color="green">060</FONT>      private Path workingDir;<a name="line.60"></a>
+<FONT color="green">061</FONT>    <a name="line.61"></a>
+<FONT color="green">062</FONT>      public S3FileSystem() {<a name="line.62"></a>
+<FONT color="green">063</FONT>        // set store in initialize()<a name="line.63"></a>
+<FONT color="green">064</FONT>      }<a name="line.64"></a>
+<FONT color="green">065</FONT>      <a name="line.65"></a>
+<FONT color="green">066</FONT>      public S3FileSystem(FileSystemStore store) {<a name="line.66"></a>
+<FONT color="green">067</FONT>        this.store = store;<a name="line.67"></a>
+<FONT color="green">068</FONT>      }<a name="line.68"></a>
+<FONT color="green">069</FONT>    <a name="line.69"></a>
+<FONT color="green">070</FONT>      /**<a name="line.70"></a>
+<FONT color="green">071</FONT>       * Return the protocol scheme for the FileSystem.<a name="line.71"></a>
+<FONT color="green">072</FONT>       * &lt;p/&gt;<a name="line.72"></a>
+<FONT color="green">073</FONT>       *<a name="line.73"></a>
+<FONT color="green">074</FONT>       * @return &lt;code&gt;s3&lt;/code&gt;<a name="line.74"></a>
+<FONT color="green">075</FONT>       */<a name="line.75"></a>
+<FONT color="green">076</FONT>      @Override<a name="line.76"></a>
+<FONT color="green">077</FONT>      public String getScheme() {<a name="line.77"></a>
+<FONT color="green">078</FONT>        return "s3";<a name="line.78"></a>
+<FONT color="green">079</FONT>      }<a name="line.79"></a>
+<FONT color="green">080</FONT>    <a name="line.80"></a>
+<FONT color="green">081</FONT>      @Override<a name="line.81"></a>
+<FONT color="green">082</FONT>      public URI getUri() {<a name="line.82"></a>
+<FONT color="green">083</FONT>        return uri;<a name="line.83"></a>
+<FONT color="green">084</FONT>      }<a name="line.84"></a>
+<FONT color="green">085</FONT>    <a name="line.85"></a>
+<FONT color="green">086</FONT>      @Override<a name="line.86"></a>
+<FONT color="green">087</FONT>      public void initialize(URI uri, Configuration conf) throws IOException {<a name="line.87"></a>
+<FONT color="green">088</FONT>        super.initialize(uri, conf);<a name="line.88"></a>
+<FONT color="green">089</FONT>        if (store == null) {<a name="line.89"></a>
+<FONT color="green">090</FONT>          store = createDefaultStore(conf);<a name="line.90"></a>
+<FONT color="green">091</FONT>        }<a name="line.91"></a>
+<FONT color="green">092</FONT>        store.initialize(uri, conf);<a name="line.92"></a>
+<FONT color="green">093</FONT>        setConf(conf);<a name="line.93"></a>
+<FONT color="green">094</FONT>        this.uri = URI.create(uri.getScheme() + "://" + uri.getAuthority());    <a name="line.94"></a>
+<FONT color="green">095</FONT>        this.workingDir =<a name="line.95"></a>
+<FONT color="green">096</FONT>          new Path("/user", System.getProperty("user.name")).makeQualified(this);<a name="line.96"></a>
+<FONT color="green">097</FONT>      }  <a name="line.97"></a>
+<FONT color="green">098</FONT>    <a name="line.98"></a>
+<FONT color="green">099</FONT>      private static FileSystemStore createDefaultStore(Configuration conf) {<a name="line.99"></a>
+<FONT color="green">100</FONT>        FileSystemStore store = new Jets3tFileSystemStore();<a name="line.100"></a>
+<FONT color="green">101</FONT>        <a name="line.101"></a>
+<FONT color="green">102</FONT>        RetryPolicy basePolicy = RetryPolicies.retryUpToMaximumCountWithFixedSleep(<a name="line.102"></a>
+<FONT color="green">103</FONT>                                                                                   conf.getInt("fs.s3.maxRetries", 4),<a name="line.103"></a>
+<FONT color="green">104</FONT>                                                                                   conf.getLong("fs.s3.sleepTimeSeconds", 10), TimeUnit.SECONDS);<a name="line.104"></a>
+<FONT color="green">105</FONT>        Map&lt;Class&lt;? extends Exception&gt;,RetryPolicy&gt; exceptionToPolicyMap =<a name="line.105"></a>
+<FONT color="green">106</FONT>          new HashMap&lt;Class&lt;? extends Exception&gt;, RetryPolicy&gt;();<a name="line.106"></a>
+<FONT color="green">107</FONT>        exceptionToPolicyMap.put(IOException.class, basePolicy);<a name="line.107"></a>
+<FONT color="green">108</FONT>        exceptionToPolicyMap.put(S3Exception.class, basePolicy);<a name="line.108"></a>
+<FONT color="green">109</FONT>        <a name="line.109"></a>
+<FONT color="green">110</FONT>        RetryPolicy methodPolicy = RetryPolicies.retryByException(<a name="line.110"></a>
+<FONT color="green">111</FONT>                                                                  RetryPolicies.TRY_ONCE_THEN_FAIL, exceptionToPolicyMap);<a name="line.111"></a>
+<FONT color="green">112</FONT>        Map&lt;String,RetryPolicy&gt; methodNameToPolicyMap = new HashMap&lt;String,RetryPolicy&gt;();<a name="line.112"></a>
+<FONT color="green">113</FONT>        methodNameToPolicyMap.put("storeBlock", methodPolicy);<a name="line.113"></a>
+<FONT color="green">114</FONT>        methodNameToPolicyMap.put("retrieveBlock", methodPolicy);<a name="line.114"></a>
+<FONT color="green">115</FONT>        <a name="line.115"></a>
+<FONT color="green">116</FONT>        return (FileSystemStore) RetryProxy.create(FileSystemStore.class,<a name="line.116"></a>
+<FONT color="green">117</FONT>                                                   store, methodNameToPolicyMap);<a name="line.117"></a>
+<FONT color="green">118</FONT>      }<a name="line.118"></a>
+<FONT color="green">119</FONT>    <a name="line.119"></a>
+<FONT color="green">120</FONT>      @Override<a name="line.120"></a>
+<FONT color="green">121</FONT>      public Path getWorkingDirectory() {<a name="line.121"></a>
+<FONT color="green">122</FONT>        return workingDir;<a name="line.122"></a>
+<FONT color="green">123</FONT>      }<a name="line.123"></a>
+<FONT color="green">124</FONT>    <a name="line.124"></a>
+<FONT color="green">125</FONT>      @Override<a name="line.125"></a>
+<FONT color="green">126</FONT>      public void setWorkingDirectory(Path dir) {<a name="line.126"></a>
+<FONT color="green">127</FONT>        workingDir = makeAbsolute(dir);<a name="line.127"></a>
+<FONT color="green">128</FONT>      }<a name="line.128"></a>
+<FONT color="green">129</FONT>    <a name="line.129"></a>
+<FONT color="green">130</FONT>      private Path makeAbsolute(Path path) {<a name="line.130"></a>
+<FONT color="green">131</FONT>        if (path.isAbsolute()) {<a name="line.131"></a>
+<FONT color="green">132</FONT>          return path;<a name="line.132"></a>
+<FONT color="green">133</FONT>        }<a name="line.133"></a>
+<FONT color="green">134</FONT>        return new Path(workingDir, path);<a name="line.134"></a>
+<FONT color="green">135</FONT>      }<a name="line.135"></a>
+<FONT color="green">136</FONT>    <a name="line.136"></a>
+<FONT color="green">137</FONT>      /**<a name="line.137"></a>
+<FONT color="green">138</FONT>       * @param permission Currently ignored.<a name="line.138"></a>
+<FONT color="green">139</FONT>       */<a name="line.139"></a>
+<FONT color="green">140</FONT>      @Override<a name="line.140"></a>
+<FONT color="green">141</FONT>      public boolean mkdirs(Path path, FsPermission permission) throws IOException {<a name="line.141"></a>
+<FONT color="green">142</FONT>        Path absolutePath = makeAbsolute(path);<a name="line.142"></a>
+<FONT color="green">143</FONT>        List&lt;Path&gt; paths = new ArrayList&lt;Path&gt;();<a name="line.143"></a>
+<FONT color="green">144</FONT>        do {<a name="line.144"></a>
+<FONT color="green">145</FONT>          paths.add(0, absolutePath);<a name="line.145"></a>
+<FONT color="green">146</FONT>          absolutePath = absolutePath.getParent();<a name="line.146"></a>
+<FONT color="green">147</FONT>        } while (absolutePath != null);<a name="line.147"></a>
+<FONT color="green">148</FONT>        <a name="line.148"></a>
+<FONT color="green">149</FONT>        boolean result = true;<a name="line.149"></a>
+<FONT color="green">150</FONT>        for (Path p : paths) {<a name="line.150"></a>
+<FONT color="green">151</FONT>          result &amp;= mkdir(p);<a name="line.151"></a>
+<FONT color="green">152</FONT>        }<a name="line.152"></a>
+<FONT color="green">153</FONT>        return result;<a name="line.153"></a>
+<FONT color="green">154</FONT>      }<a name="line.154"></a>
+<FONT color="green">155</FONT>      <a name="line.155"></a>
+<FONT color="green">156</FONT>      private boolean mkdir(Path path) throws IOException {<a name="line.156"></a>
+<FONT color="green">157</FONT>        Path absolutePath = makeAbsolute(path);<a name="line.157"></a>
+<FONT color="green">158</FONT>        INode inode = store.retrieveINode(absolutePath);<a name="line.158"></a>
+<FONT color="green">159</FONT>        if (inode == null) {<a name="line.159"></a>
+<FONT color="green">160</FONT>          store.storeINode(absolutePath, INode.DIRECTORY_INODE);<a name="line.160"></a>
+<FONT color="green">161</FONT>        } else if (inode.isFile()) {<a name="line.161"></a>
+<FONT color="green">162</FONT>          throw new IOException(String.format(<a name="line.162"></a>
+<FONT color="green">163</FONT>              "Can't make directory for path %s since it is a file.",<a name="line.163"></a>
+<FONT color="green">164</FONT>              absolutePath));<a name="line.164"></a>
+<FONT color="green">165</FONT>        }<a name="line.165"></a>
+<FONT color="green">166</FONT>        return true;<a name="line.166"></a>
+<FONT color="green">167</FONT>      }<a name="line.167"></a>
+<FONT color="green">168</FONT>    <a name="line.168"></a>
+<FONT color="green">169</FONT>      @Override<a name="line.169"></a>
+<FONT color="green">170</FONT>      public boolean isFile(Path path) throws IOException {<a name="line.170"></a>
+<FONT color="green">171</FONT>        INode inode = store.retrieveINode(makeAbsolute(path));<a name="line.171"></a>
+<FONT color="green">172</FONT>        if (inode == null) {<a name="line.172"></a>
+<FONT color="green">173</FONT>          return false;<a name="line.173"></a>
+<FONT color="green">174</FONT>        }<a name="line.174"></a>
+<FONT color="green">175</FONT>        return inode.isFile();<a name="line.175"></a>
+<FONT color="green">176</FONT>      }<a name="line.176"></a>
+<FONT color="green">177</FONT>    <a name="line.177"></a>
+<FONT color="green">178</FONT>      private INode checkFile(Path path) throws IOException {<a name="line.178"></a>
+<FONT color="green">179</FONT>        INode inode = store.retrieveINode(makeAbsolute(path));<a name="line.179"></a>
+<FONT color="green">180</FONT>        if (inode == null) {<a name="line.180"></a>
+<FONT color="green">181</FONT>          throw new IOException("No such file.");<a name="line.181"></a>
+<FONT color="green">182</FONT>        }<a name="line.182"></a>
+<FONT color="green">183</FONT>        if (inode.isDirectory()) {<a name="line.183"></a>
+<FONT color="green">184</FONT>          throw new IOException("Path " + path + " is a directory.");<a name="line.184"></a>
+<FONT color="green">185</FONT>        }<a name="line.185"></a>
+<FONT color="green">186</FONT>        return inode;<a name="line.186"></a>
+<FONT color="green">187</FONT>      }<a name="line.187"></a>
+<FONT color="green">188</FONT>    <a name="line.188"></a>
+<FONT color="green">189</FONT>      @Override<a name="line.189"></a>
+<FONT color="green">190</FONT>      public FileStatus[] listStatus(Path f) throws IOException {<a name="line.190"></a>
+<FONT color="green">191</FONT>        Path absolutePath = makeAbsolute(f);<a name="line.191"></a>
+<FONT color="green">192</FONT>        INode inode = store.retrieveINode(absolutePath);<a name="line.192"></a>
+<FONT color="green">193</FONT>        if (inode == null) {<a name="line.193"></a>
+<FONT color="green">194</FONT>          throw new FileNotFoundException("File " + f + " does not exist.");<a name="line.194"></a>
+<FONT color="green">195</FONT>        }<a name="line.195"></a>
+<FONT color="green">196</FONT>        if (inode.isFile()) {<a name="line.196"></a>
+<FONT color="green">197</FONT>          return new FileStatus[] {<a name="line.197"></a>
+<FONT color="green">198</FONT>            new S3FileStatus(f.makeQualified(this), inode)<a name="line.198"></a>
+<FONT color="green">199</FONT>          };<a name="line.199"></a>
+<FONT color="green">200</FONT>        }<a name="line.200"></a>
+<FONT color="green">201</FONT>        ArrayList&lt;FileStatus&gt; ret = new ArrayList&lt;FileStatus&gt;();<a name="line.201"></a>
+<FONT color="green">202</FONT>        for (Path p : store.listSubPaths(absolutePath)) {<a name="line.202"></a>
+<FONT color="green">203</FONT>          ret.add(getFileStatus(p.makeQualified(this)));<a name="line.203"></a>
+<FONT color="green">204</FONT>        }<a name="line.204"></a>
+<FONT color="green">205</FONT>        return ret.toArray(new FileStatus[0]);<a name="line.205"></a>
+<FONT color="green">206</FONT>      }<a name="line.206"></a>
+<FONT color="green">207</FONT>    <a name="line.207"></a>
+<FONT color="green">208</FONT>      /** This optional operation is not yet supported. */<a name="line.208"></a>
+<FONT color="green">209</FONT>      @Override<a name="line.209"></a>
+<FONT color="green">210</FONT>      public FSDataOutputStream append(Path f, int bufferSize,<a name="line.210"></a>
+<FONT color="green">211</FONT>          Progressable progress) throws IOException {<a name="line.211"></a>
+<FONT color="green">212</FONT>        throw new IOException("Not supported");<a name="line.212"></a>
+<FONT color="green">213</FONT>      }<a name="line.213"></a>
+<FONT color="green">214</FONT>    <a name="line.214"></a>
+<FONT color="green">215</FONT>      /**<a name="line.215"></a>
+<FONT color="green">216</FONT>       * @param permission Currently ignored.<a name="line.216"></a>
+<FONT color="green">217</FONT>       */<a name="line.217"></a>
+<FONT color="green">218</FONT>      @Override<a name="line.218"></a>
+<FONT color="green">219</FONT>      public FSDataOutputStream create(Path file, FsPermission permission,<a name="line.219"></a>
+<FONT color="green">220</FONT>          boolean overwrite, int bufferSize,<a name="line.220"></a>
+<FONT color="green">221</FONT>          short replication, long blockSize, Progressable progress)<a name="line.221"></a>
+<FONT color="green">222</FONT>        throws IOException {<a name="line.222"></a>
+<FONT color="green">223</FONT>    <a name="line.223"></a>
+<FONT color="green">224</FONT>        INode inode = store.retrieveINode(makeAbsolute(file));<a name="line.224"></a>
+<FONT color="green">225</FONT>        if (inode != null) {<a name="line.225"></a>
+<FONT color="green">226</FONT>          if (overwrite) {<a name="line.226"></a>
+<FONT color="green">227</FONT>            delete(file, true);<a name="line.227"></a>
+<FONT color="green">228</FONT>          } else {<a name="line.228"></a>
+<FONT color="green">229</FONT>            throw new IOException("File already exists: " + file);<a name="line.229"></a>
+<FONT color="green">230</FONT>          }<a name="line.230"></a>
+<FONT color="green">231</FONT>        } else {<a name="line.231"></a>
+<FONT color="green">232</FONT>          Path parent = file.getParent();<a name="line.232"></a>
+<FONT color="green">233</FONT>          if (parent != null) {<a name="line.233"></a>
+<FONT color="green">234</FONT>            if (!mkdirs(parent)) {<a name="line.234"></a>
+<FONT color="green">235</FONT>              throw new IOException("Mkdirs failed to create " + parent.toString());<a name="line.235"></a>
+<FONT color="green">236</FONT>            }<a name="line.236"></a>
+<FONT color="green">237</FONT>          }      <a name="line.237"></a>
+<FONT color="green">238</FONT>        }<a name="line.238"></a>
+<FONT color="green">239</FONT>        return new FSDataOutputStream<a name="line.239"></a>
+<FONT color="green">240</FONT>            (new S3OutputStream(getConf(), store, makeAbsolute(file),<a name="line.240"></a>
+<FONT color="green">241</FONT>                                blockSize, progress, bufferSize),<a name="line.241"></a>
+<FONT color="green">242</FONT>             statistics);<a name="line.242"></a>
+<FONT color="green">243</FONT>      }<a name="line.243"></a>
+<FONT color="green">244</FONT>    <a name="line.244"></a>
+<FONT color="green">245</FONT>      @Override<a name="line.245"></a>
+<FONT color="green">246</FONT>      public FSDataInputStream open(Path path, int bufferSize) throws IOException {<a name="line.246"></a>
+<FONT color="green">247</FONT>        INode inode = checkFile(path);<a name="line.247"></a>
+<FONT color="green">248</FONT>        return new FSDataInputStream(new S3InputStream(getConf(), store, inode,<a name="line.248"></a>
+<FONT color="green">249</FONT>                                                       statistics));<a name="line.249"></a>
+<FONT color="green">250</FONT>      }<a name="line.250"></a>
+<FONT color="green">251</FONT>    <a name="line.251"></a>
+<FONT color="green">252</FONT>      @Override<a name="line.252"></a>
+<FONT color="green">253</FONT>      public boolean rename(Path src, Path dst) throws IOException {<a name="line.253"></a>
+<FONT color="green">254</FONT>        Path absoluteSrc = makeAbsolute(src);<a name="line.254"></a>
+<FONT color="green">255</FONT>        INode srcINode = store.retrieveINode(absoluteSrc);<a name="line.255"></a>
+<FONT color="green">256</FONT>        if (srcINode == null) {<a name="line.256"></a>
+<FONT color="green">257</FONT>          // src path doesn't exist<a name="line.257"></a>
+<FONT color="green">258</FONT>          return false; <a name="line.258"></a>
+<FONT color="green">259</FONT>        }<a name="line.259"></a>
+<FONT color="green">260</FONT>        Path absoluteDst = makeAbsolute(dst);<a name="line.260"></a>
+<FONT color="green">261</FONT>        INode dstINode = store.retrieveINode(absoluteDst);<a name="line.261"></a>
+<FONT color="green">262</FONT>        if (dstINode != null &amp;&amp; dstINode.isDirectory()) {<a name="line.262"></a>
+<FONT color="green">263</FONT>          absoluteDst = new Path(absoluteDst, absoluteSrc.getName());<a name="line.263"></a>
+<FONT color="green">264</FONT>          dstINode = store.retrieveINode(absoluteDst);<a name="line.264"></a>
+<FONT color="green">265</FONT>        }<a name="line.265"></a>
+<FONT color="green">266</FONT>        if (dstINode != null) {<a name="line.266"></a>
+<FONT color="green">267</FONT>          // dst path already exists - can't overwrite<a name="line.267"></a>
+<FONT color="green">268</FONT>          return false;<a name="line.268"></a>
+<FONT color="green">269</FONT>        }<a name="line.269"></a>
+<FONT color="green">270</FONT>        Path dstParent = absoluteDst.getParent();<a name="line.270"></a>
+<FONT color="green">271</FONT>        if (dstParent != null) {<a name="line.271"></a>
+<FONT color="green">272</FONT>          INode dstParentINode = store.retrieveINode(dstParent);<a name="line.272"></a>
+<FONT color="green">273</FONT>          if (dstParentINode == null || dstParentINode.isFile()) {<a name="line.273"></a>
+<FONT color="green">274</FONT>            // dst parent doesn't exist or is a file<a name="line.274"></a>
+<FONT color="green">275</FONT>            return false;<a name="line.275"></a>
+<FONT color="green">276</FONT>          }<a name="line.276"></a>
+<FONT color="green">277</FONT>        }<a name="line.277"></a>
+<FONT color="green">278</FONT>        return renameRecursive(absoluteSrc, absoluteDst);<a name="line.278"></a>
+<FONT color="green">279</FONT>      }<a name="line.279"></a>
+<FONT color="green">280</FONT>      <a name="line.280"></a>
+<FONT color="green">281</FONT>      private boolean renameRecursive(Path src, Path dst) throws IOException {<a name="line.281"></a>
+<FONT color="green">282</FONT>        INode srcINode = store.retrieveINode(src);<a name="line.282"></a>
+<FONT color="green">283</FONT>        store.storeINode(dst, srcINode);<a name="line.283"></a>
+<FONT color="green">284</FONT>        store.deleteINode(src);<a name="line.284"></a>
+<FONT color="green">285</FONT>        if (srcINode.isDirectory()) {<a name="line.285"></a>
+<FONT color="green">286</FONT>          for (Path oldSrc : store.listDeepSubPaths(src)) {<a name="line.286"></a>
+<FONT color="green">287</FONT>            INode inode = store.retrieveINode(oldSrc);<a name="line.287"></a>
+<FONT color="green">288</FONT>            if (inode == null) {<a name="line.288"></a>
+<FONT color="green">289</FONT>              return false;<a name="line.289"></a>
+<FONT color="green">290</FONT>            }<a name="line.290"></a>
+<FONT color="green">291</FONT>            String oldSrcPath = oldSrc.toUri().getPath();<a name="line.291"></a>
+<FONT color="green">292</FONT>            String srcPath = src.toUri().getPath();<a name="line.292"></a>
+<FONT color="green">293</FONT>            String dstPath = dst.toUri().getPath();<a name="line.293"></a>
+<FONT color="green">294</FONT>            Path newDst = new Path(oldSrcPath.replaceFirst(srcPath, dstPath));<a name="line.294"></a>
+<FONT color="green">295</FONT>            store.storeINode(newDst, inode);<a name="line.295"></a>
+<FONT color="green">296</FONT>            store.deleteINode(oldSrc);<a name="line.296"></a>
+<FONT color="green">297</FONT>          }<a name="line.297"></a>
+<FONT color="green">298</FONT>        }<a name="line.298"></a>
+<FONT color="green">299</FONT>        return true;<a name="line.299"></a>
+<FONT color="green">300</FONT>      }<a name="line.300"></a>
+<FONT color="green">301</FONT>    <a name="line.301"></a>
+<FONT color="green">302</FONT>      @Override<a name="line.302"></a>
+<FONT color="green">303</FONT>      public boolean delete(Path path, boolean recursive) throws IOException {<a name="line.303"></a>
+<FONT color="green">304</FONT>       Path absolutePath = makeAbsolute(path);<a name="line.304"></a>
+<FONT color="green">305</FONT>       INode inode = store.retrieveINode(absolutePath);<a name="line.305"></a>
+<FONT color="green">306</FONT>       if (inode == null) {<a name="line.306"></a>
+<FONT color="green">307</FONT>         return false;<a name="line.307"></a>
+<FONT color="green">308</FONT>       }<a name="line.308"></a>
+<FONT color="green">309</FONT>       if (inode.isFile()) {<a name="line.309"></a>
+<FONT color="green">310</FONT>         store.deleteINode(absolutePath);<a name="line.310"></a>
+<FONT color="green">311</FONT>         for (Block block: inode.getBlocks()) {<a name="line.311"></a>
+<FONT color="green">312</FONT>           store.deleteBlock(block);<a name="line.312"></a>
+<FONT color="green">313</FONT>         }<a name="line.313"></a>
+<FONT color="green">314</FONT>       } else {<a name="line.314"></a>
+<FONT color="green">315</FONT>         FileStatus[] contents = null; <a name="line.315"></a>
+<FONT color="green">316</FONT>         try {<a name="line.316"></a>
+<FONT color="green">317</FONT>           contents = listStatus(absolutePath);<a name="line.317"></a>
+<FONT color="green">318</FONT>         } catch(FileNotFoundException fnfe) {<a name="line.318"></a>
+<FONT color="green">319</FONT>           return false;<a name="line.319"></a>
+<FONT color="green">320</FONT>         }<a name="line.320"></a>
+<FONT color="green">321</FONT>    <a name="line.321"></a>
+<FONT color="green">322</FONT>         if ((contents.length !=0) &amp;&amp; (!recursive)) {<a name="line.322"></a>
+<FONT color="green">323</FONT>           throw new IOException("Directory " + path.toString() <a name="line.323"></a>
+<FONT color="green">324</FONT>               + " is not empty.");<a name="line.324"></a>
+<FONT color="green">325</FONT>         }<a name="line.325"></a>
+<FONT color="green">326</FONT>         for (FileStatus p:contents) {<a name="line.326"></a>
+<FONT color="green">327</FONT>           if (!delete(p.getPath(), recursive)) {<a name="line.327"></a>
+<FONT color="green">328</FONT>             return false;<a name="line.328"></a>
+<FONT color="green">329</FONT>           }<a name="line.329"></a>
+<FONT color="green">330</FONT>         }<a name="line.330"></a>
+<FONT color="green">331</FONT>         store.deleteINode(absolutePath);<a name="line.331"></a>
+<FONT color="green">332</FONT>       }<a name="line.332"></a>
+<FONT color="green">333</FONT>       return true;<a name="line.333"></a>
+<FONT color="green">334</FONT>      }<a name="line.334"></a>
+<FONT color="green">335</FONT>      <a name="line.335"></a>
+<FONT color="green">336</FONT>      /**<a name="line.336"></a>
+<FONT color="green">337</FONT>       * FileStatus for S3 file systems. <a name="line.337"></a>
+<FONT color="green">338</FONT>       */<a name="line.338"></a>
+<FONT color="green">339</FONT>      @Override<a name="line.339"></a>
+<FONT color="green">340</FONT>      public FileStatus getFileStatus(Path f)  throws IOException {<a name="line.340"></a>
+<FONT color="green">341</FONT>        INode inode = store.retrieveINode(makeAbsolute(f));<a name="line.341"></a>
+<FONT color="green">342</FONT>        if (inode == null) {<a name="line.342"></a>
+<FONT color="green">343</FONT>          throw new FileNotFoundException(f + ": No such file or directory.");<a name="line.343"></a>
+<FONT color="green">344</FONT>        }<a name="line.344"></a>
+<FONT color="green">345</FONT>        return new S3FileStatus(f.makeQualified(this), inode);<a name="line.345"></a>
+<FONT color="green">346</FONT>      }<a name="line.346"></a>
+<FONT color="green">347</FONT>      <a name="line.347"></a>
+<FONT color="green">348</FONT>      @Override<a name="line.348"></a>
+<FONT color="green">349</FONT>      public long getDefaultBlockSize() {<a name="line.349"></a>
+<FONT color="green">350</FONT>        return getConf().getLong("fs.s3.block.size", 64 * 1024 * 1024);<a name="line.350"></a>
+<FONT color="green">351</FONT>      }<a name="line.351"></a>
+<FONT color="green">352</FONT>    <a name="line.352"></a>
+<FONT color="green">353</FONT>      @Override<a name="line.353"></a>
+<FONT color="green">354</FONT>      public String getCanonicalServiceName() {<a name="line.354"></a>
+<FONT color="green">355</FONT>        // Does not support Token<a name="line.355"></a>
+<FONT color="green">356</FONT>        return null;<a name="line.356"></a>
+<FONT color="green">357</FONT>      }<a name="line.357"></a>
+<FONT color="green">358</FONT>    <a name="line.358"></a>
+<FONT color="green">359</FONT>      // diagnostic methods<a name="line.359"></a>
+<FONT color="green">360</FONT>    <a name="line.360"></a>
+<FONT color="green">361</FONT>      void dump() throws IOException {<a name="line.361"></a>
+<FONT color="green">362</FONT>        store.dump();<a name="line.362"></a>
+<FONT color="green">363</FONT>      }<a name="line.363"></a>
+<FONT color="green">364</FONT>    <a name="line.364"></a>
+<FONT color="green">365</FONT>      void purge() throws IOException {<a name="line.365"></a>
+<FONT color="green">366</FONT>        store.purge();<a name="line.366"></a>
+<FONT color="green">367</FONT>      }<a name="line.367"></a>
+<FONT color="green">368</FONT>    <a name="line.368"></a>
+<FONT color="green">369</FONT>      private static class S3FileStatus extends FileStatus {<a name="line.369"></a>
+<FONT color="green">370</FONT>    <a name="line.370"></a>
+<FONT color="green">371</FONT>        S3FileStatus(Path f, INode inode) throws IOException {<a name="line.371"></a>
+<FONT color="green">372</FONT>          super(findLength(inode), inode.isDirectory(), 1,<a name="line.372"></a>
+<FONT color="green">373</FONT>                findBlocksize(inode), 0, f);<a name="line.373"></a>
+<FONT color="green">374</FONT>        }<a name="line.374"></a>
+<FONT color="green">375</FONT>    <a name="line.375"></a>
+<FONT color="green">376</FONT>        private static long findLength(INode inode) {<a name="line.376"></a>
+<FONT color="green">377</FONT>          if (!inode.isDirectory()) {<a name="line.377"></a>
+<FONT color="green">378</FONT>            long length = 0L;<a name="line.378"></a>
+<FONT color="green">379</FONT>            for (Block block : inode.getBlocks()) {<a name="line.379"></a>
+<FONT color="green">380</FONT>              length += block.getLength();<a name="line.380"></a>
+<FONT color="green">381</FONT>            }<a name="line.381"></a>
+<FONT color="green">382</FONT>            return length;<a name="line.382"></a>
+<FONT color="green">383</FONT>          }<a name="line.383"></a>
+<FONT color="green">384</FONT>          return 0;<a name="line.384"></a>
+<FONT color="green">385</FONT>        }<a name="line.385"></a>
+<FONT color="green">386</FONT>    <a name="line.386"></a>
+<FONT color="green">387</FONT>        private static long findBlocksize(INode inode) {<a name="line.387"></a>
+<FONT color="green">388</FONT>          final Block[] ret = inode.getBlocks();<a name="line.388"></a>
+<FONT color="green">389</FONT>          return ret == null ? 0L : ret[0].getLength();<a name="line.389"></a>
+<FONT color="green">390</FONT>        }<a name="line.390"></a>
+<FONT color="green">391</FONT>      }<a name="line.391"></a>
+<FONT color="green">392</FONT>    }<a name="line.392"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

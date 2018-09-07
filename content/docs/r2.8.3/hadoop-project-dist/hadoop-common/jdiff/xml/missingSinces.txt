@@ -1,0 +1,17 @@
+NO DOC BLOCK: org.apache.hadoop.conf.Configuration Method addResource(java.io.InputStream, boolean)
+NO DOC BLOCK: org.apache.hadoop.conf.Configuration Method addResource(java.io.InputStream, java.lang.String, boolean)
+NO DOC BLOCK: org.apache.hadoop.conf.Configuration Method addResource(java.lang.String, boolean)
+NO DOC BLOCK: org.apache.hadoop.conf.Configuration Method addResource(java.net.URL, boolean)
+NO DOC BLOCK: org.apache.hadoop.conf.Configuration Method addResource(org.apache.hadoop.fs.Path, boolean)
+MISSING @SINCE TAG: org.apache.hadoop.conf.Configuration Method dumpConfiguration(org.apache.hadoop.conf.Configuration, java.lang.String, java.io.Writer)
+NO DOC BLOCK: org.apache.hadoop.conf.Configuration Method setRestrictSystemProperties(boolean)
+NO DOC BLOCK: org.apache.hadoop.conf.Configuration Method setRestrictSystemPropertiesDefault(boolean)
+NO DOC BLOCK: org.apache.hadoop.conf.Configuration Method setRestrictSystemProps(boolean)
+MISSING @SINCE TAG: org.apache.hadoop.conf.Configuration Method writeXml(java.lang.String, java.io.Writer)
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field KMS_CLIENT_FAILOVER_MAX_RETRIES_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field KMS_CLIENT_FAILOVER_SLEEP_BASE_MILLIS_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field KMS_CLIENT_FAILOVER_SLEEP_BASE_MILLIS_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field KMS_CLIENT_FAILOVER_SLEEP_MAX_MILLIS_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field KMS_CLIENT_FAILOVER_SLEEP_MAX_MILLIS_KEY
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field KMS_CLIENT_TIMEOUT_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field KMS_CLIENT_TIMEOUT_SECONDS

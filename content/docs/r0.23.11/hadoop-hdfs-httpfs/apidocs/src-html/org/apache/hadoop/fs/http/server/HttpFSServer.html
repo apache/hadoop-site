@@ -1,0 +1,676 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span><a name="line.18"></a>
+<span class="sourceLineNo">019</span>package org.apache.hadoop.fs.http.server;<a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.apache.hadoop.conf.Configuration;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import org.apache.hadoop.fs.FileSystem;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.apache.hadoop.fs.http.client.HttpFSFileSystem;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.apache.hadoop.fs.http.server.HttpFSParams.AccessTimeParam;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.apache.hadoop.fs.http.server.HttpFSParams.BlockSizeParam;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.apache.hadoop.fs.http.server.HttpFSParams.DataParam;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.apache.hadoop.fs.http.server.HttpFSParams.DeleteOpParam;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.apache.hadoop.fs.http.server.HttpFSParams.DeleteRecursiveParam;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.apache.hadoop.fs.http.server.HttpFSParams.DoAsParam;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.apache.hadoop.fs.http.server.HttpFSParams.FilterParam;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.apache.hadoop.fs.http.server.HttpFSParams.FsPathParam;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.apache.hadoop.fs.http.server.HttpFSParams.GetOpParam;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.apache.hadoop.fs.http.server.HttpFSParams.GroupParam;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.apache.hadoop.fs.http.server.HttpFSParams.LenParam;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.apache.hadoop.fs.http.server.HttpFSParams.ModifiedTimeParam;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.apache.hadoop.fs.http.server.HttpFSParams.OffsetParam;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.apache.hadoop.fs.http.server.HttpFSParams.OverwriteParam;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.apache.hadoop.fs.http.server.HttpFSParams.OwnerParam;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.apache.hadoop.fs.http.server.HttpFSParams.PermissionParam;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import org.apache.hadoop.fs.http.server.HttpFSParams.PostOpParam;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import org.apache.hadoop.fs.http.server.HttpFSParams.PutOpParam;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import org.apache.hadoop.fs.http.server.HttpFSParams.ReplicationParam;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import org.apache.hadoop.fs.http.server.HttpFSParams.ToPathParam;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import org.apache.hadoop.lib.service.FileSystemAccess;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>import org.apache.hadoop.lib.service.FileSystemAccessException;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>import org.apache.hadoop.lib.service.Groups;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>import org.apache.hadoop.lib.service.Instrumentation;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>import org.apache.hadoop.lib.service.ProxyUser;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>import org.apache.hadoop.lib.servlet.FileSystemReleaseFilter;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>import org.apache.hadoop.lib.servlet.HostnameFilter;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>import org.apache.hadoop.lib.wsrs.InputStreamEntity;<a name="line.51"></a>
+<span class="sourceLineNo">052</span>import org.json.simple.JSONObject;<a name="line.52"></a>
+<span class="sourceLineNo">053</span>import org.slf4j.Logger;<a name="line.53"></a>
+<span class="sourceLineNo">054</span>import org.slf4j.LoggerFactory;<a name="line.54"></a>
+<span class="sourceLineNo">055</span>import org.slf4j.MDC;<a name="line.55"></a>
+<span class="sourceLineNo">056</span><a name="line.56"></a>
+<span class="sourceLineNo">057</span>import javax.ws.rs.Consumes;<a name="line.57"></a>
+<span class="sourceLineNo">058</span>import javax.ws.rs.DELETE;<a name="line.58"></a>
+<span class="sourceLineNo">059</span>import javax.ws.rs.DefaultValue;<a name="line.59"></a>
+<span class="sourceLineNo">060</span>import javax.ws.rs.GET;<a name="line.60"></a>
+<span class="sourceLineNo">061</span>import javax.ws.rs.POST;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>import javax.ws.rs.PUT;<a name="line.62"></a>
+<span class="sourceLineNo">063</span>import javax.ws.rs.Path;<a name="line.63"></a>
+<span class="sourceLineNo">064</span>import javax.ws.rs.PathParam;<a name="line.64"></a>
+<span class="sourceLineNo">065</span>import javax.ws.rs.Produces;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>import javax.ws.rs.QueryParam;<a name="line.66"></a>
+<span class="sourceLineNo">067</span>import javax.ws.rs.core.Context;<a name="line.67"></a>
+<span class="sourceLineNo">068</span>import javax.ws.rs.core.MediaType;<a name="line.68"></a>
+<span class="sourceLineNo">069</span>import javax.ws.rs.core.Response;<a name="line.69"></a>
+<span class="sourceLineNo">070</span>import javax.ws.rs.core.UriBuilder;<a name="line.70"></a>
+<span class="sourceLineNo">071</span>import javax.ws.rs.core.UriInfo;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>import java.io.IOException;<a name="line.72"></a>
+<span class="sourceLineNo">073</span>import java.io.InputStream;<a name="line.73"></a>
+<span class="sourceLineNo">074</span>import java.net.URI;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>import java.security.AccessControlException;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>import java.security.Principal;<a name="line.76"></a>
+<span class="sourceLineNo">077</span>import java.text.MessageFormat;<a name="line.77"></a>
+<span class="sourceLineNo">078</span>import java.util.List;<a name="line.78"></a>
+<span class="sourceLineNo">079</span>import java.util.Map;<a name="line.79"></a>
+<span class="sourceLineNo">080</span><a name="line.80"></a>
+<span class="sourceLineNo">081</span>/**<a name="line.81"></a>
+<span class="sourceLineNo">082</span> * Main class of HttpFSServer server.<a name="line.82"></a>
+<span class="sourceLineNo">083</span> * &lt;p/&gt;<a name="line.83"></a>
+<span class="sourceLineNo">084</span> * The &lt;code&gt;HttpFSServer&lt;/code&gt; class uses Jersey JAX-RS to binds HTTP requests to the<a name="line.84"></a>
+<span class="sourceLineNo">085</span> * different operations.<a name="line.85"></a>
+<span class="sourceLineNo">086</span> */<a name="line.86"></a>
+<span class="sourceLineNo">087</span>@Path(HttpFSFileSystem.SERVICE_VERSION)<a name="line.87"></a>
+<span class="sourceLineNo">088</span>public class HttpFSServer {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>  private static Logger AUDIT_LOG = LoggerFactory.getLogger("httpfsaudit");<a name="line.89"></a>
+<span class="sourceLineNo">090</span><a name="line.90"></a>
+<span class="sourceLineNo">091</span>  /**<a name="line.91"></a>
+<span class="sourceLineNo">092</span>   * Special binding for '/' as it is not handled by the wildcard binding.<a name="line.92"></a>
+<span class="sourceLineNo">093</span>   *<a name="line.93"></a>
+<span class="sourceLineNo">094</span>   * @param user principal making the request.<a name="line.94"></a>
+<span class="sourceLineNo">095</span>   * @param op GET operation, default value is @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.GetOpValues#OPEN}.<a name="line.95"></a>
+<span class="sourceLineNo">096</span>   * @param filter Glob filter, default value is none. Used only if the<a name="line.96"></a>
+<span class="sourceLineNo">097</span>   * operation is @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.GetOpValues#LISTSTATUS}<a name="line.97"></a>
+<span class="sourceLineNo">098</span>   * @param doAs user being impersonated, defualt value is none. It can be used<a name="line.98"></a>
+<span class="sourceLineNo">099</span>   * only if the current user is a HttpFSServer proxyuser.<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   *<a name="line.100"></a>
+<span class="sourceLineNo">101</span>   * @return the request response<a name="line.101"></a>
+<span class="sourceLineNo">102</span>   *<a name="line.102"></a>
+<span class="sourceLineNo">103</span>   * @throws IOException thrown if an IO error occurred. Thrown exceptions are<a name="line.103"></a>
+<span class="sourceLineNo">104</span>   * handled by {@link HttpFSExceptionProvider}.<a name="line.104"></a>
+<span class="sourceLineNo">105</span>   * @throws FileSystemAccessException thrown if a FileSystemAccess releated error occurred. Thrown<a name="line.105"></a>
+<span class="sourceLineNo">106</span>   * exceptions are handled by {@link HttpFSExceptionProvider}.<a name="line.106"></a>
+<span class="sourceLineNo">107</span>   */<a name="line.107"></a>
+<span class="sourceLineNo">108</span>  @GET<a name="line.108"></a>
+<span class="sourceLineNo">109</span>  @Path("/")<a name="line.109"></a>
+<span class="sourceLineNo">110</span>  @Produces(MediaType.APPLICATION_JSON)<a name="line.110"></a>
+<span class="sourceLineNo">111</span>  public Response root(@Context Principal user,<a name="line.111"></a>
+<span class="sourceLineNo">112</span>                       @QueryParam(GetOpParam.NAME) GetOpParam op,<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                       @QueryParam(FilterParam.NAME) @DefaultValue(FilterParam.DEFAULT) FilterParam filter,<a name="line.113"></a>
+<span class="sourceLineNo">114</span>                       @QueryParam(DoAsParam.NAME) @DefaultValue(DoAsParam.DEFAULT) DoAsParam doAs)<a name="line.114"></a>
+<span class="sourceLineNo">115</span>    throws IOException, FileSystemAccessException {<a name="line.115"></a>
+<span class="sourceLineNo">116</span>    return get(user, new FsPathParam(""), op, new OffsetParam(OffsetParam.DEFAULT),<a name="line.116"></a>
+<span class="sourceLineNo">117</span>               new LenParam(LenParam.DEFAULT), filter, doAs,<a name="line.117"></a>
+<span class="sourceLineNo">118</span>               new OverwriteParam(OverwriteParam.DEFAULT),<a name="line.118"></a>
+<span class="sourceLineNo">119</span>               new BlockSizeParam(BlockSizeParam.DEFAULT),<a name="line.119"></a>
+<span class="sourceLineNo">120</span>               new PermissionParam(PermissionParam.DEFAULT),<a name="line.120"></a>
+<span class="sourceLineNo">121</span>               new ReplicationParam(ReplicationParam.DEFAULT));<a name="line.121"></a>
+<span class="sourceLineNo">122</span>  }<a name="line.122"></a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span>  /**<a name="line.124"></a>
+<span class="sourceLineNo">125</span>   * Resolves the effective user that will be used to request a FileSystemAccess filesystem.<a name="line.125"></a>
+<span class="sourceLineNo">126</span>   * &lt;p/&gt;<a name="line.126"></a>
+<span class="sourceLineNo">127</span>   * If the doAs-user is NULL or the same as the user, it returns the user.<a name="line.127"></a>
+<span class="sourceLineNo">128</span>   * &lt;p/&gt;<a name="line.128"></a>
+<span class="sourceLineNo">129</span>   * Otherwise it uses proxyuser rules (see {@link ProxyUser} to determine if the<a name="line.129"></a>
+<span class="sourceLineNo">130</span>   * current user can impersonate the doAs-user.<a name="line.130"></a>
+<span class="sourceLineNo">131</span>   * &lt;p/&gt;<a name="line.131"></a>
+<span class="sourceLineNo">132</span>   * If the current user cannot impersonate the doAs-user an<a name="line.132"></a>
+<span class="sourceLineNo">133</span>   * &lt;code&gt;AccessControlException&lt;/code&gt; will be thrown.<a name="line.133"></a>
+<span class="sourceLineNo">134</span>   *<a name="line.134"></a>
+<span class="sourceLineNo">135</span>   * @param user principal for whom the filesystem instance is.<a name="line.135"></a>
+<span class="sourceLineNo">136</span>   * @param doAs do-as user, if any.<a name="line.136"></a>
+<span class="sourceLineNo">137</span>   *<a name="line.137"></a>
+<span class="sourceLineNo">138</span>   * @return the effective user.<a name="line.138"></a>
+<span class="sourceLineNo">139</span>   *<a name="line.139"></a>
+<span class="sourceLineNo">140</span>   * @throws IOException thrown if an IO error occurrs.<a name="line.140"></a>
+<span class="sourceLineNo">141</span>   * @throws AccessControlException thrown if the current user cannot impersonate<a name="line.141"></a>
+<span class="sourceLineNo">142</span>   * the doAs-user.<a name="line.142"></a>
+<span class="sourceLineNo">143</span>   */<a name="line.143"></a>
+<span class="sourceLineNo">144</span>  private String getEffectiveUser(Principal user, String doAs) throws IOException {<a name="line.144"></a>
+<span class="sourceLineNo">145</span>    String effectiveUser = user.getName();<a name="line.145"></a>
+<span class="sourceLineNo">146</span>    if (doAs != null &amp;&amp; !doAs.equals(user.getName())) {<a name="line.146"></a>
+<span class="sourceLineNo">147</span>      ProxyUser proxyUser = HttpFSServerWebApp.get().get(ProxyUser.class);<a name="line.147"></a>
+<span class="sourceLineNo">148</span>      proxyUser.validate(user.getName(), HostnameFilter.get(), doAs);<a name="line.148"></a>
+<span class="sourceLineNo">149</span>      effectiveUser = doAs;<a name="line.149"></a>
+<span class="sourceLineNo">150</span>      AUDIT_LOG.info("Proxy user [{}] DoAs user [{}]", user.getName(), doAs);<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    }<a name="line.151"></a>
+<span class="sourceLineNo">152</span>    return effectiveUser;<a name="line.152"></a>
+<span class="sourceLineNo">153</span>  }<a name="line.153"></a>
+<span class="sourceLineNo">154</span><a name="line.154"></a>
+<span class="sourceLineNo">155</span>  /**<a name="line.155"></a>
+<span class="sourceLineNo">156</span>   * Executes a {@link FileSystemAccess.FileSystemExecutor} using a filesystem for the effective<a name="line.156"></a>
+<span class="sourceLineNo">157</span>   * user.<a name="line.157"></a>
+<span class="sourceLineNo">158</span>   *<a name="line.158"></a>
+<span class="sourceLineNo">159</span>   * @param user principal making the request.<a name="line.159"></a>
+<span class="sourceLineNo">160</span>   * @param doAs do-as user, if any.<a name="line.160"></a>
+<span class="sourceLineNo">161</span>   * @param executor FileSystemExecutor to execute.<a name="line.161"></a>
+<span class="sourceLineNo">162</span>   *<a name="line.162"></a>
+<span class="sourceLineNo">163</span>   * @return FileSystemExecutor response<a name="line.163"></a>
+<span class="sourceLineNo">164</span>   *<a name="line.164"></a>
+<span class="sourceLineNo">165</span>   * @throws IOException thrown if an IO error occurrs.<a name="line.165"></a>
+<span class="sourceLineNo">166</span>   * @throws FileSystemAccessException thrown if a FileSystemAccess releated error occurred. Thrown<a name="line.166"></a>
+<span class="sourceLineNo">167</span>   * exceptions are handled by {@link HttpFSExceptionProvider}.<a name="line.167"></a>
+<span class="sourceLineNo">168</span>   */<a name="line.168"></a>
+<span class="sourceLineNo">169</span>  private &lt;T&gt; T fsExecute(Principal user, String doAs, FileSystemAccess.FileSystemExecutor&lt;T&gt; executor)<a name="line.169"></a>
+<span class="sourceLineNo">170</span>    throws IOException, FileSystemAccessException {<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    String hadoopUser = getEffectiveUser(user, doAs);<a name="line.171"></a>
+<span class="sourceLineNo">172</span>    FileSystemAccess fsAccess = HttpFSServerWebApp.get().get(FileSystemAccess.class);<a name="line.172"></a>
+<span class="sourceLineNo">173</span>    Configuration conf = HttpFSServerWebApp.get().get(FileSystemAccess.class).getDefaultConfiguration();<a name="line.173"></a>
+<span class="sourceLineNo">174</span>    return fsAccess.execute(hadoopUser, conf, executor);<a name="line.174"></a>
+<span class="sourceLineNo">175</span>  }<a name="line.175"></a>
+<span class="sourceLineNo">176</span><a name="line.176"></a>
+<span class="sourceLineNo">177</span>  /**<a name="line.177"></a>
+<span class="sourceLineNo">178</span>   * Returns a filesystem instance. The fileystem instance is wired for release at the completion of<a name="line.178"></a>
+<span class="sourceLineNo">179</span>   * the current Servlet request via the {@link FileSystemReleaseFilter}.<a name="line.179"></a>
+<span class="sourceLineNo">180</span>   * &lt;p/&gt;<a name="line.180"></a>
+<span class="sourceLineNo">181</span>   * If a do-as user is specified, the current user must be a valid proxyuser, otherwise an<a name="line.181"></a>
+<span class="sourceLineNo">182</span>   * &lt;code&gt;AccessControlException&lt;/code&gt; will be thrown.<a name="line.182"></a>
+<span class="sourceLineNo">183</span>   *<a name="line.183"></a>
+<span class="sourceLineNo">184</span>   * @param user principal for whom the filesystem instance is.<a name="line.184"></a>
+<span class="sourceLineNo">185</span>   * @param doAs do-as user, if any.<a name="line.185"></a>
+<span class="sourceLineNo">186</span>   *<a name="line.186"></a>
+<span class="sourceLineNo">187</span>   * @return a filesystem for the specified user or do-as user.<a name="line.187"></a>
+<span class="sourceLineNo">188</span>   *<a name="line.188"></a>
+<span class="sourceLineNo">189</span>   * @throws IOException thrown if an IO error occurred. Thrown exceptions are<a name="line.189"></a>
+<span class="sourceLineNo">190</span>   * handled by {@link HttpFSExceptionProvider}.<a name="line.190"></a>
+<span class="sourceLineNo">191</span>   * @throws FileSystemAccessException thrown if a FileSystemAccess releated error occurred. Thrown<a name="line.191"></a>
+<span class="sourceLineNo">192</span>   * exceptions are handled by {@link HttpFSExceptionProvider}.<a name="line.192"></a>
+<span class="sourceLineNo">193</span>   */<a name="line.193"></a>
+<span class="sourceLineNo">194</span>  private FileSystem createFileSystem(Principal user, String doAs) throws IOException, FileSystemAccessException {<a name="line.194"></a>
+<span class="sourceLineNo">195</span>    String hadoopUser = getEffectiveUser(user, doAs);<a name="line.195"></a>
+<span class="sourceLineNo">196</span>    FileSystemAccess fsAccess = HttpFSServerWebApp.get().get(FileSystemAccess.class);<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    Configuration conf = HttpFSServerWebApp.get().get(FileSystemAccess.class).getDefaultConfiguration();<a name="line.197"></a>
+<span class="sourceLineNo">198</span>    FileSystem fs = fsAccess.createFileSystem(hadoopUser, conf);<a name="line.198"></a>
+<span class="sourceLineNo">199</span>    FileSystemReleaseFilter.setFileSystem(fs);<a name="line.199"></a>
+<span class="sourceLineNo">200</span>    return fs;<a name="line.200"></a>
+<span class="sourceLineNo">201</span>  }<a name="line.201"></a>
+<span class="sourceLineNo">202</span><a name="line.202"></a>
+<span class="sourceLineNo">203</span>  /**<a name="line.203"></a>
+<span class="sourceLineNo">204</span>   * Binding to handle all GET requests, supported operations are<a name="line.204"></a>
+<span class="sourceLineNo">205</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.GetOpValues}.<a name="line.205"></a>
+<span class="sourceLineNo">206</span>   * &lt;p/&gt;<a name="line.206"></a>
+<span class="sourceLineNo">207</span>   * The @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.GetOpValues#INSTRUMENTATION} operation is available only<a name="line.207"></a>
+<span class="sourceLineNo">208</span>   * to users that are in HttpFSServer's admin group (see {@link HttpFSServer}. It returns<a name="line.208"></a>
+<span class="sourceLineNo">209</span>   * HttpFSServer instrumentation data. The specified path must be '/'.<a name="line.209"></a>
+<span class="sourceLineNo">210</span>   *<a name="line.210"></a>
+<span class="sourceLineNo">211</span>   * @param user principal making the request.<a name="line.211"></a>
+<span class="sourceLineNo">212</span>   * @param path path for the GET request.<a name="line.212"></a>
+<span class="sourceLineNo">213</span>   * @param op GET operation, default value is @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.GetOpValues#OPEN}.<a name="line.213"></a>
+<span class="sourceLineNo">214</span>   * @param offset of the  file being fetch, used only with<a name="line.214"></a>
+<span class="sourceLineNo">215</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.GetOpValues#OPEN} operations.<a name="line.215"></a>
+<span class="sourceLineNo">216</span>   * @param len amounts of bytes, used only with @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.GetOpValues#OPEN}<a name="line.216"></a>
+<span class="sourceLineNo">217</span>   * operations.<a name="line.217"></a>
+<span class="sourceLineNo">218</span>   * @param filter Glob filter, default value is none. Used only if the<a name="line.218"></a>
+<span class="sourceLineNo">219</span>   * operation is @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.GetOpValues#LISTSTATUS}<a name="line.219"></a>
+<span class="sourceLineNo">220</span>   * @param doAs user being impersonated, defualt value is none. It can be used<a name="line.220"></a>
+<span class="sourceLineNo">221</span>   * only if the current user is a HttpFSServer proxyuser.<a name="line.221"></a>
+<span class="sourceLineNo">222</span>   * @param override default is true. Used only for<a name="line.222"></a>
+<span class="sourceLineNo">223</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#CREATE} operations.<a name="line.223"></a>
+<span class="sourceLineNo">224</span>   * @param blockSize block size to set, used only by<a name="line.224"></a>
+<span class="sourceLineNo">225</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#CREATE} operations.<a name="line.225"></a>
+<span class="sourceLineNo">226</span>   * @param permission permission to set, used only by<a name="line.226"></a>
+<span class="sourceLineNo">227</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#SETPERMISSION}.<a name="line.227"></a>
+<span class="sourceLineNo">228</span>   * @param replication replication factor to set, used only by<a name="line.228"></a>
+<span class="sourceLineNo">229</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#SETREPLICATION}.<a name="line.229"></a>
+<span class="sourceLineNo">230</span>   *<a name="line.230"></a>
+<span class="sourceLineNo">231</span>   * @return the request response.<a name="line.231"></a>
+<span class="sourceLineNo">232</span>   *<a name="line.232"></a>
+<span class="sourceLineNo">233</span>   * @throws IOException thrown if an IO error occurred. Thrown exceptions are<a name="line.233"></a>
+<span class="sourceLineNo">234</span>   * handled by {@link HttpFSExceptionProvider}.<a name="line.234"></a>
+<span class="sourceLineNo">235</span>   * @throws FileSystemAccessException thrown if a FileSystemAccess releated error occurred. Thrown<a name="line.235"></a>
+<span class="sourceLineNo">236</span>   * exceptions are handled by {@link HttpFSExceptionProvider}.<a name="line.236"></a>
+<span class="sourceLineNo">237</span>   */<a name="line.237"></a>
+<span class="sourceLineNo">238</span>  @GET<a name="line.238"></a>
+<span class="sourceLineNo">239</span>  @Path("{path:.*}")<a name="line.239"></a>
+<span class="sourceLineNo">240</span>  @Produces({MediaType.APPLICATION_OCTET_STREAM, MediaType.APPLICATION_JSON})<a name="line.240"></a>
+<span class="sourceLineNo">241</span>  public Response get(@Context Principal user,<a name="line.241"></a>
+<span class="sourceLineNo">242</span>                      @PathParam("path") @DefaultValue("") FsPathParam path,<a name="line.242"></a>
+<span class="sourceLineNo">243</span>                      @QueryParam(GetOpParam.NAME) GetOpParam op,<a name="line.243"></a>
+<span class="sourceLineNo">244</span>                      @QueryParam(OffsetParam.NAME) @DefaultValue(OffsetParam.DEFAULT) OffsetParam offset,<a name="line.244"></a>
+<span class="sourceLineNo">245</span>                      @QueryParam(LenParam.NAME) @DefaultValue(LenParam.DEFAULT) LenParam len,<a name="line.245"></a>
+<span class="sourceLineNo">246</span>                      @QueryParam(FilterParam.NAME) @DefaultValue(FilterParam.DEFAULT) FilterParam filter,<a name="line.246"></a>
+<span class="sourceLineNo">247</span>                      @QueryParam(DoAsParam.NAME) @DefaultValue(DoAsParam.DEFAULT) DoAsParam doAs,<a name="line.247"></a>
+<span class="sourceLineNo">248</span><a name="line.248"></a>
+<span class="sourceLineNo">249</span>                      //these params are only for createHandle operation acceptance purposes<a name="line.249"></a>
+<span class="sourceLineNo">250</span>                      @QueryParam(OverwriteParam.NAME) @DefaultValue(OverwriteParam.DEFAULT) OverwriteParam override,<a name="line.250"></a>
+<span class="sourceLineNo">251</span>                      @QueryParam(BlockSizeParam.NAME) @DefaultValue(BlockSizeParam.DEFAULT) BlockSizeParam blockSize,<a name="line.251"></a>
+<span class="sourceLineNo">252</span>                      @QueryParam(PermissionParam.NAME) @DefaultValue(PermissionParam.DEFAULT)<a name="line.252"></a>
+<span class="sourceLineNo">253</span>                      PermissionParam permission,<a name="line.253"></a>
+<span class="sourceLineNo">254</span>                      @QueryParam(ReplicationParam.NAME) @DefaultValue(ReplicationParam.DEFAULT)<a name="line.254"></a>
+<span class="sourceLineNo">255</span>                      ReplicationParam replication<a name="line.255"></a>
+<span class="sourceLineNo">256</span>  )<a name="line.256"></a>
+<span class="sourceLineNo">257</span>    throws IOException, FileSystemAccessException {<a name="line.257"></a>
+<span class="sourceLineNo">258</span>    Response response = null;<a name="line.258"></a>
+<span class="sourceLineNo">259</span>    if (op == null) {<a name="line.259"></a>
+<span class="sourceLineNo">260</span>      throw new UnsupportedOperationException(MessageFormat.format("Missing [{0}] parameter", GetOpParam.NAME));<a name="line.260"></a>
+<span class="sourceLineNo">261</span>    } else {<a name="line.261"></a>
+<span class="sourceLineNo">262</span>      path.makeAbsolute();<a name="line.262"></a>
+<span class="sourceLineNo">263</span>      MDC.put(HttpFSFileSystem.OP_PARAM, op.value().name());<a name="line.263"></a>
+<span class="sourceLineNo">264</span>      switch (op.value()) {<a name="line.264"></a>
+<span class="sourceLineNo">265</span>        case OPEN: {<a name="line.265"></a>
+<span class="sourceLineNo">266</span>          //Invoking the command directly using an unmanaged FileSystem that is released by the<a name="line.266"></a>
+<span class="sourceLineNo">267</span>          //FileSystemReleaseFilter<a name="line.267"></a>
+<span class="sourceLineNo">268</span>          FSOperations.FSOpen command = new FSOperations.FSOpen(path.value());<a name="line.268"></a>
+<span class="sourceLineNo">269</span>          FileSystem fs = createFileSystem(user, doAs.value());<a name="line.269"></a>
+<span class="sourceLineNo">270</span>          InputStream is = command.execute(fs);<a name="line.270"></a>
+<span class="sourceLineNo">271</span>          AUDIT_LOG.info("[{}] offset [{}] len [{}]", new Object[]{path, offset, len});<a name="line.271"></a>
+<span class="sourceLineNo">272</span>          InputStreamEntity entity = new InputStreamEntity(is, offset.value(), len.value());<a name="line.272"></a>
+<span class="sourceLineNo">273</span>          response = Response.ok(entity).type(MediaType.APPLICATION_OCTET_STREAM).build();<a name="line.273"></a>
+<span class="sourceLineNo">274</span>          break;<a name="line.274"></a>
+<span class="sourceLineNo">275</span>        }<a name="line.275"></a>
+<span class="sourceLineNo">276</span>        case GETFILESTATUS: {<a name="line.276"></a>
+<span class="sourceLineNo">277</span>          FSOperations.FSFileStatus command = new FSOperations.FSFileStatus(path.value());<a name="line.277"></a>
+<span class="sourceLineNo">278</span>          Map json = fsExecute(user, doAs.value(), command);<a name="line.278"></a>
+<span class="sourceLineNo">279</span>          AUDIT_LOG.info("[{}]", path);<a name="line.279"></a>
+<span class="sourceLineNo">280</span>          response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();<a name="line.280"></a>
+<span class="sourceLineNo">281</span>          break;<a name="line.281"></a>
+<span class="sourceLineNo">282</span>        }<a name="line.282"></a>
+<span class="sourceLineNo">283</span>        case LISTSTATUS: {<a name="line.283"></a>
+<span class="sourceLineNo">284</span>          FSOperations.FSListStatus command = new FSOperations.FSListStatus(path.value(), filter.value());<a name="line.284"></a>
+<span class="sourceLineNo">285</span>          Map json = fsExecute(user, doAs.value(), command);<a name="line.285"></a>
+<span class="sourceLineNo">286</span>          if (filter.value() == null) {<a name="line.286"></a>
+<span class="sourceLineNo">287</span>            AUDIT_LOG.info("[{}]", path);<a name="line.287"></a>
+<span class="sourceLineNo">288</span>          } else {<a name="line.288"></a>
+<span class="sourceLineNo">289</span>            AUDIT_LOG.info("[{}] filter [{}]", path, filter.value());<a name="line.289"></a>
+<span class="sourceLineNo">290</span>          }<a name="line.290"></a>
+<span class="sourceLineNo">291</span>          response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();<a name="line.291"></a>
+<span class="sourceLineNo">292</span>          break;<a name="line.292"></a>
+<span class="sourceLineNo">293</span>        }<a name="line.293"></a>
+<span class="sourceLineNo">294</span>        case GETHOMEDIR: {<a name="line.294"></a>
+<span class="sourceLineNo">295</span>          FSOperations.FSHomeDir command = new FSOperations.FSHomeDir();<a name="line.295"></a>
+<span class="sourceLineNo">296</span>          JSONObject json = fsExecute(user, doAs.value(), command);<a name="line.296"></a>
+<span class="sourceLineNo">297</span>          AUDIT_LOG.info("");<a name="line.297"></a>
+<span class="sourceLineNo">298</span>          response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();<a name="line.298"></a>
+<span class="sourceLineNo">299</span>          break;<a name="line.299"></a>
+<span class="sourceLineNo">300</span>        }<a name="line.300"></a>
+<span class="sourceLineNo">301</span>        case INSTRUMENTATION: {<a name="line.301"></a>
+<span class="sourceLineNo">302</span>          if (!path.value().equals("/")) {<a name="line.302"></a>
+<span class="sourceLineNo">303</span>            throw new UnsupportedOperationException(<a name="line.303"></a>
+<span class="sourceLineNo">304</span>              MessageFormat.format("Invalid path for {0}={1}, must be '/'",<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                                   GetOpParam.NAME, HttpFSFileSystem.GetOpValues.INSTRUMENTATION));<a name="line.305"></a>
+<span class="sourceLineNo">306</span>          }<a name="line.306"></a>
+<span class="sourceLineNo">307</span>          Groups groups = HttpFSServerWebApp.get().get(Groups.class);<a name="line.307"></a>
+<span class="sourceLineNo">308</span>          List&lt;String&gt; userGroups = groups.getGroups(user.getName());<a name="line.308"></a>
+<span class="sourceLineNo">309</span>          if (!userGroups.contains(HttpFSServerWebApp.get().getAdminGroup())) {<a name="line.309"></a>
+<span class="sourceLineNo">310</span>            throw new AccessControlException("User not in HttpFSServer admin group");<a name="line.310"></a>
+<span class="sourceLineNo">311</span>          }<a name="line.311"></a>
+<span class="sourceLineNo">312</span>          Instrumentation instrumentation = HttpFSServerWebApp.get().get(Instrumentation.class);<a name="line.312"></a>
+<span class="sourceLineNo">313</span>          Map snapshot = instrumentation.getSnapshot();<a name="line.313"></a>
+<span class="sourceLineNo">314</span>          response = Response.ok(snapshot).build();<a name="line.314"></a>
+<span class="sourceLineNo">315</span>          break;<a name="line.315"></a>
+<span class="sourceLineNo">316</span>        }<a name="line.316"></a>
+<span class="sourceLineNo">317</span>        case GETCONTENTSUMMARY: {<a name="line.317"></a>
+<span class="sourceLineNo">318</span>          FSOperations.FSContentSummary command = new FSOperations.FSContentSummary(path.value());<a name="line.318"></a>
+<span class="sourceLineNo">319</span>          Map json = fsExecute(user, doAs.value(), command);<a name="line.319"></a>
+<span class="sourceLineNo">320</span>          AUDIT_LOG.info("[{}]", path);<a name="line.320"></a>
+<span class="sourceLineNo">321</span>          response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();<a name="line.321"></a>
+<span class="sourceLineNo">322</span>          break;<a name="line.322"></a>
+<span class="sourceLineNo">323</span>        }<a name="line.323"></a>
+<span class="sourceLineNo">324</span>        case GETFILECHECKSUM: {<a name="line.324"></a>
+<span class="sourceLineNo">325</span>          FSOperations.FSFileChecksum command = new FSOperations.FSFileChecksum(path.value());<a name="line.325"></a>
+<span class="sourceLineNo">326</span>          Map json = fsExecute(user, doAs.value(), command);<a name="line.326"></a>
+<span class="sourceLineNo">327</span>          AUDIT_LOG.info("[{}]", path);<a name="line.327"></a>
+<span class="sourceLineNo">328</span>          response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();<a name="line.328"></a>
+<span class="sourceLineNo">329</span>          break;<a name="line.329"></a>
+<span class="sourceLineNo">330</span>        }<a name="line.330"></a>
+<span class="sourceLineNo">331</span>        case GETDELEGATIONTOKEN: {<a name="line.331"></a>
+<span class="sourceLineNo">332</span>          response = Response.status(Response.Status.BAD_REQUEST).build();<a name="line.332"></a>
+<span class="sourceLineNo">333</span>          break;<a name="line.333"></a>
+<span class="sourceLineNo">334</span>        }<a name="line.334"></a>
+<span class="sourceLineNo">335</span>        case GETFILEBLOCKLOCATIONS: {<a name="line.335"></a>
+<span class="sourceLineNo">336</span>          response = Response.status(Response.Status.BAD_REQUEST).build();<a name="line.336"></a>
+<span class="sourceLineNo">337</span>          break;<a name="line.337"></a>
+<span class="sourceLineNo">338</span>        }<a name="line.338"></a>
+<span class="sourceLineNo">339</span>      }<a name="line.339"></a>
+<span class="sourceLineNo">340</span>      return response;<a name="line.340"></a>
+<span class="sourceLineNo">341</span>    }<a name="line.341"></a>
+<span class="sourceLineNo">342</span>  }<a name="line.342"></a>
+<span class="sourceLineNo">343</span><a name="line.343"></a>
+<span class="sourceLineNo">344</span>  /**<a name="line.344"></a>
+<span class="sourceLineNo">345</span>   * Creates the URL for an upload operation (create or append).<a name="line.345"></a>
+<span class="sourceLineNo">346</span>   *<a name="line.346"></a>
+<span class="sourceLineNo">347</span>   * @param uriInfo uri info of the request.<a name="line.347"></a>
+<span class="sourceLineNo">348</span>   * @param uploadOperation operation for the upload URL.<a name="line.348"></a>
+<span class="sourceLineNo">349</span>   *<a name="line.349"></a>
+<span class="sourceLineNo">350</span>   * @return the URI for uploading data.<a name="line.350"></a>
+<span class="sourceLineNo">351</span>   */<a name="line.351"></a>
+<span class="sourceLineNo">352</span>  protected URI createUploadRedirectionURL(UriInfo uriInfo, Enum&lt;?&gt; uploadOperation) {<a name="line.352"></a>
+<span class="sourceLineNo">353</span>    UriBuilder uriBuilder = uriInfo.getRequestUriBuilder();<a name="line.353"></a>
+<span class="sourceLineNo">354</span>    uriBuilder = uriBuilder.replaceQueryParam(PutOpParam.NAME, uploadOperation).<a name="line.354"></a>
+<span class="sourceLineNo">355</span>      queryParam(DataParam.NAME, Boolean.TRUE);<a name="line.355"></a>
+<span class="sourceLineNo">356</span>    return uriBuilder.build(null);<a name="line.356"></a>
+<span class="sourceLineNo">357</span>  }<a name="line.357"></a>
+<span class="sourceLineNo">358</span><a name="line.358"></a>
+<span class="sourceLineNo">359</span>  /**<a name="line.359"></a>
+<span class="sourceLineNo">360</span>   * Binding to handle all DELETE requests.<a name="line.360"></a>
+<span class="sourceLineNo">361</span>   *<a name="line.361"></a>
+<span class="sourceLineNo">362</span>   * @param user principal making the request.<a name="line.362"></a>
+<span class="sourceLineNo">363</span>   * @param path path for the DELETE request.<a name="line.363"></a>
+<span class="sourceLineNo">364</span>   * @param op DELETE operation, default value is @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.DeleteOpValues#DELETE}.<a name="line.364"></a>
+<span class="sourceLineNo">365</span>   * @param recursive indicates if the delete is recursive, default is &lt;code&gt;false&lt;/code&gt;<a name="line.365"></a>
+<span class="sourceLineNo">366</span>   * @param doAs user being impersonated, defualt value is none. It can be used<a name="line.366"></a>
+<span class="sourceLineNo">367</span>   * only if the current user is a HttpFSServer proxyuser.<a name="line.367"></a>
+<span class="sourceLineNo">368</span>   *<a name="line.368"></a>
+<span class="sourceLineNo">369</span>   * @return the request response.<a name="line.369"></a>
+<span class="sourceLineNo">370</span>   *<a name="line.370"></a>
+<span class="sourceLineNo">371</span>   * @throws IOException thrown if an IO error occurred. Thrown exceptions are<a name="line.371"></a>
+<span class="sourceLineNo">372</span>   * handled by {@link HttpFSExceptionProvider}.<a name="line.372"></a>
+<span class="sourceLineNo">373</span>   * @throws FileSystemAccessException thrown if a FileSystemAccess releated error occurred. Thrown<a name="line.373"></a>
+<span class="sourceLineNo">374</span>   * exceptions are handled by {@link HttpFSExceptionProvider}.<a name="line.374"></a>
+<span class="sourceLineNo">375</span>   */<a name="line.375"></a>
+<span class="sourceLineNo">376</span>  @DELETE<a name="line.376"></a>
+<span class="sourceLineNo">377</span>  @Path("{path:.*}")<a name="line.377"></a>
+<span class="sourceLineNo">378</span>  @Produces(MediaType.APPLICATION_JSON)<a name="line.378"></a>
+<span class="sourceLineNo">379</span>  public Response delete(@Context Principal user,<a name="line.379"></a>
+<span class="sourceLineNo">380</span>                         @PathParam("path") FsPathParam path,<a name="line.380"></a>
+<span class="sourceLineNo">381</span>                         @QueryParam(DeleteOpParam.NAME) DeleteOpParam op,<a name="line.381"></a>
+<span class="sourceLineNo">382</span>                         @QueryParam(DeleteRecursiveParam.NAME) @DefaultValue(DeleteRecursiveParam.DEFAULT)<a name="line.382"></a>
+<span class="sourceLineNo">383</span>                         DeleteRecursiveParam recursive,<a name="line.383"></a>
+<span class="sourceLineNo">384</span>                         @QueryParam(DoAsParam.NAME) @DefaultValue(DoAsParam.DEFAULT) DoAsParam doAs)<a name="line.384"></a>
+<span class="sourceLineNo">385</span>    throws IOException, FileSystemAccessException {<a name="line.385"></a>
+<span class="sourceLineNo">386</span>    Response response = null;<a name="line.386"></a>
+<span class="sourceLineNo">387</span>    if (op == null) {<a name="line.387"></a>
+<span class="sourceLineNo">388</span>      throw new UnsupportedOperationException(MessageFormat.format("Missing [{0}] parameter", DeleteOpParam.NAME));<a name="line.388"></a>
+<span class="sourceLineNo">389</span>    }<a name="line.389"></a>
+<span class="sourceLineNo">390</span>    switch (op.value()) {<a name="line.390"></a>
+<span class="sourceLineNo">391</span>      case DELETE: {<a name="line.391"></a>
+<span class="sourceLineNo">392</span>        path.makeAbsolute();<a name="line.392"></a>
+<span class="sourceLineNo">393</span>        MDC.put(HttpFSFileSystem.OP_PARAM, "DELETE");<a name="line.393"></a>
+<span class="sourceLineNo">394</span>        AUDIT_LOG.info("[{}] recursive [{}]", path, recursive);<a name="line.394"></a>
+<span class="sourceLineNo">395</span>        FSOperations.FSDelete command = new FSOperations.FSDelete(path.value(), recursive.value());<a name="line.395"></a>
+<span class="sourceLineNo">396</span>        JSONObject json = fsExecute(user, doAs.value(), command);<a name="line.396"></a>
+<span class="sourceLineNo">397</span>        response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();<a name="line.397"></a>
+<span class="sourceLineNo">398</span>        break;<a name="line.398"></a>
+<span class="sourceLineNo">399</span>      }<a name="line.399"></a>
+<span class="sourceLineNo">400</span>    }<a name="line.400"></a>
+<span class="sourceLineNo">401</span>    return response;<a name="line.401"></a>
+<span class="sourceLineNo">402</span>  }<a name="line.402"></a>
+<span class="sourceLineNo">403</span><a name="line.403"></a>
+<span class="sourceLineNo">404</span><a name="line.404"></a>
+<span class="sourceLineNo">405</span>  /**<a name="line.405"></a>
+<span class="sourceLineNo">406</span>   * Binding to handle all PUT requests, supported operations are<a name="line.406"></a>
+<span class="sourceLineNo">407</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues}.<a name="line.407"></a>
+<span class="sourceLineNo">408</span>   *<a name="line.408"></a>
+<span class="sourceLineNo">409</span>   * @param is request input stream, used only for<a name="line.409"></a>
+<span class="sourceLineNo">410</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PostOpValues#APPEND} operations.<a name="line.410"></a>
+<span class="sourceLineNo">411</span>   * @param user principal making the request.<a name="line.411"></a>
+<span class="sourceLineNo">412</span>   * @param uriInfo the request uriInfo.<a name="line.412"></a>
+<span class="sourceLineNo">413</span>   * @param path path for the PUT request.<a name="line.413"></a>
+<span class="sourceLineNo">414</span>   * @param op PUT operation, no default value.<a name="line.414"></a>
+<span class="sourceLineNo">415</span>   * @param toPath new path, used only for<a name="line.415"></a>
+<span class="sourceLineNo">416</span>   * {@link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#RENAME} operations.<a name="line.416"></a>
+<span class="sourceLineNo">417</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#SETTIMES}.<a name="line.417"></a>
+<span class="sourceLineNo">418</span>   * @param owner owner to set, used only for<a name="line.418"></a>
+<span class="sourceLineNo">419</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#SETOWNER} operations.<a name="line.419"></a>
+<span class="sourceLineNo">420</span>   * @param group group to set, used only for<a name="line.420"></a>
+<span class="sourceLineNo">421</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#SETOWNER} operations.<a name="line.421"></a>
+<span class="sourceLineNo">422</span>   * @param override default is true. Used only for<a name="line.422"></a>
+<span class="sourceLineNo">423</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#CREATE} operations.<a name="line.423"></a>
+<span class="sourceLineNo">424</span>   * @param blockSize block size to set, used only by<a name="line.424"></a>
+<span class="sourceLineNo">425</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#CREATE} operations.<a name="line.425"></a>
+<span class="sourceLineNo">426</span>   * @param permission permission to set, used only by<a name="line.426"></a>
+<span class="sourceLineNo">427</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#SETPERMISSION}.<a name="line.427"></a>
+<span class="sourceLineNo">428</span>   * @param replication replication factor to set, used only by<a name="line.428"></a>
+<span class="sourceLineNo">429</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#SETREPLICATION}.<a name="line.429"></a>
+<span class="sourceLineNo">430</span>   * @param modifiedTime modified time, in seconds since EPOC, used only by<a name="line.430"></a>
+<span class="sourceLineNo">431</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#SETTIMES}.<a name="line.431"></a>
+<span class="sourceLineNo">432</span>   * @param accessTime accessed time, in seconds since EPOC, used only by<a name="line.432"></a>
+<span class="sourceLineNo">433</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PutOpValues#SETTIMES}.<a name="line.433"></a>
+<span class="sourceLineNo">434</span>   * @param hasData indicates if the append request is uploading data or not<a name="line.434"></a>
+<span class="sourceLineNo">435</span>   * (just getting the handle).<a name="line.435"></a>
+<span class="sourceLineNo">436</span>   * @param doAs user being impersonated, defualt value is none. It can be used<a name="line.436"></a>
+<span class="sourceLineNo">437</span>   * only if the current user is a HttpFSServer proxyuser.<a name="line.437"></a>
+<span class="sourceLineNo">438</span>   *<a name="line.438"></a>
+<span class="sourceLineNo">439</span>   * @return the request response.<a name="line.439"></a>
+<span class="sourceLineNo">440</span>   *<a name="line.440"></a>
+<span class="sourceLineNo">441</span>   * @throws IOException thrown if an IO error occurred. Thrown exceptions are<a name="line.441"></a>
+<span class="sourceLineNo">442</span>   * handled by {@link HttpFSExceptionProvider}.<a name="line.442"></a>
+<span class="sourceLineNo">443</span>   * @throws FileSystemAccessException thrown if a FileSystemAccess releated error occurred. Thrown<a name="line.443"></a>
+<span class="sourceLineNo">444</span>   * exceptions are handled by {@link HttpFSExceptionProvider}.<a name="line.444"></a>
+<span class="sourceLineNo">445</span>   */<a name="line.445"></a>
+<span class="sourceLineNo">446</span>  @PUT<a name="line.446"></a>
+<span class="sourceLineNo">447</span>  @Path("{path:.*}")<a name="line.447"></a>
+<span class="sourceLineNo">448</span>  @Consumes({"*/*"})<a name="line.448"></a>
+<span class="sourceLineNo">449</span>  @Produces({MediaType.APPLICATION_JSON})<a name="line.449"></a>
+<span class="sourceLineNo">450</span>  public Response put(InputStream is,<a name="line.450"></a>
+<span class="sourceLineNo">451</span>                      @Context Principal user,<a name="line.451"></a>
+<span class="sourceLineNo">452</span>                      @Context UriInfo uriInfo,<a name="line.452"></a>
+<span class="sourceLineNo">453</span>                      @PathParam("path") FsPathParam path,<a name="line.453"></a>
+<span class="sourceLineNo">454</span>                      @QueryParam(PutOpParam.NAME) PutOpParam op,<a name="line.454"></a>
+<span class="sourceLineNo">455</span>                      @QueryParam(ToPathParam.NAME) @DefaultValue(ToPathParam.DEFAULT) ToPathParam toPath,<a name="line.455"></a>
+<span class="sourceLineNo">456</span>                      @QueryParam(OwnerParam.NAME) @DefaultValue(OwnerParam.DEFAULT) OwnerParam owner,<a name="line.456"></a>
+<span class="sourceLineNo">457</span>                      @QueryParam(GroupParam.NAME) @DefaultValue(GroupParam.DEFAULT) GroupParam group,<a name="line.457"></a>
+<span class="sourceLineNo">458</span>                      @QueryParam(OverwriteParam.NAME) @DefaultValue(OverwriteParam.DEFAULT) OverwriteParam override,<a name="line.458"></a>
+<span class="sourceLineNo">459</span>                      @QueryParam(BlockSizeParam.NAME) @DefaultValue(BlockSizeParam.DEFAULT) BlockSizeParam blockSize,<a name="line.459"></a>
+<span class="sourceLineNo">460</span>                      @QueryParam(PermissionParam.NAME) @DefaultValue(PermissionParam.DEFAULT)<a name="line.460"></a>
+<span class="sourceLineNo">461</span>                      PermissionParam permission,<a name="line.461"></a>
+<span class="sourceLineNo">462</span>                      @QueryParam(ReplicationParam.NAME) @DefaultValue(ReplicationParam.DEFAULT)<a name="line.462"></a>
+<span class="sourceLineNo">463</span>                      ReplicationParam replication,<a name="line.463"></a>
+<span class="sourceLineNo">464</span>                      @QueryParam(ModifiedTimeParam.NAME) @DefaultValue(ModifiedTimeParam.DEFAULT)<a name="line.464"></a>
+<span class="sourceLineNo">465</span>                      ModifiedTimeParam modifiedTime,<a name="line.465"></a>
+<span class="sourceLineNo">466</span>                      @QueryParam(AccessTimeParam.NAME) @DefaultValue(AccessTimeParam.DEFAULT)<a name="line.466"></a>
+<span class="sourceLineNo">467</span>                      AccessTimeParam accessTime,<a name="line.467"></a>
+<span class="sourceLineNo">468</span>                      @QueryParam(DataParam.NAME) @DefaultValue(DataParam.DEFAULT) DataParam hasData,<a name="line.468"></a>
+<span class="sourceLineNo">469</span>                      @QueryParam(DoAsParam.NAME) @DefaultValue(DoAsParam.DEFAULT) DoAsParam doAs)<a name="line.469"></a>
+<span class="sourceLineNo">470</span>    throws IOException, FileSystemAccessException {<a name="line.470"></a>
+<span class="sourceLineNo">471</span>    Response response = null;<a name="line.471"></a>
+<span class="sourceLineNo">472</span>    if (op == null) {<a name="line.472"></a>
+<span class="sourceLineNo">473</span>      throw new UnsupportedOperationException(MessageFormat.format("Missing [{0}] parameter", PutOpParam.NAME));<a name="line.473"></a>
+<span class="sourceLineNo">474</span>    }<a name="line.474"></a>
+<span class="sourceLineNo">475</span>    path.makeAbsolute();<a name="line.475"></a>
+<span class="sourceLineNo">476</span>    MDC.put(HttpFSFileSystem.OP_PARAM, op.value().name());<a name="line.476"></a>
+<span class="sourceLineNo">477</span>    switch (op.value()) {<a name="line.477"></a>
+<span class="sourceLineNo">478</span>      case CREATE: {<a name="line.478"></a>
+<span class="sourceLineNo">479</span>        if (!hasData.value()) {<a name="line.479"></a>
+<span class="sourceLineNo">480</span>          response = Response.temporaryRedirect(<a name="line.480"></a>
+<span class="sourceLineNo">481</span>            createUploadRedirectionURL(uriInfo, HttpFSFileSystem.PutOpValues.CREATE)).build();<a name="line.481"></a>
+<span class="sourceLineNo">482</span>        } else {<a name="line.482"></a>
+<span class="sourceLineNo">483</span>          FSOperations.FSCreate<a name="line.483"></a>
+<span class="sourceLineNo">484</span>            command = new FSOperations.FSCreate(is, path.value(), permission.value(), override.value(),<a name="line.484"></a>
+<span class="sourceLineNo">485</span>                                                replication.value(), blockSize.value());<a name="line.485"></a>
+<span class="sourceLineNo">486</span>          fsExecute(user, doAs.value(), command);<a name="line.486"></a>
+<span class="sourceLineNo">487</span>          AUDIT_LOG.info("[{}] permission [{}] override [{}] replication [{}] blockSize [{}]",<a name="line.487"></a>
+<span class="sourceLineNo">488</span>                         new Object[]{path, permission, override, replication, blockSize});<a name="line.488"></a>
+<span class="sourceLineNo">489</span>          response = Response.status(Response.Status.CREATED).build();<a name="line.489"></a>
+<span class="sourceLineNo">490</span>        }<a name="line.490"></a>
+<span class="sourceLineNo">491</span>        break;<a name="line.491"></a>
+<span class="sourceLineNo">492</span>      }<a name="line.492"></a>
+<span class="sourceLineNo">493</span>      case MKDIRS: {<a name="line.493"></a>
+<span class="sourceLineNo">494</span>        FSOperations.FSMkdirs command = new FSOperations.FSMkdirs(path.value(), permission.value());<a name="line.494"></a>
+<span class="sourceLineNo">495</span>        JSONObject json = fsExecute(user, doAs.value(), command);<a name="line.495"></a>
+<span class="sourceLineNo">496</span>        AUDIT_LOG.info("[{}] permission [{}]", path, permission.value());<a name="line.496"></a>
+<span class="sourceLineNo">497</span>        response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();<a name="line.497"></a>
+<span class="sourceLineNo">498</span>        break;<a name="line.498"></a>
+<span class="sourceLineNo">499</span>      }<a name="line.499"></a>
+<span class="sourceLineNo">500</span>      case RENAME: {<a name="line.500"></a>
+<span class="sourceLineNo">501</span>        FSOperations.FSRename command = new FSOperations.FSRename(path.value(), toPath.value());<a name="line.501"></a>
+<span class="sourceLineNo">502</span>        JSONObject json = fsExecute(user, doAs.value(), command);<a name="line.502"></a>
+<span class="sourceLineNo">503</span>        AUDIT_LOG.info("[{}] to [{}]", path, toPath);<a name="line.503"></a>
+<span class="sourceLineNo">504</span>        response = Response.ok(json).type(MediaType.APPLICATION_JSON).build();<a name="line.504"></a>
+<span class="sourceLineNo">505</span>        break;<a name="line.505"></a>
+<span class="sourceLineNo">506</span>      }<a name="line.506"></a>
+<span class="sourceLineNo">507</span>      case SETOWNER: {<a name="line.507"></a>
+<span class="sourceLineNo">508</span>        FSOperations.FSSetOwner command = new FSOperations.FSSetOwner(path.value(), owner.value(), group.value());<a name="line.508"></a>
+<span class="sourceLineNo">509</span>        fsExecute(user, doAs.value(), command);<a name="line.509"></a>
+<span class="sourceLineNo">510</span>        AUDIT_LOG.info("[{}] to (O/G)[{}]", path, owner.value() + ":" + group.value());<a name="line.510"></a>
+<span class="sourceLineNo">511</span>        response = Response.ok().build();<a name="line.511"></a>
+<span class="sourceLineNo">512</span>        break;<a name="line.512"></a>
+<span class="sourceLineNo">513</span>      }<a name="line.513"></a>
+<span class="sourceLineNo">514</span>      case SETPERMISSION: {<a name="line.514"></a>
+<span class="sourceLineNo">515</span>        FSOperations.FSSetPermission command = new FSOperations.FSSetPermission(path.value(), permission.value());<a name="line.515"></a>
+<span class="sourceLineNo">516</span>        fsExecute(user, doAs.value(), command);<a name="line.516"></a>
+<span class="sourceLineNo">517</span>        AUDIT_LOG.info("[{}] to [{}]", path, permission.value());<a name="line.517"></a>
+<span class="sourceLineNo">518</span>        response = Response.ok().build();<a name="line.518"></a>
+<span class="sourceLineNo">519</span>        break;<a name="line.519"></a>
+<span class="sourceLineNo">520</span>      }<a name="line.520"></a>
+<span class="sourceLineNo">521</span>      case SETREPLICATION: {<a name="line.521"></a>
+<span class="sourceLineNo">522</span>        FSOperations.FSSetReplication command = new FSOperations.FSSetReplication(path.value(), replication.value());<a name="line.522"></a>
+<span class="sourceLineNo">523</span>        JSONObject json = fsExecute(user, doAs.value(), command);<a name="line.523"></a>
+<span class="sourceLineNo">524</span>        AUDIT_LOG.info("[{}] to [{}]", path, replication.value());<a name="line.524"></a>
+<span class="sourceLineNo">525</span>        response = Response.ok(json).build();<a name="line.525"></a>
+<span class="sourceLineNo">526</span>        break;<a name="line.526"></a>
+<span class="sourceLineNo">527</span>      }<a name="line.527"></a>
+<span class="sourceLineNo">528</span>      case SETTIMES: {<a name="line.528"></a>
+<span class="sourceLineNo">529</span>        FSOperations.FSSetTimes<a name="line.529"></a>
+<span class="sourceLineNo">530</span>          command = new FSOperations.FSSetTimes(path.value(), modifiedTime.value(), accessTime.value());<a name="line.530"></a>
+<span class="sourceLineNo">531</span>        fsExecute(user, doAs.value(), command);<a name="line.531"></a>
+<span class="sourceLineNo">532</span>        AUDIT_LOG.info("[{}] to (M/A)[{}]", path, modifiedTime.value() + ":" + accessTime.value());<a name="line.532"></a>
+<span class="sourceLineNo">533</span>        response = Response.ok().build();<a name="line.533"></a>
+<span class="sourceLineNo">534</span>        break;<a name="line.534"></a>
+<span class="sourceLineNo">535</span>      }<a name="line.535"></a>
+<span class="sourceLineNo">536</span>      case RENEWDELEGATIONTOKEN: {<a name="line.536"></a>
+<span class="sourceLineNo">537</span>        response = Response.status(Response.Status.BAD_REQUEST).build();<a name="line.537"></a>
+<span class="sourceLineNo">538</span>        break;<a name="line.538"></a>
+<span class="sourceLineNo">539</span>      }<a name="line.539"></a>
+<span class="sourceLineNo">540</span>      case CANCELDELEGATIONTOKEN: {<a name="line.540"></a>
+<span class="sourceLineNo">541</span>        response = Response.status(Response.Status.BAD_REQUEST).build();<a name="line.541"></a>
+<span class="sourceLineNo">542</span>        break;<a name="line.542"></a>
+<span class="sourceLineNo">543</span>      }<a name="line.543"></a>
+<span class="sourceLineNo">544</span>    }<a name="line.544"></a>
+<span class="sourceLineNo">545</span>    return response;<a name="line.545"></a>
+<span class="sourceLineNo">546</span>  }<a name="line.546"></a>
+<span class="sourceLineNo">547</span><a name="line.547"></a>
+<span class="sourceLineNo">548</span>  /**<a name="line.548"></a>
+<span class="sourceLineNo">549</span>   * Binding to handle all OPST requests, supported operations are<a name="line.549"></a>
+<span class="sourceLineNo">550</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PostOpValues}.<a name="line.550"></a>
+<span class="sourceLineNo">551</span>   *<a name="line.551"></a>
+<span class="sourceLineNo">552</span>   * @param is request input stream, used only for<a name="line.552"></a>
+<span class="sourceLineNo">553</span>   * @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PostOpValues#APPEND} operations.<a name="line.553"></a>
+<span class="sourceLineNo">554</span>   * @param user principal making the request.<a name="line.554"></a>
+<span class="sourceLineNo">555</span>   * @param uriInfo the request uriInfo.<a name="line.555"></a>
+<span class="sourceLineNo">556</span>   * @param path path for the POST request.<a name="line.556"></a>
+<span class="sourceLineNo">557</span>   * @param op POST operation, default is @link org.apache.hadoop.fs.http.client.HttpFSFileSystem.PostOpValues#APPEND}.<a name="line.557"></a>
+<span class="sourceLineNo">558</span>   * @param hasData indicates if the append request is uploading data or not (just getting the handle).<a name="line.558"></a>
+<span class="sourceLineNo">559</span>   * @param doAs user being impersonated, defualt value is none. It can be used<a name="line.559"></a>
+<span class="sourceLineNo">560</span>   * only if the current user is a HttpFSServer proxyuser.<a name="line.560"></a>
+<span class="sourceLineNo">561</span>   *<a name="line.561"></a>
+<span class="sourceLineNo">562</span>   * @return the request response.<a name="line.562"></a>
+<span class="sourceLineNo">563</span>   *<a name="line.563"></a>
+<span class="sourceLineNo">564</span>   * @throws IOException thrown if an IO error occurred. Thrown exceptions are<a name="line.564"></a>
+<span class="sourceLineNo">565</span>   * handled by {@link HttpFSExceptionProvider}.<a name="line.565"></a>
+<span class="sourceLineNo">566</span>   * @throws FileSystemAccessException thrown if a FileSystemAccess releated error occurred. Thrown<a name="line.566"></a>
+<span class="sourceLineNo">567</span>   * exceptions are handled by {@link HttpFSExceptionProvider}.<a name="line.567"></a>
+<span class="sourceLineNo">568</span>   */<a name="line.568"></a>
+<span class="sourceLineNo">569</span>  @POST<a name="line.569"></a>
+<span class="sourceLineNo">570</span>  @Path("{path:.*}")<a name="line.570"></a>
+<span class="sourceLineNo">571</span>  @Consumes({"*/*"})<a name="line.571"></a>
+<span class="sourceLineNo">572</span>  @Produces({MediaType.APPLICATION_JSON})<a name="line.572"></a>
+<span class="sourceLineNo">573</span>  public Response post(InputStream is,<a name="line.573"></a>
+<span class="sourceLineNo">574</span>                       @Context Principal user,<a name="line.574"></a>
+<span class="sourceLineNo">575</span>                       @Context UriInfo uriInfo,<a name="line.575"></a>
+<span class="sourceLineNo">576</span>                       @PathParam("path") FsPathParam path,<a name="line.576"></a>
+<span class="sourceLineNo">577</span>                       @QueryParam(PostOpParam.NAME) PostOpParam op,<a name="line.577"></a>
+<span class="sourceLineNo">578</span>                       @QueryParam(DataParam.NAME) @DefaultValue(DataParam.DEFAULT) DataParam hasData,<a name="line.578"></a>
+<span class="sourceLineNo">579</span>                       @QueryParam(DoAsParam.NAME) @DefaultValue(DoAsParam.DEFAULT) DoAsParam doAs)<a name="line.579"></a>
+<span class="sourceLineNo">580</span>    throws IOException, FileSystemAccessException {<a name="line.580"></a>
+<span class="sourceLineNo">581</span>    Response response = null;<a name="line.581"></a>
+<span class="sourceLineNo">582</span>    if (op == null) {<a name="line.582"></a>
+<span class="sourceLineNo">583</span>      throw new UnsupportedOperationException(MessageFormat.format("Missing [{0}] parameter", PostOpParam.NAME));<a name="line.583"></a>
+<span class="sourceLineNo">584</span>    }<a name="line.584"></a>
+<span class="sourceLineNo">585</span>    path.makeAbsolute();<a name="line.585"></a>
+<span class="sourceLineNo">586</span>    MDC.put(HttpFSFileSystem.OP_PARAM, op.value().name());<a name="line.586"></a>
+<span class="sourceLineNo">587</span>    switch (op.value()) {<a name="line.587"></a>
+<span class="sourceLineNo">588</span>      case APPEND: {<a name="line.588"></a>
+<span class="sourceLineNo">589</span>        if (!hasData.value()) {<a name="line.589"></a>
+<span class="sourceLineNo">590</span>          response = Response.temporaryRedirect(<a name="line.590"></a>
+<span class="sourceLineNo">591</span>            createUploadRedirectionURL(uriInfo, HttpFSFileSystem.PostOpValues.APPEND)).build();<a name="line.591"></a>
+<span class="sourceLineNo">592</span>        } else {<a name="line.592"></a>
+<span class="sourceLineNo">593</span>          FSOperations.FSAppend command = new FSOperations.FSAppend(is, path.value());<a name="line.593"></a>
+<span class="sourceLineNo">594</span>          fsExecute(user, doAs.value(), command);<a name="line.594"></a>
+<span class="sourceLineNo">595</span>          AUDIT_LOG.info("[{}]", path);<a name="line.595"></a>
+<span class="sourceLineNo">596</span>          response = Response.ok().type(MediaType.APPLICATION_JSON).build();<a name="line.596"></a>
+<span class="sourceLineNo">597</span>        }<a name="line.597"></a>
+<span class="sourceLineNo">598</span>        break;<a name="line.598"></a>
+<span class="sourceLineNo">599</span>      }<a name="line.599"></a>
+<span class="sourceLineNo">600</span>    }<a name="line.600"></a>
+<span class="sourceLineNo">601</span>    return response;<a name="line.601"></a>
+<span class="sourceLineNo">602</span>  }<a name="line.602"></a>
+<span class="sourceLineNo">603</span><a name="line.603"></a>
+<span class="sourceLineNo">604</span>}<a name="line.604"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

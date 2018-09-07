@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span><a name="line.18"></a>
+<span class="sourceLineNo">019</span>package org.apache.hadoop.filecache;<a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.apache.hadoop.classification.InterfaceAudience;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import org.apache.hadoop.classification.InterfaceStability;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.apache.hadoop.conf.Configuration;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.apache.hadoop.fs.FileSystem;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.apache.hadoop.fs.Path;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.apache.hadoop.mapreduce.Job;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>/**<a name="line.28"></a>
+<span class="sourceLineNo">029</span> * Distribute application-specific large, read-only files efficiently.<a name="line.29"></a>
+<span class="sourceLineNo">030</span> * <a name="line.30"></a>
+<span class="sourceLineNo">031</span> * &lt;p&gt;&lt;code&gt;DistributedCache&lt;/code&gt; is a facility provided by the Map-Reduce<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * framework to cache files (text, archives, jars etc.) needed by applications.<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * &lt;/p&gt;<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * <a name="line.34"></a>
+<span class="sourceLineNo">035</span> * &lt;p&gt;Applications specify the files, via urls (hdfs:// or http://) to be cached <a name="line.35"></a>
+<span class="sourceLineNo">036</span> * via the {@link org.apache.hadoop.mapred.JobConf}. The<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * &lt;code&gt;DistributedCache&lt;/code&gt; assumes that the files specified via urls are<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * already present on the {@link FileSystem} at the path specified by the url<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * and are accessible by every machine in the cluster.&lt;/p&gt;<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * <a name="line.40"></a>
+<span class="sourceLineNo">041</span> * &lt;p&gt;The framework will copy the necessary files on to the slave node before <a name="line.41"></a>
+<span class="sourceLineNo">042</span> * any tasks for the job are executed on that node. Its efficiency stems from <a name="line.42"></a>
+<span class="sourceLineNo">043</span> * the fact that the files are only copied once per job and the ability to <a name="line.43"></a>
+<span class="sourceLineNo">044</span> * cache archives which are un-archived on the slaves.&lt;/p&gt; <a name="line.44"></a>
+<span class="sourceLineNo">045</span> *<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * &lt;p&gt;&lt;code&gt;DistributedCache&lt;/code&gt; can be used to distribute simple, read-only<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * data/text files and/or more complex types such as archives, jars etc. <a name="line.47"></a>
+<span class="sourceLineNo">048</span> * Archives (zip, tar and tgz/tar.gz files) are un-archived at the slave nodes. <a name="line.48"></a>
+<span class="sourceLineNo">049</span> * Jars may be optionally added to the classpath of the tasks, a rudimentary <a name="line.49"></a>
+<span class="sourceLineNo">050</span> * software distribution mechanism.  Files have execution permissions.<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * In older version of Hadoop Map/Reduce users could optionally ask for symlinks<a name="line.51"></a>
+<span class="sourceLineNo">052</span> * to be created in the working directory of the child task.  In the current <a name="line.52"></a>
+<span class="sourceLineNo">053</span> * version symlinks are always created.  If the URL does not have a fragment <a name="line.53"></a>
+<span class="sourceLineNo">054</span> * the name of the file or directory will be used. If multiple files or <a name="line.54"></a>
+<span class="sourceLineNo">055</span> * directories map to the same link name, the last one added, will be used.  All<a name="line.55"></a>
+<span class="sourceLineNo">056</span> * others will not even be downloaded.&lt;/p&gt;<a name="line.56"></a>
+<span class="sourceLineNo">057</span> * <a name="line.57"></a>
+<span class="sourceLineNo">058</span> * &lt;p&gt;&lt;code&gt;DistributedCache&lt;/code&gt; tracks modification timestamps of the cache <a name="line.58"></a>
+<span class="sourceLineNo">059</span> * files. Clearly the cache files should not be modified by the application <a name="line.59"></a>
+<span class="sourceLineNo">060</span> * or externally while the job is executing.&lt;/p&gt;<a name="line.60"></a>
+<span class="sourceLineNo">061</span> * <a name="line.61"></a>
+<span class="sourceLineNo">062</span> * &lt;p&gt;Here is an illustrative example on how to use the <a name="line.62"></a>
+<span class="sourceLineNo">063</span> * &lt;code&gt;DistributedCache&lt;/code&gt;:&lt;/p&gt;<a name="line.63"></a>
+<span class="sourceLineNo">064</span> * &lt;p&gt;&lt;blockquote&gt;&lt;pre&gt;<a name="line.64"></a>
+<span class="sourceLineNo">065</span> *     // Setting up the cache for the application<a name="line.65"></a>
+<span class="sourceLineNo">066</span> *     <a name="line.66"></a>
+<span class="sourceLineNo">067</span> *     1. Copy the requisite files to the &lt;code&gt;FileSystem&lt;/code&gt;:<a name="line.67"></a>
+<span class="sourceLineNo">068</span> *     <a name="line.68"></a>
+<span class="sourceLineNo">069</span> *     $ bin/hadoop fs -copyFromLocal lookup.dat /myapp/lookup.dat  <a name="line.69"></a>
+<span class="sourceLineNo">070</span> *     $ bin/hadoop fs -copyFromLocal map.zip /myapp/map.zip  <a name="line.70"></a>
+<span class="sourceLineNo">071</span> *     $ bin/hadoop fs -copyFromLocal mylib.jar /myapp/mylib.jar<a name="line.71"></a>
+<span class="sourceLineNo">072</span> *     $ bin/hadoop fs -copyFromLocal mytar.tar /myapp/mytar.tar<a name="line.72"></a>
+<span class="sourceLineNo">073</span> *     $ bin/hadoop fs -copyFromLocal mytgz.tgz /myapp/mytgz.tgz<a name="line.73"></a>
+<span class="sourceLineNo">074</span> *     $ bin/hadoop fs -copyFromLocal mytargz.tar.gz /myapp/mytargz.tar.gz<a name="line.74"></a>
+<span class="sourceLineNo">075</span> *     <a name="line.75"></a>
+<span class="sourceLineNo">076</span> *     2. Setup the application's &lt;code&gt;JobConf&lt;/code&gt;:<a name="line.76"></a>
+<span class="sourceLineNo">077</span> *     <a name="line.77"></a>
+<span class="sourceLineNo">078</span> *     JobConf job = new JobConf();<a name="line.78"></a>
+<span class="sourceLineNo">079</span> *     DistributedCache.addCacheFile(new URI("/myapp/lookup.dat#lookup.dat"), <a name="line.79"></a>
+<span class="sourceLineNo">080</span> *                                   job);<a name="line.80"></a>
+<span class="sourceLineNo">081</span> *     DistributedCache.addCacheArchive(new URI("/myapp/map.zip", job);<a name="line.81"></a>
+<span class="sourceLineNo">082</span> *     DistributedCache.addFileToClassPath(new Path("/myapp/mylib.jar"), job);<a name="line.82"></a>
+<span class="sourceLineNo">083</span> *     DistributedCache.addCacheArchive(new URI("/myapp/mytar.tar", job);<a name="line.83"></a>
+<span class="sourceLineNo">084</span> *     DistributedCache.addCacheArchive(new URI("/myapp/mytgz.tgz", job);<a name="line.84"></a>
+<span class="sourceLineNo">085</span> *     DistributedCache.addCacheArchive(new URI("/myapp/mytargz.tar.gz", job);<a name="line.85"></a>
+<span class="sourceLineNo">086</span> *     <a name="line.86"></a>
+<span class="sourceLineNo">087</span> *     3. Use the cached files in the {@link org.apache.hadoop.mapred.Mapper}<a name="line.87"></a>
+<span class="sourceLineNo">088</span> *     or {@link org.apache.hadoop.mapred.Reducer}:<a name="line.88"></a>
+<span class="sourceLineNo">089</span> *     <a name="line.89"></a>
+<span class="sourceLineNo">090</span> *     public static class MapClass extends MapReduceBase  <a name="line.90"></a>
+<span class="sourceLineNo">091</span> *     implements Mapper&amp;lt;K, V, K, V&amp;gt; {<a name="line.91"></a>
+<span class="sourceLineNo">092</span> *     <a name="line.92"></a>
+<span class="sourceLineNo">093</span> *       private Path[] localArchives;<a name="line.93"></a>
+<span class="sourceLineNo">094</span> *       private Path[] localFiles;<a name="line.94"></a>
+<span class="sourceLineNo">095</span> *       <a name="line.95"></a>
+<span class="sourceLineNo">096</span> *       public void configure(JobConf job) {<a name="line.96"></a>
+<span class="sourceLineNo">097</span> *         // Get the cached archives/files<a name="line.97"></a>
+<span class="sourceLineNo">098</span> *         File f = new File("./map.zip/some/file/in/zip.txt");<a name="line.98"></a>
+<span class="sourceLineNo">099</span> *       }<a name="line.99"></a>
+<span class="sourceLineNo">100</span> *       <a name="line.100"></a>
+<span class="sourceLineNo">101</span> *       public void map(K key, V value, <a name="line.101"></a>
+<span class="sourceLineNo">102</span> *                       OutputCollector&amp;lt;K, V&amp;gt; output, Reporter reporter) <a name="line.102"></a>
+<span class="sourceLineNo">103</span> *       throws IOException {<a name="line.103"></a>
+<span class="sourceLineNo">104</span> *         // Use data from the cached archives/files here<a name="line.104"></a>
+<span class="sourceLineNo">105</span> *         // ...<a name="line.105"></a>
+<span class="sourceLineNo">106</span> *         // ...<a name="line.106"></a>
+<span class="sourceLineNo">107</span> *         output.collect(k, v);<a name="line.107"></a>
+<span class="sourceLineNo">108</span> *       }<a name="line.108"></a>
+<span class="sourceLineNo">109</span> *     }<a name="line.109"></a>
+<span class="sourceLineNo">110</span> *     <a name="line.110"></a>
+<span class="sourceLineNo">111</span> * &lt;/pre&gt;&lt;/blockquote&gt;&lt;/p&gt;<a name="line.111"></a>
+<span class="sourceLineNo">112</span> *<a name="line.112"></a>
+<span class="sourceLineNo">113</span> * It is also very common to use the DistributedCache by using<a name="line.113"></a>
+<span class="sourceLineNo">114</span> * {@link org.apache.hadoop.util.GenericOptionsParser}.<a name="line.114"></a>
+<span class="sourceLineNo">115</span> *<a name="line.115"></a>
+<span class="sourceLineNo">116</span> * This class includes methods that should be used by users<a name="line.116"></a>
+<span class="sourceLineNo">117</span> * (specifically those mentioned in the example above, as well<a name="line.117"></a>
+<span class="sourceLineNo">118</span> * as {@link DistributedCache#addArchiveToClassPath(Path, Configuration)}),<a name="line.118"></a>
+<span class="sourceLineNo">119</span> * as well as methods intended for use by the MapReduce framework<a name="line.119"></a>
+<span class="sourceLineNo">120</span> * (e.g., {@link org.apache.hadoop.mapred.JobClient}).<a name="line.120"></a>
+<span class="sourceLineNo">121</span> *<a name="line.121"></a>
+<span class="sourceLineNo">122</span> * @see org.apache.hadoop.mapred.JobConf<a name="line.122"></a>
+<span class="sourceLineNo">123</span> * @see org.apache.hadoop.mapred.JobClient<a name="line.123"></a>
+<span class="sourceLineNo">124</span> * @see org.apache.hadoop.mapreduce.Job<a name="line.124"></a>
+<span class="sourceLineNo">125</span> */<a name="line.125"></a>
+<span class="sourceLineNo">126</span>@InterfaceAudience.Public<a name="line.126"></a>
+<span class="sourceLineNo">127</span>@InterfaceStability.Stable<a name="line.127"></a>
+<span class="sourceLineNo">128</span>public class DistributedCache extends<a name="line.128"></a>
+<span class="sourceLineNo">129</span>    org.apache.hadoop.mapreduce.filecache.DistributedCache {<a name="line.129"></a>
+<span class="sourceLineNo">130</span>  //<a name="line.130"></a>
+<span class="sourceLineNo">131</span>}<a name="line.131"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

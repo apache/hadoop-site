@@ -1,0 +1,2517 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8">
+<meta name="Forrest-skin-name" content="pelt">
+<title>WebHDFS REST API</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="images/favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">Apache</a> &gt; <a href="http://hadoop.apache.org/">Hadoop</a> &gt; <a href="http://hadoop.apache.org/core/">Core</a><script src="skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href="http://hadoop.apache.org/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo.jpg" title="Apache Hadoop"></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href="http://hadoop.apache.org/core/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo-2.gif" title="Scalable Computing Platform"></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="hadoop.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with google');" size="25" name="q" id="query" type="text" value="Search the site with google">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="unselected" href="http://hadoop.apache.org/core/">Project</a>
+</li>
+<li>
+<a class="unselected" href="http://wiki.apache.org/hadoop">Wiki</a>
+</li>
+<li class="current">
+<a class="selected" href="index.html">Hadoop 1.0.4 Documentation</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_1.1', 'skin/')" id="menu_1.1Title" class="menutitle">Getting Started</div>
+<div id="menu_1.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="single_node_setup.html">Single Node Setup</a>
+</div>
+<div class="menuitem">
+<a href="cluster_setup.html">Cluster Setup</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.2', 'skin/')" id="menu_1.2Title" class="menutitle">Guides</div>
+<div id="menu_1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="HttpAuthentication.html">Authentication for Hadoop HTTP web-consoles</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3', 'skin/')" id="menu_1.3Title" class="menutitle">MapReduce</div>
+<div id="menu_1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="mapred_tutorial.html">MapReduce Tutorial</a>
+</div>
+<div class="menuitem">
+<a href="streaming.html">Hadoop Streaming</a>
+</div>
+<div class="menuitem">
+<a href="commands_manual.html">Hadoop Commands</a>
+</div>
+<div class="menuitem">
+<a href="distcp.html">DistCp</a>
+</div>
+<div class="menuitem">
+<a href="vaidya.html">Vaidya</a>
+</div>
+<div class="menuitem">
+<a href="hadoop_archives.html">Hadoop Archives</a>
+</div>
+<div class="menuitem">
+<a href="gridmix.html">Gridmix</a>
+</div>
+<div class="menuitem">
+<a href="capacity_scheduler.html">Capacity Scheduler</a>
+</div>
+<div class="menuitem">
+<a href="fair_scheduler.html">Fair Scheduler</a>
+</div>
+<div class="menuitem">
+<a href="hod_scheduler.html">Hod Scheduler</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.4', 'skin/')" id="menu_selected_1.4Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">HDFS</div>
+<div id="menu_selected_1.4" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="hdfs_user_guide.html">HDFS Users </a>
+</div>
+<div class="menuitem">
+<a href="hdfs_design.html">HDFS Architecture</a>
+</div>
+<div class="menuitem">
+<a href="hdfs_permissions_guide.html">Permissions</a>
+</div>
+<div class="menuitem">
+<a href="hdfs_quota_admin_guide.html">Quotas</a>
+</div>
+<div class="menuitem">
+<a href="SLG_user_guide.html">Synthetic Load Generator</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">WebHDFS REST API</div>
+</div>
+<div class="menuitem">
+<a href="libhdfs.html">C API libhdfs</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.5', 'skin/')" id="menu_1.5Title" class="menutitle">Common</div>
+<div id="menu_1.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="deployment_layout.html">Deployment Layout</a>
+</div>
+<div class="menuitem">
+<a href="file_system_shell.html">File System Shell</a>
+</div>
+<div class="menuitem">
+<a href="service_level_auth.html">Service Level Authorization</a>
+</div>
+<div class="menuitem">
+<a href="native_libraries.html">Native Libraries</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.6', 'skin/')" id="menu_1.6Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="Secure_Impersonation.html">Secure Impersonation</a>
+</div>
+<div class="menuitem">
+<a href="api/index.html">API Docs</a>
+</div>
+<div class="menuitem">
+<a href="jdiff/changes.html">API Changes</a>
+</div>
+<div class="menuitem">
+<a href="http://wiki.apache.org/hadoop/">Wiki</a>
+</div>
+<div class="menuitem">
+<a href="http://wiki.apache.org/hadoop/FAQ">FAQ</a>
+</div>
+<div class="menuitem">
+<a href="releasenotes.html">Release Notes</a>
+</div>
+<div class="menuitem">
+<a href="changes.html">Change Log</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2"></div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="webhdfs.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>WebHDFS REST API</h1>
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Document+Conventions">Document Conventions</a>
+</li>
+<li>
+<a href="#Introduction">Introduction</a>
+<ul class="minitoc">
+<li>
+<a href="#Operations">Operations</a>
+</li>
+<li>
+<a href="#FsURIvsHTTP_URL">FileSystem URIs vs HTTP URLs</a>
+</li>
+<li>
+<a href="#HDFS+Configuration+Options">HDFS Configuration Options</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Authentication">Authentication</a>
+</li>
+<li>
+<a href="#ProxyUsers">Proxy Users</a>
+</li>
+<li>
+<a href="#File+and+Directory+Operations">File and Directory Operations</a>
+<ul class="minitoc">
+<li>
+<a href="#CREATE">Create and Write to a File</a>
+</li>
+<li>
+<a href="#APPEND">Append to a File</a>
+</li>
+<li>
+<a href="#OPEN">Open and Read a File</a>
+</li>
+<li>
+<a href="#MKDIRS">Make a Directory</a>
+</li>
+<li>
+<a href="#RENAME">Rename a File/Directory</a>
+</li>
+<li>
+<a href="#DELETE">Delete a File/Directory</a>
+</li>
+<li>
+<a href="#GETFILESTATUS">Status of a File/Directory</a>
+</li>
+<li>
+<a href="#LISTSTATUS">List a Directory</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Other+File+System+Operations">Other File System Operations</a>
+<ul class="minitoc">
+<li>
+<a href="#GETCONTENTSUMMARY">Get Content Summary of a Directory</a>
+</li>
+<li>
+<a href="#GETFILECHECKSUM">Get File Checksum</a>
+</li>
+<li>
+<a href="#GETHOMEDIRECTORY">Get Home Directory</a>
+</li>
+<li>
+<a href="#SETPERMISSION">Set Permission</a>
+</li>
+<li>
+<a href="#SETOWNER">Set Owner</a>
+</li>
+<li>
+<a href="#SETREPLICATION">Set Replication Factor</a>
+</li>
+<li>
+<a href="#SETTIMES">Set Access or Modification Time</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Delegation+Token+Operations">Delegation Token Operations</a>
+<ul class="minitoc">
+<li>
+<a href="#GETDELEGATIONTOKEN">Get Delegation Token</a>
+</li>
+<li>
+<a href="#RENEWDELEGATIONTOKEN">Renew Delegation Token</a>
+</li>
+<li>
+<a href="#CANCELDELEGATIONTOKEN">Cancel Delegation Token</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#Error+Responses">Error Responses</a>
+<ul class="minitoc">
+<li>
+<a href="#HTTP+Response+Codes">HTTP Response Codes</a>
+<ul class="minitoc">
+<li>
+<a href="#Illegal+Argument+Exception">Illegal Argument Exception</a>
+</li>
+<li>
+<a href="#Security+Exception">Security Exception</a>
+</li>
+<li>
+<a href="#Access+Control+Exception">Access Control Exception</a>
+</li>
+<li>
+<a href="#File+Not+Found+Exception">File Not Found Exception</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#JSON+Schemas">JSON Schemas</a>
+<ul class="minitoc">
+<li>
+<a href="#boolean">Boolean JSON Schema</a>
+</li>
+<li>
+<a href="#ContentSummary">ContentSummary JSON Schema</a>
+</li>
+<li>
+<a href="#FileChecksum">FileChecksum JSON Schema</a>
+</li>
+<li>
+<a href="#FileStatus">FileStatus JSON Schema</a>
+<ul class="minitoc">
+<li>
+<a href="#fileStatusProperties">FileStatus Properties</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#FileStatuses">FileStatuses JSON Schema</a>
+</li>
+<li>
+<a href="#long">Long JSON Schema</a>
+</li>
+<li>
+<a href="#Path">Path JSON Schema</a>
+</li>
+<li>
+<a href="#RemoteException">RemoteException JSON Schema</a>
+</li>
+<li>
+<a href="#Token">Token JSON Schema</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#ParameterDictionary">HTTP Query Parameter Dictionary</a>
+<ul class="minitoc">
+<li>
+<a href="#accesstime">Access Time</a>
+</li>
+<li>
+<a href="#blocksize">Block Size</a>
+</li>
+<li>
+<a href="#buffersize">Buffer Size</a>
+</li>
+<li>
+<a href="#delegation">Delegation</a>
+</li>
+<li>
+<a href="#destination">Destination</a>
+</li>
+<li>
+<a href="#doas">Do As</a>
+</li>
+<li>
+<a href="#group">Group</a>
+</li>
+<li>
+<a href="#length">Length</a>
+</li>
+<li>
+<a href="#modificationtime">Modification Time</a>
+</li>
+<li>
+<a href="#offset">Offset</a>
+</li>
+<li>
+<a href="#op">Op</a>
+</li>
+<li>
+<a href="#overwrite">Overwrite</a>
+</li>
+<li>
+<a href="#owner">Owner</a>
+</li>
+<li>
+<a href="#permission">Permission</a>
+</li>
+<li>
+<a href="#recursive">Recursive</a>
+</li>
+<li>
+<a href="#renewer">Renewer</a>
+</li>
+<li>
+<a href="#replication">Replication</a>
+</li>
+<li>
+<a href="#token">Token</a>
+</li>
+<li>
+<a href="#user.name">Username</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+    
+<a name="N1000D"></a><a name="Document+Conventions"></a>
+<h2 class="h3">Document Conventions</h2>
+<div class="section">
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">Monospaced</span></td><td colspan="1" rowspan="1">Used for commands, HTTP request and responses and code blocks.</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">&lt;Monospaced&gt;</span></td><td colspan="1" rowspan="1">User entered values.</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">[Monospaced]</span></td><td colspan="1" rowspan="1">Optional values.  When the value is not specified, the default value is used.</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><em>Italics</em></td><td colspan="1" rowspan="1">Important phrases and words.</td>
+</tr>
+
+</table>
+</div>
+<!-- ***************************************************************************** -->
+    
+<a name="N10045"></a><a name="Introduction"></a>
+<h2 class="h3">Introduction</h2>
+<div class="section">
+<p>
+  The HTTP REST API supports the complete FileSystem interface for HDFS.
+  The operations and the corresponding FileSystem methods are shown in the next section.
+  The Section <a href="#ParameterDictionary">HTTP Query Parameter Dictionary</a> specifies the parameter details
+  such as the defaults and the valid values.
+</p>
+<a name="N10052"></a><a name="Operations"></a>
+<h3 class="h4">Operations</h3>
+<ul>
+  
+<li>HTTP GET
+  <ul>
+    
+<li>
+<a href="#OPEN"><span class="codefrag">OPEN</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#open(org.apache.hadoop.fs.Path,%20int)">FileSystem.open</a>)
+    </li>
+    
+<li>
+<a href="#GETFILESTATUS"><span class="codefrag">GETFILESTATUS</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#getFileStatus(org.apache.hadoop.fs.Path)">FileSystem.getFileStatus</a>)
+    </li>
+    
+<li>
+<a href="#LISTSTATUS"><span class="codefrag">LISTSTATUS</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#listStatus(org.apache.hadoop.fs.Path)">FileSystem.listStatus</a>)
+    </li>
+    
+<li>
+<a href="#GETCONTENTSUMMARY"><span class="codefrag">GETCONTENTSUMMARY</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#getContentSummary(org.apache.hadoop.fs.Path)">FileSystem.getContentSummary</a>)
+    </li>
+    
+<li>
+<a href="#GETFILECHECKSUM"><span class="codefrag">GETFILECHECKSUM</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#getFileChecksum(org.apache.hadoop.fs.Path)">FileSystem.getFileChecksum</a>)
+    </li>
+    
+<li>
+<a href="#GETHOMEDIRECTORY"><span class="codefrag">GETHOMEDIRECTORY</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#getHomeDirectory()">FileSystem.getHomeDirectory</a>)
+    </li>
+    
+<li>
+<a href="#GETDELEGATIONTOKEN"><span class="codefrag">GETDELEGATIONTOKEN</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#getDelegationToken(java.lang.String)">FileSystem.getDelegationToken</a>)
+    </li>
+  
+</ul>
+</li>
+  
+<li>HTTP PUT
+  <ul>
+    
+<li>
+<a href="#CREATE"><span class="codefrag">CREATE</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#create(org.apache.hadoop.fs.Path,%20org.apache.hadoop.fs.permission.FsPermission,%20boolean,%20int,%20short,%20long,%20org.apache.hadoop.util.Progressable)">FileSystem.create</a>)
+    </li>
+    
+<li>
+<a href="#MKDIRS"><span class="codefrag">MKDIRS</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#mkdirs(org.apache.hadoop.fs.Path,%20org.apache.hadoop.fs.permission.FsPermission)">FileSystem.mkdirs</a>)
+    </li>
+    
+<li>
+<a href="#RENAME"><span class="codefrag">RENAME</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#rename(org.apache.hadoop.fs.Path,%20org.apache.hadoop.fs.Path)">FileSystem.rename</a>)
+    </li>
+    
+<li>
+<a href="#SETREPLICATION"><span class="codefrag">SETREPLICATION</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#setReplication(org.apache.hadoop.fs.Path,%20short)">FileSystem.setReplication</a>)
+    </li>
+    
+<li>
+<a href="#SETOWNER"><span class="codefrag">SETOWNER</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#setOwner(org.apache.hadoop.fs.Path,%20java.lang.String,%20java.lang.String)">FileSystem.setOwner</a>)
+    </li>
+    
+<li>
+<a href="#SETPERMISSION"><span class="codefrag">SETPERMISSION</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#setPermission(org.apache.hadoop.fs.Path,%20org.apache.hadoop.fs.permission.FsPermission)">FileSystem.setPermission</a>)
+    </li>
+    
+<li>
+<a href="#SETTIMES"><span class="codefrag">SETTIMES</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#setTimes(org.apache.hadoop.fs.Path,%20long,%20long)">FileSystem.setTimes</a>)
+    </li>
+    
+<li>
+<a href="#RENEWDELEGATIONTOKEN"><span class="codefrag">RENEWDELEGATIONTOKEN</span></a>
+        (see DistributedFileSystem.renewDelegationToken)
+    </li>
+    
+<li>
+<a href="#CANCELDELEGATIONTOKEN"><span class="codefrag">CANCELDELEGATIONTOKEN</span></a>
+        (see DistributedFileSystem.cancelDelegationToken)
+    </li>
+  
+</ul>
+</li>
+  
+<li>HTTP POST
+  <ul>
+    
+<li>
+<a href="#APPEND"><span class="codefrag">APPEND</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#append(org.apache.hadoop.fs.Path,%20int,%20org.apache.hadoop.util.Progressable)">FileSystem.append</a>)
+    </li>
+  
+</ul>
+</li>
+  
+<li>HTTP DELETE
+  <ul>
+    
+<li>
+<a href="#DELETE"><span class="codefrag">DELETE</span></a>
+        (see <a href="api/org/apache/hadoop/fs/FileSystem.html#delete(org.apache.hadoop.fs.Path,%20boolean)">FileSystem.delete</a>)
+    </li>
+  
+</ul>
+</li>
+
+</ul>
+<a name="N10130"></a><a name="FsURIvsHTTP_URL"></a>
+<h3 class="h4">FileSystem URIs vs HTTP URLs</h3>
+<p>
+  The FileSystem scheme of WebHDFS is "<span class="codefrag">webhdfs://</span>".
+  A WebHDFS FileSystem URI has the following format.
+</p>
+<pre class="code">
+  webhdfs://&lt;HOST&gt;:&lt;HTTP_PORT&gt;/&lt;PATH&gt;
+</pre>
+<p>
+  The above WebHDFS URI corresponds to the below HDFS URI.
+</p>
+<pre class="code">
+  hdfs://&lt;HOST&gt;:&lt;RPC_PORT&gt;/&lt;PATH&gt;
+</pre>
+<p>
+  In the REST API, the prefix "<span class="codefrag">/webhdfs/v1</span>" is inserted in the path and a query is appended at the end.
+  Therefore, the corresponding HTTP URL has the following format.
+</p>
+<pre class="code">
+  http://&lt;HOST&gt;:&lt;HTTP_PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=...
+</pre>
+<a name="N10154"></a><a name="HDFS+Configuration+Options"></a>
+<h3 class="h4">HDFS Configuration Options</h3>
+<p>
+  Below are the HDFS configuration options for WebHDFS.
+</p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+<th colspan="1" rowspan="1">Property Name</th><th colspan="1" rowspan="1">Description</th>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">dfs.webhdfs.enabled</span></td>
+<td colspan="1" rowspan="1">Enable/disable WebHDFS in Namenodes and Datanodes
+</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">dfs.web.authentication.kerberos.principal</span></td>
+<td colspan="1" rowspan="1">The HTTP Kerberos principal used by Hadoop-Auth in the HTTP endpoint.
+    The HTTP Kerberos principal MUST start with 'HTTP/' per Kerberos
+    HTTP SPENGO specification.
+</td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">dfs.web.authentication.kerberos.keytab</span></td>
+<td colspan="1" rowspan="1">The Kerberos keytab file with the credentials for the
+    HTTP Kerberos principal used by Hadoop-Auth in the HTTP endpoint.
+</td>
+</tr>
+
+</table>
+</div>
+<!-- ***************************************************************************** -->
+    
+<a name="N10192"></a><a name="Authentication"></a>
+<h2 class="h3">Authentication</h2>
+<div class="section">
+<p>
+  When security is <em>off</em>, the authenticated user is the username specified in the <span class="codefrag">user.name</span> query parameter.
+  If the <span class="codefrag">user.name</span> parameter is not set,
+  the server may either set the authenticated user to a default web user, if there is any, or return an error response.
+</p>
+<p>
+  When security is <em>on</em>, authentication is performed by either Hadoop delegation token or Kerberos SPNEGO.
+  If a token is set in the <span class="codefrag">delegation</span> query parameter, the authenticated user is the user encoded in the token.
+  If the <span class="codefrag">delegation</span> parameter is not set, the user is authenticated by Kerberos SPNEGO.
+</p>
+<p>
+Below are examples using the <span class="codefrag">curl</span> command tool.
+</p>
+<ol>
+  
+<li>
+    Authentication when security is off:
+    <pre class="code">
+curl -i "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?[user.name=&lt;USER&gt;&amp;]op=..."
+    </pre>
+  
+</li>
+<li>
+    Authentication using Kerberos SPNEGO when security is on:
+    <pre class="code">
+curl -i --negotiate -u : "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=..."
+    </pre>
+  
+</li>
+<li>
+    Authentication using Hadoop delegation token when security is on:
+    <pre class="code">
+curl -i "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?delegation=&lt;TOKEN&gt;&amp;op=..."
+    </pre>
+  
+</li>
+
+</ol>
+</div>
+<!-- ***************************************************************************** -->
+    
+<a name="N101CF"></a><a name="ProxyUsers"></a>
+<h2 class="h3">Proxy Users</h2>
+<div class="section">
+<p>
+  When the proxy user feature is enabled, a proxy user <em>P</em> may submit a request on behalf of another user <em>U</em>.
+  The username of <em>U</em> must be specified in the <span class="codefrag">doas</span> query parameter unless a delegation token is presented in authentication.
+  In such case, the information of both users <em>P</em> and <em>U</em> must be encoded in the delegation token.
+</p>
+<ol>
+  
+<li>
+    A proxy request when security is off:
+    <pre class="code">
+curl -i "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?[user.name=&lt;USER&gt;&amp;]doas=&lt;USER&gt;&amp;op=..."
+    </pre>
+  
+</li>
+<li>
+    A proxy request using Kerberos SPNEGO when security is on:
+    <pre class="code">
+curl -i --negotiate -u : "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?doas=&lt;USER&gt;&amp;op=..."
+    </pre>
+  
+</li>
+<li>
+    A proxy request using Hadoop delegation token when security is on:
+    <pre class="code">
+curl -i "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?delegation=&lt;TOKEN&gt;&amp;op=..."
+    </pre>
+  
+</li>
+
+</ol>
+</div>
+<!-- ***************************************************************************** -->
+<!-- ***************************************************************************** -->
+    
+<a name="N10205"></a><a name="File+and+Directory+Operations"></a>
+<h2 class="h3">File and Directory Operations</h2>
+<div class="section">
+<a name="N1020B"></a><a name="CREATE"></a>
+<h3 class="h4">Create and Write to a File</h3>
+<ul>
+  
+<li>Step 1: Submit a HTTP PUT request without automatically following redirects and without sending the file data.
+    <pre class="code">
+curl -i -X PUT "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=CREATE
+                    [&amp;overwrite=&lt;true|false&gt;][&amp;blocksize=&lt;LONG&gt;][&amp;replication=&lt;SHORT&gt;]
+                    [&amp;permission=&lt;OCTAL&gt;][&amp;buffersize=&lt;INT&gt;]"
+    </pre>
+The request is redirected to a datanode where the file data is to be written:
+    <pre class="code">
+HTTP/1.1 307 TEMPORARY_REDIRECT
+Location: http://&lt;DATANODE&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=CREATE...
+Content-Length: 0
+    </pre>
+  
+</li>
+  
+<li>Step 2: Submit another HTTP PUT request using the URL in the <span class="codefrag">Location</span> header with the file data to be written.
+    <pre class="code">
+curl -i -X PUT -T &lt;LOCAL_FILE&gt; "http://&lt;DATANODE&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=CREATE..."
+    </pre>
+The client receives a <span class="codefrag">201 Created</span> response with zero content length
+and the WebHDFS URI of the file in the <span class="codefrag">Location</span> header:
+    <pre class="code">
+HTTP/1.1 201 Created
+Location: webhdfs://&lt;HOST&gt;:&lt;PORT&gt;/&lt;PATH&gt;
+Content-Length: 0
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  
+<strong>Note</strong> that the reason of having two-step create/append is
+  for preventing clients to send out data before the redirect.
+  This issue is addressed by the "<span class="codefrag">Expect: 100-continue</span>" header in HTTP/1.1;
+  see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.2.3">RFC 2616, Section 8.2.3</a>.
+  Unfortunately, there are software library bugs (e.g. Jetty 6 HTTP server and Java 6 HTTP client),
+  which do not correctly implement "<span class="codefrag">Expect: 100-continue</span>".
+  The two-step create/append is a temporary workaround for the software library bugs.
+</p>
+<p>
+  See also:
+  <a href="#overwrite"><span class="codefrag">overwrite</span></a>,
+  <a href="#blocksize"><span class="codefrag">blocksize</span></a>,
+  <a href="#replication"><span class="codefrag">replication</span></a>,
+  <a href="#permission"><span class="codefrag">permission</span></a>,
+  <a href="#buffersize"><span class="codefrag">buffersize</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#create(org.apache.hadoop.fs.Path,%20org.apache.hadoop.fs.permission.FsPermission,%20boolean,%20int,%20short,%20long,%20org.apache.hadoop.util.Progressable)">FileSystem.create</a>
+
+</p>
+<a name="N10266"></a><a name="APPEND"></a>
+<h3 class="h4">Append to a File</h3>
+<ul>
+  
+<li>Step 1: Submit a HTTP POST request without automatically following redirects and without sending the file data.
+    <pre class="code">
+curl -i -X POST "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=APPEND[&amp;buffersize=&lt;INT&gt;]"
+    </pre>
+The request is redirected to a datanode where the file data is to be appended:
+    <pre class="code">
+HTTP/1.1 307 TEMPORARY_REDIRECT
+Location: http://&lt;DATANODE&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=APPEND...
+Content-Length: 0
+    </pre>
+  
+</li>
+  
+<li>Step 2: Submit another HTTP POST request using the URL in the <span class="codefrag">Location</span> header with the file data to be appended.
+    <pre class="code">
+curl -i -X POST -T &lt;LOCAL_FILE&gt; "http://&lt;DATANODE&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=APPEND..."
+    </pre>
+The client receives a response with zero content length:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Length: 0
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+<em>
+  See the note in the previous section for the description of why this operation requires two steps.
+</em>
+</p>
+<p>
+  See also:
+  <a href="#buffersize"><span class="codefrag">buffersize</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#append(org.apache.hadoop.fs.Path,%20int,%20org.apache.hadoop.util.Progressable)">FileSystem.append</a>
+
+</p>
+<a name="N1029B"></a><a name="OPEN"></a>
+<h3 class="h4">Open and Read a File</h3>
+<ul>
+  
+<li>Submit a HTTP GET request with automatically following redirects.
+    <pre class="code">
+curl -i -L "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=OPEN
+                    [&amp;offset=&lt;LONG&gt;][&amp;length=&lt;LONG&gt;][&amp;buffersize=&lt;INT&gt;]"
+    </pre>
+The request is redirected to a datanode where the file data can be read:
+    <pre class="code">
+HTTP/1.1 307 TEMPORARY_REDIRECT
+Location: http://&lt;DATANODE&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=OPEN...
+Content-Length: 0
+    </pre>
+The client follows the redirect to the datanode and receives the file data:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/octet-stream
+Content-Length: 22
+
+Hello, webhdfs user!
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#offset"><span class="codefrag">offset</span></a>,
+  <a href="#length"><span class="codefrag">length</span></a>,
+  <a href="#buffersize"><span class="codefrag">buffersize</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#open(org.apache.hadoop.fs.Path,%20int)">FileSystem.open</a>
+
+</p>
+<a name="N102CC"></a><a name="MKDIRS"></a>
+<h3 class="h4">Make a Directory</h3>
+<ul>
+  
+<li>Submit a HTTP PUT request.
+    <pre class="code">
+curl -i -X PUT "http://&lt;HOST&gt;:&lt;PORT&gt;/&lt;PATH&gt;?op=MKDIRS[&amp;permission=&lt;OCTAL&gt;]"
+    </pre>
+The client receives a response with a <a href="#boolean"><span class="codefrag">boolean</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{"boolean": true}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#permission"><span class="codefrag">permission</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#mkdirs(org.apache.hadoop.fs.Path,%20org.apache.hadoop.fs.permission.FsPermission)">FileSystem.mkdirs</a>
+
+</p>
+<a name="N102F5"></a><a name="RENAME"></a>
+<h3 class="h4">Rename a File/Directory</h3>
+<ul>
+  
+<li>Submit a HTTP PUT request.
+    <pre class="code">
+curl -i -X PUT "&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=RENAME&amp;destination=&lt;PATH&gt;"
+    </pre>
+The client receives a response with a <a href="#boolean"><span class="codefrag">boolean</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{"boolean": true}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#destination"><span class="codefrag">destination</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#rename(org.apache.hadoop.fs.Path,%20org.apache.hadoop.fs.Path)">FileSystem.rename</a>
+
+</p>
+<a name="N1031E"></a><a name="DELETE"></a>
+<h3 class="h4">Delete a File/Directory</h3>
+<ul>
+  
+<li>Submit a HTTP DELETE request.
+    <pre class="code">
+curl -i -X DELETE "http://&lt;host&gt;:&lt;port&gt;/webhdfs/v1/&lt;path&gt;?op=DELETE
+                              [&amp;recursive=&lt;true|false&gt;]"
+    </pre>
+The client receives a response with a <a href="#boolean"><span class="codefrag">boolean</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{"boolean": true}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#recursive"><span class="codefrag">recursive</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#delete(org.apache.hadoop.fs.Path,%20boolean)">FileSystem.delete</a>
+
+</p>
+<a name="N10347"></a><a name="GETFILESTATUS"></a>
+<h3 class="h4">Status of a File/Directory</h3>
+<ul>
+  
+<li>Submit a HTTP GET request.
+    <pre class="code">
+curl -i  "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=GETFILESTATUS"
+    </pre>
+The client receives a response with a <a href="#FileStatus"><span class="codefrag">FileStatus</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{
+  "FileStatus":
+  {
+    "accessTime"      : 0,
+    "blockSize"       : 0,
+    "group"           : "supergroup",
+    "length"          : 0,             //in bytes, zero for directories
+    "modificationTime": 1320173277227,
+    "owner"           : "webuser",
+    "pathSuffix"      : "",
+    "permission"      : "777",
+    "replication"     : 0,
+    "type"            : "DIRECTORY"    //enum {FILE, DIRECTORY}
+  }
+}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#getFileStatus(org.apache.hadoop.fs.Path)">FileSystem.getFileStatus</a>
+
+</p>
+<a name="N1036B"></a><a name="LISTSTATUS"></a>
+<h3 class="h4">List a Directory</h3>
+<ul>
+  
+<li>Submit a HTTP GET request.
+    <pre class="code">
+curl -i  "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=LISTSTATUS"
+    </pre>
+The client receives a response with a <a href="#FileStatuses"><span class="codefrag">FileStatuses</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 427
+
+{
+  "FileStatuses":
+  {
+    "FileStatus":
+    [
+      {
+        "accessTime"      : 1320171722771,
+        "blockSize"       : 33554432,
+        "group"           : "supergroup",
+        "length"          : 24930,
+        "modificationTime": 1320171722771,
+        "owner"           : "webuser",
+        "pathSuffix"      : "a.patch",
+        "permission"      : "644",
+        "replication"     : 1,
+        "type"            : "FILE"
+      },
+      {
+        "accessTime"      : 0,
+        "blockSize"       : 0,
+        "group"           : "supergroup",
+        "length"          : 0,
+        "modificationTime": 1320895981256,
+        "owner"           : "szetszwo",
+        "pathSuffix"      : "bar",
+        "permission"      : "711",
+        "replication"     : 0,
+        "type"            : "DIRECTORY"
+      },
+      ...
+    ]
+  }
+}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#listStatus(org.apache.hadoop.fs.Path)">FileSystem.listStatus</a>
+
+</p>
+</div>
+<!-- ***************************************************************************** -->
+<!-- ***************************************************************************** -->
+    
+<a name="N10392"></a><a name="Other+File+System+Operations"></a>
+<h2 class="h3">Other File System Operations</h2>
+<div class="section">
+<a name="N10398"></a><a name="GETCONTENTSUMMARY"></a>
+<h3 class="h4">Get Content Summary of a Directory</h3>
+<ul>
+  
+<li>Submit a HTTP GET request.
+    <pre class="code">
+curl -i "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=GETCONTENTSUMMARY"
+    </pre>
+The client receives a response with a <a href="#ContentSummary"><span class="codefrag">ContentSummary</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{
+  "ContentSummary":
+  {
+    "directoryCount": 2,
+    "fileCount"     : 1,
+    "length"        : 24930,
+    "quota"         : -1,
+    "spaceConsumed" : 24930,
+    "spaceQuota"    : -1
+  }
+}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#getContentSummary(org.apache.hadoop.fs.Path)">FileSystem.getContentSummary</a>
+
+</p>
+<a name="N103BC"></a><a name="GETFILECHECKSUM"></a>
+<h3 class="h4">Get File Checksum</h3>
+<ul>
+  
+<li>Submit a HTTP GET request.
+    <pre class="code">
+curl -i "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=GETFILECHECKSUM"
+    </pre>
+The request is redirected to a datanode:
+    <pre class="code">
+HTTP/1.1 307 TEMPORARY_REDIRECT
+Location: http://&lt;DATANODE&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=GETFILECHECKSUM...
+Content-Length: 0
+    </pre>
+The client follows the redirect to the datanode and receives a <a href="#FileChecksum"><span class="codefrag">FileChecksum</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{
+  "FileChecksum":
+  {
+    "algorithm": "MD5-of-1MD5-of-512CRC32",
+    "bytes"    : "eadb10de24aa315748930df6e185c0d ...",
+    "length"   : 28
+  }
+}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#getFileChecksum(org.apache.hadoop.fs.Path)">FileSystem.getFileChecksum</a>
+
+</p>
+<a name="N103E4"></a><a name="GETHOMEDIRECTORY"></a>
+<h3 class="h4">Get Home Directory</h3>
+<ul>
+  
+<li>Submit a HTTP GET request.
+    <pre class="code">
+curl -i "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/?op=GETHOMEDIRECTORY"
+    </pre>
+The client receives a response with a <a href="#Path"><span class="codefrag">Path</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{"Path": "/user/szetszwo"}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#getHomeDirectory()">FileSystem.getHomeDirectory</a>
+
+</p>
+<a name="N10408"></a><a name="SETPERMISSION"></a>
+<h3 class="h4">Set Permission</h3>
+<ul>
+  
+<li>Submit a HTTP PUT request.
+    <pre class="code">
+curl -i -X PUT "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=SETPERMISSION
+                              [&amp;permission=&lt;OCTAL&gt;]"
+    </pre>
+The client receives a response with zero content length:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Length: 0
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#permission"><span class="codefrag">permission</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#setPermission(org.apache.hadoop.fs.Path,%20org.apache.hadoop.fs.permission.FsPermission)">FileSystem.setPermission</a>
+
+</p>
+<a name="N1042B"></a><a name="SETOWNER"></a>
+<h3 class="h4">Set Owner</h3>
+<ul>
+  
+<li>Submit a HTTP PUT request.
+    <pre class="code">
+curl -i -X PUT "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=SETOWNER
+                              [&amp;owner=&lt;USER&gt;][&amp;group=&lt;GROUP&gt;]"
+    </pre>
+The client receives a response with zero content length:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Length: 0
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#owner"><span class="codefrag">owner</span></a>,
+  <a href="#group"><span class="codefrag">group</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#setOwner(org.apache.hadoop.fs.Path,%20java.lang.String,%20java.lang.String)">FileSystem.setOwner</a>
+
+</p>
+<a name="N10453"></a><a name="SETREPLICATION"></a>
+<h3 class="h4">Set Replication Factor</h3>
+<ul>
+  
+<li>Submit a HTTP PUT request.
+    <pre class="code">
+curl -i -X PUT "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=SETREPLICATION
+                              [&amp;replication=&lt;SHORT&gt;]"
+    </pre>
+The client receives a response with a <a href="#boolean"><span class="codefrag">boolean</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{"boolean": true}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#replication"><span class="codefrag">replication</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#setReplication(org.apache.hadoop.fs.Path,%20short)">FileSystem.setReplication</a>
+
+</p>
+<a name="N1047C"></a><a name="SETTIMES"></a>
+<h3 class="h4">Set Access or Modification Time</h3>
+<ul>
+  
+<li>Submit a HTTP PUT request.
+    <pre class="code">
+curl -i -X PUT "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/&lt;PATH&gt;?op=SETTIMES
+                              [&amp;modificationtime=&lt;TIME&gt;][&amp;accesstime=&lt;TIME&gt;]"
+    </pre>
+The client receives a response with zero content length:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Length: 0
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#modificationtime"><span class="codefrag">modificationtime</span></a>,
+  <a href="#accesstime"><span class="codefrag">accesstime</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#setTimes(org.apache.hadoop.fs.Path,%20long,%20long)">FileSystem.setTimes</a>
+
+</p>
+</div>
+<!-- ***************************************************************************** -->
+<!-- ***************************************************************************** -->
+    
+<a name="N104A7"></a><a name="Delegation+Token+Operations"></a>
+<h2 class="h3">Delegation Token Operations</h2>
+<div class="section">
+<a name="N104AD"></a><a name="GETDELEGATIONTOKEN"></a>
+<h3 class="h4">Get Delegation Token</h3>
+<ul>
+  
+<li>Submit a HTTP GET request.
+    <pre class="code">
+curl -i "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/?op=GETDELEGATIONTOKEN&amp;renewer=&lt;USER&gt;"
+    </pre>
+The client receives a response with a <a href="#Token"><span class="codefrag">Token</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{
+  "Token":
+  {
+    "urlString": "JQAIaG9y..."
+  }
+}
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#renewer"><span class="codefrag">renewer</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileSystem.html#getDelegationToken(java.lang.String)">FileSystem.getDelegationToken</a>
+
+</p>
+<a name="N104D6"></a><a name="RENEWDELEGATIONTOKEN"></a>
+<h3 class="h4">Renew Delegation Token</h3>
+<ul>
+  
+<li>Submit a HTTP PUT request.
+    <pre class="code">
+curl -i -X PUT "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/?op=RENEWDELEGATIONTOKEN&amp;token=&lt;TOKEN&gt;"
+    </pre>
+The client receives a response with a <a href="#long"><span class="codefrag">long</span> JSON object</a>:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{"long": 1320962673997}           //the new expiration time
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#token"><span class="codefrag">token</span></a>,
+  DistributedFileSystem.renewDelegationToken
+</p>
+<a name="N104FB"></a><a name="CANCELDELEGATIONTOKEN"></a>
+<h3 class="h4">Cancel Delegation Token</h3>
+<ul>
+  
+<li>Submit a HTTP PUT request.
+    <pre class="code">
+curl -i -X PUT "http://&lt;HOST&gt;:&lt;PORT&gt;/webhdfs/v1/?op=CANCELDELEGATIONTOKEN&amp;token=&lt;TOKEN&gt;"
+    </pre>
+The client receives a response with zero content length:
+    <pre class="code">
+HTTP/1.1 200 OK
+Content-Length: 0
+    </pre>
+  
+</li>
+
+</ul>
+<p>
+  See also:
+  <a href="#token"><span class="codefrag">token</span></a>,
+  DistributedFileSystem.cancelDelegationToken
+</p>
+</div>
+<!-- ***************************************************************************** -->
+<!-- ***************************************************************************** -->
+    
+<a name="N1051D"></a><a name="Error+Responses"></a>
+<h2 class="h3">Error Responses</h2>
+<div class="section">
+<p>
+  When an operation fails, the server may throw an exception.
+  The JSON schema of error responses is defined in <a href="#RemoteException"><span class="codefrag">RemoteException</span> JSON schema</a>.
+  The table below shows the mapping from exceptions to HTTP response codes.
+</p>
+<a name="N1052C"></a><a name="HTTP+Response+Codes"></a>
+<h3 class="h4">HTTP Response Codes</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+
+<tr>
+<th colspan="1" rowspan="1">Exceptions</th><th colspan="1" rowspan="1">HTTP Response Codes</th>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">IllegalArgumentException     </span></td><td colspan="1" rowspan="1"><span class="codefrag">400 Bad Request          </span></td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">UnsupportedOperationException</span></td><td colspan="1" rowspan="1"><span class="codefrag">400 Bad Request          </span></td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">SecurityException            </span></td><td colspan="1" rowspan="1"><span class="codefrag">401 Unauthorized         </span></td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">IOException                  </span></td><td colspan="1" rowspan="1"><span class="codefrag">403 Forbidden            </span></td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">FileNotFoundException        </span></td><td colspan="1" rowspan="1"><span class="codefrag">404 Not Found            </span></td>
+</tr>
+
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">RumtimeException             </span></td><td colspan="1" rowspan="1"><span class="codefrag">500 Internal Server Error</span></td>
+</tr>
+
+</table>
+<p>
+  Below are examples of exception responses.
+</p>
+<a name="N1058C"></a><a name="Illegal+Argument+Exception"></a>
+<h4>Illegal Argument Exception</h4>
+<pre class="code">
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{
+  "RemoteException":
+  {
+    "exception"    : "IllegalArgumentException",
+    "javaClassName": "java.lang.IllegalArgumentException",
+    "message"      : "Invalid value for webhdfs parameter \"permission\": ..."
+  }
+}
+</pre>
+<a name="N10599"></a><a name="Security+Exception"></a>
+<h4>Security Exception</h4>
+<pre class="code">
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{
+  "RemoteException":
+  {
+    "exception"    : "SecurityException",
+    "javaClassName": "java.lang.SecurityException",
+    "message"      : "Failed to obtain user group information: ..."
+  }
+}
+</pre>
+<a name="N105A6"></a><a name="Access+Control+Exception"></a>
+<h4>Access Control Exception</h4>
+<pre class="code">
+HTTP/1.1 403 Forbidden
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{
+  "RemoteException":
+  {
+    "exception"    : "AccessControlException",
+    "javaClassName": "org.apache.hadoop.security.AccessControlException",
+    "message"      : "Permission denied: ..."
+  }
+}
+</pre>
+<a name="N105B3"></a><a name="File+Not+Found+Exception"></a>
+<h4>File Not Found Exception</h4>
+<pre class="code">
+HTTP/1.1 404 Not Found
+Content-Type: application/json
+Transfer-Encoding: chunked
+
+{
+  "RemoteException":
+  {
+    "exception"    : "FileNotFoundException",
+    "javaClassName": "java.io.FileNotFoundException",
+    "message"      : "File does not exist: /foo/a.patch"
+  }
+}
+</pre>
+</div>
+<!-- ***************************************************************************** -->
+<!-- ***************************************************************************** -->
+    
+<a name="N105C4"></a><a name="JSON+Schemas"></a>
+<h2 class="h3">JSON Schemas</h2>
+<div class="section">
+<p>
+All operations, except for <a href="#OPEN"><span class="codefrag">OPEN</span></a>,
+either return a zero-length response or a JSON response .
+For <a href="#OPEN"><span class="codefrag">OPEN</span></a>, the response is an octet-stream.
+The JSON schemas are shown below.
+See <a href="http://tools.ietf.org/id/draft-zyp-json-schema-03.html">draft-zyp-json-schema-03</a>
+for the syntax definitions of the JSON schemas.
+</p>
+<a name="N105DB"></a><a name="boolean"></a>
+<h3 class="h4">Boolean JSON Schema</h3>
+<pre class="code">
+{
+  "name"      : "boolean",
+  "properties":
+  {
+    "boolean":
+    {
+      "description": "A boolean value",
+      "type"       : "boolean",
+      "required"   : true
+    }
+  }
+}
+</pre>
+<p>
+  See also:
+  <a href="#MKDIRS"><span class="codefrag">MKDIRS</span></a>,
+  <a href="#RENAME"><span class="codefrag">RENAME</span></a>,
+  <a href="#DELETE"><span class="codefrag">DELETE</span></a>,
+  <a href="#SETREPLICATION"><span class="codefrag">SETREPLICATION</span></a>
+
+</p>
+<a name="N105FF"></a><a name="ContentSummary"></a>
+<h3 class="h4">ContentSummary JSON Schema</h3>
+<pre class="code">
+{
+  "name"      : "ContentSummary",
+  "properties":
+  {
+    "ContentSummary":
+    {
+      "type"      : "object",
+      "properties":
+      {
+        "directoryCount":
+        {
+          "description": "The number of directories.",
+          "type"       : "integer",
+          "required"   : true
+        },
+        "fileCount":
+        {
+          "description": "The number of files.",
+          "type"       : "integer",
+          "required"   : true
+        },
+        "length":
+        {
+          "description": "The number of bytes used by the content.",
+          "type"       : "integer",
+          "required"   : true
+        },
+        "quota":
+        {
+          "description": "The namespace quota of this directory.",
+          "type"       : "integer",
+          "required"   : true
+        },
+        "spaceConsumed":
+        {
+          "description": "The disk space consumed by the content.",
+          "type"       : "integer",
+          "required"   : true
+        },
+        "spaceQuota":
+        {
+          "description": "The disk space quota.",
+          "type"       : "integer",
+          "required"   : true
+        }
+      }
+    }
+  }
+}
+</pre>
+<p>
+  See also:
+  <a href="#GETCONTENTSUMMARY"><span class="codefrag">GETCONTENTSUMMARY</span></a>
+
+</p>
+<a name="N10614"></a><a name="FileChecksum"></a>
+<h3 class="h4">FileChecksum JSON Schema</h3>
+<pre class="code">
+{
+  "name"      : "FileChecksum",
+  "properties":
+  {
+    "FileChecksum":
+    {
+      "type"      : "object",
+      "properties":
+      {
+        "algorithm":
+        {
+          "description": "The name of the checksum algorithm.",
+          "type"       : "string",
+          "required"   : true
+        },
+        "bytes":
+        {
+          "description": "The byte sequence of the checksum in hexadecimal.",
+          "type"       : "string",
+          "required"   : true
+        },
+        "length":
+        {
+          "description": "The length of the bytes (not the length of the string).",
+          "type"       : "integer",
+          "required"   : true
+        }
+      }
+    }
+  }
+}
+</pre>
+<p>
+  See also:
+  <a href="#GETFILECHECKSUM"><span class="codefrag">GETFILECHECKSUM</span></a>
+
+</p>
+<a name="N10629"></a><a name="FileStatus"></a>
+<h3 class="h4">FileStatus JSON Schema</h3>
+<pre class="code">
+{
+  "name"      : "FileStatus",
+  "properties":
+  {
+    "FileStatus": fileStatusProperties      //See <a href="#fileStatusProperties">FileStatus Properties</a>
+  }
+}
+</pre>
+<p>
+  See also:
+  <a href="#GETFILESTATUS"><span class="codefrag">GETFILESTATUS</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileStatus.html">FileStatus</a>
+
+</p>
+<a name="N10643"></a><a name="fileStatusProperties"></a>
+<h4>FileStatus Properties</h4>
+<p>
+  JavaScript syntax is used to define <span class="codefrag">fileStatusProperties</span>
+  so that it can be referred in both <span class="codefrag">FileStatus</span> and <span class="codefrag">FileStatuses</span> JSON schemas.
+</p>
+<pre class="code">
+var fileStatusProperties =
+{
+  "type"      : "object",
+  "properties":
+  {
+    "accessTime":
+    {
+      "description": "The access time.",
+      "type"       : "integer",
+      "required"   : true
+    },
+    "blockSize":
+    {
+      "description": "The block size of a file.",
+      "type"       : "integer",
+      "required"   : true
+    },
+    "group":
+    {
+      "description": "The group owner.",
+      "type"       : "string",
+      "required"   : true
+    },
+    "length":
+    {
+      "description": "The number of bytes in a file.",
+      "type"       : "integer",
+      "required"   : true
+    },
+    "modificationTime":
+    {
+      "description": "The modification time.",
+      "type"       : "integer",
+      "required"   : true
+    },
+    "owner":
+    {
+      "description": "The user who is the owner.",
+      "type"       : "string",
+      "required"   : true
+    },
+    "pathSuffix":
+    {
+      "description": "The path suffix.",
+      "type"       : "string",
+      "required"   : true
+    },
+    "permission":
+    {
+      "description": "The permission represented as a octal string.",
+      "type"       : "string",
+      "required"   : true
+    },
+    "replication":
+    {
+      "description": "The number of replication of a file.",
+      "type"       : "integer",
+      "required"   : true
+    },
+   "type":
+    {
+      "description": "The type of the path object.",
+      "enum"       : ["FILE", "DIRECTORY"],
+      "required"   : true
+    }
+  }
+};
+</pre>
+<a name="N1065D"></a><a name="FileStatuses"></a>
+<h3 class="h4">FileStatuses JSON Schema</h3>
+<p>
+  A <span class="codefrag">FileStatuses</span> JSON object represents an array of <span class="codefrag">FileStatus</span> JSON objects.
+</p>
+<pre class="code">
+{
+  "name"      : "FileStatuses",
+  "properties":
+  {
+    "FileStatuses":
+    {
+      "type"      : "object",
+      "properties":
+      {
+        "FileStatus":
+        {
+          "description": "An array of FileStatus",
+          "type"       : "array",
+          "items"      : fileStatusProperties      //See <a href="#fileStatusProperties">FileStatus Properties</a>
+        }
+      }
+    }
+  }
+}
+</pre>
+<p>
+  See also:
+  <a href="#LISTSTATUS"><span class="codefrag">LISTSTATUS</span></a>,
+  <a href="api/org/apache/hadoop/fs/FileStatus.html">FileStatus</a>
+
+</p>
+<a name="N10683"></a><a name="long"></a>
+<h3 class="h4">Long JSON Schema</h3>
+<pre class="code">
+{
+  "name"      : "long",
+  "properties":
+  {
+    "long":
+    {
+      "description": "A long integer value",
+      "type"       : "integer",
+      "required"   : true
+    }
+  }
+}
+</pre>
+<p>
+  See also:
+  <a href="#RENEWDELEGATIONTOKEN"><span class="codefrag">RENEWDELEGATIONTOKEN</span></a>,
+</p>
+<a name="N10698"></a><a name="Path"></a>
+<h3 class="h4">Path JSON Schema</h3>
+<pre class="code">
+{
+  "name"      : "Path",
+  "properties":
+  {
+    "Path":
+    {
+      "description": "The string representation a Path.",
+      "type"       : "string",
+      "required"   : true
+    }
+  }
+}
+</pre>
+<p>
+  See also:
+  <a href="#GETHOMEDIRECTORY"><span class="codefrag">GETHOMEDIRECTORY</span></a>,
+  <a href="api/org/apache/hadoop/fs/Path.html">Path</a>
+
+</p>
+<a name="N106B1"></a><a name="RemoteException"></a>
+<h3 class="h4">RemoteException JSON Schema</h3>
+<pre class="code">
+{
+  "name"      : "RemoteException",
+  "properties":
+  {
+    "RemoteException":
+    {
+      "type"      : "object",
+      "properties":
+      {
+        "exception":
+        {
+          "description": "Name of the exception",
+          "type"       : "string",
+          "required"   : true
+        },
+        "message":
+        {
+          "description": "Exception message",
+          "type"       : "string",
+          "required"   : true
+        },
+        "javaClassName":                                     //an optional property
+        {
+          "description": "Java class name of the exception",
+          "type"       : "string",
+        }
+      }
+    }
+  }
+}
+</pre>
+<a name="N106BE"></a><a name="Token"></a>
+<h3 class="h4">Token JSON Schema</h3>
+<pre class="code">
+{
+  "name"      : "Token",
+  "properties":
+  {
+    "Token":
+    {
+      "type"      : "object",
+      "properties":
+      {
+        "urlString":
+        {
+          "description": "A delegation token encoded as a URL safe string.",
+          "type"       : "string",
+          "required"   : true
+        }
+      }
+    }
+  }
+}
+</pre>
+<p>
+  See also:
+  <a href="#GETDELEGATIONTOKEN"><span class="codefrag">GETDELEGATIONTOKEN</span></a>,
+  the note in <a href="#delegation">Delegation</a>.
+</p>
+</div>
+<!-- ***************************************************************************** -->
+<!-- ***************************************************************************** -->
+    
+<a name="N106DA"></a><a name="ParameterDictionary"></a>
+<h2 class="h3">HTTP Query Parameter Dictionary</h2>
+<div class="section">
+<a name="N106E0"></a><a name="accesstime"></a>
+<h3 class="h4">Access Time</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">accesstime</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The access time of a file/directory.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">long</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">-1 (means keeping it unchanged)</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">-1 or a timestamp</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any integer.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#SETTIMES"><span class="codefrag">SETTIMES</span></a>
+
+</p>
+<a name="N10731"></a><a name="blocksize"></a>
+<h3 class="h4">Block Size</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">blocksize</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The block size of a file.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">long</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">Specified in the configuration.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">&gt; 0</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any integer.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#CREATE"><span class="codefrag">CREATE</span></a>
+
+</p>
+<a name="N10782"></a><a name="buffersize"></a>
+<h3 class="h4">Buffer Size</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">buffersize</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The size of the buffer used in transferring data.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">int</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">Specified in the configuration.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">&gt; 0</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any integer.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#CREATE"><span class="codefrag">CREATE</span></a>,
+  <a href="#APPEND"><span class="codefrag">APPEND</span></a>,
+  <a href="#OPEN"><span class="codefrag">OPEN</span></a>
+
+</p>
+<a name="N107DD"></a><a name="delegation"></a>
+<h3 class="h4">Delegation</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">delegation</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The delegation token used for authentication.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">String</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">&lt;empty&gt;</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">An encoded token.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">See the note below.</td>
+</tr>
+
+</table>
+<p>
+  
+<strong>Note</strong> that delegation tokens are encoded as a URL safe string;
+  see <span class="codefrag">encodeToUrlString()</span>
+  and <span class="codefrag">decodeFromUrlString(String)</span>
+  in <span class="codefrag">org.apache.hadoop.security.token.Token</span> for the details of the encoding.
+</p>
+<p>
+  See also:
+  <a href="#Authentication">Authentication</a>
+
+</p>
+<a name="N1083C"></a><a name="destination"></a>
+<h3 class="h4">Destination</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">destination</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The destination path used in <a href="#RENAME">RENAME</a>.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">Path</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">&lt;empty&gt; (an invalid path)</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">An absolute FileSystem path without scheme and authority.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any path.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#RENAME"><span class="codefrag">RENAME</span></a>
+
+</p>
+<a name="N10891"></a><a name="doas"></a>
+<h3 class="h4">Do As</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">doas</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">Allowing a proxy user to do as another user.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">String</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">null</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">Any valid username.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any string.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#ProxyUsers">Proxy Users</a>
+
+</p>
+<a name="N108E1"></a><a name="group"></a>
+<h3 class="h4">Group</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">group</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The name of a group.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">String</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">&lt;empty&gt; (means keeping it unchanged)</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">Any valid group name.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any string.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#SETOWNER"><span class="codefrag">SETOWNER</span></a>
+
+</p>
+<a name="N10932"></a><a name="length"></a>
+<h3 class="h4">Length</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">length</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The number of bytes to be processed.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">long</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">null (means the entire file)</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">&gt;= 0 or null</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any integer.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#OPEN"><span class="codefrag">OPEN</span></a>
+
+</p>
+<a name="N10983"></a><a name="modificationtime"></a>
+<h3 class="h4">Modification Time</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">modificationtime</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The modification time of a file/directory.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">long</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">-1 (means keeping it unchanged)</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">-1 or a timestamp</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any integer.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#SETTIMES"><span class="codefrag">SETTIMES</span></a>
+
+</p>
+<a name="N109D4"></a><a name="offset"></a>
+<h3 class="h4">Offset</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">offset</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The starting byte position.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">long</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">0</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">&gt;= 0</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any integer.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#OPEN"><span class="codefrag">OPEN</span></a>
+
+</p>
+<a name="N10A25"></a><a name="op"></a>
+<h3 class="h4">Op</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">op</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The name of the operation to be executed.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">enum</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">null (an invalid value)</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">Any valid operation name.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any string.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#Operations">Operations</a>
+
+</p>
+<a name="N10A75"></a><a name="overwrite"></a>
+<h3 class="h4">Overwrite</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">overwrite</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">If a file already exists, should it be overwritten?</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">boolean</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">false</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">true | false</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">true | false</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#CREATE"><span class="codefrag">CREATE</span></a>
+
+</p>
+<a name="N10AC6"></a><a name="owner"></a>
+<h3 class="h4">Owner</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">owner</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The username who is the owner of a file/directory.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">String</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">&lt;empty&gt; (means keeping it unchanged)</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">Any valid username.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any string.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#SETOWNER"><span class="codefrag">SETOWNER</span></a>
+
+</p>
+<a name="N10B17"></a><a name="permission"></a>
+<h3 class="h4">Permission</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">permission</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The permission of a file/directory.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">Octal</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">755</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">0 - 777</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any radix-8 integer (leading zeros may be omitted.)</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#CREATE"><span class="codefrag">CREATE</span></a>,
+  <a href="#MKDIRS"><span class="codefrag">MKDIRS</span></a>,
+  <a href="#SETPERMISSION"><span class="codefrag">SETPERMISSION</span></a>
+
+</p>
+<a name="N10B72"></a><a name="recursive"></a>
+<h3 class="h4">Recursive</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">recursive</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">Should the operation act on the content in the subdirectories?</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">boolean</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">false</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">true | false</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">true | false</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#RENAME"><span class="codefrag">RENAME</span></a>
+
+</p>
+<a name="N10BC3"></a><a name="renewer"></a>
+<h3 class="h4">Renewer</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">renewer</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The username of the renewer of a delegation token.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">String</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">&lt;empty&gt; (means the current user)</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">Any valid username.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any string.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#GETDELEGATIONTOKEN"><span class="codefrag">GETDELEGATIONTOKEN</span></a>
+
+</p>
+<a name="N10C14"></a><a name="replication"></a>
+<h3 class="h4">Replication</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">replication</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The number of replications of a file.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">short</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">Specified in the configuration.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">&gt; 0</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any integer.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#CREATE"><span class="codefrag">CREATE</span></a>,
+  <a href="#SETREPLICATION"><span class="codefrag">SETREPLICATION</span></a>
+
+</p>
+<a name="N10C6A"></a><a name="token"></a>
+<h3 class="h4">Token</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">token</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The delegation token used for the operation.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">String</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">&lt;empty&gt;</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">An encoded token.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">See the note in <a href="#delegation">Delegation</a>.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#RENEWDELEGATIONTOKEN"><span class="codefrag">RENEWDELEGATIONTOKEN</span></a>,
+  <a href="#CANCELDELEGATIONTOKEN"><span class="codefrag">CANCELDELEGATIONTOKEN</span></a>
+
+</p>
+<a name="N10CC4"></a><a name="user.name"></a>
+<h3 class="h4">Username</h3>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+  
+<tr>
+<td colspan="1" rowspan="1">Name</td><td colspan="1" rowspan="1"><span class="codefrag">user.name</span></td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Description</td><td colspan="1" rowspan="1">The authenticated user; see <a href="#Authentication">Authentication</a>.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Type</td><td colspan="1" rowspan="1">String</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Default Value</td><td colspan="1" rowspan="1">null</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Valid Values</td><td colspan="1" rowspan="1">Any valid username.</td>
+</tr>
+  
+<tr>
+<td colspan="1" rowspan="1">Syntax</td><td colspan="1" rowspan="1">Any string.</td>
+</tr>
+
+</table>
+<p>
+  See also:
+  <a href="#Authentication">Authentication</a>
+
+</p>
+</div>
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

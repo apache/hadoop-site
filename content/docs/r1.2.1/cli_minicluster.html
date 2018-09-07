@@ -1,0 +1,411 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.9">
+<meta name="Forrest-skin-name" content="pelt">
+<title>CLI MiniCluster</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="images/favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">Apache</a> &gt; <a href="http://hadoop.apache.org/">Hadoop</a> &gt; <a href="http://hadoop.apache.org/core/">Core</a><script src="skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href="http://hadoop.apache.org/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo.jpg" title="Apache Hadoop"></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href="http://hadoop.apache.org/core/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo-2.gif" title="Scalable Computing Platform"></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="hadoop.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with google');" size="25" name="q" id="query" type="text" value="Search the site with google">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="unselected" href="http://hadoop.apache.org/core/">Project</a>
+</li>
+<li>
+<a class="unselected" href="http://wiki.apache.org/hadoop">Wiki</a>
+</li>
+<li class="current">
+<a class="selected" href="index.html">Hadoop 1.2.1 Documentation</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Getting Started</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="single_node_setup.html">Single Node Setup</a>
+</div>
+<div class="menuitem">
+<a href="cluster_setup.html">Cluster Setup</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">CLI MiniCluster</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.2', 'skin/')" id="menu_1.2Title" class="menutitle">Guides</div>
+<div id="menu_1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="HttpAuthentication.html">Authentication for Hadoop HTTP web-consoles</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.3', 'skin/')" id="menu_1.3Title" class="menutitle">MapReduce</div>
+<div id="menu_1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="mapred_tutorial.html">MapReduce Tutorial</a>
+</div>
+<div class="menuitem">
+<a href="streaming.html">Hadoop Streaming</a>
+</div>
+<div class="menuitem">
+<a href="commands_manual.html">Hadoop Commands</a>
+</div>
+<div class="menuitem">
+<a href="distcp.html">DistCp</a>
+</div>
+<div class="menuitem">
+<a href="distcp2.html">DistCp Version 2</a>
+</div>
+<div class="menuitem">
+<a href="vaidya.html">Vaidya</a>
+</div>
+<div class="menuitem">
+<a href="hadoop_archives.html">Hadoop Archives</a>
+</div>
+<div class="menuitem">
+<a href="gridmix.html">Gridmix</a>
+</div>
+<div class="menuitem">
+<a href="rumen.html">Rumen</a>
+</div>
+<div class="menuitem">
+<a href="capacity_scheduler.html">Capacity Scheduler</a>
+</div>
+<div class="menuitem">
+<a href="fair_scheduler.html">Fair Scheduler</a>
+</div>
+<div class="menuitem">
+<a href="hod_scheduler.html">Hod Scheduler</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.4', 'skin/')" id="menu_1.4Title" class="menutitle">HDFS</div>
+<div id="menu_1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="hdfs_user_guide.html">HDFS Users </a>
+</div>
+<div class="menuitem">
+<a href="hdfs_design.html">HDFS Architecture</a>
+</div>
+<div class="menuitem">
+<a href="hdfs_permissions_guide.html">Permissions</a>
+</div>
+<div class="menuitem">
+<a href="hdfs_quota_admin_guide.html">Quotas</a>
+</div>
+<div class="menuitem">
+<a href="SLG_user_guide.html">Synthetic Load Generator</a>
+</div>
+<div class="menuitem">
+<a href="hdfs_imageviewer.html">Offline Image Viewer</a>
+</div>
+<div class="menuitem">
+<a href="hftp.html">HFTP</a>
+</div>
+<div class="menuitem">
+<a href="webhdfs.html">WebHDFS REST API</a>
+</div>
+<div class="menuitem">
+<a href="libhdfs.html">C API libhdfs</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.5', 'skin/')" id="menu_1.5Title" class="menutitle">Common</div>
+<div id="menu_1.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="deployment_layout.html">Deployment Layout</a>
+</div>
+<div class="menuitem">
+<a href="file_system_shell.html">File System Shell</a>
+</div>
+<div class="menuitem">
+<a href="service_level_auth.html">Service Level Authorization</a>
+</div>
+<div class="menuitem">
+<a href="native_libraries.html">Native Libraries</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.6', 'skin/')" id="menu_1.6Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="Secure_Impersonation.html">Secure Impersonation</a>
+</div>
+<div class="menuitem">
+<a href="api/index.html">API Docs</a>
+</div>
+<div class="menuitem">
+<a href="jdiff/changes.html">API Changes</a>
+</div>
+<div class="menuitem">
+<a href="http://wiki.apache.org/hadoop/">Wiki</a>
+</div>
+<div class="menuitem">
+<a href="http://wiki.apache.org/hadoop/FAQ">FAQ</a>
+</div>
+<div class="menuitem">
+<a href="releasenotes.html">Release Notes</a>
+</div>
+<div class="menuitem">
+<a href="changes.html">Change Log</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2"></div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="cli_minicluster.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>CLI MiniCluster</h1>
+<div id="front-matter">
+<div id="minitoc-area">
+<ul class="minitoc">
+<li>
+<a href="#Purpose">Purpose</a>
+</li>
+<li>
+<a href="#Hadoop+Tarball">Hadoop Tarball</a>
+</li>
+<li>
+<a href="#Running+the+MiniCluster">Running the MiniCluster</a>
+</li>
+</ul>
+</div>
+</div>
+
+    
+<a name="Purpose"></a>
+<h2 class="h3">Purpose</h2>
+<div class="section">
+<p>
+         Using the CLI MiniCluster, users can simply start and stop
+         a single-node Hadoop cluster with a single command, and without the
+         need to set any environment variables or manage configuration files.
+         The CLI MiniCluster starts both a MapReduce and HDF clusters. This is
+         useful for cases where users want to quickly experiment with a real
+         Hadoop cluster or test non-Java programs that rely on significant
+         Hadoop functionality.
+      </p>
+</div>
+
+    
+<a name="Hadoop+Tarball"></a>
+<h2 class="h3">Hadoop Tarball</h2>
+<div class="section">
+<p>
+         To get a Hadoop distribution, download a recent
+         <a href="http://hadoop.apache.org/core/releases.html">stable release</a> from one of the Apache
+         Download Mirrors. Unpack the downloaded Hadoop distribution. In the
+         distribution, edit the file <span class="codefrag">conf/hadoop-env.sh</span> to define at
+         least <span class="codefrag">JAVA_HOME</span> to be the root of your Java installation.
+      </p>
+</div>
+
+    
+<a name="Running+the+MiniCluster"></a>
+<h2 class="h3">Running the MiniCluster</h2>
+<div class="section">
+<p>
+         From inside the root directory of the extracted tarball, you can start the
+         CLI MiniCluster using the following command:
+      </p>
+<p>
+         
+<span class="codefrag">$ bin/hadoop jar hadoop-test-*.jar minicluster -jtport JT_PORT -nnport NN_PORT</span>
+      
+</p>
+<p>
+         In the example command above, JT_PORT and NN_PORT should be replaced by
+         the user's choice of these port numbers. If not specified, random free
+         ports will be used.
+      </p>
+<p>
+         There are a number of command line arguments that the users can use to
+         control which services to start, and to pass other configuration
+         properties. The available command line arguments:
+      </p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+<th colspan="1" rowspan="1">Argument</th><th colspan="1" rowspan="1">Description</th>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-D &lt;property=value&gt;</span></td><td colspan="1" rowspan="1">Options to pass into configuration object</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-datanodes &lt;arg&gt;</span></td><td colspan="1" rowspan="1">How many datanodes to start (default 1)</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-format</span></td><td colspan="1" rowspan="1">Format the DFS (default false)</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-help</span></td><td colspan="1" rowspan="1">Prints option help.</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-jhsport &lt;arg&gt;</span></td><td colspan="1" rowspan="1">JobHistoryServer port (default 0--we choose)</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-namenode &lt;arg&gt;</span></td><td colspan="1" rowspan="1">URL of the namenode (default is either the DFS cluster or a temporary dir)</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-nnport &lt;arg&gt;</span></td><td colspan="1" rowspan="1">NameNode port (default 0--we choose)</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-nodemanagers &lt;arg&gt;</span></td><td colspan="1" rowspan="1">How many nodemanagers to start (default 1)</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-nodfs</span></td><td colspan="1" rowspan="1">Don't start a mini DFS cluster</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-nomr</span></td><td colspan="1" rowspan="1">Don't start a mini MR cluster</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-rmport &lt;arg&gt;</span></td><td colspan="1" rowspan="1">ResourceManager port (default 0--we choose)</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-writeConfig &lt;path&gt;</span></td><td colspan="1" rowspan="1">Save configuration to this XML file.</td>
+</tr>
+        
+<tr>
+<td colspan="1" rowspan="1"><span class="codefrag">-writeDetails &lt;path&gt;</span></td><td colspan="1" rowspan="1">Write basic information to this JSON file.</td>
+</tr>
+      
+</table>
+<p>
+         To display this full list of available arguments, the user can pass the
+         <span class="codefrag">-help</span> argument to the above command.
+      </p>
+</div>
+
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2008 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

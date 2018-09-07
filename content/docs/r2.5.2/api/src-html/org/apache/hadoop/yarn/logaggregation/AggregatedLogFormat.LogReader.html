@@ -1,0 +1,724 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>    * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>    * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>    * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>    * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>    * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>    * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>    * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>    *<a name="line.9"></a>
+<FONT color="green">010</FONT>    *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>    *<a name="line.11"></a>
+<FONT color="green">012</FONT>    * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>    * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>    * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>    * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>    */<a name="line.17"></a>
+<FONT color="green">018</FONT>    <a name="line.18"></a>
+<FONT color="green">019</FONT>    package org.apache.hadoop.yarn.logaggregation;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>    import java.io.DataInput;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import java.io.DataInputStream;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import java.io.DataOutput;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import java.io.DataOutputStream;<a name="line.24"></a>
+<FONT color="green">025</FONT>    import java.io.EOFException;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import java.io.File;<a name="line.26"></a>
+<FONT color="green">027</FONT>    import java.io.FileInputStream;<a name="line.27"></a>
+<FONT color="green">028</FONT>    import java.io.IOException;<a name="line.28"></a>
+<FONT color="green">029</FONT>    import java.io.InputStreamReader;<a name="line.29"></a>
+<FONT color="green">030</FONT>    import java.io.PrintStream;<a name="line.30"></a>
+<FONT color="green">031</FONT>    import java.io.Writer;<a name="line.31"></a>
+<FONT color="green">032</FONT>    import java.security.PrivilegedExceptionAction;<a name="line.32"></a>
+<FONT color="green">033</FONT>    import java.util.ArrayList;<a name="line.33"></a>
+<FONT color="green">034</FONT>    import java.util.Arrays;<a name="line.34"></a>
+<FONT color="green">035</FONT>    import java.util.Collections;<a name="line.35"></a>
+<FONT color="green">036</FONT>    import java.util.EnumSet;<a name="line.36"></a>
+<FONT color="green">037</FONT>    import java.util.HashMap;<a name="line.37"></a>
+<FONT color="green">038</FONT>    import java.util.List;<a name="line.38"></a>
+<FONT color="green">039</FONT>    import java.util.Map;<a name="line.39"></a>
+<FONT color="green">040</FONT>    import java.util.Map.Entry;<a name="line.40"></a>
+<FONT color="green">041</FONT>    <a name="line.41"></a>
+<FONT color="green">042</FONT>    import org.apache.commons.io.input.BoundedInputStream;<a name="line.42"></a>
+<FONT color="green">043</FONT>    import org.apache.commons.logging.Log;<a name="line.43"></a>
+<FONT color="green">044</FONT>    import org.apache.commons.logging.LogFactory;<a name="line.44"></a>
+<FONT color="green">045</FONT>    import org.apache.hadoop.classification.InterfaceAudience.Private;<a name="line.45"></a>
+<FONT color="green">046</FONT>    import org.apache.hadoop.classification.InterfaceAudience.Public;<a name="line.46"></a>
+<FONT color="green">047</FONT>    import org.apache.hadoop.classification.InterfaceStability.Evolving;<a name="line.47"></a>
+<FONT color="green">048</FONT>    import org.apache.hadoop.conf.Configuration;<a name="line.48"></a>
+<FONT color="green">049</FONT>    import org.apache.hadoop.fs.CreateFlag;<a name="line.49"></a>
+<FONT color="green">050</FONT>    import org.apache.hadoop.fs.FSDataInputStream;<a name="line.50"></a>
+<FONT color="green">051</FONT>    import org.apache.hadoop.fs.FSDataOutputStream;<a name="line.51"></a>
+<FONT color="green">052</FONT>    import org.apache.hadoop.fs.FileContext;<a name="line.52"></a>
+<FONT color="green">053</FONT>    import org.apache.hadoop.fs.Options;<a name="line.53"></a>
+<FONT color="green">054</FONT>    import org.apache.hadoop.fs.Path;<a name="line.54"></a>
+<FONT color="green">055</FONT>    import org.apache.hadoop.fs.permission.FsPermission;<a name="line.55"></a>
+<FONT color="green">056</FONT>    import org.apache.hadoop.io.IOUtils;<a name="line.56"></a>
+<FONT color="green">057</FONT>    import org.apache.hadoop.io.SecureIOUtils;<a name="line.57"></a>
+<FONT color="green">058</FONT>    import org.apache.hadoop.io.Writable;<a name="line.58"></a>
+<FONT color="green">059</FONT>    import org.apache.hadoop.io.file.tfile.TFile;<a name="line.59"></a>
+<FONT color="green">060</FONT>    import org.apache.hadoop.security.UserGroupInformation;<a name="line.60"></a>
+<FONT color="green">061</FONT>    import org.apache.hadoop.yarn.api.records.ApplicationAccessType;<a name="line.61"></a>
+<FONT color="green">062</FONT>    import org.apache.hadoop.yarn.api.records.ContainerId;<a name="line.62"></a>
+<FONT color="green">063</FONT>    import org.apache.hadoop.yarn.conf.YarnConfiguration;<a name="line.63"></a>
+<FONT color="green">064</FONT>    import org.apache.hadoop.yarn.exceptions.YarnRuntimeException;<a name="line.64"></a>
+<FONT color="green">065</FONT>    import org.apache.hadoop.yarn.util.ConverterUtils;<a name="line.65"></a>
+<FONT color="green">066</FONT>    <a name="line.66"></a>
+<FONT color="green">067</FONT>    @Public<a name="line.67"></a>
+<FONT color="green">068</FONT>    @Evolving<a name="line.68"></a>
+<FONT color="green">069</FONT>    public class AggregatedLogFormat {<a name="line.69"></a>
+<FONT color="green">070</FONT>    <a name="line.70"></a>
+<FONT color="green">071</FONT>      private static final Log LOG = LogFactory.getLog(AggregatedLogFormat.class);<a name="line.71"></a>
+<FONT color="green">072</FONT>      private static final LogKey APPLICATION_ACL_KEY = new LogKey("APPLICATION_ACL");<a name="line.72"></a>
+<FONT color="green">073</FONT>      private static final LogKey APPLICATION_OWNER_KEY = new LogKey("APPLICATION_OWNER");<a name="line.73"></a>
+<FONT color="green">074</FONT>      private static final LogKey VERSION_KEY = new LogKey("VERSION");<a name="line.74"></a>
+<FONT color="green">075</FONT>      private static final Map&lt;String, LogKey&gt; RESERVED_KEYS;<a name="line.75"></a>
+<FONT color="green">076</FONT>      //Maybe write out the retention policy.<a name="line.76"></a>
+<FONT color="green">077</FONT>      //Maybe write out a list of containerLogs skipped by the retention policy.<a name="line.77"></a>
+<FONT color="green">078</FONT>      private static final int VERSION = 1;<a name="line.78"></a>
+<FONT color="green">079</FONT>    <a name="line.79"></a>
+<FONT color="green">080</FONT>      /**<a name="line.80"></a>
+<FONT color="green">081</FONT>       * Umask for the log file.<a name="line.81"></a>
+<FONT color="green">082</FONT>       */<a name="line.82"></a>
+<FONT color="green">083</FONT>      private static final FsPermission APP_LOG_FILE_UMASK = FsPermission<a name="line.83"></a>
+<FONT color="green">084</FONT>          .createImmutable((short) (0640 ^ 0777));<a name="line.84"></a>
+<FONT color="green">085</FONT>    <a name="line.85"></a>
+<FONT color="green">086</FONT>    <a name="line.86"></a>
+<FONT color="green">087</FONT>      static {<a name="line.87"></a>
+<FONT color="green">088</FONT>        RESERVED_KEYS = new HashMap&lt;String, AggregatedLogFormat.LogKey&gt;();<a name="line.88"></a>
+<FONT color="green">089</FONT>        RESERVED_KEYS.put(APPLICATION_ACL_KEY.toString(), APPLICATION_ACL_KEY);<a name="line.89"></a>
+<FONT color="green">090</FONT>        RESERVED_KEYS.put(APPLICATION_OWNER_KEY.toString(), APPLICATION_OWNER_KEY);<a name="line.90"></a>
+<FONT color="green">091</FONT>        RESERVED_KEYS.put(VERSION_KEY.toString(), VERSION_KEY);<a name="line.91"></a>
+<FONT color="green">092</FONT>      }<a name="line.92"></a>
+<FONT color="green">093</FONT>    <a name="line.93"></a>
+<FONT color="green">094</FONT>      @Public<a name="line.94"></a>
+<FONT color="green">095</FONT>      public static class LogKey implements Writable {<a name="line.95"></a>
+<FONT color="green">096</FONT>    <a name="line.96"></a>
+<FONT color="green">097</FONT>        private String keyString;<a name="line.97"></a>
+<FONT color="green">098</FONT>    <a name="line.98"></a>
+<FONT color="green">099</FONT>        public LogKey() {<a name="line.99"></a>
+<FONT color="green">100</FONT>    <a name="line.100"></a>
+<FONT color="green">101</FONT>        }<a name="line.101"></a>
+<FONT color="green">102</FONT>    <a name="line.102"></a>
+<FONT color="green">103</FONT>        public LogKey(ContainerId containerId) {<a name="line.103"></a>
+<FONT color="green">104</FONT>          this.keyString = containerId.toString();<a name="line.104"></a>
+<FONT color="green">105</FONT>        }<a name="line.105"></a>
+<FONT color="green">106</FONT>    <a name="line.106"></a>
+<FONT color="green">107</FONT>        public LogKey(String keyString) {<a name="line.107"></a>
+<FONT color="green">108</FONT>          this.keyString = keyString;<a name="line.108"></a>
+<FONT color="green">109</FONT>        }<a name="line.109"></a>
+<FONT color="green">110</FONT>        <a name="line.110"></a>
+<FONT color="green">111</FONT>        @Override<a name="line.111"></a>
+<FONT color="green">112</FONT>        public int hashCode() {<a name="line.112"></a>
+<FONT color="green">113</FONT>          return keyString == null ? 0 : keyString.hashCode();<a name="line.113"></a>
+<FONT color="green">114</FONT>        }<a name="line.114"></a>
+<FONT color="green">115</FONT>    <a name="line.115"></a>
+<FONT color="green">116</FONT>        @Override<a name="line.116"></a>
+<FONT color="green">117</FONT>        public boolean equals(Object obj) {<a name="line.117"></a>
+<FONT color="green">118</FONT>          if (obj instanceof LogKey) {<a name="line.118"></a>
+<FONT color="green">119</FONT>            LogKey other = (LogKey) obj;<a name="line.119"></a>
+<FONT color="green">120</FONT>            if (this.keyString == null) {<a name="line.120"></a>
+<FONT color="green">121</FONT>              return other.keyString == null;<a name="line.121"></a>
+<FONT color="green">122</FONT>            }<a name="line.122"></a>
+<FONT color="green">123</FONT>            return this.keyString.equals(other.keyString);<a name="line.123"></a>
+<FONT color="green">124</FONT>          }<a name="line.124"></a>
+<FONT color="green">125</FONT>          return false;<a name="line.125"></a>
+<FONT color="green">126</FONT>        }<a name="line.126"></a>
+<FONT color="green">127</FONT>    <a name="line.127"></a>
+<FONT color="green">128</FONT>        @Private<a name="line.128"></a>
+<FONT color="green">129</FONT>        @Override<a name="line.129"></a>
+<FONT color="green">130</FONT>        public void write(DataOutput out) throws IOException {<a name="line.130"></a>
+<FONT color="green">131</FONT>          out.writeUTF(this.keyString);<a name="line.131"></a>
+<FONT color="green">132</FONT>        }<a name="line.132"></a>
+<FONT color="green">133</FONT>    <a name="line.133"></a>
+<FONT color="green">134</FONT>        @Private<a name="line.134"></a>
+<FONT color="green">135</FONT>        @Override<a name="line.135"></a>
+<FONT color="green">136</FONT>        public void readFields(DataInput in) throws IOException {<a name="line.136"></a>
+<FONT color="green">137</FONT>          this.keyString = in.readUTF();<a name="line.137"></a>
+<FONT color="green">138</FONT>        }<a name="line.138"></a>
+<FONT color="green">139</FONT>    <a name="line.139"></a>
+<FONT color="green">140</FONT>        @Override<a name="line.140"></a>
+<FONT color="green">141</FONT>        public String toString() {<a name="line.141"></a>
+<FONT color="green">142</FONT>          return this.keyString;<a name="line.142"></a>
+<FONT color="green">143</FONT>        }<a name="line.143"></a>
+<FONT color="green">144</FONT>      }<a name="line.144"></a>
+<FONT color="green">145</FONT>    <a name="line.145"></a>
+<FONT color="green">146</FONT>      @Private<a name="line.146"></a>
+<FONT color="green">147</FONT>      public static class LogValue {<a name="line.147"></a>
+<FONT color="green">148</FONT>    <a name="line.148"></a>
+<FONT color="green">149</FONT>        private final List&lt;String&gt; rootLogDirs;<a name="line.149"></a>
+<FONT color="green">150</FONT>        private final ContainerId containerId;<a name="line.150"></a>
+<FONT color="green">151</FONT>        private final String user;<a name="line.151"></a>
+<FONT color="green">152</FONT>        // TODO Maybe add a version string here. Instead of changing the version of<a name="line.152"></a>
+<FONT color="green">153</FONT>        // the entire k-v format<a name="line.153"></a>
+<FONT color="green">154</FONT>    <a name="line.154"></a>
+<FONT color="green">155</FONT>        public LogValue(List&lt;String&gt; rootLogDirs, ContainerId containerId,<a name="line.155"></a>
+<FONT color="green">156</FONT>            String user) {<a name="line.156"></a>
+<FONT color="green">157</FONT>          this.rootLogDirs = new ArrayList&lt;String&gt;(rootLogDirs);<a name="line.157"></a>
+<FONT color="green">158</FONT>          this.containerId = containerId;<a name="line.158"></a>
+<FONT color="green">159</FONT>          this.user = user;<a name="line.159"></a>
+<FONT color="green">160</FONT>    <a name="line.160"></a>
+<FONT color="green">161</FONT>          // Ensure logs are processed in lexical order<a name="line.161"></a>
+<FONT color="green">162</FONT>          Collections.sort(this.rootLogDirs);<a name="line.162"></a>
+<FONT color="green">163</FONT>        }<a name="line.163"></a>
+<FONT color="green">164</FONT>    <a name="line.164"></a>
+<FONT color="green">165</FONT>        public void write(DataOutputStream out) throws IOException {<a name="line.165"></a>
+<FONT color="green">166</FONT>          for (String rootLogDir : this.rootLogDirs) {<a name="line.166"></a>
+<FONT color="green">167</FONT>            File appLogDir =<a name="line.167"></a>
+<FONT color="green">168</FONT>                new File(rootLogDir, <a name="line.168"></a>
+<FONT color="green">169</FONT>                    ConverterUtils.toString(<a name="line.169"></a>
+<FONT color="green">170</FONT>                        this.containerId.getApplicationAttemptId().<a name="line.170"></a>
+<FONT color="green">171</FONT>                            getApplicationId())<a name="line.171"></a>
+<FONT color="green">172</FONT>                    );<a name="line.172"></a>
+<FONT color="green">173</FONT>            File containerLogDir =<a name="line.173"></a>
+<FONT color="green">174</FONT>                new File(appLogDir, ConverterUtils.toString(this.containerId));<a name="line.174"></a>
+<FONT color="green">175</FONT>    <a name="line.175"></a>
+<FONT color="green">176</FONT>            if (!containerLogDir.isDirectory()) {<a name="line.176"></a>
+<FONT color="green">177</FONT>              continue; // ContainerDir may have been deleted by the user.<a name="line.177"></a>
+<FONT color="green">178</FONT>            }<a name="line.178"></a>
+<FONT color="green">179</FONT>    <a name="line.179"></a>
+<FONT color="green">180</FONT>            // Write out log files in lexical order<a name="line.180"></a>
+<FONT color="green">181</FONT>            File[] logFiles = containerLogDir.listFiles();<a name="line.181"></a>
+<FONT color="green">182</FONT>            Arrays.sort(logFiles);<a name="line.182"></a>
+<FONT color="green">183</FONT>            for (File logFile : logFiles) {<a name="line.183"></a>
+<FONT color="green">184</FONT>    <a name="line.184"></a>
+<FONT color="green">185</FONT>              final long fileLength = logFile.length();<a name="line.185"></a>
+<FONT color="green">186</FONT>    <a name="line.186"></a>
+<FONT color="green">187</FONT>              // Write the logFile Type<a name="line.187"></a>
+<FONT color="green">188</FONT>              out.writeUTF(logFile.getName());<a name="line.188"></a>
+<FONT color="green">189</FONT>    <a name="line.189"></a>
+<FONT color="green">190</FONT>              // Write the log length as UTF so that it is printable<a name="line.190"></a>
+<FONT color="green">191</FONT>              out.writeUTF(String.valueOf(fileLength));<a name="line.191"></a>
+<FONT color="green">192</FONT>    <a name="line.192"></a>
+<FONT color="green">193</FONT>              // Write the log itself<a name="line.193"></a>
+<FONT color="green">194</FONT>              FileInputStream in = null;<a name="line.194"></a>
+<FONT color="green">195</FONT>              try {<a name="line.195"></a>
+<FONT color="green">196</FONT>                in = SecureIOUtils.openForRead(logFile, getUser(), null);<a name="line.196"></a>
+<FONT color="green">197</FONT>                byte[] buf = new byte[65535];<a name="line.197"></a>
+<FONT color="green">198</FONT>                int len = 0;<a name="line.198"></a>
+<FONT color="green">199</FONT>                long bytesLeft = fileLength;<a name="line.199"></a>
+<FONT color="green">200</FONT>                while ((len = in.read(buf)) != -1) {<a name="line.200"></a>
+<FONT color="green">201</FONT>                  //If buffer contents within fileLength, write<a name="line.201"></a>
+<FONT color="green">202</FONT>                  if (len &lt; bytesLeft) {<a name="line.202"></a>
+<FONT color="green">203</FONT>                    out.write(buf, 0, len);<a name="line.203"></a>
+<FONT color="green">204</FONT>                    bytesLeft-=len;<a name="line.204"></a>
+<FONT color="green">205</FONT>                  }<a name="line.205"></a>
+<FONT color="green">206</FONT>                  //else only write contents within fileLength, then exit early<a name="line.206"></a>
+<FONT color="green">207</FONT>                  else {<a name="line.207"></a>
+<FONT color="green">208</FONT>                    out.write(buf, 0, (int)bytesLeft);<a name="line.208"></a>
+<FONT color="green">209</FONT>                    break;<a name="line.209"></a>
+<FONT color="green">210</FONT>                  }<a name="line.210"></a>
+<FONT color="green">211</FONT>                }<a name="line.211"></a>
+<FONT color="green">212</FONT>                long newLength = logFile.length();<a name="line.212"></a>
+<FONT color="green">213</FONT>                if(fileLength &lt; newLength) {<a name="line.213"></a>
+<FONT color="green">214</FONT>                  LOG.warn("Aggregated logs truncated by approximately "+<a name="line.214"></a>
+<FONT color="green">215</FONT>                      (newLength-fileLength) +" bytes.");<a name="line.215"></a>
+<FONT color="green">216</FONT>                }<a name="line.216"></a>
+<FONT color="green">217</FONT>              } catch (IOException e) {<a name="line.217"></a>
+<FONT color="green">218</FONT>                String message = "Error aggregating log file. Log file : "<a name="line.218"></a>
+<FONT color="green">219</FONT>                    + logFile.getAbsolutePath() + e.getMessage(); <a name="line.219"></a>
+<FONT color="green">220</FONT>                LOG.error(message, e);<a name="line.220"></a>
+<FONT color="green">221</FONT>                out.write(message.getBytes());<a name="line.221"></a>
+<FONT color="green">222</FONT>              } finally {<a name="line.222"></a>
+<FONT color="green">223</FONT>                if (in != null) {<a name="line.223"></a>
+<FONT color="green">224</FONT>                  in.close();<a name="line.224"></a>
+<FONT color="green">225</FONT>                }<a name="line.225"></a>
+<FONT color="green">226</FONT>              }<a name="line.226"></a>
+<FONT color="green">227</FONT>            }<a name="line.227"></a>
+<FONT color="green">228</FONT>          }<a name="line.228"></a>
+<FONT color="green">229</FONT>        }<a name="line.229"></a>
+<FONT color="green">230</FONT>        <a name="line.230"></a>
+<FONT color="green">231</FONT>        // Added for testing purpose.<a name="line.231"></a>
+<FONT color="green">232</FONT>        public String getUser() {<a name="line.232"></a>
+<FONT color="green">233</FONT>          return user;<a name="line.233"></a>
+<FONT color="green">234</FONT>        }<a name="line.234"></a>
+<FONT color="green">235</FONT>      }<a name="line.235"></a>
+<FONT color="green">236</FONT>    <a name="line.236"></a>
+<FONT color="green">237</FONT>      /**<a name="line.237"></a>
+<FONT color="green">238</FONT>       * The writer that writes out the aggregated logs.<a name="line.238"></a>
+<FONT color="green">239</FONT>       */<a name="line.239"></a>
+<FONT color="green">240</FONT>      @Private<a name="line.240"></a>
+<FONT color="green">241</FONT>      public static class LogWriter {<a name="line.241"></a>
+<FONT color="green">242</FONT>    <a name="line.242"></a>
+<FONT color="green">243</FONT>        private final FSDataOutputStream fsDataOStream;<a name="line.243"></a>
+<FONT color="green">244</FONT>        private final TFile.Writer writer;<a name="line.244"></a>
+<FONT color="green">245</FONT>    <a name="line.245"></a>
+<FONT color="green">246</FONT>        public LogWriter(final Configuration conf, final Path remoteAppLogFile,<a name="line.246"></a>
+<FONT color="green">247</FONT>            UserGroupInformation userUgi) throws IOException {<a name="line.247"></a>
+<FONT color="green">248</FONT>          try {<a name="line.248"></a>
+<FONT color="green">249</FONT>            this.fsDataOStream =<a name="line.249"></a>
+<FONT color="green">250</FONT>                userUgi.doAs(new PrivilegedExceptionAction&lt;FSDataOutputStream&gt;() {<a name="line.250"></a>
+<FONT color="green">251</FONT>                  @Override<a name="line.251"></a>
+<FONT color="green">252</FONT>                  public FSDataOutputStream run() throws Exception {<a name="line.252"></a>
+<FONT color="green">253</FONT>                    FileContext fc = FileContext.getFileContext(conf);<a name="line.253"></a>
+<FONT color="green">254</FONT>                    fc.setUMask(APP_LOG_FILE_UMASK);<a name="line.254"></a>
+<FONT color="green">255</FONT>                    return fc.create(<a name="line.255"></a>
+<FONT color="green">256</FONT>                        remoteAppLogFile,<a name="line.256"></a>
+<FONT color="green">257</FONT>                        EnumSet.of(CreateFlag.CREATE, CreateFlag.OVERWRITE),<a name="line.257"></a>
+<FONT color="green">258</FONT>                        new Options.CreateOpts[] {});<a name="line.258"></a>
+<FONT color="green">259</FONT>                  }<a name="line.259"></a>
+<FONT color="green">260</FONT>                });<a name="line.260"></a>
+<FONT color="green">261</FONT>          } catch (InterruptedException e) {<a name="line.261"></a>
+<FONT color="green">262</FONT>            throw new IOException(e);<a name="line.262"></a>
+<FONT color="green">263</FONT>          }<a name="line.263"></a>
+<FONT color="green">264</FONT>    <a name="line.264"></a>
+<FONT color="green">265</FONT>          // Keys are not sorted: null arg<a name="line.265"></a>
+<FONT color="green">266</FONT>          // 256KB minBlockSize : Expected log size for each container too<a name="line.266"></a>
+<FONT color="green">267</FONT>          this.writer =<a name="line.267"></a>
+<FONT color="green">268</FONT>              new TFile.Writer(this.fsDataOStream, 256 * 1024, conf.get(<a name="line.268"></a>
+<FONT color="green">269</FONT>                  YarnConfiguration.NM_LOG_AGG_COMPRESSION_TYPE,<a name="line.269"></a>
+<FONT color="green">270</FONT>                  YarnConfiguration.DEFAULT_NM_LOG_AGG_COMPRESSION_TYPE), null, conf);<a name="line.270"></a>
+<FONT color="green">271</FONT>          //Write the version string<a name="line.271"></a>
+<FONT color="green">272</FONT>          writeVersion();<a name="line.272"></a>
+<FONT color="green">273</FONT>        }<a name="line.273"></a>
+<FONT color="green">274</FONT>    <a name="line.274"></a>
+<FONT color="green">275</FONT>        private void writeVersion() throws IOException {<a name="line.275"></a>
+<FONT color="green">276</FONT>          DataOutputStream out = this.writer.prepareAppendKey(-1);<a name="line.276"></a>
+<FONT color="green">277</FONT>          VERSION_KEY.write(out);<a name="line.277"></a>
+<FONT color="green">278</FONT>          out.close();<a name="line.278"></a>
+<FONT color="green">279</FONT>          out = this.writer.prepareAppendValue(-1);<a name="line.279"></a>
+<FONT color="green">280</FONT>          out.writeInt(VERSION);<a name="line.280"></a>
+<FONT color="green">281</FONT>          out.close();<a name="line.281"></a>
+<FONT color="green">282</FONT>        }<a name="line.282"></a>
+<FONT color="green">283</FONT>    <a name="line.283"></a>
+<FONT color="green">284</FONT>        public void writeApplicationOwner(String user) throws IOException {<a name="line.284"></a>
+<FONT color="green">285</FONT>          DataOutputStream out = this.writer.prepareAppendKey(-1);<a name="line.285"></a>
+<FONT color="green">286</FONT>          APPLICATION_OWNER_KEY.write(out);<a name="line.286"></a>
+<FONT color="green">287</FONT>          out.close();<a name="line.287"></a>
+<FONT color="green">288</FONT>          out = this.writer.prepareAppendValue(-1);<a name="line.288"></a>
+<FONT color="green">289</FONT>          out.writeUTF(user);<a name="line.289"></a>
+<FONT color="green">290</FONT>          out.close();<a name="line.290"></a>
+<FONT color="green">291</FONT>        }<a name="line.291"></a>
+<FONT color="green">292</FONT>    <a name="line.292"></a>
+<FONT color="green">293</FONT>        public void writeApplicationACLs(Map&lt;ApplicationAccessType, String&gt; appAcls)<a name="line.293"></a>
+<FONT color="green">294</FONT>            throws IOException {<a name="line.294"></a>
+<FONT color="green">295</FONT>          DataOutputStream out = this.writer.prepareAppendKey(-1);<a name="line.295"></a>
+<FONT color="green">296</FONT>          APPLICATION_ACL_KEY.write(out);<a name="line.296"></a>
+<FONT color="green">297</FONT>          out.close();<a name="line.297"></a>
+<FONT color="green">298</FONT>          out = this.writer.prepareAppendValue(-1);<a name="line.298"></a>
+<FONT color="green">299</FONT>          for (Entry&lt;ApplicationAccessType, String&gt; entry : appAcls.entrySet()) {<a name="line.299"></a>
+<FONT color="green">300</FONT>            out.writeUTF(entry.getKey().toString());<a name="line.300"></a>
+<FONT color="green">301</FONT>            out.writeUTF(entry.getValue());<a name="line.301"></a>
+<FONT color="green">302</FONT>          }<a name="line.302"></a>
+<FONT color="green">303</FONT>          out.close();<a name="line.303"></a>
+<FONT color="green">304</FONT>        }<a name="line.304"></a>
+<FONT color="green">305</FONT>    <a name="line.305"></a>
+<FONT color="green">306</FONT>        public void append(LogKey logKey, LogValue logValue) throws IOException {<a name="line.306"></a>
+<FONT color="green">307</FONT>          DataOutputStream out = this.writer.prepareAppendKey(-1);<a name="line.307"></a>
+<FONT color="green">308</FONT>          logKey.write(out);<a name="line.308"></a>
+<FONT color="green">309</FONT>          out.close();<a name="line.309"></a>
+<FONT color="green">310</FONT>          out = this.writer.prepareAppendValue(-1);<a name="line.310"></a>
+<FONT color="green">311</FONT>          logValue.write(out);<a name="line.311"></a>
+<FONT color="green">312</FONT>          out.close();<a name="line.312"></a>
+<FONT color="green">313</FONT>        }<a name="line.313"></a>
+<FONT color="green">314</FONT>    <a name="line.314"></a>
+<FONT color="green">315</FONT>        public void close() {<a name="line.315"></a>
+<FONT color="green">316</FONT>          try {<a name="line.316"></a>
+<FONT color="green">317</FONT>            this.writer.close();<a name="line.317"></a>
+<FONT color="green">318</FONT>          } catch (IOException e) {<a name="line.318"></a>
+<FONT color="green">319</FONT>            LOG.warn("Exception closing writer", e);<a name="line.319"></a>
+<FONT color="green">320</FONT>          }<a name="line.320"></a>
+<FONT color="green">321</FONT>          try {<a name="line.321"></a>
+<FONT color="green">322</FONT>            this.fsDataOStream.close();<a name="line.322"></a>
+<FONT color="green">323</FONT>          } catch (IOException e) {<a name="line.323"></a>
+<FONT color="green">324</FONT>            LOG.warn("Exception closing output-stream", e);<a name="line.324"></a>
+<FONT color="green">325</FONT>          }<a name="line.325"></a>
+<FONT color="green">326</FONT>        }<a name="line.326"></a>
+<FONT color="green">327</FONT>      }<a name="line.327"></a>
+<FONT color="green">328</FONT>    <a name="line.328"></a>
+<FONT color="green">329</FONT>      @Public<a name="line.329"></a>
+<FONT color="green">330</FONT>      @Evolving<a name="line.330"></a>
+<FONT color="green">331</FONT>      public static class LogReader {<a name="line.331"></a>
+<FONT color="green">332</FONT>    <a name="line.332"></a>
+<FONT color="green">333</FONT>        private final FSDataInputStream fsDataIStream;<a name="line.333"></a>
+<FONT color="green">334</FONT>        private final TFile.Reader.Scanner scanner;<a name="line.334"></a>
+<FONT color="green">335</FONT>        private final TFile.Reader reader;<a name="line.335"></a>
+<FONT color="green">336</FONT>    <a name="line.336"></a>
+<FONT color="green">337</FONT>        public LogReader(Configuration conf, Path remoteAppLogFile)<a name="line.337"></a>
+<FONT color="green">338</FONT>            throws IOException {<a name="line.338"></a>
+<FONT color="green">339</FONT>          FileContext fileContext = FileContext.getFileContext(conf);<a name="line.339"></a>
+<FONT color="green">340</FONT>          this.fsDataIStream = fileContext.open(remoteAppLogFile);<a name="line.340"></a>
+<FONT color="green">341</FONT>          reader =<a name="line.341"></a>
+<FONT color="green">342</FONT>              new TFile.Reader(this.fsDataIStream, fileContext.getFileStatus(<a name="line.342"></a>
+<FONT color="green">343</FONT>                  remoteAppLogFile).getLen(), conf);<a name="line.343"></a>
+<FONT color="green">344</FONT>          this.scanner = reader.createScanner();<a name="line.344"></a>
+<FONT color="green">345</FONT>        }<a name="line.345"></a>
+<FONT color="green">346</FONT>    <a name="line.346"></a>
+<FONT color="green">347</FONT>        private boolean atBeginning = true;<a name="line.347"></a>
+<FONT color="green">348</FONT>    <a name="line.348"></a>
+<FONT color="green">349</FONT>        /**<a name="line.349"></a>
+<FONT color="green">350</FONT>         * Returns the owner of the application.<a name="line.350"></a>
+<FONT color="green">351</FONT>         * <a name="line.351"></a>
+<FONT color="green">352</FONT>         * @return the application owner.<a name="line.352"></a>
+<FONT color="green">353</FONT>         * @throws IOException<a name="line.353"></a>
+<FONT color="green">354</FONT>         */<a name="line.354"></a>
+<FONT color="green">355</FONT>        public String getApplicationOwner() throws IOException {<a name="line.355"></a>
+<FONT color="green">356</FONT>          TFile.Reader.Scanner ownerScanner = reader.createScanner();<a name="line.356"></a>
+<FONT color="green">357</FONT>          LogKey key = new LogKey();<a name="line.357"></a>
+<FONT color="green">358</FONT>          while (!ownerScanner.atEnd()) {<a name="line.358"></a>
+<FONT color="green">359</FONT>            TFile.Reader.Scanner.Entry entry = ownerScanner.entry();<a name="line.359"></a>
+<FONT color="green">360</FONT>            key.readFields(entry.getKeyStream());<a name="line.360"></a>
+<FONT color="green">361</FONT>            if (key.toString().equals(APPLICATION_OWNER_KEY.toString())) {<a name="line.361"></a>
+<FONT color="green">362</FONT>              DataInputStream valueStream = entry.getValueStream();<a name="line.362"></a>
+<FONT color="green">363</FONT>              return valueStream.readUTF();<a name="line.363"></a>
+<FONT color="green">364</FONT>            }<a name="line.364"></a>
+<FONT color="green">365</FONT>            ownerScanner.advance();<a name="line.365"></a>
+<FONT color="green">366</FONT>          }<a name="line.366"></a>
+<FONT color="green">367</FONT>          return null;<a name="line.367"></a>
+<FONT color="green">368</FONT>        }<a name="line.368"></a>
+<FONT color="green">369</FONT>    <a name="line.369"></a>
+<FONT color="green">370</FONT>        /**<a name="line.370"></a>
+<FONT color="green">371</FONT>         * Returns ACLs for the application. An empty map is returned if no ACLs are<a name="line.371"></a>
+<FONT color="green">372</FONT>         * found.<a name="line.372"></a>
+<FONT color="green">373</FONT>         * <a name="line.373"></a>
+<FONT color="green">374</FONT>         * @return a map of the Application ACLs.<a name="line.374"></a>
+<FONT color="green">375</FONT>         * @throws IOException<a name="line.375"></a>
+<FONT color="green">376</FONT>         */<a name="line.376"></a>
+<FONT color="green">377</FONT>        public Map&lt;ApplicationAccessType, String&gt; getApplicationAcls()<a name="line.377"></a>
+<FONT color="green">378</FONT>            throws IOException {<a name="line.378"></a>
+<FONT color="green">379</FONT>          // TODO Seek directly to the key once a comparator is specified.<a name="line.379"></a>
+<FONT color="green">380</FONT>          TFile.Reader.Scanner aclScanner = reader.createScanner();<a name="line.380"></a>
+<FONT color="green">381</FONT>          LogKey key = new LogKey();<a name="line.381"></a>
+<FONT color="green">382</FONT>          Map&lt;ApplicationAccessType, String&gt; acls =<a name="line.382"></a>
+<FONT color="green">383</FONT>              new HashMap&lt;ApplicationAccessType, String&gt;();<a name="line.383"></a>
+<FONT color="green">384</FONT>          while (!aclScanner.atEnd()) {<a name="line.384"></a>
+<FONT color="green">385</FONT>            TFile.Reader.Scanner.Entry entry = aclScanner.entry();<a name="line.385"></a>
+<FONT color="green">386</FONT>            key.readFields(entry.getKeyStream());<a name="line.386"></a>
+<FONT color="green">387</FONT>            if (key.toString().equals(APPLICATION_ACL_KEY.toString())) {<a name="line.387"></a>
+<FONT color="green">388</FONT>              DataInputStream valueStream = entry.getValueStream();<a name="line.388"></a>
+<FONT color="green">389</FONT>              while (true) {<a name="line.389"></a>
+<FONT color="green">390</FONT>                String appAccessOp = null;<a name="line.390"></a>
+<FONT color="green">391</FONT>                String aclString = null;<a name="line.391"></a>
+<FONT color="green">392</FONT>                try {<a name="line.392"></a>
+<FONT color="green">393</FONT>                  appAccessOp = valueStream.readUTF();<a name="line.393"></a>
+<FONT color="green">394</FONT>                } catch (EOFException e) {<a name="line.394"></a>
+<FONT color="green">395</FONT>                  // Valid end of stream.<a name="line.395"></a>
+<FONT color="green">396</FONT>                  break;<a name="line.396"></a>
+<FONT color="green">397</FONT>                }<a name="line.397"></a>
+<FONT color="green">398</FONT>                try {<a name="line.398"></a>
+<FONT color="green">399</FONT>                  aclString = valueStream.readUTF();<a name="line.399"></a>
+<FONT color="green">400</FONT>                } catch (EOFException e) {<a name="line.400"></a>
+<FONT color="green">401</FONT>                  throw new YarnRuntimeException("Error reading ACLs", e);<a name="line.401"></a>
+<FONT color="green">402</FONT>                }<a name="line.402"></a>
+<FONT color="green">403</FONT>                acls.put(ApplicationAccessType.valueOf(appAccessOp), aclString);<a name="line.403"></a>
+<FONT color="green">404</FONT>              }<a name="line.404"></a>
+<FONT color="green">405</FONT>    <a name="line.405"></a>
+<FONT color="green">406</FONT>            }<a name="line.406"></a>
+<FONT color="green">407</FONT>            aclScanner.advance();<a name="line.407"></a>
+<FONT color="green">408</FONT>          }<a name="line.408"></a>
+<FONT color="green">409</FONT>          return acls;<a name="line.409"></a>
+<FONT color="green">410</FONT>        }<a name="line.410"></a>
+<FONT color="green">411</FONT>        <a name="line.411"></a>
+<FONT color="green">412</FONT>        /**<a name="line.412"></a>
+<FONT color="green">413</FONT>         * Read the next key and return the value-stream.<a name="line.413"></a>
+<FONT color="green">414</FONT>         * <a name="line.414"></a>
+<FONT color="green">415</FONT>         * @param key<a name="line.415"></a>
+<FONT color="green">416</FONT>         * @return the valueStream if there are more keys or null otherwise.<a name="line.416"></a>
+<FONT color="green">417</FONT>         * @throws IOException<a name="line.417"></a>
+<FONT color="green">418</FONT>         */<a name="line.418"></a>
+<FONT color="green">419</FONT>        public DataInputStream next(LogKey key) throws IOException {<a name="line.419"></a>
+<FONT color="green">420</FONT>          if (!this.atBeginning) {<a name="line.420"></a>
+<FONT color="green">421</FONT>            this.scanner.advance();<a name="line.421"></a>
+<FONT color="green">422</FONT>          } else {<a name="line.422"></a>
+<FONT color="green">423</FONT>            this.atBeginning = false;<a name="line.423"></a>
+<FONT color="green">424</FONT>          }<a name="line.424"></a>
+<FONT color="green">425</FONT>          if (this.scanner.atEnd()) {<a name="line.425"></a>
+<FONT color="green">426</FONT>            return null;<a name="line.426"></a>
+<FONT color="green">427</FONT>          }<a name="line.427"></a>
+<FONT color="green">428</FONT>          TFile.Reader.Scanner.Entry entry = this.scanner.entry();<a name="line.428"></a>
+<FONT color="green">429</FONT>          key.readFields(entry.getKeyStream());<a name="line.429"></a>
+<FONT color="green">430</FONT>          // Skip META keys<a name="line.430"></a>
+<FONT color="green">431</FONT>          if (RESERVED_KEYS.containsKey(key.toString())) {<a name="line.431"></a>
+<FONT color="green">432</FONT>            return next(key);<a name="line.432"></a>
+<FONT color="green">433</FONT>          }<a name="line.433"></a>
+<FONT color="green">434</FONT>          DataInputStream valueStream = entry.getValueStream();<a name="line.434"></a>
+<FONT color="green">435</FONT>          return valueStream;<a name="line.435"></a>
+<FONT color="green">436</FONT>        }<a name="line.436"></a>
+<FONT color="green">437</FONT>    <a name="line.437"></a>
+<FONT color="green">438</FONT>        /**<a name="line.438"></a>
+<FONT color="green">439</FONT>         * Get a ContainerLogsReader to read the logs for<a name="line.439"></a>
+<FONT color="green">440</FONT>         * the specified container.<a name="line.440"></a>
+<FONT color="green">441</FONT>         *<a name="line.441"></a>
+<FONT color="green">442</FONT>         * @param containerId<a name="line.442"></a>
+<FONT color="green">443</FONT>         * @return object to read the container's logs or null if the<a name="line.443"></a>
+<FONT color="green">444</FONT>         *         logs could not be found<a name="line.444"></a>
+<FONT color="green">445</FONT>         * @throws IOException<a name="line.445"></a>
+<FONT color="green">446</FONT>         */<a name="line.446"></a>
+<FONT color="green">447</FONT>        @Private<a name="line.447"></a>
+<FONT color="green">448</FONT>        public ContainerLogsReader getContainerLogsReader(<a name="line.448"></a>
+<FONT color="green">449</FONT>            ContainerId containerId) throws IOException {<a name="line.449"></a>
+<FONT color="green">450</FONT>          ContainerLogsReader logReader = null;<a name="line.450"></a>
+<FONT color="green">451</FONT>    <a name="line.451"></a>
+<FONT color="green">452</FONT>          final LogKey containerKey = new LogKey(containerId);<a name="line.452"></a>
+<FONT color="green">453</FONT>          LogKey key = new LogKey();<a name="line.453"></a>
+<FONT color="green">454</FONT>          DataInputStream valueStream = next(key);<a name="line.454"></a>
+<FONT color="green">455</FONT>          while (valueStream != null &amp;&amp; !key.equals(containerKey)) {<a name="line.455"></a>
+<FONT color="green">456</FONT>            valueStream = next(key);<a name="line.456"></a>
+<FONT color="green">457</FONT>          }<a name="line.457"></a>
+<FONT color="green">458</FONT>    <a name="line.458"></a>
+<FONT color="green">459</FONT>          if (valueStream != null) {<a name="line.459"></a>
+<FONT color="green">460</FONT>            logReader = new ContainerLogsReader(valueStream);<a name="line.460"></a>
+<FONT color="green">461</FONT>          }<a name="line.461"></a>
+<FONT color="green">462</FONT>    <a name="line.462"></a>
+<FONT color="green">463</FONT>          return logReader;<a name="line.463"></a>
+<FONT color="green">464</FONT>        }<a name="line.464"></a>
+<FONT color="green">465</FONT>    <a name="line.465"></a>
+<FONT color="green">466</FONT>        //TODO  Change Log format and interfaces to be containerId specific.<a name="line.466"></a>
+<FONT color="green">467</FONT>        // Avoid returning completeValueStreams.<a name="line.467"></a>
+<FONT color="green">468</FONT>    //    public List&lt;String&gt; getTypesForContainer(DataInputStream valueStream){}<a name="line.468"></a>
+<FONT color="green">469</FONT>    //    <a name="line.469"></a>
+<FONT color="green">470</FONT>    //    /**<a name="line.470"></a>
+<FONT color="green">471</FONT>    //     * @param valueStream<a name="line.471"></a>
+<FONT color="green">472</FONT>    //     *          The Log stream for the container.<a name="line.472"></a>
+<FONT color="green">473</FONT>    //     * @param fileType<a name="line.473"></a>
+<FONT color="green">474</FONT>    //     *          the log type required.<a name="line.474"></a>
+<FONT color="green">475</FONT>    //     * @return An InputStreamReader for the required log type or null if the<a name="line.475"></a>
+<FONT color="green">476</FONT>    //     *         type is not found.<a name="line.476"></a>
+<FONT color="green">477</FONT>    //     * @throws IOException<a name="line.477"></a>
+<FONT color="green">478</FONT>    //     */<a name="line.478"></a>
+<FONT color="green">479</FONT>    //    public InputStreamReader getLogStreamForType(DataInputStream valueStream,<a name="line.479"></a>
+<FONT color="green">480</FONT>    //        String fileType) throws IOException {<a name="line.480"></a>
+<FONT color="green">481</FONT>    //      valueStream.reset();<a name="line.481"></a>
+<FONT color="green">482</FONT>    //      try {<a name="line.482"></a>
+<FONT color="green">483</FONT>    //        while (true) {<a name="line.483"></a>
+<FONT color="green">484</FONT>    //          String ft = valueStream.readUTF();<a name="line.484"></a>
+<FONT color="green">485</FONT>    //          String fileLengthStr = valueStream.readUTF();<a name="line.485"></a>
+<FONT color="green">486</FONT>    //          long fileLength = Long.parseLong(fileLengthStr);<a name="line.486"></a>
+<FONT color="green">487</FONT>    //          if (ft.equals(fileType)) {<a name="line.487"></a>
+<FONT color="green">488</FONT>    //            BoundedInputStream bis =<a name="line.488"></a>
+<FONT color="green">489</FONT>    //                new BoundedInputStream(valueStream, fileLength);<a name="line.489"></a>
+<FONT color="green">490</FONT>    //            return new InputStreamReader(bis);<a name="line.490"></a>
+<FONT color="green">491</FONT>    //          } else {<a name="line.491"></a>
+<FONT color="green">492</FONT>    //            long totalSkipped = 0;<a name="line.492"></a>
+<FONT color="green">493</FONT>    //            long currSkipped = 0;<a name="line.493"></a>
+<FONT color="green">494</FONT>    //            while (currSkipped != -1 &amp;&amp; totalSkipped &lt; fileLength) {<a name="line.494"></a>
+<FONT color="green">495</FONT>    //              currSkipped = valueStream.skip(fileLength - totalSkipped);<a name="line.495"></a>
+<FONT color="green">496</FONT>    //              totalSkipped += currSkipped;<a name="line.496"></a>
+<FONT color="green">497</FONT>    //            }<a name="line.497"></a>
+<FONT color="green">498</FONT>    //            // TODO Verify skip behaviour.<a name="line.498"></a>
+<FONT color="green">499</FONT>    //            if (currSkipped == -1) {<a name="line.499"></a>
+<FONT color="green">500</FONT>    //              return null;<a name="line.500"></a>
+<FONT color="green">501</FONT>    //            }<a name="line.501"></a>
+<FONT color="green">502</FONT>    //          }<a name="line.502"></a>
+<FONT color="green">503</FONT>    //        }<a name="line.503"></a>
+<FONT color="green">504</FONT>    //      } catch (EOFException e) {<a name="line.504"></a>
+<FONT color="green">505</FONT>    //        return null;<a name="line.505"></a>
+<FONT color="green">506</FONT>    //      }<a name="line.506"></a>
+<FONT color="green">507</FONT>    //    }<a name="line.507"></a>
+<FONT color="green">508</FONT>    <a name="line.508"></a>
+<FONT color="green">509</FONT>        /**<a name="line.509"></a>
+<FONT color="green">510</FONT>         * Writes all logs for a single container to the provided writer.<a name="line.510"></a>
+<FONT color="green">511</FONT>         * @param valueStream<a name="line.511"></a>
+<FONT color="green">512</FONT>         * @param writer<a name="line.512"></a>
+<FONT color="green">513</FONT>         * @throws IOException<a name="line.513"></a>
+<FONT color="green">514</FONT>         */<a name="line.514"></a>
+<FONT color="green">515</FONT>        public static void readAcontainerLogs(DataInputStream valueStream,<a name="line.515"></a>
+<FONT color="green">516</FONT>            Writer writer) throws IOException {<a name="line.516"></a>
+<FONT color="green">517</FONT>          int bufferSize = 65536;<a name="line.517"></a>
+<FONT color="green">518</FONT>          char[] cbuf = new char[bufferSize];<a name="line.518"></a>
+<FONT color="green">519</FONT>          String fileType;<a name="line.519"></a>
+<FONT color="green">520</FONT>          String fileLengthStr;<a name="line.520"></a>
+<FONT color="green">521</FONT>          long fileLength;<a name="line.521"></a>
+<FONT color="green">522</FONT>    <a name="line.522"></a>
+<FONT color="green">523</FONT>          while (true) {<a name="line.523"></a>
+<FONT color="green">524</FONT>            try {<a name="line.524"></a>
+<FONT color="green">525</FONT>              fileType = valueStream.readUTF();<a name="line.525"></a>
+<FONT color="green">526</FONT>            } catch (EOFException e) {<a name="line.526"></a>
+<FONT color="green">527</FONT>              // EndOfFile<a name="line.527"></a>
+<FONT color="green">528</FONT>              return;<a name="line.528"></a>
+<FONT color="green">529</FONT>            }<a name="line.529"></a>
+<FONT color="green">530</FONT>            fileLengthStr = valueStream.readUTF();<a name="line.530"></a>
+<FONT color="green">531</FONT>            fileLength = Long.parseLong(fileLengthStr);<a name="line.531"></a>
+<FONT color="green">532</FONT>            writer.write("\n\nLogType:");<a name="line.532"></a>
+<FONT color="green">533</FONT>            writer.write(fileType);<a name="line.533"></a>
+<FONT color="green">534</FONT>            writer.write("\nLogLength:");<a name="line.534"></a>
+<FONT color="green">535</FONT>            writer.write(fileLengthStr);<a name="line.535"></a>
+<FONT color="green">536</FONT>            writer.write("\nLog Contents:\n");<a name="line.536"></a>
+<FONT color="green">537</FONT>            // ByteLevel<a name="line.537"></a>
+<FONT color="green">538</FONT>            BoundedInputStream bis =<a name="line.538"></a>
+<FONT color="green">539</FONT>                new BoundedInputStream(valueStream, fileLength);<a name="line.539"></a>
+<FONT color="green">540</FONT>            InputStreamReader reader = new InputStreamReader(bis);<a name="line.540"></a>
+<FONT color="green">541</FONT>            int currentRead = 0;<a name="line.541"></a>
+<FONT color="green">542</FONT>            int totalRead = 0;<a name="line.542"></a>
+<FONT color="green">543</FONT>            while ((currentRead = reader.read(cbuf, 0, bufferSize)) != -1) {<a name="line.543"></a>
+<FONT color="green">544</FONT>              writer.write(cbuf, 0, currentRead);<a name="line.544"></a>
+<FONT color="green">545</FONT>              totalRead += currentRead;<a name="line.545"></a>
+<FONT color="green">546</FONT>            }<a name="line.546"></a>
+<FONT color="green">547</FONT>          }<a name="line.547"></a>
+<FONT color="green">548</FONT>        }<a name="line.548"></a>
+<FONT color="green">549</FONT>    <a name="line.549"></a>
+<FONT color="green">550</FONT>        /**<a name="line.550"></a>
+<FONT color="green">551</FONT>         * Keep calling this till you get a {@link EOFException} for getting logs of<a name="line.551"></a>
+<FONT color="green">552</FONT>         * all types for a single container.<a name="line.552"></a>
+<FONT color="green">553</FONT>         * <a name="line.553"></a>
+<FONT color="green">554</FONT>         * @param valueStream<a name="line.554"></a>
+<FONT color="green">555</FONT>         * @param out<a name="line.555"></a>
+<FONT color="green">556</FONT>         * @throws IOException<a name="line.556"></a>
+<FONT color="green">557</FONT>         */<a name="line.557"></a>
+<FONT color="green">558</FONT>        public static void readAContainerLogsForALogType(<a name="line.558"></a>
+<FONT color="green">559</FONT>            DataInputStream valueStream, PrintStream out)<a name="line.559"></a>
+<FONT color="green">560</FONT>              throws IOException {<a name="line.560"></a>
+<FONT color="green">561</FONT>    <a name="line.561"></a>
+<FONT color="green">562</FONT>          byte[] buf = new byte[65535];<a name="line.562"></a>
+<FONT color="green">563</FONT>    <a name="line.563"></a>
+<FONT color="green">564</FONT>          String fileType = valueStream.readUTF();<a name="line.564"></a>
+<FONT color="green">565</FONT>          String fileLengthStr = valueStream.readUTF();<a name="line.565"></a>
+<FONT color="green">566</FONT>          long fileLength = Long.parseLong(fileLengthStr);<a name="line.566"></a>
+<FONT color="green">567</FONT>          out.print("LogType: ");<a name="line.567"></a>
+<FONT color="green">568</FONT>          out.println(fileType);<a name="line.568"></a>
+<FONT color="green">569</FONT>          out.print("LogLength: ");<a name="line.569"></a>
+<FONT color="green">570</FONT>          out.println(fileLengthStr);<a name="line.570"></a>
+<FONT color="green">571</FONT>          out.println("Log Contents:");<a name="line.571"></a>
+<FONT color="green">572</FONT>    <a name="line.572"></a>
+<FONT color="green">573</FONT>          long curRead = 0;<a name="line.573"></a>
+<FONT color="green">574</FONT>          long pendingRead = fileLength - curRead;<a name="line.574"></a>
+<FONT color="green">575</FONT>          int toRead =<a name="line.575"></a>
+<FONT color="green">576</FONT>                    pendingRead &gt; buf.length ? buf.length : (int) pendingRead;<a name="line.576"></a>
+<FONT color="green">577</FONT>          int len = valueStream.read(buf, 0, toRead);<a name="line.577"></a>
+<FONT color="green">578</FONT>          while (len != -1 &amp;&amp; curRead &lt; fileLength) {<a name="line.578"></a>
+<FONT color="green">579</FONT>            out.write(buf, 0, len);<a name="line.579"></a>
+<FONT color="green">580</FONT>            curRead += len;<a name="line.580"></a>
+<FONT color="green">581</FONT>    <a name="line.581"></a>
+<FONT color="green">582</FONT>            pendingRead = fileLength - curRead;<a name="line.582"></a>
+<FONT color="green">583</FONT>            toRead =<a name="line.583"></a>
+<FONT color="green">584</FONT>                      pendingRead &gt; buf.length ? buf.length : (int) pendingRead;<a name="line.584"></a>
+<FONT color="green">585</FONT>            len = valueStream.read(buf, 0, toRead);<a name="line.585"></a>
+<FONT color="green">586</FONT>          }<a name="line.586"></a>
+<FONT color="green">587</FONT>          out.println("");<a name="line.587"></a>
+<FONT color="green">588</FONT>        }<a name="line.588"></a>
+<FONT color="green">589</FONT>    <a name="line.589"></a>
+<FONT color="green">590</FONT>        public void close() {<a name="line.590"></a>
+<FONT color="green">591</FONT>          IOUtils.cleanup(LOG, scanner, reader, fsDataIStream);<a name="line.591"></a>
+<FONT color="green">592</FONT>        }<a name="line.592"></a>
+<FONT color="green">593</FONT>      }<a name="line.593"></a>
+<FONT color="green">594</FONT>    <a name="line.594"></a>
+<FONT color="green">595</FONT>      @Private<a name="line.595"></a>
+<FONT color="green">596</FONT>      public static class ContainerLogsReader {<a name="line.596"></a>
+<FONT color="green">597</FONT>        private DataInputStream valueStream;<a name="line.597"></a>
+<FONT color="green">598</FONT>        private String currentLogType = null;<a name="line.598"></a>
+<FONT color="green">599</FONT>        private long currentLogLength = 0;<a name="line.599"></a>
+<FONT color="green">600</FONT>        private BoundedInputStream currentLogData = null;<a name="line.600"></a>
+<FONT color="green">601</FONT>        private InputStreamReader currentLogISR;<a name="line.601"></a>
+<FONT color="green">602</FONT>    <a name="line.602"></a>
+<FONT color="green">603</FONT>        public ContainerLogsReader(DataInputStream stream) {<a name="line.603"></a>
+<FONT color="green">604</FONT>          valueStream = stream;<a name="line.604"></a>
+<FONT color="green">605</FONT>        }<a name="line.605"></a>
+<FONT color="green">606</FONT>    <a name="line.606"></a>
+<FONT color="green">607</FONT>        public String nextLog() throws IOException {<a name="line.607"></a>
+<FONT color="green">608</FONT>          if (currentLogData != null &amp;&amp; currentLogLength &gt; 0) {<a name="line.608"></a>
+<FONT color="green">609</FONT>            // seek to the end of the current log, relying on BoundedInputStream<a name="line.609"></a>
+<FONT color="green">610</FONT>            // to prevent seeking past the end of the current log<a name="line.610"></a>
+<FONT color="green">611</FONT>            do {<a name="line.611"></a>
+<FONT color="green">612</FONT>              if (currentLogData.skip(currentLogLength) &lt; 0) {<a name="line.612"></a>
+<FONT color="green">613</FONT>                break;<a name="line.613"></a>
+<FONT color="green">614</FONT>              }<a name="line.614"></a>
+<FONT color="green">615</FONT>            } while (currentLogData.read() != -1);<a name="line.615"></a>
+<FONT color="green">616</FONT>          }<a name="line.616"></a>
+<FONT color="green">617</FONT>    <a name="line.617"></a>
+<FONT color="green">618</FONT>          currentLogType = null;<a name="line.618"></a>
+<FONT color="green">619</FONT>          currentLogLength = 0;<a name="line.619"></a>
+<FONT color="green">620</FONT>          currentLogData = null;<a name="line.620"></a>
+<FONT color="green">621</FONT>          currentLogISR = null;<a name="line.621"></a>
+<FONT color="green">622</FONT>    <a name="line.622"></a>
+<FONT color="green">623</FONT>          try {<a name="line.623"></a>
+<FONT color="green">624</FONT>            String logType = valueStream.readUTF();<a name="line.624"></a>
+<FONT color="green">625</FONT>            String logLengthStr = valueStream.readUTF();<a name="line.625"></a>
+<FONT color="green">626</FONT>            currentLogLength = Long.parseLong(logLengthStr);<a name="line.626"></a>
+<FONT color="green">627</FONT>            currentLogData =<a name="line.627"></a>
+<FONT color="green">628</FONT>                new BoundedInputStream(valueStream, currentLogLength);<a name="line.628"></a>
+<FONT color="green">629</FONT>            currentLogData.setPropagateClose(false);<a name="line.629"></a>
+<FONT color="green">630</FONT>            currentLogISR = new InputStreamReader(currentLogData);<a name="line.630"></a>
+<FONT color="green">631</FONT>            currentLogType = logType;<a name="line.631"></a>
+<FONT color="green">632</FONT>          } catch (EOFException e) {<a name="line.632"></a>
+<FONT color="green">633</FONT>          }<a name="line.633"></a>
+<FONT color="green">634</FONT>    <a name="line.634"></a>
+<FONT color="green">635</FONT>          return currentLogType;<a name="line.635"></a>
+<FONT color="green">636</FONT>        }<a name="line.636"></a>
+<FONT color="green">637</FONT>    <a name="line.637"></a>
+<FONT color="green">638</FONT>        public String getCurrentLogType() {<a name="line.638"></a>
+<FONT color="green">639</FONT>          return currentLogType;<a name="line.639"></a>
+<FONT color="green">640</FONT>        }<a name="line.640"></a>
+<FONT color="green">641</FONT>    <a name="line.641"></a>
+<FONT color="green">642</FONT>        public long getCurrentLogLength() {<a name="line.642"></a>
+<FONT color="green">643</FONT>          return currentLogLength;<a name="line.643"></a>
+<FONT color="green">644</FONT>        }<a name="line.644"></a>
+<FONT color="green">645</FONT>    <a name="line.645"></a>
+<FONT color="green">646</FONT>        public long skip(long n) throws IOException {<a name="line.646"></a>
+<FONT color="green">647</FONT>          return currentLogData.skip(n);<a name="line.647"></a>
+<FONT color="green">648</FONT>        }<a name="line.648"></a>
+<FONT color="green">649</FONT>    <a name="line.649"></a>
+<FONT color="green">650</FONT>        public int read(byte[] buf, int off, int len) throws IOException {<a name="line.650"></a>
+<FONT color="green">651</FONT>          return currentLogData.read(buf, off, len);<a name="line.651"></a>
+<FONT color="green">652</FONT>        }<a name="line.652"></a>
+<FONT color="green">653</FONT>    <a name="line.653"></a>
+<FONT color="green">654</FONT>        public int read(char[] buf, int off, int len) throws IOException {<a name="line.654"></a>
+<FONT color="green">655</FONT>          return currentLogISR.read(buf, off, len);<a name="line.655"></a>
+<FONT color="green">656</FONT>        }<a name="line.656"></a>
+<FONT color="green">657</FONT>      }<a name="line.657"></a>
+<FONT color="green">658</FONT>    }<a name="line.658"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

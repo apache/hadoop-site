@@ -1,0 +1,892 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.hadoop.hdfs.protocolPB;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import java.util.ArrayList;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import java.util.Arrays;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import java.util.List;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import com.google.protobuf.ByteString;<a name="line.24"></a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.apache.hadoop.fs.StorageType;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.apache.hadoop.ha.HAServiceProtocol.HAServiceState;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.apache.hadoop.ha.proto.HAServiceProtocolProtos;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.apache.hadoop.hdfs.DFSUtilClient;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.apache.hadoop.hdfs.protocol.Block;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.apache.hadoop.hdfs.protocol.DatanodeID;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.apache.hadoop.hdfs.protocol.DatanodeInfo;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.apache.hadoop.hdfs.protocol.ExtendedBlock;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.apache.hadoop.hdfs.protocol.LocatedBlock;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.BalancerBandwidthCommandProto;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.BlockCommandProto;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.BlockIdCommandProto;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.BlockRecoveryCommandProto;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.DatanodeCommandProto;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.DatanodeRegistrationProto;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.FinalizeCommandProto;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.KeyUpdateCommandProto;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.ReceivedDeletedBlockInfoProto;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.RegisterCommandProto;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.VolumeFailureSummaryProto;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.BlockReportContextProto;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.BlockProto;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.DatanodeInfosProto;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.LocatedBlockProto;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.StorageTypeProto;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.StorageTypesProto;<a name="line.51"></a>
+<span class="sourceLineNo">052</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.BlockKeyProto;<a name="line.52"></a>
+<span class="sourceLineNo">053</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.BlockWithLocationsProto;<a name="line.53"></a>
+<span class="sourceLineNo">054</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.BlocksWithLocationsProto;<a name="line.54"></a>
+<span class="sourceLineNo">055</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.CheckpointCommandProto;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.CheckpointSignatureProto;<a name="line.56"></a>
+<span class="sourceLineNo">057</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.ExportedBlockKeysProto;<a name="line.57"></a>
+<span class="sourceLineNo">058</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.NamenodeCommandProto;<a name="line.58"></a>
+<span class="sourceLineNo">059</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.NamenodeRegistrationProto;<a name="line.59"></a>
+<span class="sourceLineNo">060</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.NamenodeRegistrationProto.NamenodeRoleProto;<a name="line.60"></a>
+<span class="sourceLineNo">061</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.NamespaceInfoProto;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.NNHAStatusHeartbeatProto;<a name="line.62"></a>
+<span class="sourceLineNo">063</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.RecoveringBlockProto;<a name="line.63"></a>
+<span class="sourceLineNo">064</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.RemoteEditLogManifestProto;<a name="line.64"></a>
+<span class="sourceLineNo">065</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.RemoteEditLogProto;<a name="line.65"></a>
+<span class="sourceLineNo">066</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.ReplicaStateProto;<a name="line.66"></a>
+<span class="sourceLineNo">067</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.StorageInfoProto;<a name="line.67"></a>
+<span class="sourceLineNo">068</span>import org.apache.hadoop.hdfs.protocol.proto.HdfsServerProtos.StorageUuidsProto;<a name="line.68"></a>
+<span class="sourceLineNo">069</span>import org.apache.hadoop.hdfs.protocol.proto.JournalProtocolProtos.JournalInfoProto;<a name="line.69"></a>
+<span class="sourceLineNo">070</span>import org.apache.hadoop.hdfs.security.token.block.BlockKey;<a name="line.70"></a>
+<span class="sourceLineNo">071</span>import org.apache.hadoop.hdfs.security.token.block.ExportedBlockKeys;<a name="line.71"></a>
+<span class="sourceLineNo">072</span>import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.NamenodeRole;<a name="line.72"></a>
+<span class="sourceLineNo">073</span>import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.NodeType;<a name="line.73"></a>
+<span class="sourceLineNo">074</span>import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>import org.apache.hadoop.hdfs.server.common.Storage;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>import org.apache.hadoop.hdfs.server.common.StorageInfo;<a name="line.76"></a>
+<span class="sourceLineNo">077</span>import org.apache.hadoop.hdfs.server.namenode.CheckpointSignature;<a name="line.77"></a>
+<span class="sourceLineNo">078</span>import org.apache.hadoop.hdfs.server.protocol.BalancerBandwidthCommand;<a name="line.78"></a>
+<span class="sourceLineNo">079</span>import org.apache.hadoop.hdfs.server.protocol.BlockCommand;<a name="line.79"></a>
+<span class="sourceLineNo">080</span>import org.apache.hadoop.hdfs.server.protocol.BlockIdCommand;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>import org.apache.hadoop.hdfs.server.protocol.BlockRecoveryCommand;<a name="line.81"></a>
+<span class="sourceLineNo">082</span>import org.apache.hadoop.hdfs.server.protocol.BlockRecoveryCommand.RecoveringBlock;<a name="line.82"></a>
+<span class="sourceLineNo">083</span>import org.apache.hadoop.hdfs.server.protocol.BlockReportContext;<a name="line.83"></a>
+<span class="sourceLineNo">084</span>import org.apache.hadoop.hdfs.server.protocol.BlocksWithLocations;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>import org.apache.hadoop.hdfs.server.protocol.BlocksWithLocations.BlockWithLocations;<a name="line.85"></a>
+<span class="sourceLineNo">086</span>import org.apache.hadoop.hdfs.server.protocol.CheckpointCommand;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>import org.apache.hadoop.hdfs.server.protocol.DatanodeCommand;<a name="line.87"></a>
+<span class="sourceLineNo">088</span>import org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol;<a name="line.88"></a>
+<span class="sourceLineNo">089</span>import org.apache.hadoop.hdfs.server.protocol.DatanodeRegistration;<a name="line.89"></a>
+<span class="sourceLineNo">090</span>import org.apache.hadoop.hdfs.server.protocol.FinalizeCommand;<a name="line.90"></a>
+<span class="sourceLineNo">091</span>import org.apache.hadoop.hdfs.server.protocol.JournalInfo;<a name="line.91"></a>
+<span class="sourceLineNo">092</span>import org.apache.hadoop.hdfs.server.protocol.KeyUpdateCommand;<a name="line.92"></a>
+<span class="sourceLineNo">093</span>import org.apache.hadoop.hdfs.server.protocol.NNHAStatusHeartbeat;<a name="line.93"></a>
+<span class="sourceLineNo">094</span>import org.apache.hadoop.hdfs.server.protocol.NamenodeCommand;<a name="line.94"></a>
+<span class="sourceLineNo">095</span>import org.apache.hadoop.hdfs.server.protocol.NamenodeRegistration;<a name="line.95"></a>
+<span class="sourceLineNo">096</span>import org.apache.hadoop.hdfs.server.protocol.NamespaceInfo;<a name="line.96"></a>
+<span class="sourceLineNo">097</span>import org.apache.hadoop.hdfs.server.protocol.ReceivedDeletedBlockInfo;<a name="line.97"></a>
+<span class="sourceLineNo">098</span>import org.apache.hadoop.hdfs.server.protocol.ReceivedDeletedBlockInfo.BlockStatus;<a name="line.98"></a>
+<span class="sourceLineNo">099</span>import org.apache.hadoop.hdfs.server.protocol.RegisterCommand;<a name="line.99"></a>
+<span class="sourceLineNo">100</span>import org.apache.hadoop.hdfs.server.protocol.RemoteEditLog;<a name="line.100"></a>
+<span class="sourceLineNo">101</span>import org.apache.hadoop.hdfs.server.protocol.RemoteEditLogManifest;<a name="line.101"></a>
+<span class="sourceLineNo">102</span>import org.apache.hadoop.hdfs.server.protocol.VolumeFailureSummary;<a name="line.102"></a>
+<span class="sourceLineNo">103</span><a name="line.103"></a>
+<span class="sourceLineNo">104</span>/**<a name="line.104"></a>
+<span class="sourceLineNo">105</span> * Utilities for converting protobuf classes to and from implementation classes<a name="line.105"></a>
+<span class="sourceLineNo">106</span> * and other helper utilities to help in dealing with protobuf.<a name="line.106"></a>
+<span class="sourceLineNo">107</span> * <a name="line.107"></a>
+<span class="sourceLineNo">108</span> * Note that when converting from an internal type to protobuf type, the<a name="line.108"></a>
+<span class="sourceLineNo">109</span> * converter never return null for protobuf type. The check for internal type<a name="line.109"></a>
+<span class="sourceLineNo">110</span> * being null must be done before calling the convert() method.<a name="line.110"></a>
+<span class="sourceLineNo">111</span> *<a name="line.111"></a>
+<span class="sourceLineNo">112</span> * For those helper methods that convert HDFS client-side data structures from<a name="line.112"></a>
+<span class="sourceLineNo">113</span> * and to protobuf, see {@link PBHelperClient}.<a name="line.113"></a>
+<span class="sourceLineNo">114</span> */<a name="line.114"></a>
+<span class="sourceLineNo">115</span>public class PBHelper {<a name="line.115"></a>
+<span class="sourceLineNo">116</span>  private static final RegisterCommandProto REG_CMD_PROTO = <a name="line.116"></a>
+<span class="sourceLineNo">117</span>      RegisterCommandProto.newBuilder().build();<a name="line.117"></a>
+<span class="sourceLineNo">118</span>  private static final RegisterCommand REG_CMD = new RegisterCommand();<a name="line.118"></a>
+<span class="sourceLineNo">119</span><a name="line.119"></a>
+<span class="sourceLineNo">120</span>  private PBHelper() {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    /** Hidden constructor */<a name="line.121"></a>
+<span class="sourceLineNo">122</span>  }<a name="line.122"></a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span>  public static NamenodeRole convert(NamenodeRoleProto role) {<a name="line.124"></a>
+<span class="sourceLineNo">125</span>    switch (role) {<a name="line.125"></a>
+<span class="sourceLineNo">126</span>    case NAMENODE:<a name="line.126"></a>
+<span class="sourceLineNo">127</span>      return NamenodeRole.NAMENODE;<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    case BACKUP:<a name="line.128"></a>
+<span class="sourceLineNo">129</span>      return NamenodeRole.BACKUP;<a name="line.129"></a>
+<span class="sourceLineNo">130</span>    case CHECKPOINT:<a name="line.130"></a>
+<span class="sourceLineNo">131</span>      return NamenodeRole.CHECKPOINT;<a name="line.131"></a>
+<span class="sourceLineNo">132</span>    }<a name="line.132"></a>
+<span class="sourceLineNo">133</span>    return null;<a name="line.133"></a>
+<span class="sourceLineNo">134</span>  }<a name="line.134"></a>
+<span class="sourceLineNo">135</span><a name="line.135"></a>
+<span class="sourceLineNo">136</span>  public static NamenodeRoleProto convert(NamenodeRole role) {<a name="line.136"></a>
+<span class="sourceLineNo">137</span>    switch (role) {<a name="line.137"></a>
+<span class="sourceLineNo">138</span>    case NAMENODE:<a name="line.138"></a>
+<span class="sourceLineNo">139</span>      return NamenodeRoleProto.NAMENODE;<a name="line.139"></a>
+<span class="sourceLineNo">140</span>    case BACKUP:<a name="line.140"></a>
+<span class="sourceLineNo">141</span>      return NamenodeRoleProto.BACKUP;<a name="line.141"></a>
+<span class="sourceLineNo">142</span>    case CHECKPOINT:<a name="line.142"></a>
+<span class="sourceLineNo">143</span>      return NamenodeRoleProto.CHECKPOINT;<a name="line.143"></a>
+<span class="sourceLineNo">144</span>    }<a name="line.144"></a>
+<span class="sourceLineNo">145</span>    return null;<a name="line.145"></a>
+<span class="sourceLineNo">146</span>  }<a name="line.146"></a>
+<span class="sourceLineNo">147</span><a name="line.147"></a>
+<span class="sourceLineNo">148</span>  public static StorageInfoProto convert(StorageInfo info) {<a name="line.148"></a>
+<span class="sourceLineNo">149</span>    return StorageInfoProto.newBuilder().setClusterID(info.getClusterID())<a name="line.149"></a>
+<span class="sourceLineNo">150</span>        .setCTime(info.getCTime()).setLayoutVersion(info.getLayoutVersion())<a name="line.150"></a>
+<span class="sourceLineNo">151</span>        .setNamespceID(info.getNamespaceID()).build();<a name="line.151"></a>
+<span class="sourceLineNo">152</span>  }<a name="line.152"></a>
+<span class="sourceLineNo">153</span><a name="line.153"></a>
+<span class="sourceLineNo">154</span>  public static StorageInfo convert(StorageInfoProto info, NodeType type) {<a name="line.154"></a>
+<span class="sourceLineNo">155</span>    return new StorageInfo(info.getLayoutVersion(), info.getNamespceID(),<a name="line.155"></a>
+<span class="sourceLineNo">156</span>        info.getClusterID(), info.getCTime(), type);<a name="line.156"></a>
+<span class="sourceLineNo">157</span>  }<a name="line.157"></a>
+<span class="sourceLineNo">158</span><a name="line.158"></a>
+<span class="sourceLineNo">159</span>  public static NamenodeRegistrationProto convert(NamenodeRegistration reg) {<a name="line.159"></a>
+<span class="sourceLineNo">160</span>    return NamenodeRegistrationProto.newBuilder()<a name="line.160"></a>
+<span class="sourceLineNo">161</span>        .setHttpAddress(reg.getHttpAddress()).setRole(convert(reg.getRole()))<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        .setRpcAddress(reg.getAddress())<a name="line.162"></a>
+<span class="sourceLineNo">163</span>        .setStorageInfo(convert((StorageInfo) reg)).build();<a name="line.163"></a>
+<span class="sourceLineNo">164</span>  }<a name="line.164"></a>
+<span class="sourceLineNo">165</span><a name="line.165"></a>
+<span class="sourceLineNo">166</span>  public static NamenodeRegistration convert(NamenodeRegistrationProto reg) {<a name="line.166"></a>
+<span class="sourceLineNo">167</span>    StorageInfo si = convert(reg.getStorageInfo(), NodeType.NAME_NODE);<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    return new NamenodeRegistration(reg.getRpcAddress(), reg.getHttpAddress(),<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        si, convert(reg.getRole()));<a name="line.169"></a>
+<span class="sourceLineNo">170</span>  }<a name="line.170"></a>
+<span class="sourceLineNo">171</span><a name="line.171"></a>
+<span class="sourceLineNo">172</span>  public static BlockWithLocationsProto convert(BlockWithLocations blk) {<a name="line.172"></a>
+<span class="sourceLineNo">173</span>    return BlockWithLocationsProto.newBuilder()<a name="line.173"></a>
+<span class="sourceLineNo">174</span>        .setBlock(PBHelperClient.convert(blk.getBlock()))<a name="line.174"></a>
+<span class="sourceLineNo">175</span>        .addAllDatanodeUuids(Arrays.asList(blk.getDatanodeUuids()))<a name="line.175"></a>
+<span class="sourceLineNo">176</span>        .addAllStorageUuids(Arrays.asList(blk.getStorageIDs()))<a name="line.176"></a>
+<span class="sourceLineNo">177</span>        .addAllStorageTypes(PBHelperClient.convertStorageTypes(blk.getStorageTypes()))<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        .build();<a name="line.178"></a>
+<span class="sourceLineNo">179</span>  }<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>  public static BlockWithLocations convert(BlockWithLocationsProto b) {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>    final List&lt;String&gt; datanodeUuids = b.getDatanodeUuidsList();<a name="line.182"></a>
+<span class="sourceLineNo">183</span>    final List&lt;String&gt; storageUuids = b.getStorageUuidsList();<a name="line.183"></a>
+<span class="sourceLineNo">184</span>    final List&lt;StorageTypeProto&gt; storageTypes = b.getStorageTypesList();<a name="line.184"></a>
+<span class="sourceLineNo">185</span>    return new BlockWithLocations(PBHelperClient.convert(b.getBlock()),<a name="line.185"></a>
+<span class="sourceLineNo">186</span>        datanodeUuids.toArray(new String[datanodeUuids.size()]),<a name="line.186"></a>
+<span class="sourceLineNo">187</span>        storageUuids.toArray(new String[storageUuids.size()]),<a name="line.187"></a>
+<span class="sourceLineNo">188</span>        PBHelperClient.convertStorageTypes(storageTypes, storageUuids.size()));<a name="line.188"></a>
+<span class="sourceLineNo">189</span>  }<a name="line.189"></a>
+<span class="sourceLineNo">190</span><a name="line.190"></a>
+<span class="sourceLineNo">191</span>  public static BlocksWithLocationsProto convert(BlocksWithLocations blks) {<a name="line.191"></a>
+<span class="sourceLineNo">192</span>    BlocksWithLocationsProto.Builder builder = BlocksWithLocationsProto<a name="line.192"></a>
+<span class="sourceLineNo">193</span>        .newBuilder();<a name="line.193"></a>
+<span class="sourceLineNo">194</span>    for (BlockWithLocations b : blks.getBlocks()) {<a name="line.194"></a>
+<span class="sourceLineNo">195</span>      builder.addBlocks(convert(b));<a name="line.195"></a>
+<span class="sourceLineNo">196</span>    }<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    return builder.build();<a name="line.197"></a>
+<span class="sourceLineNo">198</span>  }<a name="line.198"></a>
+<span class="sourceLineNo">199</span><a name="line.199"></a>
+<span class="sourceLineNo">200</span>  public static BlocksWithLocations convert(BlocksWithLocationsProto blocks) {<a name="line.200"></a>
+<span class="sourceLineNo">201</span>    List&lt;BlockWithLocationsProto&gt; b = blocks.getBlocksList();<a name="line.201"></a>
+<span class="sourceLineNo">202</span>    BlockWithLocations[] ret = new BlockWithLocations[b.size()];<a name="line.202"></a>
+<span class="sourceLineNo">203</span>    int i = 0;<a name="line.203"></a>
+<span class="sourceLineNo">204</span>    for (BlockWithLocationsProto entry : b) {<a name="line.204"></a>
+<span class="sourceLineNo">205</span>      ret[i++] = convert(entry);<a name="line.205"></a>
+<span class="sourceLineNo">206</span>    }<a name="line.206"></a>
+<span class="sourceLineNo">207</span>    return new BlocksWithLocations(ret);<a name="line.207"></a>
+<span class="sourceLineNo">208</span>  }<a name="line.208"></a>
+<span class="sourceLineNo">209</span><a name="line.209"></a>
+<span class="sourceLineNo">210</span>  public static BlockKeyProto convert(BlockKey key) {<a name="line.210"></a>
+<span class="sourceLineNo">211</span>    byte[] encodedKey = key.getEncodedKey();<a name="line.211"></a>
+<span class="sourceLineNo">212</span>    ByteString keyBytes = PBHelperClient.getByteString(encodedKey == null ?<a name="line.212"></a>
+<span class="sourceLineNo">213</span>        DFSUtilClient.EMPTY_BYTES : encodedKey);<a name="line.213"></a>
+<span class="sourceLineNo">214</span>    return BlockKeyProto.newBuilder().setKeyId(key.getKeyId())<a name="line.214"></a>
+<span class="sourceLineNo">215</span>        .setKeyBytes(keyBytes).setExpiryDate(key.getExpiryDate()).build();<a name="line.215"></a>
+<span class="sourceLineNo">216</span>  }<a name="line.216"></a>
+<span class="sourceLineNo">217</span><a name="line.217"></a>
+<span class="sourceLineNo">218</span>  public static BlockKey convert(BlockKeyProto k) {<a name="line.218"></a>
+<span class="sourceLineNo">219</span>    return new BlockKey(k.getKeyId(), k.getExpiryDate(), k.getKeyBytes()<a name="line.219"></a>
+<span class="sourceLineNo">220</span>        .toByteArray());<a name="line.220"></a>
+<span class="sourceLineNo">221</span>  }<a name="line.221"></a>
+<span class="sourceLineNo">222</span><a name="line.222"></a>
+<span class="sourceLineNo">223</span>  public static ExportedBlockKeysProto convert(ExportedBlockKeys keys) {<a name="line.223"></a>
+<span class="sourceLineNo">224</span>    ExportedBlockKeysProto.Builder builder = ExportedBlockKeysProto<a name="line.224"></a>
+<span class="sourceLineNo">225</span>        .newBuilder();<a name="line.225"></a>
+<span class="sourceLineNo">226</span>    builder.setIsBlockTokenEnabled(keys.isBlockTokenEnabled())<a name="line.226"></a>
+<span class="sourceLineNo">227</span>        .setKeyUpdateInterval(keys.getKeyUpdateInterval())<a name="line.227"></a>
+<span class="sourceLineNo">228</span>        .setTokenLifeTime(keys.getTokenLifetime())<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        .setCurrentKey(convert(keys.getCurrentKey()));<a name="line.229"></a>
+<span class="sourceLineNo">230</span>    for (BlockKey k : keys.getAllKeys()) {<a name="line.230"></a>
+<span class="sourceLineNo">231</span>      builder.addAllKeys(convert(k));<a name="line.231"></a>
+<span class="sourceLineNo">232</span>    }<a name="line.232"></a>
+<span class="sourceLineNo">233</span>    return builder.build();<a name="line.233"></a>
+<span class="sourceLineNo">234</span>  }<a name="line.234"></a>
+<span class="sourceLineNo">235</span><a name="line.235"></a>
+<span class="sourceLineNo">236</span>  public static ExportedBlockKeys convert(ExportedBlockKeysProto keys) {<a name="line.236"></a>
+<span class="sourceLineNo">237</span>    return new ExportedBlockKeys(keys.getIsBlockTokenEnabled(),<a name="line.237"></a>
+<span class="sourceLineNo">238</span>        keys.getKeyUpdateInterval(), keys.getTokenLifeTime(),<a name="line.238"></a>
+<span class="sourceLineNo">239</span>        convert(keys.getCurrentKey()), convertBlockKeys(keys.getAllKeysList()));<a name="line.239"></a>
+<span class="sourceLineNo">240</span>  }<a name="line.240"></a>
+<span class="sourceLineNo">241</span><a name="line.241"></a>
+<span class="sourceLineNo">242</span>  public static CheckpointSignatureProto convert(CheckpointSignature s) {<a name="line.242"></a>
+<span class="sourceLineNo">243</span>    return CheckpointSignatureProto.newBuilder()<a name="line.243"></a>
+<span class="sourceLineNo">244</span>        .setBlockPoolId(s.getBlockpoolID())<a name="line.244"></a>
+<span class="sourceLineNo">245</span>        .setCurSegmentTxId(s.getCurSegmentTxId())<a name="line.245"></a>
+<span class="sourceLineNo">246</span>        .setMostRecentCheckpointTxId(s.getMostRecentCheckpointTxId())<a name="line.246"></a>
+<span class="sourceLineNo">247</span>        .setStorageInfo(PBHelper.convert((StorageInfo) s)).build();<a name="line.247"></a>
+<span class="sourceLineNo">248</span>  }<a name="line.248"></a>
+<span class="sourceLineNo">249</span><a name="line.249"></a>
+<span class="sourceLineNo">250</span>  public static CheckpointSignature convert(CheckpointSignatureProto s) {<a name="line.250"></a>
+<span class="sourceLineNo">251</span>    StorageInfo si = PBHelper.convert(s.getStorageInfo(), NodeType.NAME_NODE);<a name="line.251"></a>
+<span class="sourceLineNo">252</span>    return new CheckpointSignature(si, s.getBlockPoolId(),<a name="line.252"></a>
+<span class="sourceLineNo">253</span>        s.getMostRecentCheckpointTxId(), s.getCurSegmentTxId());<a name="line.253"></a>
+<span class="sourceLineNo">254</span>  }<a name="line.254"></a>
+<span class="sourceLineNo">255</span><a name="line.255"></a>
+<span class="sourceLineNo">256</span>  public static RemoteEditLogProto convert(RemoteEditLog log) {<a name="line.256"></a>
+<span class="sourceLineNo">257</span>    return RemoteEditLogProto.newBuilder()<a name="line.257"></a>
+<span class="sourceLineNo">258</span>        .setStartTxId(log.getStartTxId())<a name="line.258"></a>
+<span class="sourceLineNo">259</span>        .setEndTxId(log.getEndTxId())<a name="line.259"></a>
+<span class="sourceLineNo">260</span>        .setIsInProgress(log.isInProgress()).build();<a name="line.260"></a>
+<span class="sourceLineNo">261</span>  }<a name="line.261"></a>
+<span class="sourceLineNo">262</span><a name="line.262"></a>
+<span class="sourceLineNo">263</span>  public static RemoteEditLog convert(RemoteEditLogProto l) {<a name="line.263"></a>
+<span class="sourceLineNo">264</span>    return new RemoteEditLog(l.getStartTxId(), l.getEndTxId(),<a name="line.264"></a>
+<span class="sourceLineNo">265</span>        l.getIsInProgress());<a name="line.265"></a>
+<span class="sourceLineNo">266</span>  }<a name="line.266"></a>
+<span class="sourceLineNo">267</span><a name="line.267"></a>
+<span class="sourceLineNo">268</span>  public static RemoteEditLogManifestProto convert(<a name="line.268"></a>
+<span class="sourceLineNo">269</span>      RemoteEditLogManifest manifest) {<a name="line.269"></a>
+<span class="sourceLineNo">270</span>    RemoteEditLogManifestProto.Builder builder = RemoteEditLogManifestProto<a name="line.270"></a>
+<span class="sourceLineNo">271</span>        .newBuilder();<a name="line.271"></a>
+<span class="sourceLineNo">272</span>    for (RemoteEditLog log : manifest.getLogs()) {<a name="line.272"></a>
+<span class="sourceLineNo">273</span>      builder.addLogs(convert(log));<a name="line.273"></a>
+<span class="sourceLineNo">274</span>    }<a name="line.274"></a>
+<span class="sourceLineNo">275</span>    return builder.build();<a name="line.275"></a>
+<span class="sourceLineNo">276</span>  }<a name="line.276"></a>
+<span class="sourceLineNo">277</span><a name="line.277"></a>
+<span class="sourceLineNo">278</span>  public static RemoteEditLogManifest convert(<a name="line.278"></a>
+<span class="sourceLineNo">279</span>      RemoteEditLogManifestProto manifest) {<a name="line.279"></a>
+<span class="sourceLineNo">280</span>    List&lt;RemoteEditLog&gt; logs = new ArrayList&lt;RemoteEditLog&gt;(manifest<a name="line.280"></a>
+<span class="sourceLineNo">281</span>        .getLogsList().size());<a name="line.281"></a>
+<span class="sourceLineNo">282</span>    for (RemoteEditLogProto l : manifest.getLogsList()) {<a name="line.282"></a>
+<span class="sourceLineNo">283</span>      logs.add(convert(l));<a name="line.283"></a>
+<span class="sourceLineNo">284</span>    }<a name="line.284"></a>
+<span class="sourceLineNo">285</span>    return new RemoteEditLogManifest(logs);<a name="line.285"></a>
+<span class="sourceLineNo">286</span>  }<a name="line.286"></a>
+<span class="sourceLineNo">287</span><a name="line.287"></a>
+<span class="sourceLineNo">288</span>  public static CheckpointCommandProto convert(CheckpointCommand cmd) {<a name="line.288"></a>
+<span class="sourceLineNo">289</span>    return CheckpointCommandProto.newBuilder()<a name="line.289"></a>
+<span class="sourceLineNo">290</span>        .setSignature(convert(cmd.getSignature()))<a name="line.290"></a>
+<span class="sourceLineNo">291</span>        .setNeedToReturnImage(cmd.needToReturnImage()).build();<a name="line.291"></a>
+<span class="sourceLineNo">292</span>  }<a name="line.292"></a>
+<span class="sourceLineNo">293</span><a name="line.293"></a>
+<span class="sourceLineNo">294</span>  public static NamenodeCommandProto convert(NamenodeCommand cmd) {<a name="line.294"></a>
+<span class="sourceLineNo">295</span>    if (cmd instanceof CheckpointCommand) {<a name="line.295"></a>
+<span class="sourceLineNo">296</span>      return NamenodeCommandProto.newBuilder().setAction(cmd.getAction())<a name="line.296"></a>
+<span class="sourceLineNo">297</span>          .setType(NamenodeCommandProto.Type.CheckPointCommand)<a name="line.297"></a>
+<span class="sourceLineNo">298</span>          .setCheckpointCmd(convert((CheckpointCommand) cmd)).build();<a name="line.298"></a>
+<span class="sourceLineNo">299</span>    }<a name="line.299"></a>
+<span class="sourceLineNo">300</span>    return NamenodeCommandProto.newBuilder()<a name="line.300"></a>
+<span class="sourceLineNo">301</span>        .setType(NamenodeCommandProto.Type.NamenodeCommand)<a name="line.301"></a>
+<span class="sourceLineNo">302</span>        .setAction(cmd.getAction()).build();<a name="line.302"></a>
+<span class="sourceLineNo">303</span>  }<a name="line.303"></a>
+<span class="sourceLineNo">304</span><a name="line.304"></a>
+<span class="sourceLineNo">305</span>  public static BlockKey[] convertBlockKeys(List&lt;BlockKeyProto&gt; list) {<a name="line.305"></a>
+<span class="sourceLineNo">306</span>    BlockKey[] ret = new BlockKey[list.size()];<a name="line.306"></a>
+<span class="sourceLineNo">307</span>    int i = 0;<a name="line.307"></a>
+<span class="sourceLineNo">308</span>    for (BlockKeyProto k : list) {<a name="line.308"></a>
+<span class="sourceLineNo">309</span>      ret[i++] = convert(k);<a name="line.309"></a>
+<span class="sourceLineNo">310</span>    }<a name="line.310"></a>
+<span class="sourceLineNo">311</span>    return ret;<a name="line.311"></a>
+<span class="sourceLineNo">312</span>  }<a name="line.312"></a>
+<span class="sourceLineNo">313</span><a name="line.313"></a>
+<span class="sourceLineNo">314</span>  public static NamespaceInfo convert(NamespaceInfoProto info) {<a name="line.314"></a>
+<span class="sourceLineNo">315</span>    StorageInfoProto storage = info.getStorageInfo();<a name="line.315"></a>
+<span class="sourceLineNo">316</span>    return new NamespaceInfo(storage.getNamespceID(), storage.getClusterID(),<a name="line.316"></a>
+<span class="sourceLineNo">317</span>        info.getBlockPoolID(), storage.getCTime(), info.getBuildVersion(),<a name="line.317"></a>
+<span class="sourceLineNo">318</span>        info.getSoftwareVersion(), info.getCapabilities(),<a name="line.318"></a>
+<span class="sourceLineNo">319</span>        convert(info.getState()));<a name="line.319"></a>
+<span class="sourceLineNo">320</span>  }<a name="line.320"></a>
+<span class="sourceLineNo">321</span><a name="line.321"></a>
+<span class="sourceLineNo">322</span>  public static NamenodeCommand convert(NamenodeCommandProto cmd) {<a name="line.322"></a>
+<span class="sourceLineNo">323</span>    if (cmd == null) return null;<a name="line.323"></a>
+<span class="sourceLineNo">324</span>    switch (cmd.getType()) {<a name="line.324"></a>
+<span class="sourceLineNo">325</span>    case CheckPointCommand:<a name="line.325"></a>
+<span class="sourceLineNo">326</span>      CheckpointCommandProto chkPt = cmd.getCheckpointCmd();<a name="line.326"></a>
+<span class="sourceLineNo">327</span>      return new CheckpointCommand(PBHelper.convert(chkPt.getSignature()),<a name="line.327"></a>
+<span class="sourceLineNo">328</span>          chkPt.getNeedToReturnImage());<a name="line.328"></a>
+<span class="sourceLineNo">329</span>    default:<a name="line.329"></a>
+<span class="sourceLineNo">330</span>      return new NamenodeCommand(cmd.getAction());<a name="line.330"></a>
+<span class="sourceLineNo">331</span>    }<a name="line.331"></a>
+<span class="sourceLineNo">332</span>  }<a name="line.332"></a>
+<span class="sourceLineNo">333</span><a name="line.333"></a>
+<span class="sourceLineNo">334</span>  public static RecoveringBlockProto convert(RecoveringBlock b) {<a name="line.334"></a>
+<span class="sourceLineNo">335</span>    if (b == null) {<a name="line.335"></a>
+<span class="sourceLineNo">336</span>      return null;<a name="line.336"></a>
+<span class="sourceLineNo">337</span>    }<a name="line.337"></a>
+<span class="sourceLineNo">338</span>    LocatedBlockProto lb = PBHelperClient.convert((LocatedBlock) b);<a name="line.338"></a>
+<span class="sourceLineNo">339</span>    RecoveringBlockProto.Builder builder = RecoveringBlockProto.newBuilder();<a name="line.339"></a>
+<span class="sourceLineNo">340</span>    builder.setBlock(lb).setNewGenStamp(b.getNewGenerationStamp());<a name="line.340"></a>
+<span class="sourceLineNo">341</span>    if(b.getNewBlock() != null)<a name="line.341"></a>
+<span class="sourceLineNo">342</span>      builder.setTruncateBlock(PBHelperClient.convert(b.getNewBlock()));<a name="line.342"></a>
+<span class="sourceLineNo">343</span>    return builder.build();<a name="line.343"></a>
+<span class="sourceLineNo">344</span>  }<a name="line.344"></a>
+<span class="sourceLineNo">345</span><a name="line.345"></a>
+<span class="sourceLineNo">346</span>  public static RecoveringBlock convert(RecoveringBlockProto b) {<a name="line.346"></a>
+<span class="sourceLineNo">347</span>    LocatedBlock lb = PBHelperClient.convert(b.getBlock());<a name="line.347"></a>
+<span class="sourceLineNo">348</span>    RecoveringBlock rBlock;<a name="line.348"></a>
+<span class="sourceLineNo">349</span>    if (b.hasTruncateBlock()) {<a name="line.349"></a>
+<span class="sourceLineNo">350</span>      rBlock = new RecoveringBlock(lb.getBlock(), lb.getLocations(),<a name="line.350"></a>
+<span class="sourceLineNo">351</span>          PBHelperClient.convert(b.getTruncateBlock()));<a name="line.351"></a>
+<span class="sourceLineNo">352</span>    } else {<a name="line.352"></a>
+<span class="sourceLineNo">353</span>      rBlock = new RecoveringBlock(lb.getBlock(), lb.getLocations(),<a name="line.353"></a>
+<span class="sourceLineNo">354</span>          b.getNewGenStamp());<a name="line.354"></a>
+<span class="sourceLineNo">355</span>    }<a name="line.355"></a>
+<span class="sourceLineNo">356</span>    return rBlock;<a name="line.356"></a>
+<span class="sourceLineNo">357</span>  }<a name="line.357"></a>
+<span class="sourceLineNo">358</span><a name="line.358"></a>
+<span class="sourceLineNo">359</span>  public static ReplicaState convert(ReplicaStateProto state) {<a name="line.359"></a>
+<span class="sourceLineNo">360</span>    switch (state) {<a name="line.360"></a>
+<span class="sourceLineNo">361</span>    case RBW:<a name="line.361"></a>
+<span class="sourceLineNo">362</span>      return ReplicaState.RBW;<a name="line.362"></a>
+<span class="sourceLineNo">363</span>    case RUR:<a name="line.363"></a>
+<span class="sourceLineNo">364</span>      return ReplicaState.RUR;<a name="line.364"></a>
+<span class="sourceLineNo">365</span>    case RWR:<a name="line.365"></a>
+<span class="sourceLineNo">366</span>      return ReplicaState.RWR;<a name="line.366"></a>
+<span class="sourceLineNo">367</span>    case TEMPORARY:<a name="line.367"></a>
+<span class="sourceLineNo">368</span>      return ReplicaState.TEMPORARY;<a name="line.368"></a>
+<span class="sourceLineNo">369</span>    case FINALIZED:<a name="line.369"></a>
+<span class="sourceLineNo">370</span>    default:<a name="line.370"></a>
+<span class="sourceLineNo">371</span>      return ReplicaState.FINALIZED;<a name="line.371"></a>
+<span class="sourceLineNo">372</span>    }<a name="line.372"></a>
+<span class="sourceLineNo">373</span>  }<a name="line.373"></a>
+<span class="sourceLineNo">374</span><a name="line.374"></a>
+<span class="sourceLineNo">375</span>  public static ReplicaStateProto convert(ReplicaState state) {<a name="line.375"></a>
+<span class="sourceLineNo">376</span>    switch (state) {<a name="line.376"></a>
+<span class="sourceLineNo">377</span>    case RBW:<a name="line.377"></a>
+<span class="sourceLineNo">378</span>      return ReplicaStateProto.RBW;<a name="line.378"></a>
+<span class="sourceLineNo">379</span>    case RUR:<a name="line.379"></a>
+<span class="sourceLineNo">380</span>      return ReplicaStateProto.RUR;<a name="line.380"></a>
+<span class="sourceLineNo">381</span>    case RWR:<a name="line.381"></a>
+<span class="sourceLineNo">382</span>      return ReplicaStateProto.RWR;<a name="line.382"></a>
+<span class="sourceLineNo">383</span>    case TEMPORARY:<a name="line.383"></a>
+<span class="sourceLineNo">384</span>      return ReplicaStateProto.TEMPORARY;<a name="line.384"></a>
+<span class="sourceLineNo">385</span>    case FINALIZED:<a name="line.385"></a>
+<span class="sourceLineNo">386</span>    default:<a name="line.386"></a>
+<span class="sourceLineNo">387</span>      return ReplicaStateProto.FINALIZED;<a name="line.387"></a>
+<span class="sourceLineNo">388</span>    }<a name="line.388"></a>
+<span class="sourceLineNo">389</span>  }<a name="line.389"></a>
+<span class="sourceLineNo">390</span>  <a name="line.390"></a>
+<span class="sourceLineNo">391</span>  public static DatanodeRegistrationProto convert(<a name="line.391"></a>
+<span class="sourceLineNo">392</span>      DatanodeRegistration registration) {<a name="line.392"></a>
+<span class="sourceLineNo">393</span>    DatanodeRegistrationProto.Builder builder = DatanodeRegistrationProto<a name="line.393"></a>
+<span class="sourceLineNo">394</span>        .newBuilder();<a name="line.394"></a>
+<span class="sourceLineNo">395</span>    return builder.setDatanodeID(PBHelperClient.convert((DatanodeID) registration))<a name="line.395"></a>
+<span class="sourceLineNo">396</span>        .setStorageInfo(convert(registration.getStorageInfo()))<a name="line.396"></a>
+<span class="sourceLineNo">397</span>        .setKeys(convert(registration.getExportedKeys()))<a name="line.397"></a>
+<span class="sourceLineNo">398</span>        .setSoftwareVersion(registration.getSoftwareVersion()).build();<a name="line.398"></a>
+<span class="sourceLineNo">399</span>  }<a name="line.399"></a>
+<span class="sourceLineNo">400</span><a name="line.400"></a>
+<span class="sourceLineNo">401</span>  public static DatanodeRegistration convert(DatanodeRegistrationProto proto) {<a name="line.401"></a>
+<span class="sourceLineNo">402</span>    StorageInfo si = convert(proto.getStorageInfo(), NodeType.DATA_NODE);<a name="line.402"></a>
+<span class="sourceLineNo">403</span>    return new DatanodeRegistration(PBHelperClient.convert(proto.getDatanodeID()),<a name="line.403"></a>
+<span class="sourceLineNo">404</span>        si, convert(proto.getKeys()), proto.getSoftwareVersion());<a name="line.404"></a>
+<span class="sourceLineNo">405</span>  }<a name="line.405"></a>
+<span class="sourceLineNo">406</span><a name="line.406"></a>
+<span class="sourceLineNo">407</span>  public static DatanodeCommand convert(DatanodeCommandProto proto) {<a name="line.407"></a>
+<span class="sourceLineNo">408</span>    switch (proto.getCmdType()) {<a name="line.408"></a>
+<span class="sourceLineNo">409</span>    case BalancerBandwidthCommand:<a name="line.409"></a>
+<span class="sourceLineNo">410</span>      return PBHelper.convert(proto.getBalancerCmd());<a name="line.410"></a>
+<span class="sourceLineNo">411</span>    case BlockCommand:<a name="line.411"></a>
+<span class="sourceLineNo">412</span>      return PBHelper.convert(proto.getBlkCmd());<a name="line.412"></a>
+<span class="sourceLineNo">413</span>    case BlockRecoveryCommand:<a name="line.413"></a>
+<span class="sourceLineNo">414</span>      return PBHelper.convert(proto.getRecoveryCmd());<a name="line.414"></a>
+<span class="sourceLineNo">415</span>    case FinalizeCommand:<a name="line.415"></a>
+<span class="sourceLineNo">416</span>      return PBHelper.convert(proto.getFinalizeCmd());<a name="line.416"></a>
+<span class="sourceLineNo">417</span>    case KeyUpdateCommand:<a name="line.417"></a>
+<span class="sourceLineNo">418</span>      return PBHelper.convert(proto.getKeyUpdateCmd());<a name="line.418"></a>
+<span class="sourceLineNo">419</span>    case RegisterCommand:<a name="line.419"></a>
+<span class="sourceLineNo">420</span>      return REG_CMD;<a name="line.420"></a>
+<span class="sourceLineNo">421</span>    case BlockIdCommand:<a name="line.421"></a>
+<span class="sourceLineNo">422</span>      return PBHelper.convert(proto.getBlkIdCmd());<a name="line.422"></a>
+<span class="sourceLineNo">423</span>    default:<a name="line.423"></a>
+<span class="sourceLineNo">424</span>      return null;<a name="line.424"></a>
+<span class="sourceLineNo">425</span>    }<a name="line.425"></a>
+<span class="sourceLineNo">426</span>  }<a name="line.426"></a>
+<span class="sourceLineNo">427</span>  <a name="line.427"></a>
+<span class="sourceLineNo">428</span>  public static BalancerBandwidthCommandProto convert(<a name="line.428"></a>
+<span class="sourceLineNo">429</span>      BalancerBandwidthCommand bbCmd) {<a name="line.429"></a>
+<span class="sourceLineNo">430</span>    return BalancerBandwidthCommandProto.newBuilder()<a name="line.430"></a>
+<span class="sourceLineNo">431</span>        .setBandwidth(bbCmd.getBalancerBandwidthValue()).build();<a name="line.431"></a>
+<span class="sourceLineNo">432</span>  }<a name="line.432"></a>
+<span class="sourceLineNo">433</span><a name="line.433"></a>
+<span class="sourceLineNo">434</span>  public static KeyUpdateCommandProto convert(KeyUpdateCommand cmd) {<a name="line.434"></a>
+<span class="sourceLineNo">435</span>    return KeyUpdateCommandProto.newBuilder()<a name="line.435"></a>
+<span class="sourceLineNo">436</span>        .setKeys(convert(cmd.getExportedKeys())).build();<a name="line.436"></a>
+<span class="sourceLineNo">437</span>  }<a name="line.437"></a>
+<span class="sourceLineNo">438</span><a name="line.438"></a>
+<span class="sourceLineNo">439</span>  public static BlockRecoveryCommandProto convert(BlockRecoveryCommand cmd) {<a name="line.439"></a>
+<span class="sourceLineNo">440</span>    BlockRecoveryCommandProto.Builder builder = BlockRecoveryCommandProto<a name="line.440"></a>
+<span class="sourceLineNo">441</span>        .newBuilder();<a name="line.441"></a>
+<span class="sourceLineNo">442</span>    for (RecoveringBlock b : cmd.getRecoveringBlocks()) {<a name="line.442"></a>
+<span class="sourceLineNo">443</span>      builder.addBlocks(PBHelper.convert(b));<a name="line.443"></a>
+<span class="sourceLineNo">444</span>    }<a name="line.444"></a>
+<span class="sourceLineNo">445</span>    return builder.build();<a name="line.445"></a>
+<span class="sourceLineNo">446</span>  }<a name="line.446"></a>
+<span class="sourceLineNo">447</span><a name="line.447"></a>
+<span class="sourceLineNo">448</span>  public static FinalizeCommandProto convert(FinalizeCommand cmd) {<a name="line.448"></a>
+<span class="sourceLineNo">449</span>    return FinalizeCommandProto.newBuilder()<a name="line.449"></a>
+<span class="sourceLineNo">450</span>        .setBlockPoolId(cmd.getBlockPoolId()).build();<a name="line.450"></a>
+<span class="sourceLineNo">451</span>  }<a name="line.451"></a>
+<span class="sourceLineNo">452</span><a name="line.452"></a>
+<span class="sourceLineNo">453</span>  public static BlockCommandProto convert(BlockCommand cmd) {<a name="line.453"></a>
+<span class="sourceLineNo">454</span>    BlockCommandProto.Builder builder = BlockCommandProto.newBuilder()<a name="line.454"></a>
+<span class="sourceLineNo">455</span>        .setBlockPoolId(cmd.getBlockPoolId());<a name="line.455"></a>
+<span class="sourceLineNo">456</span>    switch (cmd.getAction()) {<a name="line.456"></a>
+<span class="sourceLineNo">457</span>    case DatanodeProtocol.DNA_TRANSFER:<a name="line.457"></a>
+<span class="sourceLineNo">458</span>      builder.setAction(BlockCommandProto.Action.TRANSFER);<a name="line.458"></a>
+<span class="sourceLineNo">459</span>      break;<a name="line.459"></a>
+<span class="sourceLineNo">460</span>    case DatanodeProtocol.DNA_INVALIDATE:<a name="line.460"></a>
+<span class="sourceLineNo">461</span>      builder.setAction(BlockCommandProto.Action.INVALIDATE);<a name="line.461"></a>
+<span class="sourceLineNo">462</span>      break;<a name="line.462"></a>
+<span class="sourceLineNo">463</span>    case DatanodeProtocol.DNA_SHUTDOWN:<a name="line.463"></a>
+<span class="sourceLineNo">464</span>      builder.setAction(BlockCommandProto.Action.SHUTDOWN);<a name="line.464"></a>
+<span class="sourceLineNo">465</span>      break;<a name="line.465"></a>
+<span class="sourceLineNo">466</span>    default:<a name="line.466"></a>
+<span class="sourceLineNo">467</span>      throw new AssertionError("Invalid action");<a name="line.467"></a>
+<span class="sourceLineNo">468</span>    }<a name="line.468"></a>
+<span class="sourceLineNo">469</span>    Block[] blocks = cmd.getBlocks();<a name="line.469"></a>
+<span class="sourceLineNo">470</span>    for (int i = 0; i &lt; blocks.length; i++) {<a name="line.470"></a>
+<span class="sourceLineNo">471</span>      builder.addBlocks(PBHelperClient.convert(blocks[i]));<a name="line.471"></a>
+<span class="sourceLineNo">472</span>    }<a name="line.472"></a>
+<span class="sourceLineNo">473</span>    builder.addAllTargets(PBHelperClient.convert(cmd.getTargets()))<a name="line.473"></a>
+<span class="sourceLineNo">474</span>           .addAllTargetStorageUuids(convert(cmd.getTargetStorageIDs()));<a name="line.474"></a>
+<span class="sourceLineNo">475</span>    StorageType[][] types = cmd.getTargetStorageTypes();<a name="line.475"></a>
+<span class="sourceLineNo">476</span>    if (types != null) {<a name="line.476"></a>
+<span class="sourceLineNo">477</span>      builder.addAllTargetStorageTypes(PBHelperClient.convert(types));<a name="line.477"></a>
+<span class="sourceLineNo">478</span>    }<a name="line.478"></a>
+<span class="sourceLineNo">479</span>    return builder.build();<a name="line.479"></a>
+<span class="sourceLineNo">480</span>  }<a name="line.480"></a>
+<span class="sourceLineNo">481</span><a name="line.481"></a>
+<span class="sourceLineNo">482</span>  public static BlockIdCommandProto convert(BlockIdCommand cmd) {<a name="line.482"></a>
+<span class="sourceLineNo">483</span>    BlockIdCommandProto.Builder builder = BlockIdCommandProto.newBuilder()<a name="line.483"></a>
+<span class="sourceLineNo">484</span>        .setBlockPoolId(cmd.getBlockPoolId());<a name="line.484"></a>
+<span class="sourceLineNo">485</span>    switch (cmd.getAction()) {<a name="line.485"></a>
+<span class="sourceLineNo">486</span>    case DatanodeProtocol.DNA_CACHE:<a name="line.486"></a>
+<span class="sourceLineNo">487</span>      builder.setAction(BlockIdCommandProto.Action.CACHE);<a name="line.487"></a>
+<span class="sourceLineNo">488</span>      break;<a name="line.488"></a>
+<span class="sourceLineNo">489</span>    case DatanodeProtocol.DNA_UNCACHE:<a name="line.489"></a>
+<span class="sourceLineNo">490</span>      builder.setAction(BlockIdCommandProto.Action.UNCACHE);<a name="line.490"></a>
+<span class="sourceLineNo">491</span>      break;<a name="line.491"></a>
+<span class="sourceLineNo">492</span>    default:<a name="line.492"></a>
+<span class="sourceLineNo">493</span>      throw new AssertionError("Invalid action");<a name="line.493"></a>
+<span class="sourceLineNo">494</span>    }<a name="line.494"></a>
+<span class="sourceLineNo">495</span>    long[] blockIds = cmd.getBlockIds();<a name="line.495"></a>
+<span class="sourceLineNo">496</span>    for (int i = 0; i &lt; blockIds.length; i++) {<a name="line.496"></a>
+<span class="sourceLineNo">497</span>      builder.addBlockIds(blockIds[i]);<a name="line.497"></a>
+<span class="sourceLineNo">498</span>    }<a name="line.498"></a>
+<span class="sourceLineNo">499</span>    return builder.build();<a name="line.499"></a>
+<span class="sourceLineNo">500</span>  }<a name="line.500"></a>
+<span class="sourceLineNo">501</span><a name="line.501"></a>
+<span class="sourceLineNo">502</span>  private static List&lt;StorageUuidsProto&gt; convert(String[][] targetStorageUuids) {<a name="line.502"></a>
+<span class="sourceLineNo">503</span>    StorageUuidsProto[] ret = new StorageUuidsProto[targetStorageUuids.length];<a name="line.503"></a>
+<span class="sourceLineNo">504</span>    for (int i = 0; i &lt; targetStorageUuids.length; i++) {<a name="line.504"></a>
+<span class="sourceLineNo">505</span>      ret[i] = StorageUuidsProto.newBuilder()<a name="line.505"></a>
+<span class="sourceLineNo">506</span>          .addAllStorageUuids(Arrays.asList(targetStorageUuids[i])).build();<a name="line.506"></a>
+<span class="sourceLineNo">507</span>    }<a name="line.507"></a>
+<span class="sourceLineNo">508</span>    return Arrays.asList(ret);<a name="line.508"></a>
+<span class="sourceLineNo">509</span>  }<a name="line.509"></a>
+<span class="sourceLineNo">510</span><a name="line.510"></a>
+<span class="sourceLineNo">511</span>  public static DatanodeCommandProto convert(DatanodeCommand datanodeCommand) {<a name="line.511"></a>
+<span class="sourceLineNo">512</span>    DatanodeCommandProto.Builder builder = DatanodeCommandProto.newBuilder();<a name="line.512"></a>
+<span class="sourceLineNo">513</span>    if (datanodeCommand == null) {<a name="line.513"></a>
+<span class="sourceLineNo">514</span>      return builder.setCmdType(DatanodeCommandProto.Type.NullDatanodeCommand)<a name="line.514"></a>
+<span class="sourceLineNo">515</span>          .build();<a name="line.515"></a>
+<span class="sourceLineNo">516</span>    }<a name="line.516"></a>
+<span class="sourceLineNo">517</span>    switch (datanodeCommand.getAction()) {<a name="line.517"></a>
+<span class="sourceLineNo">518</span>    case DatanodeProtocol.DNA_BALANCERBANDWIDTHUPDATE:<a name="line.518"></a>
+<span class="sourceLineNo">519</span>      builder.setCmdType(DatanodeCommandProto.Type.BalancerBandwidthCommand)<a name="line.519"></a>
+<span class="sourceLineNo">520</span>          .setBalancerCmd(<a name="line.520"></a>
+<span class="sourceLineNo">521</span>              PBHelper.convert((BalancerBandwidthCommand) datanodeCommand));<a name="line.521"></a>
+<span class="sourceLineNo">522</span>      break;<a name="line.522"></a>
+<span class="sourceLineNo">523</span>    case DatanodeProtocol.DNA_ACCESSKEYUPDATE:<a name="line.523"></a>
+<span class="sourceLineNo">524</span>      builder<a name="line.524"></a>
+<span class="sourceLineNo">525</span>          .setCmdType(DatanodeCommandProto.Type.KeyUpdateCommand)<a name="line.525"></a>
+<span class="sourceLineNo">526</span>          .setKeyUpdateCmd(PBHelper.convert((KeyUpdateCommand) datanodeCommand));<a name="line.526"></a>
+<span class="sourceLineNo">527</span>      break;<a name="line.527"></a>
+<span class="sourceLineNo">528</span>    case DatanodeProtocol.DNA_RECOVERBLOCK:<a name="line.528"></a>
+<span class="sourceLineNo">529</span>      builder.setCmdType(DatanodeCommandProto.Type.BlockRecoveryCommand)<a name="line.529"></a>
+<span class="sourceLineNo">530</span>          .setRecoveryCmd(<a name="line.530"></a>
+<span class="sourceLineNo">531</span>              PBHelper.convert((BlockRecoveryCommand) datanodeCommand));<a name="line.531"></a>
+<span class="sourceLineNo">532</span>      break;<a name="line.532"></a>
+<span class="sourceLineNo">533</span>    case DatanodeProtocol.DNA_FINALIZE:<a name="line.533"></a>
+<span class="sourceLineNo">534</span>      builder.setCmdType(DatanodeCommandProto.Type.FinalizeCommand)<a name="line.534"></a>
+<span class="sourceLineNo">535</span>          .setFinalizeCmd(PBHelper.convert((FinalizeCommand) datanodeCommand));<a name="line.535"></a>
+<span class="sourceLineNo">536</span>      break;<a name="line.536"></a>
+<span class="sourceLineNo">537</span>    case DatanodeProtocol.DNA_REGISTER:<a name="line.537"></a>
+<span class="sourceLineNo">538</span>      builder.setCmdType(DatanodeCommandProto.Type.RegisterCommand)<a name="line.538"></a>
+<span class="sourceLineNo">539</span>          .setRegisterCmd(REG_CMD_PROTO);<a name="line.539"></a>
+<span class="sourceLineNo">540</span>      break;<a name="line.540"></a>
+<span class="sourceLineNo">541</span>    case DatanodeProtocol.DNA_TRANSFER:<a name="line.541"></a>
+<span class="sourceLineNo">542</span>    case DatanodeProtocol.DNA_INVALIDATE:<a name="line.542"></a>
+<span class="sourceLineNo">543</span>    case DatanodeProtocol.DNA_SHUTDOWN:<a name="line.543"></a>
+<span class="sourceLineNo">544</span>      builder.setCmdType(DatanodeCommandProto.Type.BlockCommand).<a name="line.544"></a>
+<span class="sourceLineNo">545</span>        setBlkCmd(PBHelper.convert((BlockCommand) datanodeCommand));<a name="line.545"></a>
+<span class="sourceLineNo">546</span>      break;<a name="line.546"></a>
+<span class="sourceLineNo">547</span>    case DatanodeProtocol.DNA_CACHE:<a name="line.547"></a>
+<span class="sourceLineNo">548</span>    case DatanodeProtocol.DNA_UNCACHE:<a name="line.548"></a>
+<span class="sourceLineNo">549</span>      builder.setCmdType(DatanodeCommandProto.Type.BlockIdCommand).<a name="line.549"></a>
+<span class="sourceLineNo">550</span>        setBlkIdCmd(PBHelper.convert((BlockIdCommand) datanodeCommand));<a name="line.550"></a>
+<span class="sourceLineNo">551</span>      break;<a name="line.551"></a>
+<span class="sourceLineNo">552</span>    case DatanodeProtocol.DNA_UNKNOWN: //Not expected<a name="line.552"></a>
+<span class="sourceLineNo">553</span>    default:<a name="line.553"></a>
+<span class="sourceLineNo">554</span>      builder.setCmdType(DatanodeCommandProto.Type.NullDatanodeCommand);<a name="line.554"></a>
+<span class="sourceLineNo">555</span>    }<a name="line.555"></a>
+<span class="sourceLineNo">556</span>    return builder.build();<a name="line.556"></a>
+<span class="sourceLineNo">557</span>  }<a name="line.557"></a>
+<span class="sourceLineNo">558</span><a name="line.558"></a>
+<span class="sourceLineNo">559</span>  public static KeyUpdateCommand convert(KeyUpdateCommandProto keyUpdateCmd) {<a name="line.559"></a>
+<span class="sourceLineNo">560</span>    return new KeyUpdateCommand(convert(keyUpdateCmd.getKeys()));<a name="line.560"></a>
+<span class="sourceLineNo">561</span>  }<a name="line.561"></a>
+<span class="sourceLineNo">562</span><a name="line.562"></a>
+<span class="sourceLineNo">563</span>  public static FinalizeCommand convert(FinalizeCommandProto finalizeCmd) {<a name="line.563"></a>
+<span class="sourceLineNo">564</span>    return new FinalizeCommand(finalizeCmd.getBlockPoolId());<a name="line.564"></a>
+<span class="sourceLineNo">565</span>  }<a name="line.565"></a>
+<span class="sourceLineNo">566</span><a name="line.566"></a>
+<span class="sourceLineNo">567</span>  public static BlockRecoveryCommand convert(<a name="line.567"></a>
+<span class="sourceLineNo">568</span>      BlockRecoveryCommandProto recoveryCmd) {<a name="line.568"></a>
+<span class="sourceLineNo">569</span>    List&lt;RecoveringBlockProto&gt; list = recoveryCmd.getBlocksList();<a name="line.569"></a>
+<span class="sourceLineNo">570</span>    List&lt;RecoveringBlock&gt; recoveringBlocks = new ArrayList&lt;RecoveringBlock&gt;(<a name="line.570"></a>
+<span class="sourceLineNo">571</span>        list.size());<a name="line.571"></a>
+<span class="sourceLineNo">572</span>    <a name="line.572"></a>
+<span class="sourceLineNo">573</span>    for (RecoveringBlockProto rbp : list) {<a name="line.573"></a>
+<span class="sourceLineNo">574</span>      recoveringBlocks.add(PBHelper.convert(rbp));<a name="line.574"></a>
+<span class="sourceLineNo">575</span>    }<a name="line.575"></a>
+<span class="sourceLineNo">576</span>    return new BlockRecoveryCommand(recoveringBlocks);<a name="line.576"></a>
+<span class="sourceLineNo">577</span>  }<a name="line.577"></a>
+<span class="sourceLineNo">578</span><a name="line.578"></a>
+<span class="sourceLineNo">579</span>  public static BlockCommand convert(BlockCommandProto blkCmd) {<a name="line.579"></a>
+<span class="sourceLineNo">580</span>    List&lt;BlockProto&gt; blockProtoList = blkCmd.getBlocksList();<a name="line.580"></a>
+<span class="sourceLineNo">581</span>    Block[] blocks = new Block[blockProtoList.size()];<a name="line.581"></a>
+<span class="sourceLineNo">582</span>    for (int i = 0; i &lt; blockProtoList.size(); i++) {<a name="line.582"></a>
+<span class="sourceLineNo">583</span>      blocks[i] = PBHelperClient.convert(blockProtoList.get(i));<a name="line.583"></a>
+<span class="sourceLineNo">584</span>    }<a name="line.584"></a>
+<span class="sourceLineNo">585</span>    List&lt;DatanodeInfosProto&gt; targetList = blkCmd.getTargetsList();<a name="line.585"></a>
+<span class="sourceLineNo">586</span>    DatanodeInfo[][] targets = new DatanodeInfo[targetList.size()][];<a name="line.586"></a>
+<span class="sourceLineNo">587</span>    for (int i = 0; i &lt; targetList.size(); i++) {<a name="line.587"></a>
+<span class="sourceLineNo">588</span>      targets[i] = PBHelperClient.convert(targetList.get(i));<a name="line.588"></a>
+<span class="sourceLineNo">589</span>    }<a name="line.589"></a>
+<span class="sourceLineNo">590</span><a name="line.590"></a>
+<span class="sourceLineNo">591</span>    StorageType[][] targetStorageTypes = new StorageType[targetList.size()][];<a name="line.591"></a>
+<span class="sourceLineNo">592</span>    List&lt;StorageTypesProto&gt; targetStorageTypesList = blkCmd.getTargetStorageTypesList();<a name="line.592"></a>
+<span class="sourceLineNo">593</span>    if (targetStorageTypesList.isEmpty()) { // missing storage types<a name="line.593"></a>
+<span class="sourceLineNo">594</span>      for(int i = 0; i &lt; targetStorageTypes.length; i++) {<a name="line.594"></a>
+<span class="sourceLineNo">595</span>        targetStorageTypes[i] = new StorageType[targets[i].length];<a name="line.595"></a>
+<span class="sourceLineNo">596</span>        Arrays.fill(targetStorageTypes[i], StorageType.DEFAULT);<a name="line.596"></a>
+<span class="sourceLineNo">597</span>      }<a name="line.597"></a>
+<span class="sourceLineNo">598</span>    } else {<a name="line.598"></a>
+<span class="sourceLineNo">599</span>      for(int i = 0; i &lt; targetStorageTypes.length; i++) {<a name="line.599"></a>
+<span class="sourceLineNo">600</span>        List&lt;StorageTypeProto&gt; p = targetStorageTypesList.get(i).getStorageTypesList();<a name="line.600"></a>
+<span class="sourceLineNo">601</span>        targetStorageTypes[i] = PBHelperClient.convertStorageTypes(p, targets[i].length);<a name="line.601"></a>
+<span class="sourceLineNo">602</span>      }<a name="line.602"></a>
+<span class="sourceLineNo">603</span>    }<a name="line.603"></a>
+<span class="sourceLineNo">604</span><a name="line.604"></a>
+<span class="sourceLineNo">605</span>    List&lt;StorageUuidsProto&gt; targetStorageUuidsList = blkCmd.getTargetStorageUuidsList();<a name="line.605"></a>
+<span class="sourceLineNo">606</span>    String[][] targetStorageIDs = new String[targetStorageUuidsList.size()][];<a name="line.606"></a>
+<span class="sourceLineNo">607</span>    for(int i = 0; i &lt; targetStorageIDs.length; i++) {<a name="line.607"></a>
+<span class="sourceLineNo">608</span>      List&lt;String&gt; storageIDs = targetStorageUuidsList.get(i).getStorageUuidsList();<a name="line.608"></a>
+<span class="sourceLineNo">609</span>      targetStorageIDs[i] = storageIDs.toArray(new String[storageIDs.size()]);<a name="line.609"></a>
+<span class="sourceLineNo">610</span>    }<a name="line.610"></a>
+<span class="sourceLineNo">611</span><a name="line.611"></a>
+<span class="sourceLineNo">612</span>    int action = DatanodeProtocol.DNA_UNKNOWN;<a name="line.612"></a>
+<span class="sourceLineNo">613</span>    switch (blkCmd.getAction()) {<a name="line.613"></a>
+<span class="sourceLineNo">614</span>    case TRANSFER:<a name="line.614"></a>
+<span class="sourceLineNo">615</span>      action = DatanodeProtocol.DNA_TRANSFER;<a name="line.615"></a>
+<span class="sourceLineNo">616</span>      break;<a name="line.616"></a>
+<span class="sourceLineNo">617</span>    case INVALIDATE:<a name="line.617"></a>
+<span class="sourceLineNo">618</span>      action = DatanodeProtocol.DNA_INVALIDATE;<a name="line.618"></a>
+<span class="sourceLineNo">619</span>      break;<a name="line.619"></a>
+<span class="sourceLineNo">620</span>    case SHUTDOWN:<a name="line.620"></a>
+<span class="sourceLineNo">621</span>      action = DatanodeProtocol.DNA_SHUTDOWN;<a name="line.621"></a>
+<span class="sourceLineNo">622</span>      break;<a name="line.622"></a>
+<span class="sourceLineNo">623</span>    default:<a name="line.623"></a>
+<span class="sourceLineNo">624</span>      throw new AssertionError("Unknown action type: " + blkCmd.getAction());<a name="line.624"></a>
+<span class="sourceLineNo">625</span>    }<a name="line.625"></a>
+<span class="sourceLineNo">626</span>    return new BlockCommand(action, blkCmd.getBlockPoolId(), blocks, targets,<a name="line.626"></a>
+<span class="sourceLineNo">627</span>        targetStorageTypes, targetStorageIDs);<a name="line.627"></a>
+<span class="sourceLineNo">628</span>  }<a name="line.628"></a>
+<span class="sourceLineNo">629</span><a name="line.629"></a>
+<span class="sourceLineNo">630</span>  public static BlockIdCommand convert(BlockIdCommandProto blkIdCmd) {<a name="line.630"></a>
+<span class="sourceLineNo">631</span>    int numBlockIds = blkIdCmd.getBlockIdsCount();<a name="line.631"></a>
+<span class="sourceLineNo">632</span>    long blockIds[] = new long[numBlockIds];<a name="line.632"></a>
+<span class="sourceLineNo">633</span>    for (int i = 0; i &lt; numBlockIds; i++) {<a name="line.633"></a>
+<span class="sourceLineNo">634</span>      blockIds[i] = blkIdCmd.getBlockIds(i);<a name="line.634"></a>
+<span class="sourceLineNo">635</span>    }<a name="line.635"></a>
+<span class="sourceLineNo">636</span>    int action = DatanodeProtocol.DNA_UNKNOWN;<a name="line.636"></a>
+<span class="sourceLineNo">637</span>    switch (blkIdCmd.getAction()) {<a name="line.637"></a>
+<span class="sourceLineNo">638</span>    case CACHE:<a name="line.638"></a>
+<span class="sourceLineNo">639</span>      action = DatanodeProtocol.DNA_CACHE;<a name="line.639"></a>
+<span class="sourceLineNo">640</span>      break;<a name="line.640"></a>
+<span class="sourceLineNo">641</span>    case UNCACHE:<a name="line.641"></a>
+<span class="sourceLineNo">642</span>      action = DatanodeProtocol.DNA_UNCACHE;<a name="line.642"></a>
+<span class="sourceLineNo">643</span>      break;<a name="line.643"></a>
+<span class="sourceLineNo">644</span>    default:<a name="line.644"></a>
+<span class="sourceLineNo">645</span>      throw new AssertionError("Unknown action type: " + blkIdCmd.getAction());<a name="line.645"></a>
+<span class="sourceLineNo">646</span>    }<a name="line.646"></a>
+<span class="sourceLineNo">647</span>    return new BlockIdCommand(action, blkIdCmd.getBlockPoolId(), blockIds);<a name="line.647"></a>
+<span class="sourceLineNo">648</span>  }<a name="line.648"></a>
+<span class="sourceLineNo">649</span><a name="line.649"></a>
+<span class="sourceLineNo">650</span>  public static BalancerBandwidthCommand convert(<a name="line.650"></a>
+<span class="sourceLineNo">651</span>      BalancerBandwidthCommandProto balancerCmd) {<a name="line.651"></a>
+<span class="sourceLineNo">652</span>    return new BalancerBandwidthCommand(balancerCmd.getBandwidth());<a name="line.652"></a>
+<span class="sourceLineNo">653</span>  }<a name="line.653"></a>
+<span class="sourceLineNo">654</span><a name="line.654"></a>
+<span class="sourceLineNo">655</span>  public static ReceivedDeletedBlockInfoProto convert(<a name="line.655"></a>
+<span class="sourceLineNo">656</span>      ReceivedDeletedBlockInfo receivedDeletedBlockInfo) {<a name="line.656"></a>
+<span class="sourceLineNo">657</span>    ReceivedDeletedBlockInfoProto.Builder builder = <a name="line.657"></a>
+<span class="sourceLineNo">658</span>        ReceivedDeletedBlockInfoProto.newBuilder();<a name="line.658"></a>
+<span class="sourceLineNo">659</span>    <a name="line.659"></a>
+<span class="sourceLineNo">660</span>    ReceivedDeletedBlockInfoProto.BlockStatus status;<a name="line.660"></a>
+<span class="sourceLineNo">661</span>    switch (receivedDeletedBlockInfo.getStatus()) {<a name="line.661"></a>
+<span class="sourceLineNo">662</span>    case RECEIVING_BLOCK:<a name="line.662"></a>
+<span class="sourceLineNo">663</span>      status = ReceivedDeletedBlockInfoProto.BlockStatus.RECEIVING;<a name="line.663"></a>
+<span class="sourceLineNo">664</span>      break;<a name="line.664"></a>
+<span class="sourceLineNo">665</span>    case RECEIVED_BLOCK:<a name="line.665"></a>
+<span class="sourceLineNo">666</span>      status = ReceivedDeletedBlockInfoProto.BlockStatus.RECEIVED;<a name="line.666"></a>
+<span class="sourceLineNo">667</span>      break;<a name="line.667"></a>
+<span class="sourceLineNo">668</span>    case DELETED_BLOCK:<a name="line.668"></a>
+<span class="sourceLineNo">669</span>      status = ReceivedDeletedBlockInfoProto.BlockStatus.DELETED;<a name="line.669"></a>
+<span class="sourceLineNo">670</span>      break;<a name="line.670"></a>
+<span class="sourceLineNo">671</span>    default:<a name="line.671"></a>
+<span class="sourceLineNo">672</span>      throw new IllegalArgumentException("Bad status: " +<a name="line.672"></a>
+<span class="sourceLineNo">673</span>          receivedDeletedBlockInfo.getStatus());<a name="line.673"></a>
+<span class="sourceLineNo">674</span>    }<a name="line.674"></a>
+<span class="sourceLineNo">675</span>    builder.setStatus(status);<a name="line.675"></a>
+<span class="sourceLineNo">676</span>    <a name="line.676"></a>
+<span class="sourceLineNo">677</span>    if (receivedDeletedBlockInfo.getDelHints() != null) {<a name="line.677"></a>
+<span class="sourceLineNo">678</span>      builder.setDeleteHint(receivedDeletedBlockInfo.getDelHints());<a name="line.678"></a>
+<span class="sourceLineNo">679</span>    }<a name="line.679"></a>
+<span class="sourceLineNo">680</span>    return builder.setBlock(<a name="line.680"></a>
+<span class="sourceLineNo">681</span>        PBHelperClient.convert(receivedDeletedBlockInfo.getBlock())).build();<a name="line.681"></a>
+<span class="sourceLineNo">682</span>  }<a name="line.682"></a>
+<span class="sourceLineNo">683</span><a name="line.683"></a>
+<span class="sourceLineNo">684</span>  public static ReceivedDeletedBlockInfo convert(<a name="line.684"></a>
+<span class="sourceLineNo">685</span>      ReceivedDeletedBlockInfoProto proto) {<a name="line.685"></a>
+<span class="sourceLineNo">686</span>    ReceivedDeletedBlockInfo.BlockStatus status = null;<a name="line.686"></a>
+<span class="sourceLineNo">687</span>    switch (proto.getStatus()) {<a name="line.687"></a>
+<span class="sourceLineNo">688</span>    case RECEIVING:<a name="line.688"></a>
+<span class="sourceLineNo">689</span>      status = BlockStatus.RECEIVING_BLOCK;<a name="line.689"></a>
+<span class="sourceLineNo">690</span>      break;<a name="line.690"></a>
+<span class="sourceLineNo">691</span>    case RECEIVED:<a name="line.691"></a>
+<span class="sourceLineNo">692</span>      status = BlockStatus.RECEIVED_BLOCK;<a name="line.692"></a>
+<span class="sourceLineNo">693</span>      break;<a name="line.693"></a>
+<span class="sourceLineNo">694</span>    case DELETED:<a name="line.694"></a>
+<span class="sourceLineNo">695</span>      status = BlockStatus.DELETED_BLOCK;<a name="line.695"></a>
+<span class="sourceLineNo">696</span>      break;<a name="line.696"></a>
+<span class="sourceLineNo">697</span>    }<a name="line.697"></a>
+<span class="sourceLineNo">698</span>    return new ReceivedDeletedBlockInfo(<a name="line.698"></a>
+<span class="sourceLineNo">699</span>        PBHelperClient.convert(proto.getBlock()),<a name="line.699"></a>
+<span class="sourceLineNo">700</span>        status,<a name="line.700"></a>
+<span class="sourceLineNo">701</span>        proto.hasDeleteHint() ? proto.getDeleteHint() : null);<a name="line.701"></a>
+<span class="sourceLineNo">702</span>  }<a name="line.702"></a>
+<span class="sourceLineNo">703</span>  <a name="line.703"></a>
+<span class="sourceLineNo">704</span>  public static NamespaceInfoProto convert(NamespaceInfo info) {<a name="line.704"></a>
+<span class="sourceLineNo">705</span>    NamespaceInfoProto.Builder builder = NamespaceInfoProto.newBuilder();<a name="line.705"></a>
+<span class="sourceLineNo">706</span>    builder.setBlockPoolID(info.getBlockPoolID())<a name="line.706"></a>
+<span class="sourceLineNo">707</span>        .setBuildVersion(info.getBuildVersion())<a name="line.707"></a>
+<span class="sourceLineNo">708</span>        .setUnused(0)<a name="line.708"></a>
+<span class="sourceLineNo">709</span>        .setStorageInfo(PBHelper.convert((StorageInfo)info))<a name="line.709"></a>
+<span class="sourceLineNo">710</span>        .setSoftwareVersion(info.getSoftwareVersion())<a name="line.710"></a>
+<span class="sourceLineNo">711</span>        .setCapabilities(info.getCapabilities());<a name="line.711"></a>
+<span class="sourceLineNo">712</span>    HAServiceState state = info.getState();<a name="line.712"></a>
+<span class="sourceLineNo">713</span>    if(state != null) {<a name="line.713"></a>
+<span class="sourceLineNo">714</span>      builder.setState(convert(info.getState()));<a name="line.714"></a>
+<span class="sourceLineNo">715</span>    }<a name="line.715"></a>
+<span class="sourceLineNo">716</span>    return builder.build();<a name="line.716"></a>
+<span class="sourceLineNo">717</span>  }<a name="line.717"></a>
+<span class="sourceLineNo">718</span><a name="line.718"></a>
+<span class="sourceLineNo">719</span>  public static HAServiceState convert(NNHAStatusHeartbeatProto.State s) {<a name="line.719"></a>
+<span class="sourceLineNo">720</span>    if (s == null) {<a name="line.720"></a>
+<span class="sourceLineNo">721</span>      return null;<a name="line.721"></a>
+<span class="sourceLineNo">722</span>    }<a name="line.722"></a>
+<span class="sourceLineNo">723</span>    switch (s) {<a name="line.723"></a>
+<span class="sourceLineNo">724</span>    case ACTIVE:<a name="line.724"></a>
+<span class="sourceLineNo">725</span>      return HAServiceState.ACTIVE;<a name="line.725"></a>
+<span class="sourceLineNo">726</span>    case STANDBY:<a name="line.726"></a>
+<span class="sourceLineNo">727</span>      return HAServiceState.STANDBY;<a name="line.727"></a>
+<span class="sourceLineNo">728</span>    default:<a name="line.728"></a>
+<span class="sourceLineNo">729</span>      throw new IllegalArgumentException("Unexpected HAServiceStateProto:"<a name="line.729"></a>
+<span class="sourceLineNo">730</span>          + s);<a name="line.730"></a>
+<span class="sourceLineNo">731</span>    }<a name="line.731"></a>
+<span class="sourceLineNo">732</span>  }<a name="line.732"></a>
+<span class="sourceLineNo">733</span><a name="line.733"></a>
+<span class="sourceLineNo">734</span>  public static NNHAStatusHeartbeatProto.State convert(HAServiceState s) {<a name="line.734"></a>
+<span class="sourceLineNo">735</span>    if (s == null) {<a name="line.735"></a>
+<span class="sourceLineNo">736</span>      return null;<a name="line.736"></a>
+<span class="sourceLineNo">737</span>    }<a name="line.737"></a>
+<span class="sourceLineNo">738</span>    switch (s) {<a name="line.738"></a>
+<span class="sourceLineNo">739</span>    case ACTIVE:<a name="line.739"></a>
+<span class="sourceLineNo">740</span>      return NNHAStatusHeartbeatProto.State.ACTIVE;<a name="line.740"></a>
+<span class="sourceLineNo">741</span>    case STANDBY:<a name="line.741"></a>
+<span class="sourceLineNo">742</span>      return NNHAStatusHeartbeatProto.State.STANDBY;<a name="line.742"></a>
+<span class="sourceLineNo">743</span>    default:<a name="line.743"></a>
+<span class="sourceLineNo">744</span>      throw new IllegalArgumentException("Unexpected HAServiceState:"<a name="line.744"></a>
+<span class="sourceLineNo">745</span>          + s);<a name="line.745"></a>
+<span class="sourceLineNo">746</span>    }<a name="line.746"></a>
+<span class="sourceLineNo">747</span>  }<a name="line.747"></a>
+<span class="sourceLineNo">748</span><a name="line.748"></a>
+<span class="sourceLineNo">749</span>  public static NNHAStatusHeartbeat convert(NNHAStatusHeartbeatProto s) {<a name="line.749"></a>
+<span class="sourceLineNo">750</span>    if (s == null) {<a name="line.750"></a>
+<span class="sourceLineNo">751</span>      return null;<a name="line.751"></a>
+<span class="sourceLineNo">752</span>    }<a name="line.752"></a>
+<span class="sourceLineNo">753</span>    return new NNHAStatusHeartbeat(convert(s.getState()), s.getTxid());<a name="line.753"></a>
+<span class="sourceLineNo">754</span>  }<a name="line.754"></a>
+<span class="sourceLineNo">755</span><a name="line.755"></a>
+<span class="sourceLineNo">756</span>  public static NNHAStatusHeartbeatProto convert(NNHAStatusHeartbeat hb) {<a name="line.756"></a>
+<span class="sourceLineNo">757</span>    if (hb == null) {<a name="line.757"></a>
+<span class="sourceLineNo">758</span>      return null;<a name="line.758"></a>
+<span class="sourceLineNo">759</span>    }<a name="line.759"></a>
+<span class="sourceLineNo">760</span>    NNHAStatusHeartbeatProto.Builder builder =<a name="line.760"></a>
+<span class="sourceLineNo">761</span>        NNHAStatusHeartbeatProto.newBuilder();<a name="line.761"></a>
+<span class="sourceLineNo">762</span>    builder.setState(convert(hb.getState()));<a name="line.762"></a>
+<span class="sourceLineNo">763</span>    builder.setTxid(hb.getTxId());<a name="line.763"></a>
+<span class="sourceLineNo">764</span>    return builder.build();<a name="line.764"></a>
+<span class="sourceLineNo">765</span>  }<a name="line.765"></a>
+<span class="sourceLineNo">766</span><a name="line.766"></a>
+<span class="sourceLineNo">767</span>  public static VolumeFailureSummary convertVolumeFailureSummary(<a name="line.767"></a>
+<span class="sourceLineNo">768</span>      VolumeFailureSummaryProto proto) {<a name="line.768"></a>
+<span class="sourceLineNo">769</span>    List&lt;String&gt; failedStorageLocations = proto.getFailedStorageLocationsList();<a name="line.769"></a>
+<span class="sourceLineNo">770</span>    return new VolumeFailureSummary(<a name="line.770"></a>
+<span class="sourceLineNo">771</span>        failedStorageLocations.toArray(new String[failedStorageLocations.size()]),<a name="line.771"></a>
+<span class="sourceLineNo">772</span>        proto.getLastVolumeFailureDate(), proto.getEstimatedCapacityLostTotal());<a name="line.772"></a>
+<span class="sourceLineNo">773</span>  }<a name="line.773"></a>
+<span class="sourceLineNo">774</span><a name="line.774"></a>
+<span class="sourceLineNo">775</span>  public static VolumeFailureSummaryProto convertVolumeFailureSummary(<a name="line.775"></a>
+<span class="sourceLineNo">776</span>      VolumeFailureSummary volumeFailureSummary) {<a name="line.776"></a>
+<span class="sourceLineNo">777</span>    VolumeFailureSummaryProto.Builder builder =<a name="line.777"></a>
+<span class="sourceLineNo">778</span>        VolumeFailureSummaryProto.newBuilder();<a name="line.778"></a>
+<span class="sourceLineNo">779</span>    for (String failedStorageLocation:<a name="line.779"></a>
+<span class="sourceLineNo">780</span>        volumeFailureSummary.getFailedStorageLocations()) {<a name="line.780"></a>
+<span class="sourceLineNo">781</span>      builder.addFailedStorageLocations(failedStorageLocation);<a name="line.781"></a>
+<span class="sourceLineNo">782</span>    }<a name="line.782"></a>
+<span class="sourceLineNo">783</span>    builder.setLastVolumeFailureDate(<a name="line.783"></a>
+<span class="sourceLineNo">784</span>        volumeFailureSummary.getLastVolumeFailureDate());<a name="line.784"></a>
+<span class="sourceLineNo">785</span>    builder.setEstimatedCapacityLostTotal(<a name="line.785"></a>
+<span class="sourceLineNo">786</span>        volumeFailureSummary.getEstimatedCapacityLostTotal());<a name="line.786"></a>
+<span class="sourceLineNo">787</span>    return builder.build();<a name="line.787"></a>
+<span class="sourceLineNo">788</span>  }<a name="line.788"></a>
+<span class="sourceLineNo">789</span><a name="line.789"></a>
+<span class="sourceLineNo">790</span>  public static JournalInfo convert(JournalInfoProto info) {<a name="line.790"></a>
+<span class="sourceLineNo">791</span>    int lv = info.hasLayoutVersion() ? info.getLayoutVersion() : 0;<a name="line.791"></a>
+<span class="sourceLineNo">792</span>    int nsID = info.hasNamespaceID() ? info.getNamespaceID() : 0;<a name="line.792"></a>
+<span class="sourceLineNo">793</span>    return new JournalInfo(lv, info.getClusterID(), nsID);<a name="line.793"></a>
+<span class="sourceLineNo">794</span>  }<a name="line.794"></a>
+<span class="sourceLineNo">795</span><a name="line.795"></a>
+<span class="sourceLineNo">796</span>  /**<a name="line.796"></a>
+<span class="sourceLineNo">797</span>   * Method used for converting {@link JournalInfoProto} sent from Namenode<a name="line.797"></a>
+<span class="sourceLineNo">798</span>   * to Journal receivers to {@link NamenodeRegistration}.<a name="line.798"></a>
+<span class="sourceLineNo">799</span>   */<a name="line.799"></a>
+<span class="sourceLineNo">800</span>  public static JournalInfoProto convert(JournalInfo j) {<a name="line.800"></a>
+<span class="sourceLineNo">801</span>    return JournalInfoProto.newBuilder().setClusterID(j.getClusterId())<a name="line.801"></a>
+<span class="sourceLineNo">802</span>        .setLayoutVersion(j.getLayoutVersion())<a name="line.802"></a>
+<span class="sourceLineNo">803</span>        .setNamespaceID(j.getNamespaceId()).build();<a name="line.803"></a>
+<span class="sourceLineNo">804</span>  }<a name="line.804"></a>
+<span class="sourceLineNo">805</span><a name="line.805"></a>
+<span class="sourceLineNo">806</span><a name="line.806"></a>
+<span class="sourceLineNo">807</span>  public static BlockReportContext convert(BlockReportContextProto proto) {<a name="line.807"></a>
+<span class="sourceLineNo">808</span>    return new BlockReportContext(proto.getTotalRpcs(),<a name="line.808"></a>
+<span class="sourceLineNo">809</span>        proto.getCurRpc(), proto.getId(), proto.getLeaseId());<a name="line.809"></a>
+<span class="sourceLineNo">810</span>  }<a name="line.810"></a>
+<span class="sourceLineNo">811</span><a name="line.811"></a>
+<span class="sourceLineNo">812</span>  public static BlockReportContextProto convert(BlockReportContext context) {<a name="line.812"></a>
+<span class="sourceLineNo">813</span>    return BlockReportContextProto.newBuilder().<a name="line.813"></a>
+<span class="sourceLineNo">814</span>        setTotalRpcs(context.getTotalRpcs()).<a name="line.814"></a>
+<span class="sourceLineNo">815</span>        setCurRpc(context.getCurRpc()).<a name="line.815"></a>
+<span class="sourceLineNo">816</span>        setId(context.getReportId()).<a name="line.816"></a>
+<span class="sourceLineNo">817</span>        setLeaseId(context.getLeaseId()).<a name="line.817"></a>
+<span class="sourceLineNo">818</span>        build();<a name="line.818"></a>
+<span class="sourceLineNo">819</span>  }<a name="line.819"></a>
+<span class="sourceLineNo">820</span>}<a name="line.820"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

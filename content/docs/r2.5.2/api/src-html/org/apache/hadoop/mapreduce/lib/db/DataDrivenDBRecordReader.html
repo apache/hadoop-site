@@ -1,0 +1,203 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    <a name="line.18"></a>
+<FONT color="green">019</FONT>    package org.apache.hadoop.mapreduce.lib.db;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>    import java.io.DataInput;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import java.io.DataOutput;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import java.io.IOException;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import java.sql.Connection;<a name="line.24"></a>
+<FONT color="green">025</FONT>    import java.sql.DatabaseMetaData;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import java.sql.PreparedStatement;<a name="line.26"></a>
+<FONT color="green">027</FONT>    import java.sql.ResultSet;<a name="line.27"></a>
+<FONT color="green">028</FONT>    import java.sql.SQLException;<a name="line.28"></a>
+<FONT color="green">029</FONT>    import java.sql.Statement;<a name="line.29"></a>
+<FONT color="green">030</FONT>    import java.util.ArrayList;<a name="line.30"></a>
+<FONT color="green">031</FONT>    import java.util.List;<a name="line.31"></a>
+<FONT color="green">032</FONT>    <a name="line.32"></a>
+<FONT color="green">033</FONT>    import org.apache.commons.logging.Log;<a name="line.33"></a>
+<FONT color="green">034</FONT>    import org.apache.commons.logging.LogFactory;<a name="line.34"></a>
+<FONT color="green">035</FONT>    import org.apache.hadoop.io.LongWritable;<a name="line.35"></a>
+<FONT color="green">036</FONT>    import org.apache.hadoop.io.Writable;<a name="line.36"></a>
+<FONT color="green">037</FONT>    import org.apache.hadoop.mapreduce.InputFormat;<a name="line.37"></a>
+<FONT color="green">038</FONT>    import org.apache.hadoop.mapreduce.InputSplit;<a name="line.38"></a>
+<FONT color="green">039</FONT>    import org.apache.hadoop.mapreduce.Job;<a name="line.39"></a>
+<FONT color="green">040</FONT>    import org.apache.hadoop.mapreduce.JobContext;<a name="line.40"></a>
+<FONT color="green">041</FONT>    import org.apache.hadoop.mapreduce.RecordReader;<a name="line.41"></a>
+<FONT color="green">042</FONT>    import org.apache.hadoop.mapreduce.TaskAttemptContext;<a name="line.42"></a>
+<FONT color="green">043</FONT>    import org.apache.hadoop.util.ReflectionUtils;<a name="line.43"></a>
+<FONT color="green">044</FONT>    import org.apache.hadoop.classification.InterfaceAudience;<a name="line.44"></a>
+<FONT color="green">045</FONT>    import org.apache.hadoop.classification.InterfaceStability;<a name="line.45"></a>
+<FONT color="green">046</FONT>    import org.apache.hadoop.conf.Configurable;<a name="line.46"></a>
+<FONT color="green">047</FONT>    import org.apache.hadoop.conf.Configuration;<a name="line.47"></a>
+<FONT color="green">048</FONT>    <a name="line.48"></a>
+<FONT color="green">049</FONT>    /**<a name="line.49"></a>
+<FONT color="green">050</FONT>     * A RecordReader that reads records from a SQL table,<a name="line.50"></a>
+<FONT color="green">051</FONT>     * using data-driven WHERE clause splits.<a name="line.51"></a>
+<FONT color="green">052</FONT>     * Emits LongWritables containing the record number as<a name="line.52"></a>
+<FONT color="green">053</FONT>     * key and DBWritables as value.<a name="line.53"></a>
+<FONT color="green">054</FONT>     */<a name="line.54"></a>
+<FONT color="green">055</FONT>    @InterfaceAudience.Public<a name="line.55"></a>
+<FONT color="green">056</FONT>    @InterfaceStability.Evolving<a name="line.56"></a>
+<FONT color="green">057</FONT>    public class DataDrivenDBRecordReader&lt;T extends DBWritable&gt; extends DBRecordReader&lt;T&gt; {<a name="line.57"></a>
+<FONT color="green">058</FONT>    <a name="line.58"></a>
+<FONT color="green">059</FONT>      private static final Log LOG = LogFactory.getLog(DataDrivenDBRecordReader.class);<a name="line.59"></a>
+<FONT color="green">060</FONT>    <a name="line.60"></a>
+<FONT color="green">061</FONT>      private String dbProductName; // database manufacturer string.<a name="line.61"></a>
+<FONT color="green">062</FONT>    <a name="line.62"></a>
+<FONT color="green">063</FONT>      /**<a name="line.63"></a>
+<FONT color="green">064</FONT>       * @param split The InputSplit to read data for<a name="line.64"></a>
+<FONT color="green">065</FONT>       * @throws SQLException <a name="line.65"></a>
+<FONT color="green">066</FONT>       */<a name="line.66"></a>
+<FONT color="green">067</FONT>      public DataDrivenDBRecordReader(DBInputFormat.DBInputSplit split,<a name="line.67"></a>
+<FONT color="green">068</FONT>          Class&lt;T&gt; inputClass, Configuration conf, Connection conn, DBConfiguration dbConfig,<a name="line.68"></a>
+<FONT color="green">069</FONT>          String cond, String [] fields, String table, String dbProduct)<a name="line.69"></a>
+<FONT color="green">070</FONT>          throws SQLException {<a name="line.70"></a>
+<FONT color="green">071</FONT>        super(split, inputClass, conf, conn, dbConfig, cond, fields, table);<a name="line.71"></a>
+<FONT color="green">072</FONT>        this.dbProductName = dbProduct;<a name="line.72"></a>
+<FONT color="green">073</FONT>      }<a name="line.73"></a>
+<FONT color="green">074</FONT>    <a name="line.74"></a>
+<FONT color="green">075</FONT>      /** Returns the query for selecting the records,<a name="line.75"></a>
+<FONT color="green">076</FONT>       * subclasses can override this for custom behaviour.*/<a name="line.76"></a>
+<FONT color="green">077</FONT>      @SuppressWarnings("unchecked")<a name="line.77"></a>
+<FONT color="green">078</FONT>      protected String getSelectQuery() {<a name="line.78"></a>
+<FONT color="green">079</FONT>        StringBuilder query = new StringBuilder();<a name="line.79"></a>
+<FONT color="green">080</FONT>        DataDrivenDBInputFormat.DataDrivenDBInputSplit dataSplit =<a name="line.80"></a>
+<FONT color="green">081</FONT>            (DataDrivenDBInputFormat.DataDrivenDBInputSplit) getSplit();<a name="line.81"></a>
+<FONT color="green">082</FONT>        DBConfiguration dbConf = getDBConf();<a name="line.82"></a>
+<FONT color="green">083</FONT>        String [] fieldNames = getFieldNames();<a name="line.83"></a>
+<FONT color="green">084</FONT>        String tableName = getTableName();<a name="line.84"></a>
+<FONT color="green">085</FONT>        String conditions = getConditions();<a name="line.85"></a>
+<FONT color="green">086</FONT>    <a name="line.86"></a>
+<FONT color="green">087</FONT>        // Build the WHERE clauses associated with the data split first.<a name="line.87"></a>
+<FONT color="green">088</FONT>        // We need them in both branches of this function.<a name="line.88"></a>
+<FONT color="green">089</FONT>        StringBuilder conditionClauses = new StringBuilder();<a name="line.89"></a>
+<FONT color="green">090</FONT>        conditionClauses.append("( ").append(dataSplit.getLowerClause());<a name="line.90"></a>
+<FONT color="green">091</FONT>        conditionClauses.append(" ) AND ( ").append(dataSplit.getUpperClause());<a name="line.91"></a>
+<FONT color="green">092</FONT>        conditionClauses.append(" )");<a name="line.92"></a>
+<FONT color="green">093</FONT>    <a name="line.93"></a>
+<FONT color="green">094</FONT>        if(dbConf.getInputQuery() == null) {<a name="line.94"></a>
+<FONT color="green">095</FONT>          // We need to generate the entire query.<a name="line.95"></a>
+<FONT color="green">096</FONT>          query.append("SELECT ");<a name="line.96"></a>
+<FONT color="green">097</FONT>    <a name="line.97"></a>
+<FONT color="green">098</FONT>          for (int i = 0; i &lt; fieldNames.length; i++) {<a name="line.98"></a>
+<FONT color="green">099</FONT>            query.append(fieldNames[i]);<a name="line.99"></a>
+<FONT color="green">100</FONT>            if (i != fieldNames.length -1) {<a name="line.100"></a>
+<FONT color="green">101</FONT>              query.append(", ");<a name="line.101"></a>
+<FONT color="green">102</FONT>            }<a name="line.102"></a>
+<FONT color="green">103</FONT>          }<a name="line.103"></a>
+<FONT color="green">104</FONT>    <a name="line.104"></a>
+<FONT color="green">105</FONT>          query.append(" FROM ").append(tableName);<a name="line.105"></a>
+<FONT color="green">106</FONT>          if (!dbProductName.startsWith("ORACLE")) {<a name="line.106"></a>
+<FONT color="green">107</FONT>            // Seems to be necessary for hsqldb? Oracle explicitly does *not*<a name="line.107"></a>
+<FONT color="green">108</FONT>            // use this clause.<a name="line.108"></a>
+<FONT color="green">109</FONT>            query.append(" AS ").append(tableName);<a name="line.109"></a>
+<FONT color="green">110</FONT>          }<a name="line.110"></a>
+<FONT color="green">111</FONT>          query.append(" WHERE ");<a name="line.111"></a>
+<FONT color="green">112</FONT>          if (conditions != null &amp;&amp; conditions.length() &gt; 0) {<a name="line.112"></a>
+<FONT color="green">113</FONT>            // Put the user's conditions first.<a name="line.113"></a>
+<FONT color="green">114</FONT>            query.append("( ").append(conditions).append(" ) AND ");<a name="line.114"></a>
+<FONT color="green">115</FONT>          }<a name="line.115"></a>
+<FONT color="green">116</FONT>    <a name="line.116"></a>
+<FONT color="green">117</FONT>          // Now append the conditions associated with our split.<a name="line.117"></a>
+<FONT color="green">118</FONT>          query.append(conditionClauses.toString());<a name="line.118"></a>
+<FONT color="green">119</FONT>    <a name="line.119"></a>
+<FONT color="green">120</FONT>        } else {<a name="line.120"></a>
+<FONT color="green">121</FONT>          // User provided the query. We replace the special token with our WHERE clause.<a name="line.121"></a>
+<FONT color="green">122</FONT>          String inputQuery = dbConf.getInputQuery();<a name="line.122"></a>
+<FONT color="green">123</FONT>          if (inputQuery.indexOf(DataDrivenDBInputFormat.SUBSTITUTE_TOKEN) == -1) {<a name="line.123"></a>
+<FONT color="green">124</FONT>            LOG.error("Could not find the clause substitution token "<a name="line.124"></a>
+<FONT color="green">125</FONT>                + DataDrivenDBInputFormat.SUBSTITUTE_TOKEN + " in the query: ["<a name="line.125"></a>
+<FONT color="green">126</FONT>                + inputQuery + "]. Parallel splits may not work correctly.");<a name="line.126"></a>
+<FONT color="green">127</FONT>          }<a name="line.127"></a>
+<FONT color="green">128</FONT>    <a name="line.128"></a>
+<FONT color="green">129</FONT>          query.append(inputQuery.replace(DataDrivenDBInputFormat.SUBSTITUTE_TOKEN,<a name="line.129"></a>
+<FONT color="green">130</FONT>              conditionClauses.toString()));<a name="line.130"></a>
+<FONT color="green">131</FONT>        }<a name="line.131"></a>
+<FONT color="green">132</FONT>    <a name="line.132"></a>
+<FONT color="green">133</FONT>        LOG.debug("Using query: " + query.toString());<a name="line.133"></a>
+<FONT color="green">134</FONT>    <a name="line.134"></a>
+<FONT color="green">135</FONT>        return query.toString();<a name="line.135"></a>
+<FONT color="green">136</FONT>      }<a name="line.136"></a>
+<FONT color="green">137</FONT>    }<a name="line.137"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

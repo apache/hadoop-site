@@ -1,0 +1,152 @@
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hadoop  2.7.5 Release Notes</title>
+<STYLE type="text/css">
+	H1 {font-family: sans-serif}
+	H2 {font-family: sans-serif; margin-left: 7mm}
+	TABLE {margin-left: 7mm}
+</STYLE>
+</head>
+<body>
+<h1>Hadoop  2.7.5 Release Notes</h1>
+These release notes include new developer and user-facing incompatibilities, features, and major improvements. 
+<a name="changes"/>
+<h2>Changes since Hadoop 2.7.4</h2>
+<ul>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-7084">YARN-7084</a>.
+     Major bug reported by Jason Lowe and fixed by Jason Lowe <br>
+     <b>TestSchedulingMonitor#testRMStarts fails sporadically</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-6959">YARN-6959</a>.
+     Major bug reported by Yuqi Wang and fixed by Yuqi Wang (capacity scheduler , fairscheduler , scheduler)<br>
+     <b>RM may allocate wrong AM Container for new attempt</b><br>
+     <blockquote>ResourceManager will now record ResourceRequests from different attempts into different objects.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-5195">YARN-5195</a>.
+     Major bug reported by Karam Singh and fixed by sandflee (resourcemanager)<br>
+     <b>RM intermittently crashed with NPE while handling APP_ATTEMPT_REMOVED event when async-scheduling enabled in CapacityScheduler</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-6975">MAPREDUCE-6975</a>.
+     Major improvement reported by Prabhu Joseph and fixed by Prabhu Joseph (task)<br>
+     <b>Logging task counters </b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-6957">MAPREDUCE-6957</a>.
+     Major bug reported by Jooseong Kim and fixed by Jooseong Kim (mrv2)<br>
+     <b>shuffle hangs after a node manager connection timeout</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-6937">MAPREDUCE-6937</a>.
+     Major improvement reported by Zhe Zhang and fixed by Peter Bacsko <br>
+     <b>Backport MAPREDUCE-6870 to branch-2 while preserving compatibility</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-6931">MAPREDUCE-6931</a>.
+     Critical bug reported by Dennis Huo and fixed by Dennis Huo (benchmarks , test)<br>
+     <b>Remove TestDFSIO "Total Throughput" calculation</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-6750">MAPREDUCE-6750</a>.
+     Minor bug reported by Kihwal Lee and fixed by Kihwal Lee (test)<br>
+     <b>TestHSAdminServer.testRefreshSuperUserGroups is failing</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-6165">MAPREDUCE-6165</a>.
+     Minor bug reported by Wei Yan and fixed by Akira Ajisaka <br>
+     <b>[JDK8] TestCombineFileInputFormat failed on JDK8</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12832">HDFS-12832</a>.
+     Critical bug reported by DENG FEI and fixed by Konstantin Shvachko (namenode)<br>
+     <b>INode.getFullPathName may throw ArrayIndexOutOfBoundsException lead to NameNode exit</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12823">HDFS-12823</a>.
+     Major improvement reported by Erik Krogen and fixed by Erik Krogen (hdfs , hdfs-client)<br>
+     <b>Backport HDFS-9259 "Make SO_SNDBUF size configurable at DFSClient" to branch-2.7</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12638">HDFS-12638</a>.
+     Blocker bug reported by Jiandan Yang  and fixed by Konstantin Shvachko (hdfs)<br>
+     <b>Delete copy-on-truncate block along with the original block, when deleting a file being truncated</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12596">HDFS-12596</a>.
+     Major test reported by Xiao Chen and fixed by Xiao Chen (test)<br>
+     <b>Add TestFsck#testFsckCorruptWhenOneReplicaIsCorrupt back to branch-2.7</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12578">HDFS-12578</a>.
+     Blocker bug reported by Xiao Chen and fixed by Ajay Kumar (test)<br>
+     <b>TestDeadDatanode#testNonDFSUsedONDeadNodeReReg failing in branch-2.7</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12420">HDFS-12420</a>.
+     Major improvement reported by Ajay Kumar and fixed by Ajay Kumar <br>
+     <b>Add an option to disallow 'namenode format -force'</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12323">HDFS-12323</a>.
+     Major bug reported by Erik Krogen and fixed by Erik Krogen (namenode , qjm)<br>
+     <b>NameNode terminates after full GC thinking QJM unresponsive if full GC is much longer than timeout</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12157">HDFS-12157</a>.
+     Critical bug reported by Vinayakumar B and fixed by Vinayakumar B (datanode)<br>
+     <b>Do fsyncDirectory(..) outside of FSDataset lock</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12131">HDFS-12131</a>.
+     Minor improvement reported by Erik Krogen and fixed by Erik Krogen (hdfs , namenode)<br>
+     <b>Add some of the FSNamesystem JMX values as metrics</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-10984">HDFS-10984</a>.
+     Major task reported by Siddharth Wagle and fixed by Siddharth Wagle (namenode)<br>
+     <b>Expose nntop output as metrics   </b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-10738">HDFS-10738</a>.
+     Major bug reported by Rakesh R and fixed by Rakesh R (test)<br>
+     <b>Fix TestRefreshUserMappings.testRefreshSuperUserGroupsConfiguration test failure</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-10711">HDFS-10711</a>.
+     Major sub-task reported by Daryn Sharp and fixed by Daryn Sharp (hdfs)<br>
+     <b>Optimize FSPermissionChecker group membership check</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-9153">HDFS-9153</a>.
+     Major test reported by Kai Zheng and fixed by Kai Zheng <br>
+     <b>Pretty-format the output for DFSIO</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-9107">HDFS-9107</a>.
+     Critical bug reported by Daryn Sharp and fixed by Daryn Sharp (namenode)<br>
+     <b>Prevent NN's unrecoverable death spiral after full GC</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-9003">HDFS-9003</a>.
+     Major bug reported by Kihwal Lee and fixed by Kihwal Lee <br>
+     <b>ForkJoin thread pool leaks</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-8865">HDFS-8865</a>.
+     Major improvement reported by Kihwal Lee and fixed by Kihwal Lee <br>
+     <b>Improve quota initialization performance</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-8829">HDFS-8829</a>.
+     Major improvement reported by He Tianyi and fixed by He Tianyi (datanode)<br>
+     <b>Make SO_RCVBUF and SO_SNDBUF size configurable for DataTransferProtocol sockets and allow configuring auto-tuning</b><br>
+     <blockquote>HDFS-8829 introduces two new configuration settings: dfs.datanode.transfer.socket.send.buffer.size and dfs.datanode.transfer.socket.recv.buffer.size. These settings can be used to control the socket send buffer and receive buffer sizes respectively on the DataNode for client-DataNode and DataNode-DataNode connections. The default values of both settings are 128KB for backwards compatibility. For optimum performance it is recommended to set these values to zero to enable the OS networking stack to auto-tune buffer sizes.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-8797">HDFS-8797</a>.
+     Major bug reported by Jing Zhao and fixed by Jing Zhao (webhdfs)<br>
+     <b>WebHdfsFileSystem creates too many connections for pread</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-14919">HADOOP-14919</a>.
+     Critical bug reported by Aki Tanaka and fixed by Jason Lowe <br>
+     <b>BZip2 drops records when reading data in splits</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-14902">HADOOP-14902</a>.
+     Major bug reported by Jason Lowe and fixed by Hanisha Koneru (fs)<br>
+     <b>LoadGenerator#genFile write close timing is incorrectly calculated</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-14881">HADOOP-14881</a>.
+     Major sub-task reported by Chetna Chaudhari and fixed by Bharat Viswanadham <br>
+     <b>LoadGenerator should use Time.monotonicNow() to measure durations</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-14867">HADOOP-14867</a>.
+     Major bug reported by Bharat Viswanadham and fixed by Bharat Viswanadham <br>
+     <b>Update HDFS Federation setup document, for incorrect property name for secondary name node http address</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-14827">HADOOP-14827</a>.
+     Minor improvement reported by Erik Krogen and fixed by Erik Krogen (common , test)<br>
+     <b>Allow StopWatch to accept a Timer parameter for tests</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-14702">HADOOP-14702</a>.
+     Minor bug reported by Doris Gu and fixed by Doris Gu (documentation)<br>
+     <b>Fix formatting issue and regression caused by conversion from APT to Markdown</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-13442">HADOOP-13442</a>.
+     Major improvement reported by Daryn Sharp and fixed by Daryn Sharp <br>
+     <b>Optimize UGI group lookups</b><br>
+     <blockquote></blockquote></li>
+</ul>
+</body></html>

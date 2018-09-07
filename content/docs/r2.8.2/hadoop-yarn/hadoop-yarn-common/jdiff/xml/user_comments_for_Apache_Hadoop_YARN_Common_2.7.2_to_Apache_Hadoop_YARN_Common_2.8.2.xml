@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<comments
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:noNamespaceSchemaLocation='comments.xsd'
+  name="Apache_Hadoop_YARN_Common_2.7.2_to_Apache_Hadoop_YARN_Common_2.8.2"
+  jdversion="1.0.9">
+
+<!-- This file contains comments for a JDiff report. -->
+<!-- It is used only in generating the report, and does not need to ship with the final report. -->
+
+<!-- The id attribute in an identifier element identifiers the change as noted in the report. -->
+<!-- An id has the form package[.class[.[ctor|method|field].signature]], where [] indicates optional text. -->
+<!-- A comment element can have multiple identifier elements, which will -->
+<!-- will cause the same text to appear at each place in the report, but -->
+<!-- will be converted to separate comments when the comments file is used. -->
+<!-- HTML tags in the text field will appear in the report. -->
+<comment>
+  <identifier id="org.apache.hadoop.yarn.client.api"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.client.api.TimelineClient"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.client.api.TimelineClient.putDomain_added(org.apache.hadoop.yarn.api.records.ApplicationAttemptId, org.apache.hadoop.yarn.api.records.timeline.TimelineDomain)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.client.api.TimelineClient.putEntities_added(org.apache.hadoop.yarn.api.records.ApplicationAttemptId, org.apache.hadoop.yarn.api.records.timeline.TimelineEntityGroupId, org.apache.hadoop.yarn.api.records.timeline.TimelineEntity[])"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event.Dispatcher"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event.Dispatcher.getEventHandler_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event.Dispatcher.register_changed(java.lang.Class, org.apache.hadoop.yarn.event.EventHandler)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event.Event"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event.Event.getTimestamp_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event.Event.getType_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event.Event.toString_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event.EventHandler"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.event.EventHandler.handle_changed(T)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.logaggregation"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.logaggregation.AggregatedLogFormat.LogReader"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.logaggregation.AggregatedLogFormat.LogReader.readContainerLogsForALogType_added(java.io.DataInputStream, java.io.PrintStream, long, java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.security"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.security.ContainerTokenIdentifier"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.security.ContainerTokenIdentifier.ctor_added(org.apache.hadoop.yarn.api.records.ContainerId, int, java.lang.String, java.lang.String, org.apache.hadoop.yarn.api.records.Resource, long, int, long, org.apache.hadoop.yarn.api.records.Priority, long, org.apache.hadoop.yarn.api.records.LogAggregationContext, java.lang.String, org.apache.hadoop.yarn.server.api.ContainerType)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.security.ContainerTokenIdentifier.ctor_added(org.apache.hadoop.yarn.api.records.ContainerId, java.lang.String, java.lang.String, org.apache.hadoop.yarn.api.records.Resource, long, int, long, org.apache.hadoop.yarn.api.records.Priority, long, org.apache.hadoop.yarn.api.records.LogAggregationContext, java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.security.ContainerTokenIdentifier.ctor_added(org.apache.hadoop.yarn.api.records.ContainerId, java.lang.String, java.lang.String, org.apache.hadoop.yarn.api.records.Resource, long, int, long, org.apache.hadoop.yarn.api.records.Priority, long, org.apache.hadoop.yarn.api.records.LogAggregationContext, java.lang.String, org.apache.hadoop.yarn.server.api.ContainerType)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.security.ContainerTokenIdentifier.ctor_changed(org.apache.hadoop.yarn.api.records.ContainerId, java.lang.String, java.lang.String, org.apache.hadoop.yarn.api.records.Resource, long, int, long, org.apache.hadoop.yarn.api.records.Priority, long, org.apache.hadoop.yarn.api.records.LogAggregationContext)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.security.ContainerTokenIdentifier.getContainerType_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.security.ContainerTokenIdentifier.getNodeLabelExpression_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.security.ContainerTokenIdentifier.getVersion_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.sharedcache"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.sharedcache.SharedCacheChecksum"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.sharedcache.SharedCacheChecksum.computeChecksum_changed(java.io.InputStream)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state.InvalidStateTransitionException"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state.InvalidStateTransitonException"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state.MultipleArcTransition"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state.MultipleArcTransition.transition_changed(OPERAND, EVENT)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state.SingleArcTransition"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state.SingleArcTransition.transition_changed(OPERAND, EVENT)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state.StateMachine"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state.StateMachine.doTransition_changed(EVENTTYPE, EVENT)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.state.StateMachine.getCurrentState_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.AbstractLivelinessMonitor"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.AbstractLivelinessMonitor.ctor_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.Clock"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.Clock.getTime_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.ConverterUtils"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.MonotonicClock"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.timeline"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.timeline.TimelineUtils"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.timeline.TimelineUtils.createTimelineAbout_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.timeline.TimelineUtils.getTimelineServiceVersion_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.timeline.TimelineUtils.timelineServiceEnabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.timeline.TimelineUtils.timelineServiceV1_5Enabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+
+</comments>

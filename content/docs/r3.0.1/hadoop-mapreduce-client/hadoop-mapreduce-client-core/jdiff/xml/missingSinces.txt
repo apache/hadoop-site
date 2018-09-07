@@ -1,0 +1,38 @@
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.lib.output.PathOutputCommitter Class
+OK: org.apache.hadoop.mapreduce.lib.partition.RehashPartitioner Class
+MISSING @SINCE TAG: org.apache.hadoop.mapred.JobStatus Constructor (org.apache.hadoop.mapred.JobID, float, float, float, float, int, org.apache.hadoop.mapred.JobPriority, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.mapred.JobStatus Constructor (org.apache.hadoop.mapred.JobID, float, float, float, float, int, org.apache.hadoop.mapred.JobPriority, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.JobStatus Constructor (org.apache.hadoop.mapreduce.JobID, float, float, float, float, org.apache.hadoop.mapreduce.JobStatus.State, org.apache.hadoop.mapreduce.JobPriority, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method addArchiveToSharedCache(java.net.URI, org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method addFileToSharedCache(java.net.URI, org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method addFileToSharedCacheAndClasspath(java.net.URI, org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method close()
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter Method commitJobInternal(org.apache.hadoop.mapreduce.JobContext)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method getArchiveSharedCacheUploadPolicies(org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method getFileSharedCacheUploadPolicies(org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.mapred.JobConf Method getJobPriorityAsInteger()
+NO DOC BLOCK: org.apache.hadoop.mapred.FileOutputCommitter Method isCommitJobRepeatable(org.apache.hadoop.mapred.JobContext)
+MISSING @SINCE TAG: org.apache.hadoop.mapred.OutputCommitter Method isCommitJobRepeatable(org.apache.hadoop.mapred.JobContext)
+NO DOC BLOCK: org.apache.hadoop.mapred.OutputCommitter Method isCommitJobRepeatable(org.apache.hadoop.mapreduce.JobContext)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.OutputCommitter Method isCommitJobRepeatable(org.apache.hadoop.mapreduce.JobContext)
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter Method isCommitJobRepeatable(org.apache.hadoop.mapreduce.JobContext)
+NO DOC BLOCK: org.apache.hadoop.mapred.JobConf Method main(java.lang.String[])
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method setArchiveSharedCacheUploadPolicies(org.apache.hadoop.conf.Configuration, java.util.Map)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method setFileSharedCacheUploadPolicies(org.apache.hadoop.conf.Configuration, java.util.Map)
+MISSING @SINCE TAG: org.apache.hadoop.mapred.JobConf Method setJobPriorityAsInteger(int)
+MISSING @SINCE TAG: org.apache.hadoop.mapreduce.Job Method setPriorityAsInteger(int)
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter Method toString()
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.fieldsel.FieldSelectionHelper Field DATA_FIELD_SEPARATOR
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.db.DBOutputFormat Field dbProductName
+NO DOC BLOCK: org.apache.hadoop.mapreduce.Job Field DEFAULT_USE_WILDCARD_FOR_LIBJARS
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter Field FILEOUTPUTCOMMITTER_CLEANUP_FAILURES_IGNORED
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter Field FILEOUTPUTCOMMITTER_CLEANUP_FAILURES_IGNORED_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter Field FILEOUTPUTCOMMITTER_CLEANUP_SKIPPED
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter Field FILEOUTPUTCOMMITTER_CLEANUP_SKIPPED_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter Field FILEOUTPUTCOMMITTER_FAILURE_ATTEMPTS
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter Field FILEOUTPUTCOMMITTER_FAILURE_ATTEMPTS_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.input.KeyValueLineRecordReader Field KEY_VALUE_SEPARATOR
+NO DOC BLOCK: org.apache.hadoop.mapreduce.lib.output.TextOutputFormat Field SEPARATOR
+NO DOC BLOCK: org.apache.hadoop.mapreduce.TaskID Field TASK_ID_REGEX
+NO DOC BLOCK: org.apache.hadoop.mapreduce.TaskID Field taskIdPattern
+NO DOC BLOCK: org.apache.hadoop.mapreduce.Job Field USE_WILDCARD_FOR_LIBJARS

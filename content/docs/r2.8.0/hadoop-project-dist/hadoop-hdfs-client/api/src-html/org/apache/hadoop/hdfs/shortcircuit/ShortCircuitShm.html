@@ -1,0 +1,713 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.hadoop.hdfs.shortcircuit;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import java.io.FileInputStream;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import java.io.IOException;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import java.lang.reflect.Field;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.util.BitSet;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.Iterator;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.NoSuchElementException;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.Random;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.apache.commons.lang.builder.EqualsBuilder;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.apache.commons.lang.builder.HashCodeBuilder;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.apache.hadoop.fs.InvalidRequestException;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.apache.hadoop.hdfs.ExtendedBlockId;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.apache.hadoop.io.nativeio.NativeIO;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.apache.hadoop.io.nativeio.NativeIO.POSIX;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.apache.hadoop.util.Shell;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.apache.hadoop.util.StringUtils;<a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.slf4j.Logger;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.slf4j.LoggerFactory;<a name="line.38"></a>
+<span class="sourceLineNo">039</span><a name="line.39"></a>
+<span class="sourceLineNo">040</span>import sun.misc.Unsafe;<a name="line.40"></a>
+<span class="sourceLineNo">041</span><a name="line.41"></a>
+<span class="sourceLineNo">042</span>import com.google.common.base.Preconditions;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import com.google.common.collect.ComparisonChain;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import com.google.common.primitives.Ints;<a name="line.44"></a>
+<span class="sourceLineNo">045</span><a name="line.45"></a>
+<span class="sourceLineNo">046</span>import javax.annotation.Nonnull;<a name="line.46"></a>
+<span class="sourceLineNo">047</span><a name="line.47"></a>
+<span class="sourceLineNo">048</span>/**<a name="line.48"></a>
+<span class="sourceLineNo">049</span> * A shared memory segment used to implement short-circuit reads.<a name="line.49"></a>
+<span class="sourceLineNo">050</span> */<a name="line.50"></a>
+<span class="sourceLineNo">051</span>public class ShortCircuitShm {<a name="line.51"></a>
+<span class="sourceLineNo">052</span>  private static final Logger LOG = LoggerFactory.getLogger(<a name="line.52"></a>
+<span class="sourceLineNo">053</span>      ShortCircuitShm.class);<a name="line.53"></a>
+<span class="sourceLineNo">054</span><a name="line.54"></a>
+<span class="sourceLineNo">055</span>  protected static final int BYTES_PER_SLOT = 64;<a name="line.55"></a>
+<span class="sourceLineNo">056</span><a name="line.56"></a>
+<span class="sourceLineNo">057</span>  private static final Unsafe unsafe = safetyDance();<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>  private static Unsafe safetyDance() {<a name="line.59"></a>
+<span class="sourceLineNo">060</span>    try {<a name="line.60"></a>
+<span class="sourceLineNo">061</span>      Field f = Unsafe.class.getDeclaredField("theUnsafe");<a name="line.61"></a>
+<span class="sourceLineNo">062</span>      f.setAccessible(true);<a name="line.62"></a>
+<span class="sourceLineNo">063</span>      return (Unsafe)f.get(null);<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    } catch (Throwable e) {<a name="line.64"></a>
+<span class="sourceLineNo">065</span>      LOG.error("failed to load misc.Unsafe", e);<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    }<a name="line.66"></a>
+<span class="sourceLineNo">067</span>    return null;<a name="line.67"></a>
+<span class="sourceLineNo">068</span>  }<a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69"></a>
+<span class="sourceLineNo">070</span>  /**<a name="line.70"></a>
+<span class="sourceLineNo">071</span>   * Calculate the usable size of a shared memory segment.<a name="line.71"></a>
+<span class="sourceLineNo">072</span>   * We round down to a multiple of the slot size and do some validation.<a name="line.72"></a>
+<span class="sourceLineNo">073</span>   *<a name="line.73"></a>
+<span class="sourceLineNo">074</span>   * @param stream The stream we're using.<a name="line.74"></a>
+<span class="sourceLineNo">075</span>   * @return       The usable size of the shared memory segment.<a name="line.75"></a>
+<span class="sourceLineNo">076</span>   */<a name="line.76"></a>
+<span class="sourceLineNo">077</span>  private static int getUsableLength(FileInputStream stream)<a name="line.77"></a>
+<span class="sourceLineNo">078</span>      throws IOException {<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    int intSize = Ints.checkedCast(stream.getChannel().size());<a name="line.79"></a>
+<span class="sourceLineNo">080</span>    int slots = intSize / BYTES_PER_SLOT;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    if (slots == 0) {<a name="line.81"></a>
+<span class="sourceLineNo">082</span>      throw new IOException("size of shared memory segment was " +<a name="line.82"></a>
+<span class="sourceLineNo">083</span>          intSize + ", but that is not enough to hold even one slot.");<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    }<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    return slots * BYTES_PER_SLOT;<a name="line.85"></a>
+<span class="sourceLineNo">086</span>  }<a name="line.86"></a>
+<span class="sourceLineNo">087</span><a name="line.87"></a>
+<span class="sourceLineNo">088</span>  /**<a name="line.88"></a>
+<span class="sourceLineNo">089</span>   * Identifies a DfsClientShm.<a name="line.89"></a>
+<span class="sourceLineNo">090</span>   */<a name="line.90"></a>
+<span class="sourceLineNo">091</span>  public static class ShmId implements Comparable&lt;ShmId&gt; {<a name="line.91"></a>
+<span class="sourceLineNo">092</span>    private static final Random random = new Random();<a name="line.92"></a>
+<span class="sourceLineNo">093</span>    private final long hi;<a name="line.93"></a>
+<span class="sourceLineNo">094</span>    private final long lo;<a name="line.94"></a>
+<span class="sourceLineNo">095</span><a name="line.95"></a>
+<span class="sourceLineNo">096</span>    /**<a name="line.96"></a>
+<span class="sourceLineNo">097</span>     * Generate a random ShmId.<a name="line.97"></a>
+<span class="sourceLineNo">098</span>     *<a name="line.98"></a>
+<span class="sourceLineNo">099</span>     * We generate ShmIds randomly to prevent a malicious client from<a name="line.99"></a>
+<span class="sourceLineNo">100</span>     * successfully guessing one and using that to interfere with another<a name="line.100"></a>
+<span class="sourceLineNo">101</span>     * client.<a name="line.101"></a>
+<span class="sourceLineNo">102</span>     */<a name="line.102"></a>
+<span class="sourceLineNo">103</span>    public static ShmId createRandom() {<a name="line.103"></a>
+<span class="sourceLineNo">104</span>      return new ShmId(random.nextLong(), random.nextLong());<a name="line.104"></a>
+<span class="sourceLineNo">105</span>    }<a name="line.105"></a>
+<span class="sourceLineNo">106</span><a name="line.106"></a>
+<span class="sourceLineNo">107</span>    public ShmId(long hi, long lo) {<a name="line.107"></a>
+<span class="sourceLineNo">108</span>      this.hi = hi;<a name="line.108"></a>
+<span class="sourceLineNo">109</span>      this.lo = lo;<a name="line.109"></a>
+<span class="sourceLineNo">110</span>    }<a name="line.110"></a>
+<span class="sourceLineNo">111</span><a name="line.111"></a>
+<span class="sourceLineNo">112</span>    public long getHi() {<a name="line.112"></a>
+<span class="sourceLineNo">113</span>      return hi;<a name="line.113"></a>
+<span class="sourceLineNo">114</span>    }<a name="line.114"></a>
+<span class="sourceLineNo">115</span><a name="line.115"></a>
+<span class="sourceLineNo">116</span>    public long getLo() {<a name="line.116"></a>
+<span class="sourceLineNo">117</span>      return lo;<a name="line.117"></a>
+<span class="sourceLineNo">118</span>    }<a name="line.118"></a>
+<span class="sourceLineNo">119</span><a name="line.119"></a>
+<span class="sourceLineNo">120</span>    @Override<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    public boolean equals(Object o) {<a name="line.121"></a>
+<span class="sourceLineNo">122</span>      if ((o == null) || (o.getClass() != this.getClass())) {<a name="line.122"></a>
+<span class="sourceLineNo">123</span>        return false;<a name="line.123"></a>
+<span class="sourceLineNo">124</span>      }<a name="line.124"></a>
+<span class="sourceLineNo">125</span>      ShmId other = (ShmId)o;<a name="line.125"></a>
+<span class="sourceLineNo">126</span>      return new EqualsBuilder().<a name="line.126"></a>
+<span class="sourceLineNo">127</span>          append(hi, other.hi).<a name="line.127"></a>
+<span class="sourceLineNo">128</span>          append(lo, other.lo).<a name="line.128"></a>
+<span class="sourceLineNo">129</span>          isEquals();<a name="line.129"></a>
+<span class="sourceLineNo">130</span>    }<a name="line.130"></a>
+<span class="sourceLineNo">131</span><a name="line.131"></a>
+<span class="sourceLineNo">132</span>    @Override<a name="line.132"></a>
+<span class="sourceLineNo">133</span>    public int hashCode() {<a name="line.133"></a>
+<span class="sourceLineNo">134</span>      return new HashCodeBuilder().<a name="line.134"></a>
+<span class="sourceLineNo">135</span>          append(this.hi).<a name="line.135"></a>
+<span class="sourceLineNo">136</span>          append(this.lo).<a name="line.136"></a>
+<span class="sourceLineNo">137</span>          toHashCode();<a name="line.137"></a>
+<span class="sourceLineNo">138</span>    }<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>    @Override<a name="line.140"></a>
+<span class="sourceLineNo">141</span>    public String toString() {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>      return String.format("%016x%016x", hi, lo);<a name="line.142"></a>
+<span class="sourceLineNo">143</span>    }<a name="line.143"></a>
+<span class="sourceLineNo">144</span><a name="line.144"></a>
+<span class="sourceLineNo">145</span>    @Override<a name="line.145"></a>
+<span class="sourceLineNo">146</span>    public int compareTo(@Nonnull ShmId other) {<a name="line.146"></a>
+<span class="sourceLineNo">147</span>      return ComparisonChain.start().<a name="line.147"></a>
+<span class="sourceLineNo">148</span>          compare(hi, other.hi).<a name="line.148"></a>
+<span class="sourceLineNo">149</span>          compare(lo, other.lo).<a name="line.149"></a>
+<span class="sourceLineNo">150</span>          result();<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    }<a name="line.151"></a>
+<span class="sourceLineNo">152</span>  }<a name="line.152"></a>
+<span class="sourceLineNo">153</span><a name="line.153"></a>
+<span class="sourceLineNo">154</span>  /**<a name="line.154"></a>
+<span class="sourceLineNo">155</span>   * Uniquely identifies a slot.<a name="line.155"></a>
+<span class="sourceLineNo">156</span>   */<a name="line.156"></a>
+<span class="sourceLineNo">157</span>  public static class SlotId {<a name="line.157"></a>
+<span class="sourceLineNo">158</span>    private final ShmId shmId;<a name="line.158"></a>
+<span class="sourceLineNo">159</span>    private final int slotIdx;<a name="line.159"></a>
+<span class="sourceLineNo">160</span><a name="line.160"></a>
+<span class="sourceLineNo">161</span>    public SlotId(ShmId shmId, int slotIdx) {<a name="line.161"></a>
+<span class="sourceLineNo">162</span>      this.shmId = shmId;<a name="line.162"></a>
+<span class="sourceLineNo">163</span>      this.slotIdx = slotIdx;<a name="line.163"></a>
+<span class="sourceLineNo">164</span>    }<a name="line.164"></a>
+<span class="sourceLineNo">165</span><a name="line.165"></a>
+<span class="sourceLineNo">166</span>    public ShmId getShmId() {<a name="line.166"></a>
+<span class="sourceLineNo">167</span>      return shmId;<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    }<a name="line.168"></a>
+<span class="sourceLineNo">169</span><a name="line.169"></a>
+<span class="sourceLineNo">170</span>    public int getSlotIdx() {<a name="line.170"></a>
+<span class="sourceLineNo">171</span>      return slotIdx;<a name="line.171"></a>
+<span class="sourceLineNo">172</span>    }<a name="line.172"></a>
+<span class="sourceLineNo">173</span><a name="line.173"></a>
+<span class="sourceLineNo">174</span>    @Override<a name="line.174"></a>
+<span class="sourceLineNo">175</span>    public boolean equals(Object o) {<a name="line.175"></a>
+<span class="sourceLineNo">176</span>      if ((o == null) || (o.getClass() != this.getClass())) {<a name="line.176"></a>
+<span class="sourceLineNo">177</span>        return false;<a name="line.177"></a>
+<span class="sourceLineNo">178</span>      }<a name="line.178"></a>
+<span class="sourceLineNo">179</span>      SlotId other = (SlotId)o;<a name="line.179"></a>
+<span class="sourceLineNo">180</span>      return new EqualsBuilder().<a name="line.180"></a>
+<span class="sourceLineNo">181</span>          append(shmId, other.shmId).<a name="line.181"></a>
+<span class="sourceLineNo">182</span>          append(slotIdx, other.slotIdx).<a name="line.182"></a>
+<span class="sourceLineNo">183</span>          isEquals();<a name="line.183"></a>
+<span class="sourceLineNo">184</span>    }<a name="line.184"></a>
+<span class="sourceLineNo">185</span><a name="line.185"></a>
+<span class="sourceLineNo">186</span>    @Override<a name="line.186"></a>
+<span class="sourceLineNo">187</span>    public int hashCode() {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>      return new HashCodeBuilder().<a name="line.188"></a>
+<span class="sourceLineNo">189</span>          append(this.shmId).<a name="line.189"></a>
+<span class="sourceLineNo">190</span>          append(this.slotIdx).<a name="line.190"></a>
+<span class="sourceLineNo">191</span>          toHashCode();<a name="line.191"></a>
+<span class="sourceLineNo">192</span>    }<a name="line.192"></a>
+<span class="sourceLineNo">193</span><a name="line.193"></a>
+<span class="sourceLineNo">194</span>    @Override<a name="line.194"></a>
+<span class="sourceLineNo">195</span>    public String toString() {<a name="line.195"></a>
+<span class="sourceLineNo">196</span>      return String.format("SlotId(%s:%d)", shmId.toString(), slotIdx);<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    }<a name="line.197"></a>
+<span class="sourceLineNo">198</span>  }<a name="line.198"></a>
+<span class="sourceLineNo">199</span><a name="line.199"></a>
+<span class="sourceLineNo">200</span>  public class SlotIterator implements Iterator&lt;Slot&gt; {<a name="line.200"></a>
+<span class="sourceLineNo">201</span>    int slotIdx = -1;<a name="line.201"></a>
+<span class="sourceLineNo">202</span><a name="line.202"></a>
+<span class="sourceLineNo">203</span>    @Override<a name="line.203"></a>
+<span class="sourceLineNo">204</span>    public boolean hasNext() {<a name="line.204"></a>
+<span class="sourceLineNo">205</span>      synchronized (ShortCircuitShm.this) {<a name="line.205"></a>
+<span class="sourceLineNo">206</span>        return allocatedSlots.nextSetBit(slotIdx + 1) != -1;<a name="line.206"></a>
+<span class="sourceLineNo">207</span>      }<a name="line.207"></a>
+<span class="sourceLineNo">208</span>    }<a name="line.208"></a>
+<span class="sourceLineNo">209</span><a name="line.209"></a>
+<span class="sourceLineNo">210</span>    @Override<a name="line.210"></a>
+<span class="sourceLineNo">211</span>    public Slot next() {<a name="line.211"></a>
+<span class="sourceLineNo">212</span>      synchronized (ShortCircuitShm.this) {<a name="line.212"></a>
+<span class="sourceLineNo">213</span>        int nextSlotIdx = allocatedSlots.nextSetBit(slotIdx + 1);<a name="line.213"></a>
+<span class="sourceLineNo">214</span>        if (nextSlotIdx == -1) {<a name="line.214"></a>
+<span class="sourceLineNo">215</span>          throw new NoSuchElementException();<a name="line.215"></a>
+<span class="sourceLineNo">216</span>        }<a name="line.216"></a>
+<span class="sourceLineNo">217</span>        slotIdx = nextSlotIdx;<a name="line.217"></a>
+<span class="sourceLineNo">218</span>        return slots[nextSlotIdx];<a name="line.218"></a>
+<span class="sourceLineNo">219</span>      }<a name="line.219"></a>
+<span class="sourceLineNo">220</span>    }<a name="line.220"></a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span>    @Override<a name="line.222"></a>
+<span class="sourceLineNo">223</span>    public void remove() {<a name="line.223"></a>
+<span class="sourceLineNo">224</span>      throw new UnsupportedOperationException("SlotIterator " +<a name="line.224"></a>
+<span class="sourceLineNo">225</span>          "doesn't support removal");<a name="line.225"></a>
+<span class="sourceLineNo">226</span>    }<a name="line.226"></a>
+<span class="sourceLineNo">227</span>  }<a name="line.227"></a>
+<span class="sourceLineNo">228</span><a name="line.228"></a>
+<span class="sourceLineNo">229</span>  /**<a name="line.229"></a>
+<span class="sourceLineNo">230</span>   * A slot containing information about a replica.<a name="line.230"></a>
+<span class="sourceLineNo">231</span>   *<a name="line.231"></a>
+<span class="sourceLineNo">232</span>   * The format is:<a name="line.232"></a>
+<span class="sourceLineNo">233</span>   * word 0<a name="line.233"></a>
+<span class="sourceLineNo">234</span>   *   bit 0:32   Slot flags (see below).<a name="line.234"></a>
+<span class="sourceLineNo">235</span>   *   bit 33:63  Anchor count.<a name="line.235"></a>
+<span class="sourceLineNo">236</span>   * word 1:7<a name="line.236"></a>
+<span class="sourceLineNo">237</span>   *   Reserved for future use, such as statistics.<a name="line.237"></a>
+<span class="sourceLineNo">238</span>   *   Padding is also useful for avoiding false sharing.<a name="line.238"></a>
+<span class="sourceLineNo">239</span>   *<a name="line.239"></a>
+<span class="sourceLineNo">240</span>   * Little-endian versus big-endian is not relevant here since both the client<a name="line.240"></a>
+<span class="sourceLineNo">241</span>   * and the server reside on the same computer and use the same orientation.<a name="line.241"></a>
+<span class="sourceLineNo">242</span>   */<a name="line.242"></a>
+<span class="sourceLineNo">243</span>  public class Slot {<a name="line.243"></a>
+<span class="sourceLineNo">244</span>    /**<a name="line.244"></a>
+<span class="sourceLineNo">245</span>     * Flag indicating that the slot is valid.<a name="line.245"></a>
+<span class="sourceLineNo">246</span>     *<a name="line.246"></a>
+<span class="sourceLineNo">247</span>     * The DFSClient sets this flag when it allocates a new slot within one of<a name="line.247"></a>
+<span class="sourceLineNo">248</span>     * its shared memory regions.<a name="line.248"></a>
+<span class="sourceLineNo">249</span>     *<a name="line.249"></a>
+<span class="sourceLineNo">250</span>     * The DataNode clears this flag when the replica associated with this slot<a name="line.250"></a>
+<span class="sourceLineNo">251</span>     * is no longer valid.  The client itself also clears this flag when it<a name="line.251"></a>
+<span class="sourceLineNo">252</span>     * believes that the DataNode is no longer using this slot to communicate.<a name="line.252"></a>
+<span class="sourceLineNo">253</span>     */<a name="line.253"></a>
+<span class="sourceLineNo">254</span>    private static final long VALID_FLAG =          1L&lt;&lt;63;<a name="line.254"></a>
+<span class="sourceLineNo">255</span><a name="line.255"></a>
+<span class="sourceLineNo">256</span>    /**<a name="line.256"></a>
+<span class="sourceLineNo">257</span>     * Flag indicating that the slot can be anchored.<a name="line.257"></a>
+<span class="sourceLineNo">258</span>     */<a name="line.258"></a>
+<span class="sourceLineNo">259</span>    private static final long ANCHORABLE_FLAG =     1L&lt;&lt;62;<a name="line.259"></a>
+<span class="sourceLineNo">260</span><a name="line.260"></a>
+<span class="sourceLineNo">261</span>    /**<a name="line.261"></a>
+<span class="sourceLineNo">262</span>     * The slot address in memory.<a name="line.262"></a>
+<span class="sourceLineNo">263</span>     */<a name="line.263"></a>
+<span class="sourceLineNo">264</span>    private final long slotAddress;<a name="line.264"></a>
+<span class="sourceLineNo">265</span><a name="line.265"></a>
+<span class="sourceLineNo">266</span>    /**<a name="line.266"></a>
+<span class="sourceLineNo">267</span>     * BlockId of the block this slot is used for.<a name="line.267"></a>
+<span class="sourceLineNo">268</span>     */<a name="line.268"></a>
+<span class="sourceLineNo">269</span>    private final ExtendedBlockId blockId;<a name="line.269"></a>
+<span class="sourceLineNo">270</span><a name="line.270"></a>
+<span class="sourceLineNo">271</span>    Slot(long slotAddress, ExtendedBlockId blockId) {<a name="line.271"></a>
+<span class="sourceLineNo">272</span>      this.slotAddress = slotAddress;<a name="line.272"></a>
+<span class="sourceLineNo">273</span>      this.blockId = blockId;<a name="line.273"></a>
+<span class="sourceLineNo">274</span>    }<a name="line.274"></a>
+<span class="sourceLineNo">275</span><a name="line.275"></a>
+<span class="sourceLineNo">276</span>    /**<a name="line.276"></a>
+<span class="sourceLineNo">277</span>     * Get the short-circuit memory segment associated with this Slot.<a name="line.277"></a>
+<span class="sourceLineNo">278</span>     *<a name="line.278"></a>
+<span class="sourceLineNo">279</span>     * @return      The enclosing short-circuit memory segment.<a name="line.279"></a>
+<span class="sourceLineNo">280</span>     */<a name="line.280"></a>
+<span class="sourceLineNo">281</span>    public ShortCircuitShm getShm() {<a name="line.281"></a>
+<span class="sourceLineNo">282</span>      return ShortCircuitShm.this;<a name="line.282"></a>
+<span class="sourceLineNo">283</span>    }<a name="line.283"></a>
+<span class="sourceLineNo">284</span><a name="line.284"></a>
+<span class="sourceLineNo">285</span>    /**<a name="line.285"></a>
+<span class="sourceLineNo">286</span>     * Get the ExtendedBlockId associated with this slot.<a name="line.286"></a>
+<span class="sourceLineNo">287</span>     *<a name="line.287"></a>
+<span class="sourceLineNo">288</span>     * @return      The ExtendedBlockId of this slot.<a name="line.288"></a>
+<span class="sourceLineNo">289</span>     */<a name="line.289"></a>
+<span class="sourceLineNo">290</span>    public ExtendedBlockId getBlockId() {<a name="line.290"></a>
+<span class="sourceLineNo">291</span>      return blockId;<a name="line.291"></a>
+<span class="sourceLineNo">292</span>    }<a name="line.292"></a>
+<span class="sourceLineNo">293</span><a name="line.293"></a>
+<span class="sourceLineNo">294</span>    /**<a name="line.294"></a>
+<span class="sourceLineNo">295</span>     * Get the SlotId of this slot, containing both shmId and slotIdx.<a name="line.295"></a>
+<span class="sourceLineNo">296</span>     *<a name="line.296"></a>
+<span class="sourceLineNo">297</span>     * @return      The SlotId of this slot.<a name="line.297"></a>
+<span class="sourceLineNo">298</span>     */<a name="line.298"></a>
+<span class="sourceLineNo">299</span>    public SlotId getSlotId() {<a name="line.299"></a>
+<span class="sourceLineNo">300</span>      return new SlotId(getShmId(), getSlotIdx());<a name="line.300"></a>
+<span class="sourceLineNo">301</span>    }<a name="line.301"></a>
+<span class="sourceLineNo">302</span><a name="line.302"></a>
+<span class="sourceLineNo">303</span>    /**<a name="line.303"></a>
+<span class="sourceLineNo">304</span>     * Get the Slot index.<a name="line.304"></a>
+<span class="sourceLineNo">305</span>     *<a name="line.305"></a>
+<span class="sourceLineNo">306</span>     * @return      The index of this slot.<a name="line.306"></a>
+<span class="sourceLineNo">307</span>     */<a name="line.307"></a>
+<span class="sourceLineNo">308</span>    public int getSlotIdx() {<a name="line.308"></a>
+<span class="sourceLineNo">309</span>      return Ints.checkedCast(<a name="line.309"></a>
+<span class="sourceLineNo">310</span>          (slotAddress - baseAddress) / BYTES_PER_SLOT);<a name="line.310"></a>
+<span class="sourceLineNo">311</span>    }<a name="line.311"></a>
+<span class="sourceLineNo">312</span><a name="line.312"></a>
+<span class="sourceLineNo">313</span>    /**<a name="line.313"></a>
+<span class="sourceLineNo">314</span>     * Clear the slot.<a name="line.314"></a>
+<span class="sourceLineNo">315</span>     */<a name="line.315"></a>
+<span class="sourceLineNo">316</span>    void clear() {<a name="line.316"></a>
+<span class="sourceLineNo">317</span>      unsafe.putLongVolatile(null, this.slotAddress, 0);<a name="line.317"></a>
+<span class="sourceLineNo">318</span>    }<a name="line.318"></a>
+<span class="sourceLineNo">319</span><a name="line.319"></a>
+<span class="sourceLineNo">320</span>    private boolean isSet(long flag) {<a name="line.320"></a>
+<span class="sourceLineNo">321</span>      long prev = unsafe.getLongVolatile(null, this.slotAddress);<a name="line.321"></a>
+<span class="sourceLineNo">322</span>      return (prev &amp; flag) != 0;<a name="line.322"></a>
+<span class="sourceLineNo">323</span>    }<a name="line.323"></a>
+<span class="sourceLineNo">324</span><a name="line.324"></a>
+<span class="sourceLineNo">325</span>    private void setFlag(long flag) {<a name="line.325"></a>
+<span class="sourceLineNo">326</span>      long prev;<a name="line.326"></a>
+<span class="sourceLineNo">327</span>      do {<a name="line.327"></a>
+<span class="sourceLineNo">328</span>        prev = unsafe.getLongVolatile(null, this.slotAddress);<a name="line.328"></a>
+<span class="sourceLineNo">329</span>        if ((prev &amp; flag) != 0) {<a name="line.329"></a>
+<span class="sourceLineNo">330</span>          return;<a name="line.330"></a>
+<span class="sourceLineNo">331</span>        }<a name="line.331"></a>
+<span class="sourceLineNo">332</span>      } while (!unsafe.compareAndSwapLong(null, this.slotAddress,<a name="line.332"></a>
+<span class="sourceLineNo">333</span>                  prev, prev | flag));<a name="line.333"></a>
+<span class="sourceLineNo">334</span>    }<a name="line.334"></a>
+<span class="sourceLineNo">335</span><a name="line.335"></a>
+<span class="sourceLineNo">336</span>    private void clearFlag(long flag) {<a name="line.336"></a>
+<span class="sourceLineNo">337</span>      long prev;<a name="line.337"></a>
+<span class="sourceLineNo">338</span>      do {<a name="line.338"></a>
+<span class="sourceLineNo">339</span>        prev = unsafe.getLongVolatile(null, this.slotAddress);<a name="line.339"></a>
+<span class="sourceLineNo">340</span>        if ((prev &amp; flag) == 0) {<a name="line.340"></a>
+<span class="sourceLineNo">341</span>          return;<a name="line.341"></a>
+<span class="sourceLineNo">342</span>        }<a name="line.342"></a>
+<span class="sourceLineNo">343</span>      } while (!unsafe.compareAndSwapLong(null, this.slotAddress,<a name="line.343"></a>
+<span class="sourceLineNo">344</span>                  prev, prev &amp; (~flag)));<a name="line.344"></a>
+<span class="sourceLineNo">345</span>    }<a name="line.345"></a>
+<span class="sourceLineNo">346</span><a name="line.346"></a>
+<span class="sourceLineNo">347</span>    public boolean isValid() {<a name="line.347"></a>
+<span class="sourceLineNo">348</span>      return isSet(VALID_FLAG);<a name="line.348"></a>
+<span class="sourceLineNo">349</span>    }<a name="line.349"></a>
+<span class="sourceLineNo">350</span><a name="line.350"></a>
+<span class="sourceLineNo">351</span>    public void makeValid() {<a name="line.351"></a>
+<span class="sourceLineNo">352</span>      setFlag(VALID_FLAG);<a name="line.352"></a>
+<span class="sourceLineNo">353</span>    }<a name="line.353"></a>
+<span class="sourceLineNo">354</span><a name="line.354"></a>
+<span class="sourceLineNo">355</span>    public void makeInvalid() {<a name="line.355"></a>
+<span class="sourceLineNo">356</span>      clearFlag(VALID_FLAG);<a name="line.356"></a>
+<span class="sourceLineNo">357</span>    }<a name="line.357"></a>
+<span class="sourceLineNo">358</span><a name="line.358"></a>
+<span class="sourceLineNo">359</span>    public boolean isAnchorable() {<a name="line.359"></a>
+<span class="sourceLineNo">360</span>      return isSet(ANCHORABLE_FLAG);<a name="line.360"></a>
+<span class="sourceLineNo">361</span>    }<a name="line.361"></a>
+<span class="sourceLineNo">362</span><a name="line.362"></a>
+<span class="sourceLineNo">363</span>    public void makeAnchorable() {<a name="line.363"></a>
+<span class="sourceLineNo">364</span>      setFlag(ANCHORABLE_FLAG);<a name="line.364"></a>
+<span class="sourceLineNo">365</span>    }<a name="line.365"></a>
+<span class="sourceLineNo">366</span><a name="line.366"></a>
+<span class="sourceLineNo">367</span>    public void makeUnanchorable() {<a name="line.367"></a>
+<span class="sourceLineNo">368</span>      clearFlag(ANCHORABLE_FLAG);<a name="line.368"></a>
+<span class="sourceLineNo">369</span>    }<a name="line.369"></a>
+<span class="sourceLineNo">370</span><a name="line.370"></a>
+<span class="sourceLineNo">371</span>    public boolean isAnchored() {<a name="line.371"></a>
+<span class="sourceLineNo">372</span>      long prev = unsafe.getLongVolatile(null, this.slotAddress);<a name="line.372"></a>
+<span class="sourceLineNo">373</span>      // Slot is no longer valid.<a name="line.373"></a>
+<span class="sourceLineNo">374</span>      return (prev &amp; VALID_FLAG) != 0 &amp;&amp; ((prev &amp; 0x7fffffff) != 0);<a name="line.374"></a>
+<span class="sourceLineNo">375</span>    }<a name="line.375"></a>
+<span class="sourceLineNo">376</span><a name="line.376"></a>
+<span class="sourceLineNo">377</span>    /**<a name="line.377"></a>
+<span class="sourceLineNo">378</span>     * Try to add an anchor for a given slot.<a name="line.378"></a>
+<span class="sourceLineNo">379</span>     *<a name="line.379"></a>
+<span class="sourceLineNo">380</span>     * When a slot is anchored, we know that the block it refers to is resident<a name="line.380"></a>
+<span class="sourceLineNo">381</span>     * in memory.<a name="line.381"></a>
+<span class="sourceLineNo">382</span>     *<a name="line.382"></a>
+<span class="sourceLineNo">383</span>     * @return          True if the slot is anchored.<a name="line.383"></a>
+<span class="sourceLineNo">384</span>     */<a name="line.384"></a>
+<span class="sourceLineNo">385</span>    public boolean addAnchor() {<a name="line.385"></a>
+<span class="sourceLineNo">386</span>      long prev;<a name="line.386"></a>
+<span class="sourceLineNo">387</span>      do {<a name="line.387"></a>
+<span class="sourceLineNo">388</span>        prev = unsafe.getLongVolatile(null, this.slotAddress);<a name="line.388"></a>
+<span class="sourceLineNo">389</span>        if ((prev &amp; VALID_FLAG) == 0) {<a name="line.389"></a>
+<span class="sourceLineNo">390</span>          // Slot is no longer valid.<a name="line.390"></a>
+<span class="sourceLineNo">391</span>          return false;<a name="line.391"></a>
+<span class="sourceLineNo">392</span>        }<a name="line.392"></a>
+<span class="sourceLineNo">393</span>        if ((prev &amp; ANCHORABLE_FLAG) == 0) {<a name="line.393"></a>
+<span class="sourceLineNo">394</span>          // Slot can't be anchored right now.<a name="line.394"></a>
+<span class="sourceLineNo">395</span>          return false;<a name="line.395"></a>
+<span class="sourceLineNo">396</span>        }<a name="line.396"></a>
+<span class="sourceLineNo">397</span>        if ((prev &amp; 0x7fffffff) == 0x7fffffff) {<a name="line.397"></a>
+<span class="sourceLineNo">398</span>          // Too many other threads have anchored the slot (2 billion?)<a name="line.398"></a>
+<span class="sourceLineNo">399</span>          return false;<a name="line.399"></a>
+<span class="sourceLineNo">400</span>        }<a name="line.400"></a>
+<span class="sourceLineNo">401</span>      } while (!unsafe.compareAndSwapLong(null, this.slotAddress,<a name="line.401"></a>
+<span class="sourceLineNo">402</span>                  prev, prev + 1));<a name="line.402"></a>
+<span class="sourceLineNo">403</span>      return true;<a name="line.403"></a>
+<span class="sourceLineNo">404</span>    }<a name="line.404"></a>
+<span class="sourceLineNo">405</span><a name="line.405"></a>
+<span class="sourceLineNo">406</span>    /**<a name="line.406"></a>
+<span class="sourceLineNo">407</span>     * Remove an anchor for a given slot.<a name="line.407"></a>
+<span class="sourceLineNo">408</span>     */<a name="line.408"></a>
+<span class="sourceLineNo">409</span>    public void removeAnchor() {<a name="line.409"></a>
+<span class="sourceLineNo">410</span>      long prev;<a name="line.410"></a>
+<span class="sourceLineNo">411</span>      do {<a name="line.411"></a>
+<span class="sourceLineNo">412</span>        prev = unsafe.getLongVolatile(null, this.slotAddress);<a name="line.412"></a>
+<span class="sourceLineNo">413</span>        Preconditions.checkState((prev &amp; 0x7fffffff) != 0,<a name="line.413"></a>
+<span class="sourceLineNo">414</span>            "Tried to remove anchor for slot " + slotAddress +", which was " +<a name="line.414"></a>
+<span class="sourceLineNo">415</span>            "not anchored.");<a name="line.415"></a>
+<span class="sourceLineNo">416</span>      } while (!unsafe.compareAndSwapLong(null, this.slotAddress,<a name="line.416"></a>
+<span class="sourceLineNo">417</span>                  prev, prev - 1));<a name="line.417"></a>
+<span class="sourceLineNo">418</span>    }<a name="line.418"></a>
+<span class="sourceLineNo">419</span><a name="line.419"></a>
+<span class="sourceLineNo">420</span>    @Override<a name="line.420"></a>
+<span class="sourceLineNo">421</span>    public String toString() {<a name="line.421"></a>
+<span class="sourceLineNo">422</span>      return "Slot(slotIdx=" + getSlotIdx() + ", shm=" + getShm() + ")";<a name="line.422"></a>
+<span class="sourceLineNo">423</span>    }<a name="line.423"></a>
+<span class="sourceLineNo">424</span>  }<a name="line.424"></a>
+<span class="sourceLineNo">425</span><a name="line.425"></a>
+<span class="sourceLineNo">426</span>  /**<a name="line.426"></a>
+<span class="sourceLineNo">427</span>   * ID for this SharedMemorySegment.<a name="line.427"></a>
+<span class="sourceLineNo">428</span>   */<a name="line.428"></a>
+<span class="sourceLineNo">429</span>  private final ShmId shmId;<a name="line.429"></a>
+<span class="sourceLineNo">430</span><a name="line.430"></a>
+<span class="sourceLineNo">431</span>  /**<a name="line.431"></a>
+<span class="sourceLineNo">432</span>   * The base address of the memory-mapped file.<a name="line.432"></a>
+<span class="sourceLineNo">433</span>   */<a name="line.433"></a>
+<span class="sourceLineNo">434</span>  private final long baseAddress;<a name="line.434"></a>
+<span class="sourceLineNo">435</span><a name="line.435"></a>
+<span class="sourceLineNo">436</span>  /**<a name="line.436"></a>
+<span class="sourceLineNo">437</span>   * The mmapped length of the shared memory segment<a name="line.437"></a>
+<span class="sourceLineNo">438</span>   */<a name="line.438"></a>
+<span class="sourceLineNo">439</span>  private final int mmappedLength;<a name="line.439"></a>
+<span class="sourceLineNo">440</span><a name="line.440"></a>
+<span class="sourceLineNo">441</span>  /**<a name="line.441"></a>
+<span class="sourceLineNo">442</span>   * The slots associated with this shared memory segment.<a name="line.442"></a>
+<span class="sourceLineNo">443</span>   * slot[i] contains the slot at offset i * BYTES_PER_SLOT,<a name="line.443"></a>
+<span class="sourceLineNo">444</span>   * or null if that slot is not allocated.<a name="line.444"></a>
+<span class="sourceLineNo">445</span>   */<a name="line.445"></a>
+<span class="sourceLineNo">446</span>  private final Slot slots[];<a name="line.446"></a>
+<span class="sourceLineNo">447</span><a name="line.447"></a>
+<span class="sourceLineNo">448</span>  /**<a name="line.448"></a>
+<span class="sourceLineNo">449</span>   * A bitset where each bit represents a slot which is in use.<a name="line.449"></a>
+<span class="sourceLineNo">450</span>   */<a name="line.450"></a>
+<span class="sourceLineNo">451</span>  private final BitSet allocatedSlots;<a name="line.451"></a>
+<span class="sourceLineNo">452</span><a name="line.452"></a>
+<span class="sourceLineNo">453</span>  /**<a name="line.453"></a>
+<span class="sourceLineNo">454</span>   * Create the ShortCircuitShm.<a name="line.454"></a>
+<span class="sourceLineNo">455</span>   *<a name="line.455"></a>
+<span class="sourceLineNo">456</span>   * @param shmId       The ID to use.<a name="line.456"></a>
+<span class="sourceLineNo">457</span>   * @param stream      The stream that we're going to use to create this<a name="line.457"></a>
+<span class="sourceLineNo">458</span>   *                    shared memory segment.<a name="line.458"></a>
+<span class="sourceLineNo">459</span>   *<a name="line.459"></a>
+<span class="sourceLineNo">460</span>   *                    Although this is a FileInputStream, we are going to<a name="line.460"></a>
+<span class="sourceLineNo">461</span>   *                    assume that the underlying file descriptor is writable<a name="line.461"></a>
+<span class="sourceLineNo">462</span>   *                    as well as readable. It would be more appropriate to use<a name="line.462"></a>
+<span class="sourceLineNo">463</span>   *                    a RandomAccessFile here, but that class does not have<a name="line.463"></a>
+<span class="sourceLineNo">464</span>   *                    any public accessor which returns a FileDescriptor,<a name="line.464"></a>
+<span class="sourceLineNo">465</span>   *                    unlike FileInputStream.<a name="line.465"></a>
+<span class="sourceLineNo">466</span>   */<a name="line.466"></a>
+<span class="sourceLineNo">467</span>  public ShortCircuitShm(ShmId shmId, FileInputStream stream)<a name="line.467"></a>
+<span class="sourceLineNo">468</span>        throws IOException {<a name="line.468"></a>
+<span class="sourceLineNo">469</span>    if (!NativeIO.isAvailable()) {<a name="line.469"></a>
+<span class="sourceLineNo">470</span>      throw new UnsupportedOperationException("NativeIO is not available.");<a name="line.470"></a>
+<span class="sourceLineNo">471</span>    }<a name="line.471"></a>
+<span class="sourceLineNo">472</span>    if (Shell.WINDOWS) {<a name="line.472"></a>
+<span class="sourceLineNo">473</span>      throw new UnsupportedOperationException(<a name="line.473"></a>
+<span class="sourceLineNo">474</span>          "DfsClientShm is not yet implemented for Windows.");<a name="line.474"></a>
+<span class="sourceLineNo">475</span>    }<a name="line.475"></a>
+<span class="sourceLineNo">476</span>    if (unsafe == null) {<a name="line.476"></a>
+<span class="sourceLineNo">477</span>      throw new UnsupportedOperationException(<a name="line.477"></a>
+<span class="sourceLineNo">478</span>          "can't use DfsClientShm because we failed to " +<a name="line.478"></a>
+<span class="sourceLineNo">479</span>          "load misc.Unsafe.");<a name="line.479"></a>
+<span class="sourceLineNo">480</span>    }<a name="line.480"></a>
+<span class="sourceLineNo">481</span>    this.shmId = shmId;<a name="line.481"></a>
+<span class="sourceLineNo">482</span>    this.mmappedLength = getUsableLength(stream);<a name="line.482"></a>
+<span class="sourceLineNo">483</span>    this.baseAddress = POSIX.mmap(stream.getFD(),<a name="line.483"></a>
+<span class="sourceLineNo">484</span>        POSIX.MMAP_PROT_READ | POSIX.MMAP_PROT_WRITE, true, mmappedLength);<a name="line.484"></a>
+<span class="sourceLineNo">485</span>    this.slots = new Slot[mmappedLength / BYTES_PER_SLOT];<a name="line.485"></a>
+<span class="sourceLineNo">486</span>    this.allocatedSlots = new BitSet(slots.length);<a name="line.486"></a>
+<span class="sourceLineNo">487</span>    LOG.trace("creating {}(shmId={}, mmappedLength={}, baseAddress={}, "<a name="line.487"></a>
+<span class="sourceLineNo">488</span>        + "slots.length={})", this.getClass().getSimpleName(), shmId,<a name="line.488"></a>
+<span class="sourceLineNo">489</span>        mmappedLength, String.format("%x", baseAddress), slots.length);<a name="line.489"></a>
+<span class="sourceLineNo">490</span>  }<a name="line.490"></a>
+<span class="sourceLineNo">491</span><a name="line.491"></a>
+<span class="sourceLineNo">492</span>  public final ShmId getShmId() {<a name="line.492"></a>
+<span class="sourceLineNo">493</span>    return shmId;<a name="line.493"></a>
+<span class="sourceLineNo">494</span>  }<a name="line.494"></a>
+<span class="sourceLineNo">495</span><a name="line.495"></a>
+<span class="sourceLineNo">496</span>  /**<a name="line.496"></a>
+<span class="sourceLineNo">497</span>   * Determine if this shared memory object is empty.<a name="line.497"></a>
+<span class="sourceLineNo">498</span>   *<a name="line.498"></a>
+<span class="sourceLineNo">499</span>   * @return    True if the shared memory object is empty.<a name="line.499"></a>
+<span class="sourceLineNo">500</span>   */<a name="line.500"></a>
+<span class="sourceLineNo">501</span>  synchronized final public boolean isEmpty() {<a name="line.501"></a>
+<span class="sourceLineNo">502</span>    return allocatedSlots.nextSetBit(0) == -1;<a name="line.502"></a>
+<span class="sourceLineNo">503</span>  }<a name="line.503"></a>
+<span class="sourceLineNo">504</span><a name="line.504"></a>
+<span class="sourceLineNo">505</span>  /**<a name="line.505"></a>
+<span class="sourceLineNo">506</span>   * Determine if this shared memory object is full.<a name="line.506"></a>
+<span class="sourceLineNo">507</span>   *<a name="line.507"></a>
+<span class="sourceLineNo">508</span>   * @return    True if the shared memory object is full.<a name="line.508"></a>
+<span class="sourceLineNo">509</span>   */<a name="line.509"></a>
+<span class="sourceLineNo">510</span>  synchronized final public boolean isFull() {<a name="line.510"></a>
+<span class="sourceLineNo">511</span>    return allocatedSlots.nextClearBit(0) &gt;= slots.length;<a name="line.511"></a>
+<span class="sourceLineNo">512</span>  }<a name="line.512"></a>
+<span class="sourceLineNo">513</span><a name="line.513"></a>
+<span class="sourceLineNo">514</span>  /**<a name="line.514"></a>
+<span class="sourceLineNo">515</span>   * Calculate the base address of a slot.<a name="line.515"></a>
+<span class="sourceLineNo">516</span>   *<a name="line.516"></a>
+<span class="sourceLineNo">517</span>   * @param slotIdx   Index of the slot.<a name="line.517"></a>
+<span class="sourceLineNo">518</span>   * @return          The base address of the slot.<a name="line.518"></a>
+<span class="sourceLineNo">519</span>   */<a name="line.519"></a>
+<span class="sourceLineNo">520</span>  private long calculateSlotAddress(int slotIdx) {<a name="line.520"></a>
+<span class="sourceLineNo">521</span>    long offset = slotIdx;<a name="line.521"></a>
+<span class="sourceLineNo">522</span>    offset *= BYTES_PER_SLOT;<a name="line.522"></a>
+<span class="sourceLineNo">523</span>    return this.baseAddress + offset;<a name="line.523"></a>
+<span class="sourceLineNo">524</span>  }<a name="line.524"></a>
+<span class="sourceLineNo">525</span><a name="line.525"></a>
+<span class="sourceLineNo">526</span>  /**<a name="line.526"></a>
+<span class="sourceLineNo">527</span>   * Allocate a new slot and register it.<a name="line.527"></a>
+<span class="sourceLineNo">528</span>   *<a name="line.528"></a>
+<span class="sourceLineNo">529</span>   * This function chooses an empty slot, initializes it, and then returns<a name="line.529"></a>
+<span class="sourceLineNo">530</span>   * the relevant Slot object.<a name="line.530"></a>
+<span class="sourceLineNo">531</span>   *<a name="line.531"></a>
+<span class="sourceLineNo">532</span>   * @return    The new slot.<a name="line.532"></a>
+<span class="sourceLineNo">533</span>   */<a name="line.533"></a>
+<span class="sourceLineNo">534</span>  synchronized public final Slot allocAndRegisterSlot(<a name="line.534"></a>
+<span class="sourceLineNo">535</span>      ExtendedBlockId blockId) {<a name="line.535"></a>
+<span class="sourceLineNo">536</span>    int idx = allocatedSlots.nextClearBit(0);<a name="line.536"></a>
+<span class="sourceLineNo">537</span>    if (idx &gt;= slots.length) {<a name="line.537"></a>
+<span class="sourceLineNo">538</span>      throw new RuntimeException(this + ": no more slots are available.");<a name="line.538"></a>
+<span class="sourceLineNo">539</span>    }<a name="line.539"></a>
+<span class="sourceLineNo">540</span>    allocatedSlots.set(idx, true);<a name="line.540"></a>
+<span class="sourceLineNo">541</span>    Slot slot = new Slot(calculateSlotAddress(idx), blockId);<a name="line.541"></a>
+<span class="sourceLineNo">542</span>    slot.clear();<a name="line.542"></a>
+<span class="sourceLineNo">543</span>    slot.makeValid();<a name="line.543"></a>
+<span class="sourceLineNo">544</span>    slots[idx] = slot;<a name="line.544"></a>
+<span class="sourceLineNo">545</span>    if (LOG.isTraceEnabled()) {<a name="line.545"></a>
+<span class="sourceLineNo">546</span>      LOG.trace(this + ": allocAndRegisterSlot " + idx + ": allocatedSlots=" + allocatedSlots +<a name="line.546"></a>
+<span class="sourceLineNo">547</span>                  StringUtils.getStackTrace(Thread.currentThread()));<a name="line.547"></a>
+<span class="sourceLineNo">548</span>    }<a name="line.548"></a>
+<span class="sourceLineNo">549</span>    return slot;<a name="line.549"></a>
+<span class="sourceLineNo">550</span>  }<a name="line.550"></a>
+<span class="sourceLineNo">551</span><a name="line.551"></a>
+<span class="sourceLineNo">552</span>  synchronized public final Slot getSlot(int slotIdx)<a name="line.552"></a>
+<span class="sourceLineNo">553</span>      throws InvalidRequestException {<a name="line.553"></a>
+<span class="sourceLineNo">554</span>    if (!allocatedSlots.get(slotIdx)) {<a name="line.554"></a>
+<span class="sourceLineNo">555</span>      throw new InvalidRequestException(this + ": slot " + slotIdx +<a name="line.555"></a>
+<span class="sourceLineNo">556</span>          " does not exist.");<a name="line.556"></a>
+<span class="sourceLineNo">557</span>    }<a name="line.557"></a>
+<span class="sourceLineNo">558</span>    return slots[slotIdx];<a name="line.558"></a>
+<span class="sourceLineNo">559</span>  }<a name="line.559"></a>
+<span class="sourceLineNo">560</span><a name="line.560"></a>
+<span class="sourceLineNo">561</span>  /**<a name="line.561"></a>
+<span class="sourceLineNo">562</span>   * Register a slot.<a name="line.562"></a>
+<span class="sourceLineNo">563</span>   *<a name="line.563"></a>
+<span class="sourceLineNo">564</span>   * This function looks at a slot which has already been initialized (by<a name="line.564"></a>
+<span class="sourceLineNo">565</span>   * another process), and registers it with us.  Then, it returns the<a name="line.565"></a>
+<span class="sourceLineNo">566</span>   * relevant Slot object.<a name="line.566"></a>
+<span class="sourceLineNo">567</span>   *<a name="line.567"></a>
+<span class="sourceLineNo">568</span>   * @return    The slot.<a name="line.568"></a>
+<span class="sourceLineNo">569</span>   *<a name="line.569"></a>
+<span class="sourceLineNo">570</span>   * @throws InvalidRequestException<a name="line.570"></a>
+<span class="sourceLineNo">571</span>   *            If the slot index we're trying to allocate has not been<a name="line.571"></a>
+<span class="sourceLineNo">572</span>   *            initialized, or is already in use.<a name="line.572"></a>
+<span class="sourceLineNo">573</span>   */<a name="line.573"></a>
+<span class="sourceLineNo">574</span>  synchronized public final Slot registerSlot(int slotIdx,<a name="line.574"></a>
+<span class="sourceLineNo">575</span>      ExtendedBlockId blockId) throws InvalidRequestException {<a name="line.575"></a>
+<span class="sourceLineNo">576</span>    if (slotIdx &lt; 0) {<a name="line.576"></a>
+<span class="sourceLineNo">577</span>      throw new InvalidRequestException(this + ": invalid negative slot " +<a name="line.577"></a>
+<span class="sourceLineNo">578</span>          "index " + slotIdx);<a name="line.578"></a>
+<span class="sourceLineNo">579</span>    }<a name="line.579"></a>
+<span class="sourceLineNo">580</span>    if (slotIdx &gt;= slots.length) {<a name="line.580"></a>
+<span class="sourceLineNo">581</span>      throw new InvalidRequestException(this + ": invalid slot " +<a name="line.581"></a>
+<span class="sourceLineNo">582</span>          "index " + slotIdx);<a name="line.582"></a>
+<span class="sourceLineNo">583</span>    }<a name="line.583"></a>
+<span class="sourceLineNo">584</span>    if (allocatedSlots.get(slotIdx)) {<a name="line.584"></a>
+<span class="sourceLineNo">585</span>      throw new InvalidRequestException(this + ": slot " + slotIdx +<a name="line.585"></a>
+<span class="sourceLineNo">586</span>          " is already in use.");<a name="line.586"></a>
+<span class="sourceLineNo">587</span>    }<a name="line.587"></a>
+<span class="sourceLineNo">588</span>    Slot slot = new Slot(calculateSlotAddress(slotIdx), blockId);<a name="line.588"></a>
+<span class="sourceLineNo">589</span>    if (!slot.isValid()) {<a name="line.589"></a>
+<span class="sourceLineNo">590</span>      throw new InvalidRequestException(this + ": slot " + slotIdx +<a name="line.590"></a>
+<span class="sourceLineNo">591</span>          " is not marked as valid.");<a name="line.591"></a>
+<span class="sourceLineNo">592</span>    }<a name="line.592"></a>
+<span class="sourceLineNo">593</span>    slots[slotIdx] = slot;<a name="line.593"></a>
+<span class="sourceLineNo">594</span>    allocatedSlots.set(slotIdx, true);<a name="line.594"></a>
+<span class="sourceLineNo">595</span>    if (LOG.isTraceEnabled()) {<a name="line.595"></a>
+<span class="sourceLineNo">596</span>      LOG.trace(this + ": registerSlot " + slotIdx + ": allocatedSlots=" + allocatedSlots +<a name="line.596"></a>
+<span class="sourceLineNo">597</span>                  StringUtils.getStackTrace(Thread.currentThread()));<a name="line.597"></a>
+<span class="sourceLineNo">598</span>    }<a name="line.598"></a>
+<span class="sourceLineNo">599</span>    return slot;<a name="line.599"></a>
+<span class="sourceLineNo">600</span>  }<a name="line.600"></a>
+<span class="sourceLineNo">601</span><a name="line.601"></a>
+<span class="sourceLineNo">602</span>  /**<a name="line.602"></a>
+<span class="sourceLineNo">603</span>   * Unregisters a slot.<a name="line.603"></a>
+<span class="sourceLineNo">604</span>   *<a name="line.604"></a>
+<span class="sourceLineNo">605</span>   * This doesn't alter the contents of the slot.  It just means<a name="line.605"></a>
+<span class="sourceLineNo">606</span>   *<a name="line.606"></a>
+<span class="sourceLineNo">607</span>   * @param slotIdx  Index of the slot to unregister.<a name="line.607"></a>
+<span class="sourceLineNo">608</span>   */<a name="line.608"></a>
+<span class="sourceLineNo">609</span>  synchronized public final void unregisterSlot(int slotIdx) {<a name="line.609"></a>
+<span class="sourceLineNo">610</span>    Preconditions.checkState(allocatedSlots.get(slotIdx),<a name="line.610"></a>
+<span class="sourceLineNo">611</span>        "tried to unregister slot " + slotIdx + ", which was not registered.");<a name="line.611"></a>
+<span class="sourceLineNo">612</span>    allocatedSlots.set(slotIdx, false);<a name="line.612"></a>
+<span class="sourceLineNo">613</span>    slots[slotIdx] = null;<a name="line.613"></a>
+<span class="sourceLineNo">614</span>    LOG.trace("{}: unregisterSlot {}", this, slotIdx);<a name="line.614"></a>
+<span class="sourceLineNo">615</span>  }<a name="line.615"></a>
+<span class="sourceLineNo">616</span><a name="line.616"></a>
+<span class="sourceLineNo">617</span>  /**<a name="line.617"></a>
+<span class="sourceLineNo">618</span>   * Iterate over all allocated slots.<a name="line.618"></a>
+<span class="sourceLineNo">619</span>   *<a name="line.619"></a>
+<span class="sourceLineNo">620</span>   * Note that this method isn't safe if<a name="line.620"></a>
+<span class="sourceLineNo">621</span>   *<a name="line.621"></a>
+<span class="sourceLineNo">622</span>   * @return        The slot iterator.<a name="line.622"></a>
+<span class="sourceLineNo">623</span>   */<a name="line.623"></a>
+<span class="sourceLineNo">624</span>  public SlotIterator slotIterator() {<a name="line.624"></a>
+<span class="sourceLineNo">625</span>    return new SlotIterator();<a name="line.625"></a>
+<span class="sourceLineNo">626</span>  }<a name="line.626"></a>
+<span class="sourceLineNo">627</span><a name="line.627"></a>
+<span class="sourceLineNo">628</span>  public void free() {<a name="line.628"></a>
+<span class="sourceLineNo">629</span>    try {<a name="line.629"></a>
+<span class="sourceLineNo">630</span>      POSIX.munmap(baseAddress, mmappedLength);<a name="line.630"></a>
+<span class="sourceLineNo">631</span>    } catch (IOException e) {<a name="line.631"></a>
+<span class="sourceLineNo">632</span>      LOG.warn(this + ": failed to munmap", e);<a name="line.632"></a>
+<span class="sourceLineNo">633</span>    }<a name="line.633"></a>
+<span class="sourceLineNo">634</span>    LOG.trace(this + ": freed");<a name="line.634"></a>
+<span class="sourceLineNo">635</span>  }<a name="line.635"></a>
+<span class="sourceLineNo">636</span><a name="line.636"></a>
+<span class="sourceLineNo">637</span>  @Override<a name="line.637"></a>
+<span class="sourceLineNo">638</span>  public String toString() {<a name="line.638"></a>
+<span class="sourceLineNo">639</span>    return this.getClass().getSimpleName() + "(" + shmId + ")";<a name="line.639"></a>
+<span class="sourceLineNo">640</span>  }<a name="line.640"></a>
+<span class="sourceLineNo">641</span>}<a name="line.641"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

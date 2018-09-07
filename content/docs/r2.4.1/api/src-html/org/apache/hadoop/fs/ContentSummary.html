@@ -1,0 +1,236 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    package org.apache.hadoop.fs;<a name="line.18"></a>
+<FONT color="green">019</FONT>    <a name="line.19"></a>
+<FONT color="green">020</FONT>    import java.io.DataInput;<a name="line.20"></a>
+<FONT color="green">021</FONT>    import java.io.DataOutput;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import java.io.IOException;<a name="line.22"></a>
+<FONT color="green">023</FONT>    <a name="line.23"></a>
+<FONT color="green">024</FONT>    import org.apache.hadoop.classification.InterfaceAudience;<a name="line.24"></a>
+<FONT color="green">025</FONT>    import org.apache.hadoop.classification.InterfaceStability;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import org.apache.hadoop.io.Writable;<a name="line.26"></a>
+<FONT color="green">027</FONT>    <a name="line.27"></a>
+<FONT color="green">028</FONT>    /** Store the summary of a content (a directory or a file). */<a name="line.28"></a>
+<FONT color="green">029</FONT>    @InterfaceAudience.Public<a name="line.29"></a>
+<FONT color="green">030</FONT>    @InterfaceStability.Evolving<a name="line.30"></a>
+<FONT color="green">031</FONT>    public class ContentSummary implements Writable{<a name="line.31"></a>
+<FONT color="green">032</FONT>      private long length;<a name="line.32"></a>
+<FONT color="green">033</FONT>      private long fileCount;<a name="line.33"></a>
+<FONT color="green">034</FONT>      private long directoryCount;<a name="line.34"></a>
+<FONT color="green">035</FONT>      private long quota;<a name="line.35"></a>
+<FONT color="green">036</FONT>      private long spaceConsumed;<a name="line.36"></a>
+<FONT color="green">037</FONT>      private long spaceQuota;<a name="line.37"></a>
+<FONT color="green">038</FONT>      <a name="line.38"></a>
+<FONT color="green">039</FONT>    <a name="line.39"></a>
+<FONT color="green">040</FONT>      /** Constructor */<a name="line.40"></a>
+<FONT color="green">041</FONT>      public ContentSummary() {}<a name="line.41"></a>
+<FONT color="green">042</FONT>      <a name="line.42"></a>
+<FONT color="green">043</FONT>      /** Constructor */<a name="line.43"></a>
+<FONT color="green">044</FONT>      public ContentSummary(long length, long fileCount, long directoryCount) {<a name="line.44"></a>
+<FONT color="green">045</FONT>        this(length, fileCount, directoryCount, -1L, length, -1L);<a name="line.45"></a>
+<FONT color="green">046</FONT>      }<a name="line.46"></a>
+<FONT color="green">047</FONT>    <a name="line.47"></a>
+<FONT color="green">048</FONT>      /** Constructor */<a name="line.48"></a>
+<FONT color="green">049</FONT>      public ContentSummary(<a name="line.49"></a>
+<FONT color="green">050</FONT>          long length, long fileCount, long directoryCount, long quota,<a name="line.50"></a>
+<FONT color="green">051</FONT>          long spaceConsumed, long spaceQuota) {<a name="line.51"></a>
+<FONT color="green">052</FONT>        this.length = length;<a name="line.52"></a>
+<FONT color="green">053</FONT>        this.fileCount = fileCount;<a name="line.53"></a>
+<FONT color="green">054</FONT>        this.directoryCount = directoryCount;<a name="line.54"></a>
+<FONT color="green">055</FONT>        this.quota = quota;<a name="line.55"></a>
+<FONT color="green">056</FONT>        this.spaceConsumed = spaceConsumed;<a name="line.56"></a>
+<FONT color="green">057</FONT>        this.spaceQuota = spaceQuota;<a name="line.57"></a>
+<FONT color="green">058</FONT>      }<a name="line.58"></a>
+<FONT color="green">059</FONT>    <a name="line.59"></a>
+<FONT color="green">060</FONT>      /** @return the length */<a name="line.60"></a>
+<FONT color="green">061</FONT>      public long getLength() {return length;}<a name="line.61"></a>
+<FONT color="green">062</FONT>    <a name="line.62"></a>
+<FONT color="green">063</FONT>      /** @return the directory count */<a name="line.63"></a>
+<FONT color="green">064</FONT>      public long getDirectoryCount() {return directoryCount;}<a name="line.64"></a>
+<FONT color="green">065</FONT>    <a name="line.65"></a>
+<FONT color="green">066</FONT>      /** @return the file count */<a name="line.66"></a>
+<FONT color="green">067</FONT>      public long getFileCount() {return fileCount;}<a name="line.67"></a>
+<FONT color="green">068</FONT>      <a name="line.68"></a>
+<FONT color="green">069</FONT>      /** Return the directory quota */<a name="line.69"></a>
+<FONT color="green">070</FONT>      public long getQuota() {return quota;}<a name="line.70"></a>
+<FONT color="green">071</FONT>      <a name="line.71"></a>
+<FONT color="green">072</FONT>      /** Retuns (disk) space consumed */ <a name="line.72"></a>
+<FONT color="green">073</FONT>      public long getSpaceConsumed() {return spaceConsumed;}<a name="line.73"></a>
+<FONT color="green">074</FONT>    <a name="line.74"></a>
+<FONT color="green">075</FONT>      /** Returns (disk) space quota */<a name="line.75"></a>
+<FONT color="green">076</FONT>      public long getSpaceQuota() {return spaceQuota;}<a name="line.76"></a>
+<FONT color="green">077</FONT>      <a name="line.77"></a>
+<FONT color="green">078</FONT>      @Override<a name="line.78"></a>
+<FONT color="green">079</FONT>      @InterfaceAudience.Private<a name="line.79"></a>
+<FONT color="green">080</FONT>      public void write(DataOutput out) throws IOException {<a name="line.80"></a>
+<FONT color="green">081</FONT>        out.writeLong(length);<a name="line.81"></a>
+<FONT color="green">082</FONT>        out.writeLong(fileCount);<a name="line.82"></a>
+<FONT color="green">083</FONT>        out.writeLong(directoryCount);<a name="line.83"></a>
+<FONT color="green">084</FONT>        out.writeLong(quota);<a name="line.84"></a>
+<FONT color="green">085</FONT>        out.writeLong(spaceConsumed);<a name="line.85"></a>
+<FONT color="green">086</FONT>        out.writeLong(spaceQuota);<a name="line.86"></a>
+<FONT color="green">087</FONT>      }<a name="line.87"></a>
+<FONT color="green">088</FONT>    <a name="line.88"></a>
+<FONT color="green">089</FONT>      @Override<a name="line.89"></a>
+<FONT color="green">090</FONT>      @InterfaceAudience.Private<a name="line.90"></a>
+<FONT color="green">091</FONT>      public void readFields(DataInput in) throws IOException {<a name="line.91"></a>
+<FONT color="green">092</FONT>        this.length = in.readLong();<a name="line.92"></a>
+<FONT color="green">093</FONT>        this.fileCount = in.readLong();<a name="line.93"></a>
+<FONT color="green">094</FONT>        this.directoryCount = in.readLong();<a name="line.94"></a>
+<FONT color="green">095</FONT>        this.quota = in.readLong();<a name="line.95"></a>
+<FONT color="green">096</FONT>        this.spaceConsumed = in.readLong();<a name="line.96"></a>
+<FONT color="green">097</FONT>        this.spaceQuota = in.readLong();<a name="line.97"></a>
+<FONT color="green">098</FONT>      }<a name="line.98"></a>
+<FONT color="green">099</FONT>      <a name="line.99"></a>
+<FONT color="green">100</FONT>      /** <a name="line.100"></a>
+<FONT color="green">101</FONT>       * Output format:<a name="line.101"></a>
+<FONT color="green">102</FONT>       * &lt;----12----&gt; &lt;----12----&gt; &lt;-------18-------&gt;<a name="line.102"></a>
+<FONT color="green">103</FONT>       *    DIR_COUNT   FILE_COUNT       CONTENT_SIZE FILE_NAME    <a name="line.103"></a>
+<FONT color="green">104</FONT>       */<a name="line.104"></a>
+<FONT color="green">105</FONT>      private static final String STRING_FORMAT = "%12d %12d %18d ";<a name="line.105"></a>
+<FONT color="green">106</FONT>      /** <a name="line.106"></a>
+<FONT color="green">107</FONT>       * Output format:<a name="line.107"></a>
+<FONT color="green">108</FONT>       * &lt;----12----&gt; &lt;----15----&gt; &lt;----15----&gt; &lt;----15----&gt; &lt;----12----&gt; &lt;----12----&gt; &lt;-------18-------&gt;<a name="line.108"></a>
+<FONT color="green">109</FONT>       *    QUOTA   REMAINING_QUATA SPACE_QUOTA SPACE_QUOTA_REM DIR_COUNT   FILE_COUNT   CONTENT_SIZE     FILE_NAME    <a name="line.109"></a>
+<FONT color="green">110</FONT>       */<a name="line.110"></a>
+<FONT color="green">111</FONT>      private static final String QUOTA_STRING_FORMAT = "%12s %15s ";<a name="line.111"></a>
+<FONT color="green">112</FONT>      private static final String SPACE_QUOTA_STRING_FORMAT = "%15s %15s ";<a name="line.112"></a>
+<FONT color="green">113</FONT>      <a name="line.113"></a>
+<FONT color="green">114</FONT>      /** The header string */<a name="line.114"></a>
+<FONT color="green">115</FONT>      private static final String HEADER = String.format(<a name="line.115"></a>
+<FONT color="green">116</FONT>          STRING_FORMAT.replace('d', 's'), "directories", "files", "bytes");<a name="line.116"></a>
+<FONT color="green">117</FONT>    <a name="line.117"></a>
+<FONT color="green">118</FONT>      private static final String QUOTA_HEADER = String.format(<a name="line.118"></a>
+<FONT color="green">119</FONT>          QUOTA_STRING_FORMAT + SPACE_QUOTA_STRING_FORMAT, <a name="line.119"></a>
+<FONT color="green">120</FONT>          "quota", "remaining quota", "space quota", "reamaining quota") +<a name="line.120"></a>
+<FONT color="green">121</FONT>          HEADER;<a name="line.121"></a>
+<FONT color="green">122</FONT>      <a name="line.122"></a>
+<FONT color="green">123</FONT>      /** Return the header of the output.<a name="line.123"></a>
+<FONT color="green">124</FONT>       * if qOption is false, output directory count, file count, and content size;<a name="line.124"></a>
+<FONT color="green">125</FONT>       * if qOption is true, output quota and remaining quota as well.<a name="line.125"></a>
+<FONT color="green">126</FONT>       * <a name="line.126"></a>
+<FONT color="green">127</FONT>       * @param qOption a flag indicating if quota needs to be printed or not<a name="line.127"></a>
+<FONT color="green">128</FONT>       * @return the header of the output<a name="line.128"></a>
+<FONT color="green">129</FONT>       */<a name="line.129"></a>
+<FONT color="green">130</FONT>      public static String getHeader(boolean qOption) {<a name="line.130"></a>
+<FONT color="green">131</FONT>        return qOption ? QUOTA_HEADER : HEADER;<a name="line.131"></a>
+<FONT color="green">132</FONT>      }<a name="line.132"></a>
+<FONT color="green">133</FONT>      <a name="line.133"></a>
+<FONT color="green">134</FONT>      @Override<a name="line.134"></a>
+<FONT color="green">135</FONT>      public String toString() {<a name="line.135"></a>
+<FONT color="green">136</FONT>        return toString(true);<a name="line.136"></a>
+<FONT color="green">137</FONT>      }<a name="line.137"></a>
+<FONT color="green">138</FONT>    <a name="line.138"></a>
+<FONT color="green">139</FONT>      /** Return the string representation of the object in the output format.<a name="line.139"></a>
+<FONT color="green">140</FONT>       * if qOption is false, output directory count, file count, and content size;<a name="line.140"></a>
+<FONT color="green">141</FONT>       * if qOption is true, output quota and remaining quota as well.<a name="line.141"></a>
+<FONT color="green">142</FONT>       * <a name="line.142"></a>
+<FONT color="green">143</FONT>       * @param qOption a flag indicating if quota needs to be printed or not<a name="line.143"></a>
+<FONT color="green">144</FONT>       * @return the string representation of the object<a name="line.144"></a>
+<FONT color="green">145</FONT>       */<a name="line.145"></a>
+<FONT color="green">146</FONT>      public String toString(boolean qOption) {<a name="line.146"></a>
+<FONT color="green">147</FONT>        String prefix = "";<a name="line.147"></a>
+<FONT color="green">148</FONT>        if (qOption) {<a name="line.148"></a>
+<FONT color="green">149</FONT>          String quotaStr = "none";<a name="line.149"></a>
+<FONT color="green">150</FONT>          String quotaRem = "inf";<a name="line.150"></a>
+<FONT color="green">151</FONT>          String spaceQuotaStr = "none";<a name="line.151"></a>
+<FONT color="green">152</FONT>          String spaceQuotaRem = "inf";<a name="line.152"></a>
+<FONT color="green">153</FONT>          <a name="line.153"></a>
+<FONT color="green">154</FONT>          if (quota&gt;0) {<a name="line.154"></a>
+<FONT color="green">155</FONT>            quotaStr = Long.toString(quota);<a name="line.155"></a>
+<FONT color="green">156</FONT>            quotaRem = Long.toString(quota-(directoryCount+fileCount));<a name="line.156"></a>
+<FONT color="green">157</FONT>          }<a name="line.157"></a>
+<FONT color="green">158</FONT>          if (spaceQuota&gt;0) {<a name="line.158"></a>
+<FONT color="green">159</FONT>            spaceQuotaStr = Long.toString(spaceQuota);<a name="line.159"></a>
+<FONT color="green">160</FONT>            spaceQuotaRem = Long.toString(spaceQuota - spaceConsumed);        <a name="line.160"></a>
+<FONT color="green">161</FONT>          }<a name="line.161"></a>
+<FONT color="green">162</FONT>          <a name="line.162"></a>
+<FONT color="green">163</FONT>          prefix = String.format(QUOTA_STRING_FORMAT + SPACE_QUOTA_STRING_FORMAT, <a name="line.163"></a>
+<FONT color="green">164</FONT>                                 quotaStr, quotaRem, spaceQuotaStr, spaceQuotaRem);<a name="line.164"></a>
+<FONT color="green">165</FONT>        }<a name="line.165"></a>
+<FONT color="green">166</FONT>        <a name="line.166"></a>
+<FONT color="green">167</FONT>        return prefix + String.format(STRING_FORMAT, directoryCount, <a name="line.167"></a>
+<FONT color="green">168</FONT>                                      fileCount, length);<a name="line.168"></a>
+<FONT color="green">169</FONT>      }<a name="line.169"></a>
+<FONT color="green">170</FONT>    }<a name="line.170"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

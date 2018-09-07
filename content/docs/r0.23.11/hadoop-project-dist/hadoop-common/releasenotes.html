@@ -1,0 +1,218 @@
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hadoop  0.23.11 Release Notes</title>
+<STYLE type="text/css">
+	H1 {font-family: sans-serif}
+	H2 {font-family: sans-serif; margin-left: 7mm}
+	TABLE {margin-left: 7mm}
+</STYLE>
+</head>
+<body>
+<h1>Hadoop  0.23.11 Release Notes</h1>
+These release notes include new developer and user-facing incompatibilities, features, and major improvements. 
+<a name="changes"/>
+<h2>Changes since Hadoop 0.23.10</h2>
+<ul>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-1932">YARN-1932</a>.
+     Blocker bug reported by Mit Desai and fixed by Mit Desai <br>
+     <b>Javascript injection on the job status page</b><br>
+     <blockquote>Scripts can be injected into the job status page as the diagnostics field is
+not sanitized. Whatever string you set there will show up to the jobs page as it is ... ie. if you put any script commands, they will be executed in the browser of the user who is opening the page.
+
+We need escaping the diagnostic string in order to not run the scripts.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-1670">YARN-1670</a>.
+     Critical bug reported by Thomas Graves and fixed by Mit Desai <br>
+     <b>aggregated log writer can write more log data then it says is the log length</b><br>
+     <blockquote>We have seen exceptions when using 'yarn logs' to read log files. 
+at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+       at java.lang.Long.parseLong(Long.java:441)
+       at java.lang.Long.parseLong(Long.java:483)
+       at org.apache.hadoop.yarn.logaggregation.AggregatedLogFormat$LogReader.readAContainerLogsForALogType(AggregatedLogFormat.java:518)
+       at org.apache.hadoop.yarn.logaggregation.LogDumper.dumpAContainerLogs(LogDumper.java:178)
+       at org.apache.hadoop.yarn.logaggregation.LogDumper.run(LogDumper.java:130)
+       at org.apache.hadoop.yarn.logaggregation.LogDumper.main(LogDumper.java:246)
+
+
+We traced it down to the reader trying to read the file type of the next file but where it reads is still log data from the previous file.  What happened was the Log Length was written as a certain size but the log data was actually longer then that.  
+
+Inside of the write() routine in LogValue it first writes what the logfile length is, but then when it goes to write the log itself it just goes to the end of the file.  There is a race condition here where if someone is still writing to the file when it goes to be aggregated the length written could be to small.
+
+We should have the write() routine stop when it writes whatever it said was the length.  It would be nice if we could somehow tell the user it might be truncated but I'm not sure of a good way to do this.
+
+We also noticed that a bug in readAContainerLogsForALogType where it is using an int for curRead whereas it should be using a long. 
+
+      while (len != -1 &amp;&amp; curRead &lt; fileLength) {
+
+This isn't actually a problem right now as it looks like the underlying decoder is doing the right thing and the len condition exits.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-1592">YARN-1592</a>.
+     Major bug reported by Thomas Graves and fixed by Thomas Graves (capacityscheduler)<br>
+     <b>CapacityScheduler tries to reserve more than a node's total memory on branch-0.23</b><br>
+     <blockquote>see YARN-957 for description.  branch 0.23 has the same bug.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-1575">YARN-1575</a>.
+     Critical sub-task reported by Jason Lowe and fixed by Jason Lowe (nodemanager)<br>
+     <b>Public localizer crashes with "Localized unkown resource"</b><br>
+     <blockquote>The public localizer can crash with the error:
+
+{noformat}
+2014-01-08 14:11:43,212 [Thread-467] ERROR org.apache.hadoop.yarn.server.nodemanager.containermanager.localizer.ResourceLocalizationService: Localized unkonwn resource to java.util.concurrent.FutureTask@852e26
+2014-01-08 14:11:43,212 [Thread-467] INFO org.apache.hadoop.yarn.server.nodemanager.containermanager.localizer.ResourceLocalizationService: Public cache exiting
+{noformat}</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-1180">YARN-1180</a>.
+     Trivial bug reported by Thomas Graves and fixed by Chen He (capacityscheduler)<br>
+     <b>Update capacity scheduler docs to include types on the configs</b><br>
+     <blockquote>The capacity scheduler docs (http://hadoop.apache.org/docs/r2.1.0-beta/hadoop-yarn/hadoop-yarn-site/CapacityScheduler.html) don't include types for all the configs. For instance the minimum-user-limit-percent doesn't say its an Int.  It also the only setting for the Resource Allocation configs that is an Int rather then a float.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-1145">YARN-1145</a>.
+     Major bug reported by Rohith and fixed by Rohith <br>
+     <b>Potential file handle leak in aggregated logs web ui</b><br>
+     <blockquote>Any problem in getting aggregated logs for rendering on web ui, then LogReader is not closed. 
+
+Now, it reader is not closed which causing many connections in close_wait state.
+
+hadoopuser@hadoopuser:&gt; jps
+*27909* JobHistoryServer
+
+DataNode port is 50010. When greped with DataNode port, many connections are in CLOSE_WAIT from JHS.
+hadoopuser@hadoopuser:&gt; netstat -tanlp |grep 50010
+tcp        0      0 10.18.40.48:50010       0.0.0.0:*               LISTEN      21453/java          
+tcp        1      0 10.18.40.48:20596       10.18.40.48:50010       CLOSE_WAIT  *27909*/java          
+tcp        1      0 10.18.40.48:19667       10.18.40.152:50010      CLOSE_WAIT  *27909*/java          
+tcp        1      0 10.18.40.48:20593       10.18.40.48:50010       CLOSE_WAIT  *27909*/java          
+tcp        1      0 10.18.40.48:12290       10.18.40.48:50010       CLOSE_WAIT  *27909*/java          
+tcp        1      0 10.18.40.48:19662       10.18.40.152:50010      CLOSE_WAIT  *27909*/java          </blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-1053">YARN-1053</a>.
+     Blocker bug reported by Omkar Vinit Joshi and fixed by Omkar Vinit Joshi <br>
+     <b>Diagnostic message from ContainerExitEvent is ignored in ContainerImpl</b><br>
+     <blockquote>If the container launch fails then we send ContainerExitEvent. This event contains exitCode and diagnostic message. Today we are ignoring diagnostic message while handling this event inside ContainerImpl. Fixing it as it is useful in diagnosing the failure.</blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-853">YARN-853</a>.
+     Major bug reported by Devaraj K and fixed by Devaraj K (capacityscheduler)<br>
+     <b>maximum-am-resource-percent doesn't work after refreshQueues command</b><br>
+     <blockquote>If we update yarn.scheduler.capacity.maximum-am-resource-percent / yarn.scheduler.capacity.&lt;queue-path&gt;.maximum-am-resource-percent configuration and then do the refreshNodes, it uses the new config value to calculate Max Active Applications and Max Active Application Per User. If we add new node after issuing  'rmadmin -refreshQueues' command, it uses the old maximum-am-resource-percent config value to calculate Max Active Applications and Max Active Application Per User. </blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/YARN-500">YARN-500</a>.
+     Major bug reported by Nishan Shetty, Huawei and fixed by Kenji Kikushima (resourcemanager)<br>
+     <b>ResourceManager webapp is using next port if configured port is already in use</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5789">MAPREDUCE-5789</a>.
+     Major bug reported by Rushabh S Shah and fixed by Rushabh S Shah (jobhistoryserver , webapps)<br>
+     <b>Average Reduce time is incorrect on Job Overview page</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5778">MAPREDUCE-5778</a>.
+     Major bug reported by Jason Lowe and fixed by Akira AJISAKA (jobhistoryserver)<br>
+     <b>JobSummary does not escape newlines in the job name</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5757">MAPREDUCE-5757</a>.
+     Major bug reported by Jason Lowe and fixed by Jason Lowe (client)<br>
+     <b>ConcurrentModificationException in JobControl.toList</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5746">MAPREDUCE-5746</a>.
+     Major bug reported by Jason Lowe and fixed by Jason Lowe (jobhistoryserver)<br>
+     <b>Job diagnostics can implicate wrong task for a failed job</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5744">MAPREDUCE-5744</a>.
+     Blocker bug reported by Sangjin Lee and fixed by Gera Shegalov <br>
+     <b>Job hangs because RMContainerAllocator$AssignedRequests.preemptReduce() violates the comparator contract</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5689">MAPREDUCE-5689</a>.
+     Critical bug reported by Lohit Vijayarenu and fixed by Lohit Vijayarenu <br>
+     <b>MRAppMaster does not preempt reducers when scheduled maps cannot be fulfilled</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5623">MAPREDUCE-5623</a>.
+     Major bug reported by Tsuyoshi OZAWA and fixed by Jason Lowe <br>
+     <b>TestJobCleanup fails because of RejectedExecutionException and NPE.</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-5454">MAPREDUCE-5454</a>.
+     Major bug reported by Karthik Kambatla and fixed by Karthik Kambatla (test)<br>
+     <b>TestDFSIO fails intermittently on JDK7</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/MAPREDUCE-3191">MAPREDUCE-3191</a>.
+     Trivial bug reported by Todd Lipcon and fixed by Chen He <br>
+     <b>docs for map output compression incorrectly reference SequenceFile</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-6449">HDFS-6449</a>.
+     Critical bug reported by Kihwal Lee and fixed by Kihwal Lee <br>
+     <b>Incorrect counting in ContentSummaryComputationContext in 0.23.</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-6191">HDFS-6191</a>.
+     Major improvement reported by Kihwal Lee and fixed by Kihwal Lee (namenode)<br>
+     <b>Disable quota checks when replaying edit log.</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-6166">HDFS-6166</a>.
+     Blocker bug reported by Nathan Roberts and fixed by Nathan Roberts (balancer)<br>
+     <b>revisit balancer so_timeout </b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-5881">HDFS-5881</a>.
+     Critical bug reported by Kihwal Lee and fixed by Kihwal Lee <br>
+     <b>Fix skip() of the short-circuit local reader (legacy).</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-5806">HDFS-5806</a>.
+     Major bug reported by Nathan Roberts and fixed by Nathan Roberts (balancer)<br>
+     <b>balancer should set SoTimeout to avoid indefinite hangs</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-5728">HDFS-5728</a>.
+     Critical bug reported by Vinayakumar B and fixed by Vinayakumar B (datanode)<br>
+     <b>[Diskfull] Block recovery will fail if the metafile does not have crc for all chunks of the block</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-5637">HDFS-5637</a>.
+     Major improvement reported by Liang Xie and fixed by Liang Xie (hdfs-client , security)<br>
+     <b>try to refeatchToken while local read InvalidToken occurred</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4576">HDFS-4576</a>.
+     Major bug reported by Daryn Sharp and fixed by Daryn Sharp (webhdfs)<br>
+     <b>Webhdfs authentication issues</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-4461">HDFS-4461</a>.
+     Minor improvement reported by Colin Patrick McCabe and fixed by Colin Patrick McCabe <br>
+     <b>DirectoryScanner: volume path prefix takes up memory for every block that is scanned </b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10588">HADOOP-10588</a>.
+     Major bug reported by Kihwal Lee and fixed by Kihwal Lee <br>
+     <b>Workaround for jetty6 acceptor startup issue</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10454">HADOOP-10454</a>.
+     Major improvement reported by Kihwal Lee and fixed by Kihwal Lee <br>
+     <b>Provide FileContext version of har file system</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10332">HADOOP-10332</a>.
+     Major bug reported by Daryn Sharp and fixed by Jonathan Eagles <br>
+     <b>HttpServer's jetty audit log always logs 200 OK</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10164">HADOOP-10164</a>.
+     Major improvement reported by Robert Joseph Evans and fixed by Robert Joseph Evans <br>
+     <b>Allow UGI to login with a known Subject</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10148">HADOOP-10148</a>.
+     Minor sub-task reported by Chen He and fixed by Chen He (ipc)<br>
+     <b>backport hadoop-10107 to branch-0.23</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10146">HADOOP-10146</a>.
+     Critical bug reported by Daryn Sharp and fixed by Daryn Sharp (util)<br>
+     <b>Workaround JDK7 Process fd close bug</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10129">HADOOP-10129</a>.
+     Critical bug reported by Daryn Sharp and fixed by Daryn Sharp (tools/distcp)<br>
+     <b>Distcp may succeed when it fails</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10112">HADOOP-10112</a>.
+     Major bug reported by Brandon Li and fixed by Brandon Li (tools)<br>
+     <b>har file listing  doesn't work with wild card</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10110">HADOOP-10110</a>.
+     Blocker bug reported by Chuan Liu and fixed by Chuan Liu (build)<br>
+     <b>hadoop-auth has a build break due to missing dependency</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-10081">HADOOP-10081</a>.
+     Critical bug reported by Jason Lowe and fixed by Tsuyoshi OZAWA (ipc)<br>
+     <b>Client.setupIOStreams can leak socket resources on exception or error</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-9230">HADOOP-9230</a>.
+     Major bug reported by Karthik Kambatla and fixed by Karthik Kambatla (test)<br>
+     <b>TestUniformSizeInputFormat fails intermittently</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-8826">HADOOP-8826</a>.
+     Minor bug reported by Robert Joseph Evans and fixed by Mit Desai <br>
+     <b>Docs still refer to 0.20.205 as stable line</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-7688">HADOOP-7688</a>.
+     Major improvement reported by Tsz Wo Nicholas Sze and fixed by Uma Maheswara Rao G <br>
+     <b>When a servlet filter throws an exception in init(..), the Jetty server failed silently. </b><br>
+     <blockquote></blockquote></li>
+</ul>
+</body></html>

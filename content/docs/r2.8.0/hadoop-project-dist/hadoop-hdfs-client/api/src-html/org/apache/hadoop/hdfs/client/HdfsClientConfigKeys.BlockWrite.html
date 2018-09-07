@@ -1,0 +1,479 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.hadoop.hdfs.client;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import org.apache.hadoop.classification.InterfaceAudience;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.apache.hadoop.hdfs.protocol.HdfsConstants;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import java.util.concurrent.TimeUnit;<a name="line.23"></a>
+<span class="sourceLineNo">024</span><a name="line.24"></a>
+<span class="sourceLineNo">025</span>/** Client configuration properties */<a name="line.25"></a>
+<span class="sourceLineNo">026</span>@InterfaceAudience.Private<a name="line.26"></a>
+<span class="sourceLineNo">027</span>public interface HdfsClientConfigKeys {<a name="line.27"></a>
+<span class="sourceLineNo">028</span>  long SECOND = 1000L;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>  long MINUTE = 60 * SECOND;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>  String  DFS_BLOCK_SIZE_KEY = "dfs.blocksize";<a name="line.31"></a>
+<span class="sourceLineNo">032</span>  long    DFS_BLOCK_SIZE_DEFAULT = 128*1024*1024;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>  String  DFS_REPLICATION_KEY = "dfs.replication";<a name="line.33"></a>
+<span class="sourceLineNo">034</span>  short   DFS_REPLICATION_DEFAULT = 3;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>  String  DFS_WEBHDFS_USER_PATTERN_KEY =<a name="line.35"></a>
+<span class="sourceLineNo">036</span>      "dfs.webhdfs.user.provider.user.pattern";<a name="line.36"></a>
+<span class="sourceLineNo">037</span>  String  DFS_WEBHDFS_USER_PATTERN_DEFAULT = "^[A-Za-z_][A-Za-z0-9._-]*[$]?$";<a name="line.37"></a>
+<span class="sourceLineNo">038</span>  String DFS_WEBHDFS_ACL_PERMISSION_PATTERN_DEFAULT =<a name="line.38"></a>
+<span class="sourceLineNo">039</span>      "^(default:)?(user|group|mask|other):[[A-Za-z_][A-Za-z0-9._-]]*:([rwx-]{3})?(,(default:)?(user|group|mask|other):[[A-Za-z_][A-Za-z0-9._-]]*:([rwx-]{3})?)*$";<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>  String  DFS_WEBHDFS_SOCKET_CONNECT_TIMEOUT_KEY =<a name="line.41"></a>
+<span class="sourceLineNo">042</span>      "dfs.webhdfs.socket.connect-timeout";<a name="line.42"></a>
+<span class="sourceLineNo">043</span>  String  DFS_WEBHDFS_SOCKET_READ_TIMEOUT_KEY =<a name="line.43"></a>
+<span class="sourceLineNo">044</span>      "dfs.webhdfs.socket.read-timeout";<a name="line.44"></a>
+<span class="sourceLineNo">045</span><a name="line.45"></a>
+<span class="sourceLineNo">046</span>  String DFS_WEBHDFS_OAUTH_ENABLED_KEY = "dfs.webhdfs.oauth2.enabled";<a name="line.46"></a>
+<span class="sourceLineNo">047</span>  boolean DFS_WEBHDFS_OAUTH_ENABLED_DEFAULT = false;<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>  String DFS_WEBHDFS_REST_CSRF_ENABLED_KEY = "dfs.webhdfs.rest-csrf.enabled";<a name="line.49"></a>
+<span class="sourceLineNo">050</span>  boolean DFS_WEBHDFS_REST_CSRF_ENABLED_DEFAULT = false;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>  String DFS_WEBHDFS_REST_CSRF_CUSTOM_HEADER_KEY =<a name="line.51"></a>
+<span class="sourceLineNo">052</span>      "dfs.webhdfs.rest-csrf.custom-header";<a name="line.52"></a>
+<span class="sourceLineNo">053</span>  String DFS_WEBHDFS_REST_CSRF_CUSTOM_HEADER_DEFAULT = "X-XSRF-HEADER";<a name="line.53"></a>
+<span class="sourceLineNo">054</span>  String DFS_WEBHDFS_REST_CSRF_METHODS_TO_IGNORE_KEY =<a name="line.54"></a>
+<span class="sourceLineNo">055</span>      "dfs.webhdfs.rest-csrf.methods-to-ignore";<a name="line.55"></a>
+<span class="sourceLineNo">056</span>  String DFS_WEBHDFS_REST_CSRF_METHODS_TO_IGNORE_DEFAULT =<a name="line.56"></a>
+<span class="sourceLineNo">057</span>      "GET,OPTIONS,HEAD,TRACE";<a name="line.57"></a>
+<span class="sourceLineNo">058</span>  String DFS_WEBHDFS_REST_CSRF_BROWSER_USERAGENTS_REGEX_KEY =<a name="line.58"></a>
+<span class="sourceLineNo">059</span>      "dfs.webhdfs.rest-csrf.browser-useragents-regex";<a name="line.59"></a>
+<span class="sourceLineNo">060</span><a name="line.60"></a>
+<span class="sourceLineNo">061</span>  String OAUTH_CLIENT_ID_KEY = "dfs.webhdfs.oauth2.client.id";<a name="line.61"></a>
+<span class="sourceLineNo">062</span>  String OAUTH_REFRESH_URL_KEY = "dfs.webhdfs.oauth2.refresh.url";<a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span>  String ACCESS_TOKEN_PROVIDER_KEY = "dfs.webhdfs.oauth2.access.token.provider";<a name="line.64"></a>
+<span class="sourceLineNo">065</span><a name="line.65"></a>
+<span class="sourceLineNo">066</span>  String PREFIX = "dfs.client.";<a name="line.66"></a>
+<span class="sourceLineNo">067</span>  String  DFS_NAMESERVICES = "dfs.nameservices";<a name="line.67"></a>
+<span class="sourceLineNo">068</span>  int     DFS_NAMENODE_HTTP_PORT_DEFAULT = 50070;<a name="line.68"></a>
+<span class="sourceLineNo">069</span>  String  DFS_NAMENODE_HTTP_ADDRESS_KEY = "dfs.namenode.http-address";<a name="line.69"></a>
+<span class="sourceLineNo">070</span>  int     DFS_NAMENODE_HTTPS_PORT_DEFAULT = 50470;<a name="line.70"></a>
+<span class="sourceLineNo">071</span>  String  DFS_NAMENODE_HTTPS_ADDRESS_KEY = "dfs.namenode.https-address";<a name="line.71"></a>
+<span class="sourceLineNo">072</span>  String DFS_HA_NAMENODES_KEY_PREFIX = "dfs.ha.namenodes";<a name="line.72"></a>
+<span class="sourceLineNo">073</span>  String  DFS_WEBHDFS_ENABLED_KEY = "dfs.webhdfs.enabled";<a name="line.73"></a>
+<span class="sourceLineNo">074</span>  boolean DFS_WEBHDFS_ENABLED_DEFAULT = true;<a name="line.74"></a>
+<span class="sourceLineNo">075</span>  String  DFS_NAMENODE_HTTP_PORT_KEY = "dfs.http.port";<a name="line.75"></a>
+<span class="sourceLineNo">076</span>  String  DFS_NAMENODE_HTTPS_PORT_KEY = "dfs.https.port";<a name="line.76"></a>
+<span class="sourceLineNo">077</span>  int DFS_NAMENODE_RPC_PORT_DEFAULT = 8020;<a name="line.77"></a>
+<span class="sourceLineNo">078</span>  String DFS_NAMENODE_KERBEROS_PRINCIPAL_KEY =<a name="line.78"></a>
+<span class="sourceLineNo">079</span>      "dfs.namenode.kerberos.principal";<a name="line.79"></a>
+<span class="sourceLineNo">080</span>  String  DFS_CLIENT_WRITE_PACKET_SIZE_KEY = "dfs.client-write-packet-size";<a name="line.80"></a>
+<span class="sourceLineNo">081</span>  int     DFS_CLIENT_WRITE_PACKET_SIZE_DEFAULT = 64*1024;<a name="line.81"></a>
+<span class="sourceLineNo">082</span>  String  DFS_CLIENT_SOCKET_TIMEOUT_KEY = "dfs.client.socket-timeout";<a name="line.82"></a>
+<span class="sourceLineNo">083</span>  String  DFS_CLIENT_SOCKET_SEND_BUFFER_SIZE_KEY =<a name="line.83"></a>
+<span class="sourceLineNo">084</span>      "dfs.client.socket.send.buffer.size";<a name="line.84"></a>
+<span class="sourceLineNo">085</span>  int     DFS_CLIENT_SOCKET_SEND_BUFFER_SIZE_DEFAULT =<a name="line.85"></a>
+<span class="sourceLineNo">086</span>      HdfsConstants.DEFAULT_DATA_SOCKET_SIZE;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>  String  DFS_CLIENT_SOCKET_CACHE_CAPACITY_KEY =<a name="line.87"></a>
+<span class="sourceLineNo">088</span>      "dfs.client.socketcache.capacity";<a name="line.88"></a>
+<span class="sourceLineNo">089</span>  int     DFS_CLIENT_SOCKET_CACHE_CAPACITY_DEFAULT = 16;<a name="line.89"></a>
+<span class="sourceLineNo">090</span>  String  DFS_CLIENT_SOCKET_CACHE_EXPIRY_MSEC_KEY =<a name="line.90"></a>
+<span class="sourceLineNo">091</span>      "dfs.client.socketcache.expiryMsec";<a name="line.91"></a>
+<span class="sourceLineNo">092</span>  long    DFS_CLIENT_SOCKET_CACHE_EXPIRY_MSEC_DEFAULT = 3000;<a name="line.92"></a>
+<span class="sourceLineNo">093</span>  String  DFS_CLIENT_USE_DN_HOSTNAME = "dfs.client.use.datanode.hostname";<a name="line.93"></a>
+<span class="sourceLineNo">094</span>  boolean DFS_CLIENT_USE_DN_HOSTNAME_DEFAULT = false;<a name="line.94"></a>
+<span class="sourceLineNo">095</span>  String  DFS_CLIENT_CACHE_DROP_BEHIND_WRITES =<a name="line.95"></a>
+<span class="sourceLineNo">096</span>      "dfs.client.cache.drop.behind.writes";<a name="line.96"></a>
+<span class="sourceLineNo">097</span>  String  DFS_CLIENT_CACHE_DROP_BEHIND_READS =<a name="line.97"></a>
+<span class="sourceLineNo">098</span>      "dfs.client.cache.drop.behind.reads";<a name="line.98"></a>
+<span class="sourceLineNo">099</span>  String  DFS_CLIENT_CACHE_READAHEAD = "dfs.client.cache.readahead";<a name="line.99"></a>
+<span class="sourceLineNo">100</span>  String  DFS_CLIENT_CACHED_CONN_RETRY_KEY = "dfs.client.cached.conn.retry";<a name="line.100"></a>
+<span class="sourceLineNo">101</span>  int     DFS_CLIENT_CACHED_CONN_RETRY_DEFAULT = 3;<a name="line.101"></a>
+<span class="sourceLineNo">102</span>  String  DFS_CLIENT_CONTEXT = "dfs.client.context";<a name="line.102"></a>
+<span class="sourceLineNo">103</span>  String  DFS_CLIENT_CONTEXT_DEFAULT = "default";<a name="line.103"></a>
+<span class="sourceLineNo">104</span>  String  DFS_CLIENT_FILE_BLOCK_STORAGE_LOCATIONS_NUM_THREADS =<a name="line.104"></a>
+<span class="sourceLineNo">105</span>      "dfs.client.file-block-storage-locations.num-threads";<a name="line.105"></a>
+<span class="sourceLineNo">106</span>  int     DFS_CLIENT_FILE_BLOCK_STORAGE_LOCATIONS_NUM_THREADS_DEFAULT = 10;<a name="line.106"></a>
+<span class="sourceLineNo">107</span>  String  DFS_CLIENT_FILE_BLOCK_STORAGE_LOCATIONS_TIMEOUT_MS =<a name="line.107"></a>
+<span class="sourceLineNo">108</span>      "dfs.client.file-block-storage-locations.timeout.millis";<a name="line.108"></a>
+<span class="sourceLineNo">109</span>  int     DFS_CLIENT_FILE_BLOCK_STORAGE_LOCATIONS_TIMEOUT_MS_DEFAULT = 1000;<a name="line.109"></a>
+<span class="sourceLineNo">110</span>  String  DFS_CLIENT_USE_LEGACY_BLOCKREADER =<a name="line.110"></a>
+<span class="sourceLineNo">111</span>      "dfs.client.use.legacy.blockreader";<a name="line.111"></a>
+<span class="sourceLineNo">112</span>  boolean DFS_CLIENT_USE_LEGACY_BLOCKREADER_DEFAULT = false;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>  String  DFS_CLIENT_USE_LEGACY_BLOCKREADERLOCAL =<a name="line.113"></a>
+<span class="sourceLineNo">114</span>      "dfs.client.use.legacy.blockreader.local";<a name="line.114"></a>
+<span class="sourceLineNo">115</span>  boolean DFS_CLIENT_USE_LEGACY_BLOCKREADERLOCAL_DEFAULT = false;<a name="line.115"></a>
+<span class="sourceLineNo">116</span>  String  DFS_CLIENT_DATANODE_RESTART_TIMEOUT_KEY =<a name="line.116"></a>
+<span class="sourceLineNo">117</span>      "dfs.client.datanode-restart.timeout";<a name="line.117"></a>
+<span class="sourceLineNo">118</span>  long    DFS_CLIENT_DATANODE_RESTART_TIMEOUT_DEFAULT = 30;<a name="line.118"></a>
+<span class="sourceLineNo">119</span>  // Much code in hdfs is not yet updated to use these keys.<a name="line.119"></a>
+<span class="sourceLineNo">120</span>  // the initial delay (unit is ms) for locateFollowingBlock, the delay time<a name="line.120"></a>
+<span class="sourceLineNo">121</span>  // will increase exponentially(double) for each retry.<a name="line.121"></a>
+<span class="sourceLineNo">122</span>  String  DFS_CLIENT_MAX_BLOCK_ACQUIRE_FAILURES_KEY =<a name="line.122"></a>
+<span class="sourceLineNo">123</span>      "dfs.client.max.block.acquire.failures";<a name="line.123"></a>
+<span class="sourceLineNo">124</span>  int     DFS_CLIENT_MAX_BLOCK_ACQUIRE_FAILURES_DEFAULT = 3;<a name="line.124"></a>
+<span class="sourceLineNo">125</span>  String  DFS_CHECKSUM_TYPE_KEY = "dfs.checksum.type";<a name="line.125"></a>
+<span class="sourceLineNo">126</span>  String  DFS_CHECKSUM_TYPE_DEFAULT = "CRC32C";<a name="line.126"></a>
+<span class="sourceLineNo">127</span>  String  DFS_BYTES_PER_CHECKSUM_KEY = "dfs.bytes-per-checksum";<a name="line.127"></a>
+<span class="sourceLineNo">128</span>  int     DFS_BYTES_PER_CHECKSUM_DEFAULT = 512;<a name="line.128"></a>
+<span class="sourceLineNo">129</span>  String  DFS_DATANODE_SOCKET_WRITE_TIMEOUT_KEY =<a name="line.129"></a>
+<span class="sourceLineNo">130</span>      "dfs.datanode.socket.write.timeout";<a name="line.130"></a>
+<span class="sourceLineNo">131</span>  String  DFS_CLIENT_DOMAIN_SOCKET_DATA_TRAFFIC =<a name="line.131"></a>
+<span class="sourceLineNo">132</span>      "dfs.client.domain.socket.data.traffic";<a name="line.132"></a>
+<span class="sourceLineNo">133</span>  boolean DFS_CLIENT_DOMAIN_SOCKET_DATA_TRAFFIC_DEFAULT = false;<a name="line.133"></a>
+<span class="sourceLineNo">134</span>  String  DFS_DOMAIN_SOCKET_PATH_KEY = "dfs.domain.socket.path";<a name="line.134"></a>
+<span class="sourceLineNo">135</span>  String  DFS_DOMAIN_SOCKET_PATH_DEFAULT = "";<a name="line.135"></a>
+<span class="sourceLineNo">136</span>  String  DFS_SHORT_CIRCUIT_SHARED_MEMORY_WATCHER_INTERRUPT_CHECK_MS =<a name="line.136"></a>
+<span class="sourceLineNo">137</span>      "dfs.short.circuit.shared.memory.watcher.interrupt.check.ms";<a name="line.137"></a>
+<span class="sourceLineNo">138</span>  int     DFS_SHORT_CIRCUIT_SHARED_MEMORY_WATCHER_INTERRUPT_CHECK_MS_DEFAULT =<a name="line.138"></a>
+<span class="sourceLineNo">139</span>      60000;<a name="line.139"></a>
+<span class="sourceLineNo">140</span>  String  DFS_CLIENT_SLOW_IO_WARNING_THRESHOLD_KEY =<a name="line.140"></a>
+<span class="sourceLineNo">141</span>      "dfs.client.slow.io.warning.threshold.ms";<a name="line.141"></a>
+<span class="sourceLineNo">142</span>  long    DFS_CLIENT_SLOW_IO_WARNING_THRESHOLD_DEFAULT = 30000;<a name="line.142"></a>
+<span class="sourceLineNo">143</span>  String  DFS_CLIENT_KEY_PROVIDER_CACHE_EXPIRY_MS =<a name="line.143"></a>
+<span class="sourceLineNo">144</span>          "dfs.client.key.provider.cache.expiry";<a name="line.144"></a>
+<span class="sourceLineNo">145</span>  long    DFS_CLIENT_KEY_PROVIDER_CACHE_EXPIRY_DEFAULT =<a name="line.145"></a>
+<span class="sourceLineNo">146</span>              TimeUnit.DAYS.toMillis(10); // 10 days<a name="line.146"></a>
+<span class="sourceLineNo">147</span>  String  DFS_HDFS_BLOCKS_METADATA_ENABLED =<a name="line.147"></a>
+<span class="sourceLineNo">148</span>      "dfs.datanode.hdfs-blocks-metadata.enabled";<a name="line.148"></a>
+<span class="sourceLineNo">149</span>  boolean DFS_HDFS_BLOCKS_METADATA_ENABLED_DEFAULT = false;<a name="line.149"></a>
+<span class="sourceLineNo">150</span><a name="line.150"></a>
+<span class="sourceLineNo">151</span>  String  DFS_DATANODE_KERBEROS_PRINCIPAL_KEY =<a name="line.151"></a>
+<span class="sourceLineNo">152</span>      "dfs.datanode.kerberos.principal";<a name="line.152"></a>
+<span class="sourceLineNo">153</span>  String  DFS_DATANODE_READAHEAD_BYTES_KEY = "dfs.datanode.readahead.bytes";<a name="line.153"></a>
+<span class="sourceLineNo">154</span>  long    DFS_DATANODE_READAHEAD_BYTES_DEFAULT = 4 * 1024 * 1024; // 4MB<a name="line.154"></a>
+<span class="sourceLineNo">155</span><a name="line.155"></a>
+<span class="sourceLineNo">156</span>  String DFS_ENCRYPT_DATA_TRANSFER_CIPHER_SUITES_KEY =<a name="line.156"></a>
+<span class="sourceLineNo">157</span>      "dfs.encrypt.data.transfer.cipher.suites";<a name="line.157"></a>
+<span class="sourceLineNo">158</span><a name="line.158"></a>
+<span class="sourceLineNo">159</span>  String DFS_DATA_TRANSFER_PROTECTION_KEY = "dfs.data.transfer.protection";<a name="line.159"></a>
+<span class="sourceLineNo">160</span>  String DFS_DATA_TRANSFER_PROTECTION_DEFAULT = "";<a name="line.160"></a>
+<span class="sourceLineNo">161</span>  String DFS_DATA_TRANSFER_SASL_PROPS_RESOLVER_CLASS_KEY =<a name="line.161"></a>
+<span class="sourceLineNo">162</span>      "dfs.data.transfer.saslproperties.resolver.class";<a name="line.162"></a>
+<span class="sourceLineNo">163</span><a name="line.163"></a>
+<span class="sourceLineNo">164</span>  String DFS_ENCRYPT_DATA_TRANSFER_CIPHER_KEY_BITLENGTH_KEY =<a name="line.164"></a>
+<span class="sourceLineNo">165</span>      "dfs.encrypt.data.transfer.cipher.key.bitlength";<a name="line.165"></a>
+<span class="sourceLineNo">166</span>  int    DFS_ENCRYPT_DATA_TRANSFER_CIPHER_KEY_BITLENGTH_DEFAULT = 128;<a name="line.166"></a>
+<span class="sourceLineNo">167</span><a name="line.167"></a>
+<span class="sourceLineNo">168</span>  String DFS_TRUSTEDCHANNEL_RESOLVER_CLASS =<a name="line.168"></a>
+<span class="sourceLineNo">169</span>      "dfs.trustedchannel.resolver.class";<a name="line.169"></a>
+<span class="sourceLineNo">170</span><a name="line.170"></a>
+<span class="sourceLineNo">171</span>  String REPLICA_ACCESSOR_BUILDER_CLASSES_KEY =<a name="line.171"></a>
+<span class="sourceLineNo">172</span>      PREFIX + "replica.accessor.builder.classes";<a name="line.172"></a>
+<span class="sourceLineNo">173</span><a name="line.173"></a>
+<span class="sourceLineNo">174</span>  // The number of NN response dropped by client proactively in each RPC call.<a name="line.174"></a>
+<span class="sourceLineNo">175</span>  // For testing NN retry cache, we can set this property with positive value.<a name="line.175"></a>
+<span class="sourceLineNo">176</span>  String  DFS_CLIENT_TEST_DROP_NAMENODE_RESPONSE_NUM_KEY =<a name="line.176"></a>
+<span class="sourceLineNo">177</span>      "dfs.client.test.drop.namenode.response.number";<a name="line.177"></a>
+<span class="sourceLineNo">178</span>  int     DFS_CLIENT_TEST_DROP_NAMENODE_RESPONSE_NUM_DEFAULT = 0;<a name="line.178"></a>
+<span class="sourceLineNo">179</span>  String  DFS_CLIENT_LOCAL_INTERFACES = "dfs.client.local.interfaces";<a name="line.179"></a>
+<span class="sourceLineNo">180</span>  String  DFS_USER_HOME_DIR_PREFIX_KEY = "dfs.user.home.dir.prefix";<a name="line.180"></a>
+<span class="sourceLineNo">181</span>  String  DFS_USER_HOME_DIR_PREFIX_DEFAULT = "/user";<a name="line.181"></a>
+<span class="sourceLineNo">182</span><a name="line.182"></a>
+<span class="sourceLineNo">183</span>  String DFS_DATA_TRANSFER_CLIENT_TCPNODELAY_KEY =<a name="line.183"></a>
+<span class="sourceLineNo">184</span>      "dfs.data.transfer.client.tcpnodelay";<a name="line.184"></a>
+<span class="sourceLineNo">185</span>  boolean DFS_DATA_TRANSFER_CLIENT_TCPNODELAY_DEFAULT = true;<a name="line.185"></a>
+<span class="sourceLineNo">186</span><a name="line.186"></a>
+<span class="sourceLineNo">187</span>  /**<a name="line.187"></a>
+<span class="sourceLineNo">188</span>   * These are deprecated config keys to client code.<a name="line.188"></a>
+<span class="sourceLineNo">189</span>   */<a name="line.189"></a>
+<span class="sourceLineNo">190</span>  interface DeprecatedKeys {<a name="line.190"></a>
+<span class="sourceLineNo">191</span>    String DFS_NAMENODE_BACKUP_ADDRESS_KEY =<a name="line.191"></a>
+<span class="sourceLineNo">192</span>        "dfs.namenode.backup.address";<a name="line.192"></a>
+<span class="sourceLineNo">193</span>    String DFS_NAMENODE_BACKUP_HTTP_ADDRESS_KEY =<a name="line.193"></a>
+<span class="sourceLineNo">194</span>        "dfs.namenode.backup.http-address";<a name="line.194"></a>
+<span class="sourceLineNo">195</span>    String DFS_DATANODE_BALANCE_BANDWIDTHPERSEC_KEY =<a name="line.195"></a>
+<span class="sourceLineNo">196</span>        "dfs.datanode.balance.bandwidthPerSec";<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    //Following keys have no defaults<a name="line.197"></a>
+<span class="sourceLineNo">198</span>    String DFS_DATANODE_DATA_DIR_KEY = "dfs.datanode.data.dir";<a name="line.198"></a>
+<span class="sourceLineNo">199</span>    String DFS_NAMENODE_MAX_OBJECTS_KEY = "dfs.namenode.max.objects";<a name="line.199"></a>
+<span class="sourceLineNo">200</span>    String DFS_NAMENODE_NAME_DIR_KEY = "dfs.namenode.name.dir";<a name="line.200"></a>
+<span class="sourceLineNo">201</span>    String DFS_NAMENODE_NAME_DIR_RESTORE_KEY = "dfs.namenode.name.dir.restore";<a name="line.201"></a>
+<span class="sourceLineNo">202</span>    String DFS_NAMENODE_EDITS_DIR_KEY = "dfs.namenode.edits.dir";<a name="line.202"></a>
+<span class="sourceLineNo">203</span>    String DFS_NAMENODE_SAFEMODE_EXTENSION_KEY =<a name="line.203"></a>
+<span class="sourceLineNo">204</span>        "dfs.namenode.safemode.extension";<a name="line.204"></a>
+<span class="sourceLineNo">205</span>    String DFS_NAMENODE_SAFEMODE_THRESHOLD_PCT_KEY =<a name="line.205"></a>
+<span class="sourceLineNo">206</span>        "dfs.namenode.safemode.threshold-pct";<a name="line.206"></a>
+<span class="sourceLineNo">207</span>    String DFS_NAMENODE_SECONDARY_HTTP_ADDRESS_KEY =<a name="line.207"></a>
+<span class="sourceLineNo">208</span>        "dfs.namenode.secondary.http-address";<a name="line.208"></a>
+<span class="sourceLineNo">209</span>    String DFS_NAMENODE_CHECKPOINT_DIR_KEY = "dfs.namenode.checkpoint.dir";<a name="line.209"></a>
+<span class="sourceLineNo">210</span>    String DFS_NAMENODE_CHECKPOINT_EDITS_DIR_KEY =<a name="line.210"></a>
+<span class="sourceLineNo">211</span>        "dfs.namenode.checkpoint.edits.dir";<a name="line.211"></a>
+<span class="sourceLineNo">212</span>    String DFS_NAMENODE_CHECKPOINT_PERIOD_KEY =<a name="line.212"></a>
+<span class="sourceLineNo">213</span>        "dfs.namenode.checkpoint.period";<a name="line.213"></a>
+<span class="sourceLineNo">214</span>    String DFS_NAMENODE_HEARTBEAT_RECHECK_INTERVAL_KEY =<a name="line.214"></a>
+<span class="sourceLineNo">215</span>        "dfs.namenode.heartbeat.recheck-interval";<a name="line.215"></a>
+<span class="sourceLineNo">216</span>    String DFS_CLIENT_HTTPS_KEYSTORE_RESOURCE_KEY =<a name="line.216"></a>
+<span class="sourceLineNo">217</span>        "dfs.client.https.keystore.resource";<a name="line.217"></a>
+<span class="sourceLineNo">218</span>    String DFS_CLIENT_HTTPS_NEED_AUTH_KEY = "dfs.client.https.need-auth";<a name="line.218"></a>
+<span class="sourceLineNo">219</span>    String DFS_DATANODE_HOST_NAME_KEY = "dfs.datanode.hostname";<a name="line.219"></a>
+<span class="sourceLineNo">220</span>    String DFS_METRICS_SESSION_ID_KEY = "dfs.metrics.session-id";<a name="line.220"></a>
+<span class="sourceLineNo">221</span>    String DFS_NAMENODE_ACCESSTIME_PRECISION_KEY =<a name="line.221"></a>
+<span class="sourceLineNo">222</span>        "dfs.namenode.accesstime.precision";<a name="line.222"></a>
+<span class="sourceLineNo">223</span>    String DFS_NAMENODE_REPLICATION_CONSIDERLOAD_KEY =<a name="line.223"></a>
+<span class="sourceLineNo">224</span>        "dfs.namenode.replication.considerLoad";<a name="line.224"></a>
+<span class="sourceLineNo">225</span>    String DFS_NAMENODE_REPLICATION_INTERVAL_KEY =<a name="line.225"></a>
+<span class="sourceLineNo">226</span>        "dfs.namenode.replication.interval";<a name="line.226"></a>
+<span class="sourceLineNo">227</span>    String DFS_NAMENODE_REPLICATION_MIN_KEY = "dfs.namenode.replication.min";<a name="line.227"></a>
+<span class="sourceLineNo">228</span>    String DFS_NAMENODE_REPLICATION_PENDING_TIMEOUT_SEC_KEY =<a name="line.228"></a>
+<span class="sourceLineNo">229</span>        "dfs.namenode.replication.pending.timeout-sec";<a name="line.229"></a>
+<span class="sourceLineNo">230</span>    String DFS_NAMENODE_REPLICATION_MAX_STREAMS_KEY =<a name="line.230"></a>
+<span class="sourceLineNo">231</span>        "dfs.namenode.replication.max-streams";<a name="line.231"></a>
+<span class="sourceLineNo">232</span>    String DFS_PERMISSIONS_ENABLED_KEY = "dfs.permissions.enabled";<a name="line.232"></a>
+<span class="sourceLineNo">233</span>    String DFS_PERMISSIONS_SUPERUSERGROUP_KEY =<a name="line.233"></a>
+<span class="sourceLineNo">234</span>        "dfs.permissions.superusergroup";<a name="line.234"></a>
+<span class="sourceLineNo">235</span>    String DFS_DATANODE_MAX_RECEIVER_THREADS_KEY =<a name="line.235"></a>
+<span class="sourceLineNo">236</span>        "dfs.datanode.max.transfer.threads";<a name="line.236"></a>
+<span class="sourceLineNo">237</span>    String DFS_NAMESERVICE_ID = "dfs.nameservice.id";<a name="line.237"></a>
+<span class="sourceLineNo">238</span>  }<a name="line.238"></a>
+<span class="sourceLineNo">239</span><a name="line.239"></a>
+<span class="sourceLineNo">240</span>  /** dfs.client.retry configuration properties */<a name="line.240"></a>
+<span class="sourceLineNo">241</span>  interface Retry {<a name="line.241"></a>
+<span class="sourceLineNo">242</span>    String PREFIX = HdfsClientConfigKeys.PREFIX + "retry.";<a name="line.242"></a>
+<span class="sourceLineNo">243</span><a name="line.243"></a>
+<span class="sourceLineNo">244</span>    String  POLICY_ENABLED_KEY = PREFIX + "policy.enabled";<a name="line.244"></a>
+<span class="sourceLineNo">245</span>    boolean POLICY_ENABLED_DEFAULT = false;<a name="line.245"></a>
+<span class="sourceLineNo">246</span>    String  POLICY_SPEC_KEY = PREFIX + "policy.spec";<a name="line.246"></a>
+<span class="sourceLineNo">247</span>    String  POLICY_SPEC_DEFAULT = "10000,6,60000,10"; //t1,n1,t2,n2,...<a name="line.247"></a>
+<span class="sourceLineNo">248</span><a name="line.248"></a>
+<span class="sourceLineNo">249</span>    String  TIMES_GET_LAST_BLOCK_LENGTH_KEY =<a name="line.249"></a>
+<span class="sourceLineNo">250</span>        PREFIX + "times.get-last-block-length";<a name="line.250"></a>
+<span class="sourceLineNo">251</span>    int     TIMES_GET_LAST_BLOCK_LENGTH_DEFAULT = 3;<a name="line.251"></a>
+<span class="sourceLineNo">252</span>    String  INTERVAL_GET_LAST_BLOCK_LENGTH_KEY =<a name="line.252"></a>
+<span class="sourceLineNo">253</span>        PREFIX + "interval-ms.get-last-block-length";<a name="line.253"></a>
+<span class="sourceLineNo">254</span>    int     INTERVAL_GET_LAST_BLOCK_LENGTH_DEFAULT = 4000;<a name="line.254"></a>
+<span class="sourceLineNo">255</span><a name="line.255"></a>
+<span class="sourceLineNo">256</span>    String  MAX_ATTEMPTS_KEY = PREFIX + "max.attempts";<a name="line.256"></a>
+<span class="sourceLineNo">257</span>    int     MAX_ATTEMPTS_DEFAULT = 10;<a name="line.257"></a>
+<span class="sourceLineNo">258</span><a name="line.258"></a>
+<span class="sourceLineNo">259</span>    String  WINDOW_BASE_KEY = PREFIX + "window.base";<a name="line.259"></a>
+<span class="sourceLineNo">260</span>    int     WINDOW_BASE_DEFAULT = 3000;<a name="line.260"></a>
+<span class="sourceLineNo">261</span>  }<a name="line.261"></a>
+<span class="sourceLineNo">262</span><a name="line.262"></a>
+<span class="sourceLineNo">263</span>  /** dfs.client.failover configuration properties */<a name="line.263"></a>
+<span class="sourceLineNo">264</span>  interface Failover {<a name="line.264"></a>
+<span class="sourceLineNo">265</span>    String PREFIX = HdfsClientConfigKeys.PREFIX + "failover.";<a name="line.265"></a>
+<span class="sourceLineNo">266</span><a name="line.266"></a>
+<span class="sourceLineNo">267</span>    String  PROXY_PROVIDER_KEY_PREFIX = PREFIX + "proxy.provider";<a name="line.267"></a>
+<span class="sourceLineNo">268</span>    String  MAX_ATTEMPTS_KEY = PREFIX + "max.attempts";<a name="line.268"></a>
+<span class="sourceLineNo">269</span>    int     MAX_ATTEMPTS_DEFAULT = 15;<a name="line.269"></a>
+<span class="sourceLineNo">270</span>    String  SLEEPTIME_BASE_KEY = PREFIX + "sleep.base.millis";<a name="line.270"></a>
+<span class="sourceLineNo">271</span>    int     SLEEPTIME_BASE_DEFAULT = 500;<a name="line.271"></a>
+<span class="sourceLineNo">272</span>    String  SLEEPTIME_MAX_KEY = PREFIX + "sleep.max.millis";<a name="line.272"></a>
+<span class="sourceLineNo">273</span>    int     SLEEPTIME_MAX_DEFAULT = 15000;<a name="line.273"></a>
+<span class="sourceLineNo">274</span>    String  CONNECTION_RETRIES_KEY = PREFIX + "connection.retries";<a name="line.274"></a>
+<span class="sourceLineNo">275</span>    int     CONNECTION_RETRIES_DEFAULT = 0;<a name="line.275"></a>
+<span class="sourceLineNo">276</span>    String  CONNECTION_RETRIES_ON_SOCKET_TIMEOUTS_KEY =<a name="line.276"></a>
+<span class="sourceLineNo">277</span>        PREFIX + "connection.retries.on.timeouts";<a name="line.277"></a>
+<span class="sourceLineNo">278</span>    int     CONNECTION_RETRIES_ON_SOCKET_TIMEOUTS_DEFAULT = 0;<a name="line.278"></a>
+<span class="sourceLineNo">279</span>  }<a name="line.279"></a>
+<span class="sourceLineNo">280</span><a name="line.280"></a>
+<span class="sourceLineNo">281</span>  /** dfs.client.write configuration properties */<a name="line.281"></a>
+<span class="sourceLineNo">282</span>  interface Write {<a name="line.282"></a>
+<span class="sourceLineNo">283</span>    String PREFIX = HdfsClientConfigKeys.PREFIX + "write.";<a name="line.283"></a>
+<span class="sourceLineNo">284</span><a name="line.284"></a>
+<span class="sourceLineNo">285</span>    String  MAX_PACKETS_IN_FLIGHT_KEY = PREFIX + "max-packets-in-flight";<a name="line.285"></a>
+<span class="sourceLineNo">286</span>    int     MAX_PACKETS_IN_FLIGHT_DEFAULT = 80;<a name="line.286"></a>
+<span class="sourceLineNo">287</span>    String  EXCLUDE_NODES_CACHE_EXPIRY_INTERVAL_KEY =<a name="line.287"></a>
+<span class="sourceLineNo">288</span>        PREFIX + "exclude.nodes.cache.expiry.interval.millis";<a name="line.288"></a>
+<span class="sourceLineNo">289</span>    long    EXCLUDE_NODES_CACHE_EXPIRY_INTERVAL_DEFAULT = 10*MINUTE;<a name="line.289"></a>
+<span class="sourceLineNo">290</span><a name="line.290"></a>
+<span class="sourceLineNo">291</span>    interface ByteArrayManager {<a name="line.291"></a>
+<span class="sourceLineNo">292</span>      String PREFIX = Write.PREFIX + "byte-array-manager.";<a name="line.292"></a>
+<span class="sourceLineNo">293</span><a name="line.293"></a>
+<span class="sourceLineNo">294</span>      String  ENABLED_KEY = PREFIX + "enabled";<a name="line.294"></a>
+<span class="sourceLineNo">295</span>      boolean ENABLED_DEFAULT = false;<a name="line.295"></a>
+<span class="sourceLineNo">296</span>      String  COUNT_THRESHOLD_KEY = PREFIX + "count-threshold";<a name="line.296"></a>
+<span class="sourceLineNo">297</span>      int     COUNT_THRESHOLD_DEFAULT = 128;<a name="line.297"></a>
+<span class="sourceLineNo">298</span>      String  COUNT_LIMIT_KEY = PREFIX + "count-limit";<a name="line.298"></a>
+<span class="sourceLineNo">299</span>      int     COUNT_LIMIT_DEFAULT = 2048;<a name="line.299"></a>
+<span class="sourceLineNo">300</span>      String  COUNT_RESET_TIME_PERIOD_MS_KEY =<a name="line.300"></a>
+<span class="sourceLineNo">301</span>          PREFIX + "count-reset-time-period-ms";<a name="line.301"></a>
+<span class="sourceLineNo">302</span>      long    COUNT_RESET_TIME_PERIOD_MS_DEFAULT = 10*SECOND;<a name="line.302"></a>
+<span class="sourceLineNo">303</span>    }<a name="line.303"></a>
+<span class="sourceLineNo">304</span>  }<a name="line.304"></a>
+<span class="sourceLineNo">305</span><a name="line.305"></a>
+<span class="sourceLineNo">306</span>  /** dfs.client.block.write configuration properties */<a name="line.306"></a>
+<span class="sourceLineNo">307</span>  interface BlockWrite {<a name="line.307"></a>
+<span class="sourceLineNo">308</span>    String PREFIX = HdfsClientConfigKeys.PREFIX + "block.write.";<a name="line.308"></a>
+<span class="sourceLineNo">309</span><a name="line.309"></a>
+<span class="sourceLineNo">310</span>    String  RETRIES_KEY = PREFIX + "retries";<a name="line.310"></a>
+<span class="sourceLineNo">311</span>    int     RETRIES_DEFAULT = 3;<a name="line.311"></a>
+<span class="sourceLineNo">312</span>    String  LOCATEFOLLOWINGBLOCK_RETRIES_KEY =<a name="line.312"></a>
+<span class="sourceLineNo">313</span>        PREFIX + "locateFollowingBlock.retries";<a name="line.313"></a>
+<span class="sourceLineNo">314</span>    int     LOCATEFOLLOWINGBLOCK_RETRIES_DEFAULT = 5;<a name="line.314"></a>
+<span class="sourceLineNo">315</span>    String  LOCATEFOLLOWINGBLOCK_INITIAL_DELAY_MS_KEY =<a name="line.315"></a>
+<span class="sourceLineNo">316</span>        PREFIX + "locateFollowingBlock.initial.delay.ms";<a name="line.316"></a>
+<span class="sourceLineNo">317</span>    int     LOCATEFOLLOWINGBLOCK_INITIAL_DELAY_MS_DEFAULT = 400;<a name="line.317"></a>
+<span class="sourceLineNo">318</span><a name="line.318"></a>
+<span class="sourceLineNo">319</span>    interface ReplaceDatanodeOnFailure {<a name="line.319"></a>
+<span class="sourceLineNo">320</span>      String PREFIX = BlockWrite.PREFIX + "replace-datanode-on-failure.";<a name="line.320"></a>
+<span class="sourceLineNo">321</span><a name="line.321"></a>
+<span class="sourceLineNo">322</span>      String  ENABLE_KEY = PREFIX + "enable";<a name="line.322"></a>
+<span class="sourceLineNo">323</span>      boolean ENABLE_DEFAULT = true;<a name="line.323"></a>
+<span class="sourceLineNo">324</span>      String  POLICY_KEY = PREFIX + "policy";<a name="line.324"></a>
+<span class="sourceLineNo">325</span>      String  POLICY_DEFAULT = "DEFAULT";<a name="line.325"></a>
+<span class="sourceLineNo">326</span>      String  BEST_EFFORT_KEY = PREFIX + "best-effort";<a name="line.326"></a>
+<span class="sourceLineNo">327</span>      boolean BEST_EFFORT_DEFAULT = false;<a name="line.327"></a>
+<span class="sourceLineNo">328</span>    }<a name="line.328"></a>
+<span class="sourceLineNo">329</span>  }<a name="line.329"></a>
+<span class="sourceLineNo">330</span><a name="line.330"></a>
+<span class="sourceLineNo">331</span>  /** dfs.client.read configuration properties */<a name="line.331"></a>
+<span class="sourceLineNo">332</span>  interface Read {<a name="line.332"></a>
+<span class="sourceLineNo">333</span>    String PREFIX = HdfsClientConfigKeys.PREFIX + "read.";<a name="line.333"></a>
+<span class="sourceLineNo">334</span><a name="line.334"></a>
+<span class="sourceLineNo">335</span>    String  PREFETCH_SIZE_KEY = PREFIX + "prefetch.size";<a name="line.335"></a>
+<span class="sourceLineNo">336</span><a name="line.336"></a>
+<span class="sourceLineNo">337</span>    interface ShortCircuit {<a name="line.337"></a>
+<span class="sourceLineNo">338</span>      String PREFIX = Read.PREFIX + "shortcircuit.";<a name="line.338"></a>
+<span class="sourceLineNo">339</span><a name="line.339"></a>
+<span class="sourceLineNo">340</span>      String  KEY = PREFIX.substring(0, PREFIX.length()-1);<a name="line.340"></a>
+<span class="sourceLineNo">341</span>      boolean DEFAULT = false;<a name="line.341"></a>
+<span class="sourceLineNo">342</span>      String  SKIP_CHECKSUM_KEY = PREFIX + "skip.checksum";<a name="line.342"></a>
+<span class="sourceLineNo">343</span>      boolean SKIP_CHECKSUM_DEFAULT = false;<a name="line.343"></a>
+<span class="sourceLineNo">344</span>      String  BUFFER_SIZE_KEY = PREFIX + "buffer.size";<a name="line.344"></a>
+<span class="sourceLineNo">345</span>      int     BUFFER_SIZE_DEFAULT = 1024 * 1024;<a name="line.345"></a>
+<span class="sourceLineNo">346</span><a name="line.346"></a>
+<span class="sourceLineNo">347</span>      String  STREAMS_CACHE_SIZE_KEY = PREFIX + "streams.cache.size";<a name="line.347"></a>
+<span class="sourceLineNo">348</span>      int     STREAMS_CACHE_SIZE_DEFAULT = 256;<a name="line.348"></a>
+<span class="sourceLineNo">349</span>      String  STREAMS_CACHE_EXPIRY_MS_KEY = PREFIX + "streams.cache.expiry.ms";<a name="line.349"></a>
+<span class="sourceLineNo">350</span>      long    STREAMS_CACHE_EXPIRY_MS_DEFAULT = 5*MINUTE;<a name="line.350"></a>
+<span class="sourceLineNo">351</span>    }<a name="line.351"></a>
+<span class="sourceLineNo">352</span>  }<a name="line.352"></a>
+<span class="sourceLineNo">353</span><a name="line.353"></a>
+<span class="sourceLineNo">354</span>  /** dfs.client.short.circuit configuration properties */<a name="line.354"></a>
+<span class="sourceLineNo">355</span>  interface ShortCircuit {<a name="line.355"></a>
+<span class="sourceLineNo">356</span>    String PREFIX = Read.PREFIX + "short.circuit.";<a name="line.356"></a>
+<span class="sourceLineNo">357</span><a name="line.357"></a>
+<span class="sourceLineNo">358</span>    String  REPLICA_STALE_THRESHOLD_MS_KEY =<a name="line.358"></a>
+<span class="sourceLineNo">359</span>        PREFIX + "replica.stale.threshold.ms";<a name="line.359"></a>
+<span class="sourceLineNo">360</span>    long    REPLICA_STALE_THRESHOLD_MS_DEFAULT = 30*MINUTE;<a name="line.360"></a>
+<span class="sourceLineNo">361</span>  }<a name="line.361"></a>
+<span class="sourceLineNo">362</span><a name="line.362"></a>
+<span class="sourceLineNo">363</span>  /** dfs.client.mmap configuration properties */<a name="line.363"></a>
+<span class="sourceLineNo">364</span>  interface Mmap {<a name="line.364"></a>
+<span class="sourceLineNo">365</span>    String PREFIX = HdfsClientConfigKeys.PREFIX + "mmap.";<a name="line.365"></a>
+<span class="sourceLineNo">366</span><a name="line.366"></a>
+<span class="sourceLineNo">367</span>    String  ENABLED_KEY = PREFIX + "enabled";<a name="line.367"></a>
+<span class="sourceLineNo">368</span>    boolean ENABLED_DEFAULT = true;<a name="line.368"></a>
+<span class="sourceLineNo">369</span>    String  CACHE_SIZE_KEY = PREFIX + "cache.size";<a name="line.369"></a>
+<span class="sourceLineNo">370</span>    int     CACHE_SIZE_DEFAULT = 256;<a name="line.370"></a>
+<span class="sourceLineNo">371</span>    String  CACHE_TIMEOUT_MS_KEY = PREFIX + "cache.timeout.ms";<a name="line.371"></a>
+<span class="sourceLineNo">372</span>    long    CACHE_TIMEOUT_MS_DEFAULT  = 60*MINUTE;<a name="line.372"></a>
+<span class="sourceLineNo">373</span>    String  RETRY_TIMEOUT_MS_KEY = PREFIX + "retry.timeout.ms";<a name="line.373"></a>
+<span class="sourceLineNo">374</span>    long    RETRY_TIMEOUT_MS_DEFAULT = 5*MINUTE;<a name="line.374"></a>
+<span class="sourceLineNo">375</span>  }<a name="line.375"></a>
+<span class="sourceLineNo">376</span><a name="line.376"></a>
+<span class="sourceLineNo">377</span>  /** dfs.client.hedged.read configuration properties */<a name="line.377"></a>
+<span class="sourceLineNo">378</span>  interface HedgedRead {<a name="line.378"></a>
+<span class="sourceLineNo">379</span>    String PREFIX = HdfsClientConfigKeys.PREFIX + "hedged.read.";<a name="line.379"></a>
+<span class="sourceLineNo">380</span><a name="line.380"></a>
+<span class="sourceLineNo">381</span>    String  THRESHOLD_MILLIS_KEY = PREFIX + "threshold.millis";<a name="line.381"></a>
+<span class="sourceLineNo">382</span>    long    THRESHOLD_MILLIS_DEFAULT = 500;<a name="line.382"></a>
+<span class="sourceLineNo">383</span>    String  THREADPOOL_SIZE_KEY = PREFIX + "threadpool.size";<a name="line.383"></a>
+<span class="sourceLineNo">384</span>    int     THREADPOOL_SIZE_DEFAULT = 0;<a name="line.384"></a>
+<span class="sourceLineNo">385</span>  }<a name="line.385"></a>
+<span class="sourceLineNo">386</span><a name="line.386"></a>
+<span class="sourceLineNo">387</span>  /** dfs.http.client configuration properties */<a name="line.387"></a>
+<span class="sourceLineNo">388</span>  interface HttpClient {<a name="line.388"></a>
+<span class="sourceLineNo">389</span>    String  PREFIX = "dfs.http.client.";<a name="line.389"></a>
+<span class="sourceLineNo">390</span><a name="line.390"></a>
+<span class="sourceLineNo">391</span>    // retry<a name="line.391"></a>
+<span class="sourceLineNo">392</span>    String  RETRY_POLICY_ENABLED_KEY = PREFIX + "retry.policy.enabled";<a name="line.392"></a>
+<span class="sourceLineNo">393</span>    boolean RETRY_POLICY_ENABLED_DEFAULT = false;<a name="line.393"></a>
+<span class="sourceLineNo">394</span>    String  RETRY_POLICY_SPEC_KEY = PREFIX + "retry.policy.spec";<a name="line.394"></a>
+<span class="sourceLineNo">395</span>    String  RETRY_POLICY_SPEC_DEFAULT = "10000,6,60000,10"; //t1,n1,t2,n2,...<a name="line.395"></a>
+<span class="sourceLineNo">396</span>    String  RETRY_MAX_ATTEMPTS_KEY = PREFIX + "retry.max.attempts";<a name="line.396"></a>
+<span class="sourceLineNo">397</span>    int     RETRY_MAX_ATTEMPTS_DEFAULT = 10;<a name="line.397"></a>
+<span class="sourceLineNo">398</span><a name="line.398"></a>
+<span class="sourceLineNo">399</span>    // failover<a name="line.399"></a>
+<span class="sourceLineNo">400</span>    String  FAILOVER_MAX_ATTEMPTS_KEY = PREFIX + "failover.max.attempts";<a name="line.400"></a>
+<span class="sourceLineNo">401</span>    int     FAILOVER_MAX_ATTEMPTS_DEFAULT =  15;<a name="line.401"></a>
+<span class="sourceLineNo">402</span>    String  FAILOVER_SLEEPTIME_BASE_KEY = PREFIX + "failover.sleep.base.millis";<a name="line.402"></a>
+<span class="sourceLineNo">403</span>    int     FAILOVER_SLEEPTIME_BASE_DEFAULT = 500;<a name="line.403"></a>
+<span class="sourceLineNo">404</span>    String  FAILOVER_SLEEPTIME_MAX_KEY = PREFIX + "failover.sleep.max.millis";<a name="line.404"></a>
+<span class="sourceLineNo">405</span>    int     FAILOVER_SLEEPTIME_MAX_DEFAULT =  15000;<a name="line.405"></a>
+<span class="sourceLineNo">406</span>  }<a name="line.406"></a>
+<span class="sourceLineNo">407</span>}<a name="line.407"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

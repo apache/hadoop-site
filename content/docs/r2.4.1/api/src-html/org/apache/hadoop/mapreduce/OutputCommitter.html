@@ -1,0 +1,276 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    <a name="line.18"></a>
+<FONT color="green">019</FONT>    package org.apache.hadoop.mapreduce;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>    import java.io.IOException;<a name="line.21"></a>
+<FONT color="green">022</FONT>    <a name="line.22"></a>
+<FONT color="green">023</FONT>    import org.apache.hadoop.classification.InterfaceAudience;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import org.apache.hadoop.classification.InterfaceStability;<a name="line.24"></a>
+<FONT color="green">025</FONT>    /**<a name="line.25"></a>
+<FONT color="green">026</FONT>     * &lt;code&gt;OutputCommitter&lt;/code&gt; describes the commit of task output for a <a name="line.26"></a>
+<FONT color="green">027</FONT>     * Map-Reduce job.<a name="line.27"></a>
+<FONT color="green">028</FONT>     *<a name="line.28"></a>
+<FONT color="green">029</FONT>     * &lt;p&gt;The Map-Reduce framework relies on the &lt;code&gt;OutputCommitter&lt;/code&gt; of <a name="line.29"></a>
+<FONT color="green">030</FONT>     * the job to:&lt;p&gt;<a name="line.30"></a>
+<FONT color="green">031</FONT>     * &lt;ol&gt;<a name="line.31"></a>
+<FONT color="green">032</FONT>     *   &lt;li&gt;<a name="line.32"></a>
+<FONT color="green">033</FONT>     *   Setup the job during initialization. For example, create the temporary <a name="line.33"></a>
+<FONT color="green">034</FONT>     *   output directory for the job during the initialization of the job.<a name="line.34"></a>
+<FONT color="green">035</FONT>     *   &lt;/li&gt;<a name="line.35"></a>
+<FONT color="green">036</FONT>     *   &lt;li&gt;<a name="line.36"></a>
+<FONT color="green">037</FONT>     *   Cleanup the job after the job completion. For example, remove the<a name="line.37"></a>
+<FONT color="green">038</FONT>     *   temporary output directory after the job completion. <a name="line.38"></a>
+<FONT color="green">039</FONT>     *   &lt;/li&gt;<a name="line.39"></a>
+<FONT color="green">040</FONT>     *   &lt;li&gt;<a name="line.40"></a>
+<FONT color="green">041</FONT>     *   Setup the task temporary output.<a name="line.41"></a>
+<FONT color="green">042</FONT>     *   &lt;/li&gt; <a name="line.42"></a>
+<FONT color="green">043</FONT>     *   &lt;li&gt;<a name="line.43"></a>
+<FONT color="green">044</FONT>     *   Check whether a task needs a commit. This is to avoid the commit<a name="line.44"></a>
+<FONT color="green">045</FONT>     *   procedure if a task does not need commit.<a name="line.45"></a>
+<FONT color="green">046</FONT>     *   &lt;/li&gt;<a name="line.46"></a>
+<FONT color="green">047</FONT>     *   &lt;li&gt;<a name="line.47"></a>
+<FONT color="green">048</FONT>     *   Commit of the task output.<a name="line.48"></a>
+<FONT color="green">049</FONT>     *   &lt;/li&gt;  <a name="line.49"></a>
+<FONT color="green">050</FONT>     *   &lt;li&gt;<a name="line.50"></a>
+<FONT color="green">051</FONT>     *   Discard the task commit.<a name="line.51"></a>
+<FONT color="green">052</FONT>     *   &lt;/li&gt;<a name="line.52"></a>
+<FONT color="green">053</FONT>     * &lt;/ol&gt;<a name="line.53"></a>
+<FONT color="green">054</FONT>     * The methods in this class can be called from several different processes and<a name="line.54"></a>
+<FONT color="green">055</FONT>     * from several different contexts.  It is important to know which process and<a name="line.55"></a>
+<FONT color="green">056</FONT>     * which context each is called from.  Each method should be marked accordingly<a name="line.56"></a>
+<FONT color="green">057</FONT>     * in its documentation.  It is also important to note that not all methods are<a name="line.57"></a>
+<FONT color="green">058</FONT>     * guaranteed to be called once and only once.  If a method is not guaranteed to<a name="line.58"></a>
+<FONT color="green">059</FONT>     * have this property the output committer needs to handle this appropriately. <a name="line.59"></a>
+<FONT color="green">060</FONT>     * Also note it will only be in rare situations where they may be called <a name="line.60"></a>
+<FONT color="green">061</FONT>     * multiple times for the same task.<a name="line.61"></a>
+<FONT color="green">062</FONT>     * <a name="line.62"></a>
+<FONT color="green">063</FONT>     * @see org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter <a name="line.63"></a>
+<FONT color="green">064</FONT>     * @see JobContext<a name="line.64"></a>
+<FONT color="green">065</FONT>     * @see TaskAttemptContext <a name="line.65"></a>
+<FONT color="green">066</FONT>     */<a name="line.66"></a>
+<FONT color="green">067</FONT>    @InterfaceAudience.Public<a name="line.67"></a>
+<FONT color="green">068</FONT>    @InterfaceStability.Stable<a name="line.68"></a>
+<FONT color="green">069</FONT>    public abstract class OutputCommitter {<a name="line.69"></a>
+<FONT color="green">070</FONT>      /**<a name="line.70"></a>
+<FONT color="green">071</FONT>       * For the framework to setup the job output during initialization.  This is<a name="line.71"></a>
+<FONT color="green">072</FONT>       * called from the application master process for the entire job. This will be<a name="line.72"></a>
+<FONT color="green">073</FONT>       * called multiple times, once per job attempt.<a name="line.73"></a>
+<FONT color="green">074</FONT>       * <a name="line.74"></a>
+<FONT color="green">075</FONT>       * @param jobContext Context of the job whose output is being written.<a name="line.75"></a>
+<FONT color="green">076</FONT>       * @throws IOException if temporary output could not be created<a name="line.76"></a>
+<FONT color="green">077</FONT>       */<a name="line.77"></a>
+<FONT color="green">078</FONT>      public abstract void setupJob(JobContext jobContext) throws IOException;<a name="line.78"></a>
+<FONT color="green">079</FONT>    <a name="line.79"></a>
+<FONT color="green">080</FONT>      /**<a name="line.80"></a>
+<FONT color="green">081</FONT>       * For cleaning up the job's output after job completion.  This is called<a name="line.81"></a>
+<FONT color="green">082</FONT>       * from the application master process for the entire job. This may be called<a name="line.82"></a>
+<FONT color="green">083</FONT>       * multiple times.<a name="line.83"></a>
+<FONT color="green">084</FONT>       * <a name="line.84"></a>
+<FONT color="green">085</FONT>       * @param jobContext Context of the job whose output is being written.<a name="line.85"></a>
+<FONT color="green">086</FONT>       * @throws IOException<a name="line.86"></a>
+<FONT color="green">087</FONT>       * @deprecated Use {@link #commitJob(JobContext)} and<a name="line.87"></a>
+<FONT color="green">088</FONT>       *                 {@link #abortJob(JobContext, JobStatus.State)} instead.<a name="line.88"></a>
+<FONT color="green">089</FONT>       */<a name="line.89"></a>
+<FONT color="green">090</FONT>      @Deprecated<a name="line.90"></a>
+<FONT color="green">091</FONT>      public void cleanupJob(JobContext jobContext) throws IOException { }<a name="line.91"></a>
+<FONT color="green">092</FONT>    <a name="line.92"></a>
+<FONT color="green">093</FONT>      /**<a name="line.93"></a>
+<FONT color="green">094</FONT>       * For committing job's output after successful job completion. Note that this<a name="line.94"></a>
+<FONT color="green">095</FONT>       * is invoked for jobs with final runstate as SUCCESSFUL.  This is called<a name="line.95"></a>
+<FONT color="green">096</FONT>       * from the application master process for the entire job. This is guaranteed<a name="line.96"></a>
+<FONT color="green">097</FONT>       * to only be called once.  If it throws an exception the entire job will<a name="line.97"></a>
+<FONT color="green">098</FONT>       * fail.      <a name="line.98"></a>
+<FONT color="green">099</FONT>       * <a name="line.99"></a>
+<FONT color="green">100</FONT>       * @param jobContext Context of the job whose output is being written.<a name="line.100"></a>
+<FONT color="green">101</FONT>       * @throws IOException<a name="line.101"></a>
+<FONT color="green">102</FONT>       */<a name="line.102"></a>
+<FONT color="green">103</FONT>      public void commitJob(JobContext jobContext) throws IOException {<a name="line.103"></a>
+<FONT color="green">104</FONT>        cleanupJob(jobContext);<a name="line.104"></a>
+<FONT color="green">105</FONT>      }<a name="line.105"></a>
+<FONT color="green">106</FONT>    <a name="line.106"></a>
+<FONT color="green">107</FONT>      <a name="line.107"></a>
+<FONT color="green">108</FONT>      /**<a name="line.108"></a>
+<FONT color="green">109</FONT>       * For aborting an unsuccessful job's output. Note that this is invoked for <a name="line.109"></a>
+<FONT color="green">110</FONT>       * jobs with final runstate as {@link JobStatus.State#FAILED} or <a name="line.110"></a>
+<FONT color="green">111</FONT>       * {@link JobStatus.State#KILLED}.  This is called from the application<a name="line.111"></a>
+<FONT color="green">112</FONT>       * master process for the entire job. This may be called multiple times.<a name="line.112"></a>
+<FONT color="green">113</FONT>       *<a name="line.113"></a>
+<FONT color="green">114</FONT>       * @param jobContext Context of the job whose output is being written.<a name="line.114"></a>
+<FONT color="green">115</FONT>       * @param state final runstate of the job<a name="line.115"></a>
+<FONT color="green">116</FONT>       * @throws IOException<a name="line.116"></a>
+<FONT color="green">117</FONT>       */<a name="line.117"></a>
+<FONT color="green">118</FONT>      public void abortJob(JobContext jobContext, JobStatus.State state) <a name="line.118"></a>
+<FONT color="green">119</FONT>      throws IOException {<a name="line.119"></a>
+<FONT color="green">120</FONT>        cleanupJob(jobContext);<a name="line.120"></a>
+<FONT color="green">121</FONT>      }<a name="line.121"></a>
+<FONT color="green">122</FONT>      <a name="line.122"></a>
+<FONT color="green">123</FONT>      /**<a name="line.123"></a>
+<FONT color="green">124</FONT>       * Sets up output for the task.  This is called from each individual task's<a name="line.124"></a>
+<FONT color="green">125</FONT>       * process that will output to HDFS, and it is called just for that task. This<a name="line.125"></a>
+<FONT color="green">126</FONT>       * may be called multiple times for the same task, but for different task<a name="line.126"></a>
+<FONT color="green">127</FONT>       * attempts.<a name="line.127"></a>
+<FONT color="green">128</FONT>       * <a name="line.128"></a>
+<FONT color="green">129</FONT>       * @param taskContext Context of the task whose output is being written.<a name="line.129"></a>
+<FONT color="green">130</FONT>       * @throws IOException<a name="line.130"></a>
+<FONT color="green">131</FONT>       */<a name="line.131"></a>
+<FONT color="green">132</FONT>      public abstract void setupTask(TaskAttemptContext taskContext)<a name="line.132"></a>
+<FONT color="green">133</FONT>      throws IOException;<a name="line.133"></a>
+<FONT color="green">134</FONT>      <a name="line.134"></a>
+<FONT color="green">135</FONT>      /**<a name="line.135"></a>
+<FONT color="green">136</FONT>       * Check whether task needs a commit.  This is called from each individual<a name="line.136"></a>
+<FONT color="green">137</FONT>       * task's process that will output to HDFS, and it is called just for that<a name="line.137"></a>
+<FONT color="green">138</FONT>       * task.<a name="line.138"></a>
+<FONT color="green">139</FONT>       * <a name="line.139"></a>
+<FONT color="green">140</FONT>       * @param taskContext<a name="line.140"></a>
+<FONT color="green">141</FONT>       * @return true/false<a name="line.141"></a>
+<FONT color="green">142</FONT>       * @throws IOException<a name="line.142"></a>
+<FONT color="green">143</FONT>       */<a name="line.143"></a>
+<FONT color="green">144</FONT>      public abstract boolean needsTaskCommit(TaskAttemptContext taskContext)<a name="line.144"></a>
+<FONT color="green">145</FONT>      throws IOException;<a name="line.145"></a>
+<FONT color="green">146</FONT>    <a name="line.146"></a>
+<FONT color="green">147</FONT>      /**<a name="line.147"></a>
+<FONT color="green">148</FONT>       * To promote the task's temporary output to final output location.<a name="line.148"></a>
+<FONT color="green">149</FONT>       * If {@link #needsTaskCommit(TaskAttemptContext)} returns true and this<a name="line.149"></a>
+<FONT color="green">150</FONT>       * task is the task that the AM determines finished first, this method<a name="line.150"></a>
+<FONT color="green">151</FONT>       * is called to commit an individual task's output.  This is to mark<a name="line.151"></a>
+<FONT color="green">152</FONT>       * that tasks output as complete, as {@link #commitJob(JobContext)} will <a name="line.152"></a>
+<FONT color="green">153</FONT>       * also be called later on if the entire job finished successfully. This<a name="line.153"></a>
+<FONT color="green">154</FONT>       * is called from a task's process. This may be called multiple times for the<a name="line.154"></a>
+<FONT color="green">155</FONT>       * same task, but different task attempts.  It should be very rare for this to<a name="line.155"></a>
+<FONT color="green">156</FONT>       * be called multiple times and requires odd networking failures to make this<a name="line.156"></a>
+<FONT color="green">157</FONT>       * happen. In the future the Hadoop framework may eliminate this race.<a name="line.157"></a>
+<FONT color="green">158</FONT>       * <a name="line.158"></a>
+<FONT color="green">159</FONT>       * @param taskContext Context of the task whose output is being written.<a name="line.159"></a>
+<FONT color="green">160</FONT>       * @throws IOException if commit is not successful. <a name="line.160"></a>
+<FONT color="green">161</FONT>       */<a name="line.161"></a>
+<FONT color="green">162</FONT>      public abstract void commitTask(TaskAttemptContext taskContext)<a name="line.162"></a>
+<FONT color="green">163</FONT>      throws IOException;<a name="line.163"></a>
+<FONT color="green">164</FONT>      <a name="line.164"></a>
+<FONT color="green">165</FONT>      /**<a name="line.165"></a>
+<FONT color="green">166</FONT>       * Discard the task output. This is called from a task's process to clean <a name="line.166"></a>
+<FONT color="green">167</FONT>       * up a single task's output that can not yet been committed. This may be<a name="line.167"></a>
+<FONT color="green">168</FONT>       * called multiple times for the same task, but for different task attempts.<a name="line.168"></a>
+<FONT color="green">169</FONT>       * <a name="line.169"></a>
+<FONT color="green">170</FONT>       * @param taskContext<a name="line.170"></a>
+<FONT color="green">171</FONT>       * @throws IOException<a name="line.171"></a>
+<FONT color="green">172</FONT>       */<a name="line.172"></a>
+<FONT color="green">173</FONT>      public abstract void abortTask(TaskAttemptContext taskContext)<a name="line.173"></a>
+<FONT color="green">174</FONT>      throws IOException;<a name="line.174"></a>
+<FONT color="green">175</FONT>    <a name="line.175"></a>
+<FONT color="green">176</FONT>      /**<a name="line.176"></a>
+<FONT color="green">177</FONT>       * Is task output recovery supported for restarting jobs?<a name="line.177"></a>
+<FONT color="green">178</FONT>       * <a name="line.178"></a>
+<FONT color="green">179</FONT>       * If task output recovery is supported, job restart can be done more <a name="line.179"></a>
+<FONT color="green">180</FONT>       * efficiently.<a name="line.180"></a>
+<FONT color="green">181</FONT>       * <a name="line.181"></a>
+<FONT color="green">182</FONT>       * @return &lt;code&gt;true&lt;/code&gt; if task output recovery is supported,<a name="line.182"></a>
+<FONT color="green">183</FONT>       *         &lt;code&gt;false&lt;/code&gt; otherwise<a name="line.183"></a>
+<FONT color="green">184</FONT>       * @see #recoverTask(TaskAttemptContext)         <a name="line.184"></a>
+<FONT color="green">185</FONT>       */<a name="line.185"></a>
+<FONT color="green">186</FONT>      public boolean isRecoverySupported() {<a name="line.186"></a>
+<FONT color="green">187</FONT>        return false;<a name="line.187"></a>
+<FONT color="green">188</FONT>      }<a name="line.188"></a>
+<FONT color="green">189</FONT>      <a name="line.189"></a>
+<FONT color="green">190</FONT>      /**<a name="line.190"></a>
+<FONT color="green">191</FONT>       * Recover the task output. <a name="line.191"></a>
+<FONT color="green">192</FONT>       * <a name="line.192"></a>
+<FONT color="green">193</FONT>       * The retry-count for the job will be passed via the <a name="line.193"></a>
+<FONT color="green">194</FONT>       * {@link MRJobConfig#APPLICATION_ATTEMPT_ID} key in  <a name="line.194"></a>
+<FONT color="green">195</FONT>       * {@link TaskAttemptContext#getConfiguration()} for the <a name="line.195"></a>
+<FONT color="green">196</FONT>       * &lt;code&gt;OutputCommitter&lt;/code&gt;.  This is called from the application master<a name="line.196"></a>
+<FONT color="green">197</FONT>       * process, but it is called individually for each task.<a name="line.197"></a>
+<FONT color="green">198</FONT>       * <a name="line.198"></a>
+<FONT color="green">199</FONT>       * If an exception is thrown the task will be attempted again. <a name="line.199"></a>
+<FONT color="green">200</FONT>       * <a name="line.200"></a>
+<FONT color="green">201</FONT>       * This may be called multiple times for the same task.  But from different<a name="line.201"></a>
+<FONT color="green">202</FONT>       * application attempts.<a name="line.202"></a>
+<FONT color="green">203</FONT>       * <a name="line.203"></a>
+<FONT color="green">204</FONT>       * @param taskContext Context of the task whose output is being recovered<a name="line.204"></a>
+<FONT color="green">205</FONT>       * @throws IOException<a name="line.205"></a>
+<FONT color="green">206</FONT>       */<a name="line.206"></a>
+<FONT color="green">207</FONT>      public void recoverTask(TaskAttemptContext taskContext)<a name="line.207"></a>
+<FONT color="green">208</FONT>      throws IOException<a name="line.208"></a>
+<FONT color="green">209</FONT>      {}<a name="line.209"></a>
+<FONT color="green">210</FONT>    }<a name="line.210"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

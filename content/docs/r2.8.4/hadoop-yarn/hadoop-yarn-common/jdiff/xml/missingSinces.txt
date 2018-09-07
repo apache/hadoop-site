@@ -1,0 +1,17 @@
+MISSING @SINCE TAG: org.apache.hadoop.yarn.util.ConverterUtils Class
+MISSING @SINCE TAG: org.apache.hadoop.yarn.state.InvalidStateTransitionException Class
+MISSING @SINCE TAG: org.apache.hadoop.yarn.util.MonotonicClock Class
+NO DOC BLOCK: org.apache.hadoop.yarn.util.AbstractLivelinessMonitor Constructor (java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.yarn.security.ContainerTokenIdentifier Constructor (org.apache.hadoop.yarn.api.records.ContainerId, int, java.lang.String, java.lang.String, org.apache.hadoop.yarn.api.records.Resource, long, int, long, org.apache.hadoop.yarn.api.records.Priority, long, org.apache.hadoop.yarn.api.records.LogAggregationContext, java.lang.String, org.apache.hadoop.yarn.server.api.ContainerType)
+NO DOC BLOCK: org.apache.hadoop.yarn.security.ContainerTokenIdentifier Constructor (org.apache.hadoop.yarn.api.records.ContainerId, java.lang.String, java.lang.String, org.apache.hadoop.yarn.api.records.Resource, long, int, long, org.apache.hadoop.yarn.api.records.Priority, long, org.apache.hadoop.yarn.api.records.LogAggregationContext, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.yarn.security.ContainerTokenIdentifier Constructor (org.apache.hadoop.yarn.api.records.ContainerId, java.lang.String, java.lang.String, org.apache.hadoop.yarn.api.records.Resource, long, int, long, org.apache.hadoop.yarn.api.records.Priority, long, org.apache.hadoop.yarn.api.records.LogAggregationContext, java.lang.String, org.apache.hadoop.yarn.server.api.ContainerType)
+NO DOC BLOCK: org.apache.hadoop.yarn.util.timeline.TimelineUtils Method createTimelineAbout(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.yarn.security.ContainerTokenIdentifier Method getContainerType()
+MISSING @SINCE TAG: org.apache.hadoop.yarn.security.ContainerTokenIdentifier Method getNodeLabelExpression()
+MISSING @SINCE TAG: org.apache.hadoop.yarn.util.timeline.TimelineUtils Method getTimelineServiceVersion(org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.yarn.security.ContainerTokenIdentifier Method getVersion()
+MISSING @SINCE TAG: org.apache.hadoop.yarn.client.api.TimelineClient Method putDomain(org.apache.hadoop.yarn.api.records.ApplicationAttemptId, org.apache.hadoop.yarn.api.records.timeline.TimelineDomain)
+MISSING @SINCE TAG: org.apache.hadoop.yarn.client.api.TimelineClient Method putEntities(org.apache.hadoop.yarn.api.records.ApplicationAttemptId, org.apache.hadoop.yarn.api.records.timeline.TimelineEntityGroupId, org.apache.hadoop.yarn.api.records.timeline.TimelineEntity[])
+MISSING @SINCE TAG: org.apache.hadoop.yarn.logaggregation.AggregatedLogFormat.LogReader Method readContainerLogsForALogType(java.io.DataInputStream, java.io.PrintStream, long, java.util.List)
+MISSING @SINCE TAG: org.apache.hadoop.yarn.util.timeline.TimelineUtils Method timelineServiceEnabled(org.apache.hadoop.conf.Configuration)
+MISSING @SINCE TAG: org.apache.hadoop.yarn.util.timeline.TimelineUtils Method timelineServiceV1_5Enabled(org.apache.hadoop.conf.Configuration)

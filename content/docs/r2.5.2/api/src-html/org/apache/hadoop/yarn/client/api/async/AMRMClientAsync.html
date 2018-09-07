@@ -1,0 +1,298 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>    * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>    * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>    * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>    * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>    * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>    * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>    * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>    *<a name="line.9"></a>
+<FONT color="green">010</FONT>    *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>    *<a name="line.11"></a>
+<FONT color="green">012</FONT>    * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>    * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>    * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>    * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>    */<a name="line.17"></a>
+<FONT color="green">018</FONT>    <a name="line.18"></a>
+<FONT color="green">019</FONT>    package org.apache.hadoop.yarn.client.api.async;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>    import java.io.IOException;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import java.util.Collection;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import java.util.List;<a name="line.23"></a>
+<FONT color="green">024</FONT>    import java.util.concurrent.atomic.AtomicInteger;<a name="line.24"></a>
+<FONT color="green">025</FONT>    <a name="line.25"></a>
+<FONT color="green">026</FONT>    import org.apache.hadoop.classification.InterfaceAudience.Private;<a name="line.26"></a>
+<FONT color="green">027</FONT>    import org.apache.hadoop.classification.InterfaceAudience.Public;<a name="line.27"></a>
+<FONT color="green">028</FONT>    import org.apache.hadoop.classification.InterfaceStability.Stable;<a name="line.28"></a>
+<FONT color="green">029</FONT>    import org.apache.hadoop.service.AbstractService;<a name="line.29"></a>
+<FONT color="green">030</FONT>    import org.apache.hadoop.yarn.api.protocolrecords.RegisterApplicationMasterResponse;<a name="line.30"></a>
+<FONT color="green">031</FONT>    import org.apache.hadoop.yarn.api.records.Container;<a name="line.31"></a>
+<FONT color="green">032</FONT>    import org.apache.hadoop.yarn.api.records.ContainerId;<a name="line.32"></a>
+<FONT color="green">033</FONT>    import org.apache.hadoop.yarn.api.records.ContainerStatus;<a name="line.33"></a>
+<FONT color="green">034</FONT>    import org.apache.hadoop.yarn.api.records.FinalApplicationStatus;<a name="line.34"></a>
+<FONT color="green">035</FONT>    import org.apache.hadoop.yarn.api.records.NodeReport;<a name="line.35"></a>
+<FONT color="green">036</FONT>    import org.apache.hadoop.yarn.api.records.Priority;<a name="line.36"></a>
+<FONT color="green">037</FONT>    import org.apache.hadoop.yarn.api.records.Resource;<a name="line.37"></a>
+<FONT color="green">038</FONT>    import org.apache.hadoop.yarn.client.api.AMRMClient;<a name="line.38"></a>
+<FONT color="green">039</FONT>    import org.apache.hadoop.yarn.client.api.AMRMClient.ContainerRequest;<a name="line.39"></a>
+<FONT color="green">040</FONT>    import org.apache.hadoop.yarn.client.api.async.impl.AMRMClientAsyncImpl;<a name="line.40"></a>
+<FONT color="green">041</FONT>    import org.apache.hadoop.yarn.client.api.impl.AMRMClientImpl;<a name="line.41"></a>
+<FONT color="green">042</FONT>    import org.apache.hadoop.yarn.exceptions.YarnException;<a name="line.42"></a>
+<FONT color="green">043</FONT>    <a name="line.43"></a>
+<FONT color="green">044</FONT>    import com.google.common.annotations.VisibleForTesting;<a name="line.44"></a>
+<FONT color="green">045</FONT>    <a name="line.45"></a>
+<FONT color="green">046</FONT>    /**<a name="line.46"></a>
+<FONT color="green">047</FONT>     * &lt;code&gt;AMRMClientAsync&lt;/code&gt; handles communication with the ResourceManager<a name="line.47"></a>
+<FONT color="green">048</FONT>     * and provides asynchronous updates on events such as container allocations and<a name="line.48"></a>
+<FONT color="green">049</FONT>     * completions.  It contains a thread that sends periodic heartbeats to the<a name="line.49"></a>
+<FONT color="green">050</FONT>     * ResourceManager.<a name="line.50"></a>
+<FONT color="green">051</FONT>     * <a name="line.51"></a>
+<FONT color="green">052</FONT>     * It should be used by implementing a CallbackHandler:<a name="line.52"></a>
+<FONT color="green">053</FONT>     * &lt;pre&gt;<a name="line.53"></a>
+<FONT color="green">054</FONT>     * {@code<a name="line.54"></a>
+<FONT color="green">055</FONT>     * class MyCallbackHandler implements AMRMClientAsync.CallbackHandler {<a name="line.55"></a>
+<FONT color="green">056</FONT>     *   public void onContainersAllocated(List&lt;Container&gt; containers) {<a name="line.56"></a>
+<FONT color="green">057</FONT>     *     [run tasks on the containers]<a name="line.57"></a>
+<FONT color="green">058</FONT>     *   }<a name="line.58"></a>
+<FONT color="green">059</FONT>     *   <a name="line.59"></a>
+<FONT color="green">060</FONT>     *   public void onContainersCompleted(List&lt;ContainerStatus&gt; statuses) {<a name="line.60"></a>
+<FONT color="green">061</FONT>     *     [update progress, check whether app is done]<a name="line.61"></a>
+<FONT color="green">062</FONT>     *   }<a name="line.62"></a>
+<FONT color="green">063</FONT>     *   <a name="line.63"></a>
+<FONT color="green">064</FONT>     *   public void onNodesUpdated(List&lt;NodeReport&gt; updated) {}<a name="line.64"></a>
+<FONT color="green">065</FONT>     *   <a name="line.65"></a>
+<FONT color="green">066</FONT>     *   public void onReboot() {}<a name="line.66"></a>
+<FONT color="green">067</FONT>     * }<a name="line.67"></a>
+<FONT color="green">068</FONT>     * }<a name="line.68"></a>
+<FONT color="green">069</FONT>     * &lt;/pre&gt;<a name="line.69"></a>
+<FONT color="green">070</FONT>     * <a name="line.70"></a>
+<FONT color="green">071</FONT>     * The client's lifecycle should be managed similarly to the following:<a name="line.71"></a>
+<FONT color="green">072</FONT>     * <a name="line.72"></a>
+<FONT color="green">073</FONT>     * &lt;pre&gt;<a name="line.73"></a>
+<FONT color="green">074</FONT>     * {@code<a name="line.74"></a>
+<FONT color="green">075</FONT>     * AMRMClientAsync asyncClient = <a name="line.75"></a>
+<FONT color="green">076</FONT>     *     createAMRMClientAsync(appAttId, 1000, new MyCallbackhandler());<a name="line.76"></a>
+<FONT color="green">077</FONT>     * asyncClient.init(conf);<a name="line.77"></a>
+<FONT color="green">078</FONT>     * asyncClient.start();<a name="line.78"></a>
+<FONT color="green">079</FONT>     * RegisterApplicationMasterResponse response = asyncClient<a name="line.79"></a>
+<FONT color="green">080</FONT>     *    .registerApplicationMaster(appMasterHostname, appMasterRpcPort,<a name="line.80"></a>
+<FONT color="green">081</FONT>     *       appMasterTrackingUrl);<a name="line.81"></a>
+<FONT color="green">082</FONT>     * asyncClient.addContainerRequest(containerRequest);<a name="line.82"></a>
+<FONT color="green">083</FONT>     * [... wait for application to complete]<a name="line.83"></a>
+<FONT color="green">084</FONT>     * asyncClient.unregisterApplicationMaster(status, appMsg, trackingUrl);<a name="line.84"></a>
+<FONT color="green">085</FONT>     * asyncClient.stop();<a name="line.85"></a>
+<FONT color="green">086</FONT>     * }<a name="line.86"></a>
+<FONT color="green">087</FONT>     * &lt;/pre&gt;<a name="line.87"></a>
+<FONT color="green">088</FONT>     */<a name="line.88"></a>
+<FONT color="green">089</FONT>    @Public<a name="line.89"></a>
+<FONT color="green">090</FONT>    @Stable<a name="line.90"></a>
+<FONT color="green">091</FONT>    public abstract class AMRMClientAsync&lt;T extends ContainerRequest&gt; <a name="line.91"></a>
+<FONT color="green">092</FONT>    extends AbstractService {<a name="line.92"></a>
+<FONT color="green">093</FONT>      <a name="line.93"></a>
+<FONT color="green">094</FONT>      protected final AMRMClient&lt;T&gt; client;<a name="line.94"></a>
+<FONT color="green">095</FONT>      protected final CallbackHandler handler;<a name="line.95"></a>
+<FONT color="green">096</FONT>      protected final AtomicInteger heartbeatIntervalMs = new AtomicInteger();<a name="line.96"></a>
+<FONT color="green">097</FONT>    <a name="line.97"></a>
+<FONT color="green">098</FONT>      public static &lt;T extends ContainerRequest&gt; AMRMClientAsync&lt;T&gt;<a name="line.98"></a>
+<FONT color="green">099</FONT>          createAMRMClientAsync(int intervalMs, CallbackHandler callbackHandler) {<a name="line.99"></a>
+<FONT color="green">100</FONT>        return new AMRMClientAsyncImpl&lt;T&gt;(intervalMs, callbackHandler);<a name="line.100"></a>
+<FONT color="green">101</FONT>      }<a name="line.101"></a>
+<FONT color="green">102</FONT>      <a name="line.102"></a>
+<FONT color="green">103</FONT>      public static &lt;T extends ContainerRequest&gt; AMRMClientAsync&lt;T&gt;<a name="line.103"></a>
+<FONT color="green">104</FONT>          createAMRMClientAsync(AMRMClient&lt;T&gt; client, int intervalMs,<a name="line.104"></a>
+<FONT color="green">105</FONT>              CallbackHandler callbackHandler) {<a name="line.105"></a>
+<FONT color="green">106</FONT>        return new AMRMClientAsyncImpl&lt;T&gt;(client, intervalMs, callbackHandler);<a name="line.106"></a>
+<FONT color="green">107</FONT>      }<a name="line.107"></a>
+<FONT color="green">108</FONT>      <a name="line.108"></a>
+<FONT color="green">109</FONT>      protected AMRMClientAsync(int intervalMs, CallbackHandler callbackHandler) {<a name="line.109"></a>
+<FONT color="green">110</FONT>        this(new AMRMClientImpl&lt;T&gt;(), intervalMs, callbackHandler);<a name="line.110"></a>
+<FONT color="green">111</FONT>      }<a name="line.111"></a>
+<FONT color="green">112</FONT>      <a name="line.112"></a>
+<FONT color="green">113</FONT>      @Private<a name="line.113"></a>
+<FONT color="green">114</FONT>      @VisibleForTesting<a name="line.114"></a>
+<FONT color="green">115</FONT>      protected AMRMClientAsync(AMRMClient&lt;T&gt; client, int intervalMs,<a name="line.115"></a>
+<FONT color="green">116</FONT>          CallbackHandler callbackHandler) {<a name="line.116"></a>
+<FONT color="green">117</FONT>        super(AMRMClientAsync.class.getName());<a name="line.117"></a>
+<FONT color="green">118</FONT>        this.client = client;<a name="line.118"></a>
+<FONT color="green">119</FONT>        this.heartbeatIntervalMs.set(intervalMs);<a name="line.119"></a>
+<FONT color="green">120</FONT>        this.handler = callbackHandler;<a name="line.120"></a>
+<FONT color="green">121</FONT>      }<a name="line.121"></a>
+<FONT color="green">122</FONT>        <a name="line.122"></a>
+<FONT color="green">123</FONT>      public void setHeartbeatInterval(int interval) {<a name="line.123"></a>
+<FONT color="green">124</FONT>        heartbeatIntervalMs.set(interval);<a name="line.124"></a>
+<FONT color="green">125</FONT>      }<a name="line.125"></a>
+<FONT color="green">126</FONT>      <a name="line.126"></a>
+<FONT color="green">127</FONT>      public abstract List&lt;? extends Collection&lt;T&gt;&gt; getMatchingRequests(<a name="line.127"></a>
+<FONT color="green">128</FONT>                                                       Priority priority, <a name="line.128"></a>
+<FONT color="green">129</FONT>                                                       String resourceName, <a name="line.129"></a>
+<FONT color="green">130</FONT>                                                       Resource capability);<a name="line.130"></a>
+<FONT color="green">131</FONT>      <a name="line.131"></a>
+<FONT color="green">132</FONT>      /**<a name="line.132"></a>
+<FONT color="green">133</FONT>       * Registers this application master with the resource manager. On successful<a name="line.133"></a>
+<FONT color="green">134</FONT>       * registration, starts the heartbeating thread.<a name="line.134"></a>
+<FONT color="green">135</FONT>       * @throws YarnException<a name="line.135"></a>
+<FONT color="green">136</FONT>       * @throws IOException<a name="line.136"></a>
+<FONT color="green">137</FONT>       */<a name="line.137"></a>
+<FONT color="green">138</FONT>      public abstract RegisterApplicationMasterResponse registerApplicationMaster(<a name="line.138"></a>
+<FONT color="green">139</FONT>          String appHostName, int appHostPort, String appTrackingUrl)<a name="line.139"></a>
+<FONT color="green">140</FONT>          throws YarnException, IOException;<a name="line.140"></a>
+<FONT color="green">141</FONT>    <a name="line.141"></a>
+<FONT color="green">142</FONT>      /**<a name="line.142"></a>
+<FONT color="green">143</FONT>       * Unregister the application master. This must be called in the end.<a name="line.143"></a>
+<FONT color="green">144</FONT>       * @param appStatus Success/Failure status of the master<a name="line.144"></a>
+<FONT color="green">145</FONT>       * @param appMessage Diagnostics message on failure<a name="line.145"></a>
+<FONT color="green">146</FONT>       * @param appTrackingUrl New URL to get master info<a name="line.146"></a>
+<FONT color="green">147</FONT>       * @throws YarnException<a name="line.147"></a>
+<FONT color="green">148</FONT>       * @throws IOException<a name="line.148"></a>
+<FONT color="green">149</FONT>       */<a name="line.149"></a>
+<FONT color="green">150</FONT>      public abstract void unregisterApplicationMaster(<a name="line.150"></a>
+<FONT color="green">151</FONT>          FinalApplicationStatus appStatus, String appMessage, String appTrackingUrl) <a name="line.151"></a>
+<FONT color="green">152</FONT>      throws YarnException, IOException;<a name="line.152"></a>
+<FONT color="green">153</FONT>    <a name="line.153"></a>
+<FONT color="green">154</FONT>      /**<a name="line.154"></a>
+<FONT color="green">155</FONT>       * Request containers for resources before calling &lt;code&gt;allocate&lt;/code&gt;<a name="line.155"></a>
+<FONT color="green">156</FONT>       * @param req Resource request<a name="line.156"></a>
+<FONT color="green">157</FONT>       */<a name="line.157"></a>
+<FONT color="green">158</FONT>      public abstract void addContainerRequest(T req);<a name="line.158"></a>
+<FONT color="green">159</FONT>    <a name="line.159"></a>
+<FONT color="green">160</FONT>      /**<a name="line.160"></a>
+<FONT color="green">161</FONT>       * Remove previous container request. The previous container request may have <a name="line.161"></a>
+<FONT color="green">162</FONT>       * already been sent to the ResourceManager. So even after the remove request <a name="line.162"></a>
+<FONT color="green">163</FONT>       * the app must be prepared to receive an allocation for the previous request <a name="line.163"></a>
+<FONT color="green">164</FONT>       * even after the remove request<a name="line.164"></a>
+<FONT color="green">165</FONT>       * @param req Resource request<a name="line.165"></a>
+<FONT color="green">166</FONT>       */<a name="line.166"></a>
+<FONT color="green">167</FONT>      public abstract void removeContainerRequest(T req);<a name="line.167"></a>
+<FONT color="green">168</FONT>    <a name="line.168"></a>
+<FONT color="green">169</FONT>      /**<a name="line.169"></a>
+<FONT color="green">170</FONT>       * Release containers assigned by the Resource Manager. If the app cannot use<a name="line.170"></a>
+<FONT color="green">171</FONT>       * the container or wants to give up the container then it can release them.<a name="line.171"></a>
+<FONT color="green">172</FONT>       * The app needs to make new requests for the released resource capability if<a name="line.172"></a>
+<FONT color="green">173</FONT>       * it still needs it. eg. it released non-local resources<a name="line.173"></a>
+<FONT color="green">174</FONT>       * @param containerId<a name="line.174"></a>
+<FONT color="green">175</FONT>       */<a name="line.175"></a>
+<FONT color="green">176</FONT>      public abstract void releaseAssignedContainer(ContainerId containerId);<a name="line.176"></a>
+<FONT color="green">177</FONT>    <a name="line.177"></a>
+<FONT color="green">178</FONT>      /**<a name="line.178"></a>
+<FONT color="green">179</FONT>       * Get the currently available resources in the cluster.<a name="line.179"></a>
+<FONT color="green">180</FONT>       * A valid value is available after a call to allocate has been made<a name="line.180"></a>
+<FONT color="green">181</FONT>       * @return Currently available resources<a name="line.181"></a>
+<FONT color="green">182</FONT>       */<a name="line.182"></a>
+<FONT color="green">183</FONT>      public abstract Resource getAvailableResources();<a name="line.183"></a>
+<FONT color="green">184</FONT>    <a name="line.184"></a>
+<FONT color="green">185</FONT>      /**<a name="line.185"></a>
+<FONT color="green">186</FONT>       * Get the current number of nodes in the cluster.<a name="line.186"></a>
+<FONT color="green">187</FONT>       * A valid values is available after a call to allocate has been made<a name="line.187"></a>
+<FONT color="green">188</FONT>       * @return Current number of nodes in the cluster<a name="line.188"></a>
+<FONT color="green">189</FONT>       */<a name="line.189"></a>
+<FONT color="green">190</FONT>      public abstract int getClusterNodeCount();<a name="line.190"></a>
+<FONT color="green">191</FONT>    <a name="line.191"></a>
+<FONT color="green">192</FONT>      public interface CallbackHandler {<a name="line.192"></a>
+<FONT color="green">193</FONT>        <a name="line.193"></a>
+<FONT color="green">194</FONT>        /**<a name="line.194"></a>
+<FONT color="green">195</FONT>         * Called when the ResourceManager responds to a heartbeat with completed<a name="line.195"></a>
+<FONT color="green">196</FONT>         * containers. If the response contains both completed containers and<a name="line.196"></a>
+<FONT color="green">197</FONT>         * allocated containers, this will be called before containersAllocated.<a name="line.197"></a>
+<FONT color="green">198</FONT>         */<a name="line.198"></a>
+<FONT color="green">199</FONT>        public void onContainersCompleted(List&lt;ContainerStatus&gt; statuses);<a name="line.199"></a>
+<FONT color="green">200</FONT>        <a name="line.200"></a>
+<FONT color="green">201</FONT>        /**<a name="line.201"></a>
+<FONT color="green">202</FONT>         * Called when the ResourceManager responds to a heartbeat with allocated<a name="line.202"></a>
+<FONT color="green">203</FONT>         * containers. If the response containers both completed containers and<a name="line.203"></a>
+<FONT color="green">204</FONT>         * allocated containers, this will be called after containersCompleted.<a name="line.204"></a>
+<FONT color="green">205</FONT>         */<a name="line.205"></a>
+<FONT color="green">206</FONT>        public void onContainersAllocated(List&lt;Container&gt; containers);<a name="line.206"></a>
+<FONT color="green">207</FONT>        <a name="line.207"></a>
+<FONT color="green">208</FONT>        /**<a name="line.208"></a>
+<FONT color="green">209</FONT>         * Called when the ResourceManager wants the ApplicationMaster to shutdown<a name="line.209"></a>
+<FONT color="green">210</FONT>         * for being out of sync etc. The ApplicationMaster should not unregister<a name="line.210"></a>
+<FONT color="green">211</FONT>         * with the RM unless the ApplicationMaster wants to be the last attempt.<a name="line.211"></a>
+<FONT color="green">212</FONT>         */<a name="line.212"></a>
+<FONT color="green">213</FONT>        public void onShutdownRequest();<a name="line.213"></a>
+<FONT color="green">214</FONT>        <a name="line.214"></a>
+<FONT color="green">215</FONT>        /**<a name="line.215"></a>
+<FONT color="green">216</FONT>         * Called when nodes tracked by the ResourceManager have changed in health,<a name="line.216"></a>
+<FONT color="green">217</FONT>         * availability etc.<a name="line.217"></a>
+<FONT color="green">218</FONT>         */<a name="line.218"></a>
+<FONT color="green">219</FONT>        public void onNodesUpdated(List&lt;NodeReport&gt; updatedNodes);<a name="line.219"></a>
+<FONT color="green">220</FONT>        <a name="line.220"></a>
+<FONT color="green">221</FONT>        public float getProgress();<a name="line.221"></a>
+<FONT color="green">222</FONT>        <a name="line.222"></a>
+<FONT color="green">223</FONT>        /**<a name="line.223"></a>
+<FONT color="green">224</FONT>         * Called when error comes from RM communications as well as from errors in<a name="line.224"></a>
+<FONT color="green">225</FONT>         * the callback itself from the app. Calling<a name="line.225"></a>
+<FONT color="green">226</FONT>         * stop() is the recommended action.<a name="line.226"></a>
+<FONT color="green">227</FONT>         *<a name="line.227"></a>
+<FONT color="green">228</FONT>         * @param e<a name="line.228"></a>
+<FONT color="green">229</FONT>         */<a name="line.229"></a>
+<FONT color="green">230</FONT>        public void onError(Throwable e);<a name="line.230"></a>
+<FONT color="green">231</FONT>      }<a name="line.231"></a>
+<FONT color="green">232</FONT>    }<a name="line.232"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

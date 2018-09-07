@@ -1,0 +1,866 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    <a name="line.18"></a>
+<FONT color="green">019</FONT>    <a name="line.19"></a>
+<FONT color="green">020</FONT>    package org.apache.hadoop.fs;<a name="line.20"></a>
+<FONT color="green">021</FONT>    <a name="line.21"></a>
+<FONT color="green">022</FONT>    import com.google.common.annotations.VisibleForTesting;<a name="line.22"></a>
+<FONT color="green">023</FONT>    <a name="line.23"></a>
+<FONT color="green">024</FONT>    import java.io.BufferedOutputStream;<a name="line.24"></a>
+<FONT color="green">025</FONT>    import java.io.DataOutput;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import java.io.File;<a name="line.26"></a>
+<FONT color="green">027</FONT>    import java.io.FileInputStream;<a name="line.27"></a>
+<FONT color="green">028</FONT>    import java.io.FileNotFoundException;<a name="line.28"></a>
+<FONT color="green">029</FONT>    import java.io.FileOutputStream;<a name="line.29"></a>
+<FONT color="green">030</FONT>    import java.io.IOException;<a name="line.30"></a>
+<FONT color="green">031</FONT>    import java.io.OutputStream;<a name="line.31"></a>
+<FONT color="green">032</FONT>    import java.io.FileDescriptor;<a name="line.32"></a>
+<FONT color="green">033</FONT>    import java.net.URI;<a name="line.33"></a>
+<FONT color="green">034</FONT>    import java.nio.ByteBuffer;<a name="line.34"></a>
+<FONT color="green">035</FONT>    import java.util.Arrays;<a name="line.35"></a>
+<FONT color="green">036</FONT>    import java.util.EnumSet;<a name="line.36"></a>
+<FONT color="green">037</FONT>    import java.util.StringTokenizer;<a name="line.37"></a>
+<FONT color="green">038</FONT>    <a name="line.38"></a>
+<FONT color="green">039</FONT>    import org.apache.hadoop.classification.InterfaceAudience;<a name="line.39"></a>
+<FONT color="green">040</FONT>    import org.apache.hadoop.classification.InterfaceStability;<a name="line.40"></a>
+<FONT color="green">041</FONT>    import org.apache.hadoop.conf.Configuration;<a name="line.41"></a>
+<FONT color="green">042</FONT>    import org.apache.hadoop.fs.permission.FsPermission;<a name="line.42"></a>
+<FONT color="green">043</FONT>    import org.apache.hadoop.io.nativeio.NativeIO;<a name="line.43"></a>
+<FONT color="green">044</FONT>    import org.apache.hadoop.util.Progressable;<a name="line.44"></a>
+<FONT color="green">045</FONT>    import org.apache.hadoop.util.Shell;<a name="line.45"></a>
+<FONT color="green">046</FONT>    import org.apache.hadoop.util.StringUtils;<a name="line.46"></a>
+<FONT color="green">047</FONT>    <a name="line.47"></a>
+<FONT color="green">048</FONT>    /****************************************************************<a name="line.48"></a>
+<FONT color="green">049</FONT>     * Implement the FileSystem API for the raw local filesystem.<a name="line.49"></a>
+<FONT color="green">050</FONT>     *<a name="line.50"></a>
+<FONT color="green">051</FONT>     *****************************************************************/<a name="line.51"></a>
+<FONT color="green">052</FONT>    @InterfaceAudience.Public<a name="line.52"></a>
+<FONT color="green">053</FONT>    @InterfaceStability.Stable<a name="line.53"></a>
+<FONT color="green">054</FONT>    public class RawLocalFileSystem extends FileSystem {<a name="line.54"></a>
+<FONT color="green">055</FONT>      static final URI NAME = URI.create("file:///");<a name="line.55"></a>
+<FONT color="green">056</FONT>      private Path workingDir;<a name="line.56"></a>
+<FONT color="green">057</FONT>      // Temporary workaround for HADOOP-9652.<a name="line.57"></a>
+<FONT color="green">058</FONT>      private static boolean useDeprecatedFileStatus = true;<a name="line.58"></a>
+<FONT color="green">059</FONT>    <a name="line.59"></a>
+<FONT color="green">060</FONT>      @VisibleForTesting<a name="line.60"></a>
+<FONT color="green">061</FONT>      public static void useStatIfAvailable() {<a name="line.61"></a>
+<FONT color="green">062</FONT>        useDeprecatedFileStatus = !Stat.isAvailable();<a name="line.62"></a>
+<FONT color="green">063</FONT>      }<a name="line.63"></a>
+<FONT color="green">064</FONT>      <a name="line.64"></a>
+<FONT color="green">065</FONT>      public RawLocalFileSystem() {<a name="line.65"></a>
+<FONT color="green">066</FONT>        workingDir = getInitialWorkingDirectory();<a name="line.66"></a>
+<FONT color="green">067</FONT>      }<a name="line.67"></a>
+<FONT color="green">068</FONT>      <a name="line.68"></a>
+<FONT color="green">069</FONT>      private Path makeAbsolute(Path f) {<a name="line.69"></a>
+<FONT color="green">070</FONT>        if (f.isAbsolute()) {<a name="line.70"></a>
+<FONT color="green">071</FONT>          return f;<a name="line.71"></a>
+<FONT color="green">072</FONT>        } else {<a name="line.72"></a>
+<FONT color="green">073</FONT>          return new Path(workingDir, f);<a name="line.73"></a>
+<FONT color="green">074</FONT>        }<a name="line.74"></a>
+<FONT color="green">075</FONT>      }<a name="line.75"></a>
+<FONT color="green">076</FONT>      <a name="line.76"></a>
+<FONT color="green">077</FONT>      /** Convert a path to a File. */<a name="line.77"></a>
+<FONT color="green">078</FONT>      public File pathToFile(Path path) {<a name="line.78"></a>
+<FONT color="green">079</FONT>        checkPath(path);<a name="line.79"></a>
+<FONT color="green">080</FONT>        if (!path.isAbsolute()) {<a name="line.80"></a>
+<FONT color="green">081</FONT>          path = new Path(getWorkingDirectory(), path);<a name="line.81"></a>
+<FONT color="green">082</FONT>        }<a name="line.82"></a>
+<FONT color="green">083</FONT>        return new File(path.toUri().getPath());<a name="line.83"></a>
+<FONT color="green">084</FONT>      }<a name="line.84"></a>
+<FONT color="green">085</FONT>    <a name="line.85"></a>
+<FONT color="green">086</FONT>      @Override<a name="line.86"></a>
+<FONT color="green">087</FONT>      public URI getUri() { return NAME; }<a name="line.87"></a>
+<FONT color="green">088</FONT>      <a name="line.88"></a>
+<FONT color="green">089</FONT>      @Override<a name="line.89"></a>
+<FONT color="green">090</FONT>      public void initialize(URI uri, Configuration conf) throws IOException {<a name="line.90"></a>
+<FONT color="green">091</FONT>        super.initialize(uri, conf);<a name="line.91"></a>
+<FONT color="green">092</FONT>        setConf(conf);<a name="line.92"></a>
+<FONT color="green">093</FONT>      }<a name="line.93"></a>
+<FONT color="green">094</FONT>      <a name="line.94"></a>
+<FONT color="green">095</FONT>      /*******************************************************<a name="line.95"></a>
+<FONT color="green">096</FONT>       * For open()'s FSInputStream.<a name="line.96"></a>
+<FONT color="green">097</FONT>       *******************************************************/<a name="line.97"></a>
+<FONT color="green">098</FONT>      class LocalFSFileInputStream extends FSInputStream implements HasFileDescriptor {<a name="line.98"></a>
+<FONT color="green">099</FONT>        private FileInputStream fis;<a name="line.99"></a>
+<FONT color="green">100</FONT>        private long position;<a name="line.100"></a>
+<FONT color="green">101</FONT>    <a name="line.101"></a>
+<FONT color="green">102</FONT>        public LocalFSFileInputStream(Path f) throws IOException {<a name="line.102"></a>
+<FONT color="green">103</FONT>          fis = new FileInputStream(pathToFile(f));<a name="line.103"></a>
+<FONT color="green">104</FONT>        }<a name="line.104"></a>
+<FONT color="green">105</FONT>        <a name="line.105"></a>
+<FONT color="green">106</FONT>        @Override<a name="line.106"></a>
+<FONT color="green">107</FONT>        public void seek(long pos) throws IOException {<a name="line.107"></a>
+<FONT color="green">108</FONT>          fis.getChannel().position(pos);<a name="line.108"></a>
+<FONT color="green">109</FONT>          this.position = pos;<a name="line.109"></a>
+<FONT color="green">110</FONT>        }<a name="line.110"></a>
+<FONT color="green">111</FONT>        <a name="line.111"></a>
+<FONT color="green">112</FONT>        @Override<a name="line.112"></a>
+<FONT color="green">113</FONT>        public long getPos() throws IOException {<a name="line.113"></a>
+<FONT color="green">114</FONT>          return this.position;<a name="line.114"></a>
+<FONT color="green">115</FONT>        }<a name="line.115"></a>
+<FONT color="green">116</FONT>        <a name="line.116"></a>
+<FONT color="green">117</FONT>        @Override<a name="line.117"></a>
+<FONT color="green">118</FONT>        public boolean seekToNewSource(long targetPos) throws IOException {<a name="line.118"></a>
+<FONT color="green">119</FONT>          return false;<a name="line.119"></a>
+<FONT color="green">120</FONT>        }<a name="line.120"></a>
+<FONT color="green">121</FONT>        <a name="line.121"></a>
+<FONT color="green">122</FONT>        /*<a name="line.122"></a>
+<FONT color="green">123</FONT>         * Just forward to the fis<a name="line.123"></a>
+<FONT color="green">124</FONT>         */<a name="line.124"></a>
+<FONT color="green">125</FONT>        @Override<a name="line.125"></a>
+<FONT color="green">126</FONT>        public int available() throws IOException { return fis.available(); }<a name="line.126"></a>
+<FONT color="green">127</FONT>        @Override<a name="line.127"></a>
+<FONT color="green">128</FONT>        public void close() throws IOException { fis.close(); }<a name="line.128"></a>
+<FONT color="green">129</FONT>        @Override<a name="line.129"></a>
+<FONT color="green">130</FONT>        public boolean markSupported() { return false; }<a name="line.130"></a>
+<FONT color="green">131</FONT>        <a name="line.131"></a>
+<FONT color="green">132</FONT>        @Override<a name="line.132"></a>
+<FONT color="green">133</FONT>        public int read() throws IOException {<a name="line.133"></a>
+<FONT color="green">134</FONT>          try {<a name="line.134"></a>
+<FONT color="green">135</FONT>            int value = fis.read();<a name="line.135"></a>
+<FONT color="green">136</FONT>            if (value &gt;= 0) {<a name="line.136"></a>
+<FONT color="green">137</FONT>              this.position++;<a name="line.137"></a>
+<FONT color="green">138</FONT>              statistics.incrementBytesRead(1);<a name="line.138"></a>
+<FONT color="green">139</FONT>            }<a name="line.139"></a>
+<FONT color="green">140</FONT>            return value;<a name="line.140"></a>
+<FONT color="green">141</FONT>          } catch (IOException e) {                 // unexpected exception<a name="line.141"></a>
+<FONT color="green">142</FONT>            throw new FSError(e);                   // assume native fs error<a name="line.142"></a>
+<FONT color="green">143</FONT>          }<a name="line.143"></a>
+<FONT color="green">144</FONT>        }<a name="line.144"></a>
+<FONT color="green">145</FONT>        <a name="line.145"></a>
+<FONT color="green">146</FONT>        @Override<a name="line.146"></a>
+<FONT color="green">147</FONT>        public int read(byte[] b, int off, int len) throws IOException {<a name="line.147"></a>
+<FONT color="green">148</FONT>          try {<a name="line.148"></a>
+<FONT color="green">149</FONT>            int value = fis.read(b, off, len);<a name="line.149"></a>
+<FONT color="green">150</FONT>            if (value &gt; 0) {<a name="line.150"></a>
+<FONT color="green">151</FONT>              this.position += value;<a name="line.151"></a>
+<FONT color="green">152</FONT>              statistics.incrementBytesRead(value);<a name="line.152"></a>
+<FONT color="green">153</FONT>            }<a name="line.153"></a>
+<FONT color="green">154</FONT>            return value;<a name="line.154"></a>
+<FONT color="green">155</FONT>          } catch (IOException e) {                 // unexpected exception<a name="line.155"></a>
+<FONT color="green">156</FONT>            throw new FSError(e);                   // assume native fs error<a name="line.156"></a>
+<FONT color="green">157</FONT>          }<a name="line.157"></a>
+<FONT color="green">158</FONT>        }<a name="line.158"></a>
+<FONT color="green">159</FONT>        <a name="line.159"></a>
+<FONT color="green">160</FONT>        @Override<a name="line.160"></a>
+<FONT color="green">161</FONT>        public int read(long position, byte[] b, int off, int len)<a name="line.161"></a>
+<FONT color="green">162</FONT>          throws IOException {<a name="line.162"></a>
+<FONT color="green">163</FONT>          ByteBuffer bb = ByteBuffer.wrap(b, off, len);<a name="line.163"></a>
+<FONT color="green">164</FONT>          try {<a name="line.164"></a>
+<FONT color="green">165</FONT>            int value = fis.getChannel().read(bb, position);<a name="line.165"></a>
+<FONT color="green">166</FONT>            if (value &gt; 0) {<a name="line.166"></a>
+<FONT color="green">167</FONT>              statistics.incrementBytesRead(value);<a name="line.167"></a>
+<FONT color="green">168</FONT>            }<a name="line.168"></a>
+<FONT color="green">169</FONT>            return value;<a name="line.169"></a>
+<FONT color="green">170</FONT>          } catch (IOException e) {<a name="line.170"></a>
+<FONT color="green">171</FONT>            throw new FSError(e);<a name="line.171"></a>
+<FONT color="green">172</FONT>          }<a name="line.172"></a>
+<FONT color="green">173</FONT>        }<a name="line.173"></a>
+<FONT color="green">174</FONT>        <a name="line.174"></a>
+<FONT color="green">175</FONT>        @Override<a name="line.175"></a>
+<FONT color="green">176</FONT>        public long skip(long n) throws IOException {<a name="line.176"></a>
+<FONT color="green">177</FONT>          long value = fis.skip(n);<a name="line.177"></a>
+<FONT color="green">178</FONT>          if (value &gt; 0) {<a name="line.178"></a>
+<FONT color="green">179</FONT>            this.position += value;<a name="line.179"></a>
+<FONT color="green">180</FONT>          }<a name="line.180"></a>
+<FONT color="green">181</FONT>          return value;<a name="line.181"></a>
+<FONT color="green">182</FONT>        }<a name="line.182"></a>
+<FONT color="green">183</FONT>    <a name="line.183"></a>
+<FONT color="green">184</FONT>        @Override<a name="line.184"></a>
+<FONT color="green">185</FONT>        public FileDescriptor getFileDescriptor() throws IOException {<a name="line.185"></a>
+<FONT color="green">186</FONT>          return fis.getFD();<a name="line.186"></a>
+<FONT color="green">187</FONT>        }<a name="line.187"></a>
+<FONT color="green">188</FONT>      }<a name="line.188"></a>
+<FONT color="green">189</FONT>      <a name="line.189"></a>
+<FONT color="green">190</FONT>      @Override<a name="line.190"></a>
+<FONT color="green">191</FONT>      public FSDataInputStream open(Path f, int bufferSize) throws IOException {<a name="line.191"></a>
+<FONT color="green">192</FONT>        if (!exists(f)) {<a name="line.192"></a>
+<FONT color="green">193</FONT>          throw new FileNotFoundException(f.toString());<a name="line.193"></a>
+<FONT color="green">194</FONT>        }<a name="line.194"></a>
+<FONT color="green">195</FONT>        return new FSDataInputStream(new BufferedFSInputStream(<a name="line.195"></a>
+<FONT color="green">196</FONT>            new LocalFSFileInputStream(f), bufferSize));<a name="line.196"></a>
+<FONT color="green">197</FONT>      }<a name="line.197"></a>
+<FONT color="green">198</FONT>      <a name="line.198"></a>
+<FONT color="green">199</FONT>      /*********************************************************<a name="line.199"></a>
+<FONT color="green">200</FONT>       * For create()'s FSOutputStream.<a name="line.200"></a>
+<FONT color="green">201</FONT>       *********************************************************/<a name="line.201"></a>
+<FONT color="green">202</FONT>      class LocalFSFileOutputStream extends OutputStream {<a name="line.202"></a>
+<FONT color="green">203</FONT>        private FileOutputStream fos;<a name="line.203"></a>
+<FONT color="green">204</FONT>        <a name="line.204"></a>
+<FONT color="green">205</FONT>        private LocalFSFileOutputStream(Path f, boolean append) throws IOException {<a name="line.205"></a>
+<FONT color="green">206</FONT>          this.fos = new FileOutputStream(pathToFile(f), append);<a name="line.206"></a>
+<FONT color="green">207</FONT>        }<a name="line.207"></a>
+<FONT color="green">208</FONT>        <a name="line.208"></a>
+<FONT color="green">209</FONT>        /*<a name="line.209"></a>
+<FONT color="green">210</FONT>         * Just forward to the fos<a name="line.210"></a>
+<FONT color="green">211</FONT>         */<a name="line.211"></a>
+<FONT color="green">212</FONT>        @Override<a name="line.212"></a>
+<FONT color="green">213</FONT>        public void close() throws IOException { fos.close(); }<a name="line.213"></a>
+<FONT color="green">214</FONT>        @Override<a name="line.214"></a>
+<FONT color="green">215</FONT>        public void flush() throws IOException { fos.flush(); }<a name="line.215"></a>
+<FONT color="green">216</FONT>        @Override<a name="line.216"></a>
+<FONT color="green">217</FONT>        public void write(byte[] b, int off, int len) throws IOException {<a name="line.217"></a>
+<FONT color="green">218</FONT>          try {<a name="line.218"></a>
+<FONT color="green">219</FONT>            fos.write(b, off, len);<a name="line.219"></a>
+<FONT color="green">220</FONT>          } catch (IOException e) {                // unexpected exception<a name="line.220"></a>
+<FONT color="green">221</FONT>            throw new FSError(e);                  // assume native fs error<a name="line.221"></a>
+<FONT color="green">222</FONT>          }<a name="line.222"></a>
+<FONT color="green">223</FONT>        }<a name="line.223"></a>
+<FONT color="green">224</FONT>        <a name="line.224"></a>
+<FONT color="green">225</FONT>        @Override<a name="line.225"></a>
+<FONT color="green">226</FONT>        public void write(int b) throws IOException {<a name="line.226"></a>
+<FONT color="green">227</FONT>          try {<a name="line.227"></a>
+<FONT color="green">228</FONT>            fos.write(b);<a name="line.228"></a>
+<FONT color="green">229</FONT>          } catch (IOException e) {              // unexpected exception<a name="line.229"></a>
+<FONT color="green">230</FONT>            throw new FSError(e);                // assume native fs error<a name="line.230"></a>
+<FONT color="green">231</FONT>          }<a name="line.231"></a>
+<FONT color="green">232</FONT>        }<a name="line.232"></a>
+<FONT color="green">233</FONT>      }<a name="line.233"></a>
+<FONT color="green">234</FONT>    <a name="line.234"></a>
+<FONT color="green">235</FONT>      @Override<a name="line.235"></a>
+<FONT color="green">236</FONT>      public FSDataOutputStream append(Path f, int bufferSize,<a name="line.236"></a>
+<FONT color="green">237</FONT>          Progressable progress) throws IOException {<a name="line.237"></a>
+<FONT color="green">238</FONT>        if (!exists(f)) {<a name="line.238"></a>
+<FONT color="green">239</FONT>          throw new FileNotFoundException("File " + f + " not found");<a name="line.239"></a>
+<FONT color="green">240</FONT>        }<a name="line.240"></a>
+<FONT color="green">241</FONT>        if (getFileStatus(f).isDirectory()) {<a name="line.241"></a>
+<FONT color="green">242</FONT>          throw new IOException("Cannot append to a diretory (=" + f + " )");<a name="line.242"></a>
+<FONT color="green">243</FONT>        }<a name="line.243"></a>
+<FONT color="green">244</FONT>        return new FSDataOutputStream(new BufferedOutputStream(<a name="line.244"></a>
+<FONT color="green">245</FONT>            new LocalFSFileOutputStream(f, true), bufferSize), statistics);<a name="line.245"></a>
+<FONT color="green">246</FONT>      }<a name="line.246"></a>
+<FONT color="green">247</FONT>    <a name="line.247"></a>
+<FONT color="green">248</FONT>      @Override<a name="line.248"></a>
+<FONT color="green">249</FONT>      public FSDataOutputStream create(Path f, boolean overwrite, int bufferSize,<a name="line.249"></a>
+<FONT color="green">250</FONT>        short replication, long blockSize, Progressable progress)<a name="line.250"></a>
+<FONT color="green">251</FONT>        throws IOException {<a name="line.251"></a>
+<FONT color="green">252</FONT>        return create(f, overwrite, true, bufferSize, replication, blockSize, progress);<a name="line.252"></a>
+<FONT color="green">253</FONT>      }<a name="line.253"></a>
+<FONT color="green">254</FONT>    <a name="line.254"></a>
+<FONT color="green">255</FONT>      private FSDataOutputStream create(Path f, boolean overwrite,<a name="line.255"></a>
+<FONT color="green">256</FONT>          boolean createParent, int bufferSize, short replication, long blockSize,<a name="line.256"></a>
+<FONT color="green">257</FONT>          Progressable progress) throws IOException {<a name="line.257"></a>
+<FONT color="green">258</FONT>        if (exists(f) &amp;&amp; !overwrite) {<a name="line.258"></a>
+<FONT color="green">259</FONT>          throw new IOException("File already exists: "+f);<a name="line.259"></a>
+<FONT color="green">260</FONT>        }<a name="line.260"></a>
+<FONT color="green">261</FONT>        Path parent = f.getParent();<a name="line.261"></a>
+<FONT color="green">262</FONT>        if (parent != null &amp;&amp; !mkdirs(parent)) {<a name="line.262"></a>
+<FONT color="green">263</FONT>          throw new IOException("Mkdirs failed to create " + parent.toString());<a name="line.263"></a>
+<FONT color="green">264</FONT>        }<a name="line.264"></a>
+<FONT color="green">265</FONT>        return new FSDataOutputStream(new BufferedOutputStream(<a name="line.265"></a>
+<FONT color="green">266</FONT>            new LocalFSFileOutputStream(f, false), bufferSize), statistics);<a name="line.266"></a>
+<FONT color="green">267</FONT>      }<a name="line.267"></a>
+<FONT color="green">268</FONT>      <a name="line.268"></a>
+<FONT color="green">269</FONT>      @Override<a name="line.269"></a>
+<FONT color="green">270</FONT>      @Deprecated<a name="line.270"></a>
+<FONT color="green">271</FONT>      public FSDataOutputStream createNonRecursive(Path f, FsPermission permission,<a name="line.271"></a>
+<FONT color="green">272</FONT>          EnumSet&lt;CreateFlag&gt; flags, int bufferSize, short replication, long blockSize,<a name="line.272"></a>
+<FONT color="green">273</FONT>          Progressable progress) throws IOException {<a name="line.273"></a>
+<FONT color="green">274</FONT>        if (exists(f) &amp;&amp; !flags.contains(CreateFlag.OVERWRITE)) {<a name="line.274"></a>
+<FONT color="green">275</FONT>          throw new IOException("File already exists: "+f);<a name="line.275"></a>
+<FONT color="green">276</FONT>        }<a name="line.276"></a>
+<FONT color="green">277</FONT>        return new FSDataOutputStream(new BufferedOutputStream(<a name="line.277"></a>
+<FONT color="green">278</FONT>            new LocalFSFileOutputStream(f, false), bufferSize), statistics);<a name="line.278"></a>
+<FONT color="green">279</FONT>      }<a name="line.279"></a>
+<FONT color="green">280</FONT>    <a name="line.280"></a>
+<FONT color="green">281</FONT>      @Override<a name="line.281"></a>
+<FONT color="green">282</FONT>      public FSDataOutputStream create(Path f, FsPermission permission,<a name="line.282"></a>
+<FONT color="green">283</FONT>        boolean overwrite, int bufferSize, short replication, long blockSize,<a name="line.283"></a>
+<FONT color="green">284</FONT>        Progressable progress) throws IOException {<a name="line.284"></a>
+<FONT color="green">285</FONT>    <a name="line.285"></a>
+<FONT color="green">286</FONT>        FSDataOutputStream out = create(f,<a name="line.286"></a>
+<FONT color="green">287</FONT>            overwrite, bufferSize, replication, blockSize, progress);<a name="line.287"></a>
+<FONT color="green">288</FONT>        setPermission(f, permission);<a name="line.288"></a>
+<FONT color="green">289</FONT>        return out;<a name="line.289"></a>
+<FONT color="green">290</FONT>      }<a name="line.290"></a>
+<FONT color="green">291</FONT>    <a name="line.291"></a>
+<FONT color="green">292</FONT>      @Override<a name="line.292"></a>
+<FONT color="green">293</FONT>      public FSDataOutputStream createNonRecursive(Path f, FsPermission permission,<a name="line.293"></a>
+<FONT color="green">294</FONT>          boolean overwrite,<a name="line.294"></a>
+<FONT color="green">295</FONT>          int bufferSize, short replication, long blockSize,<a name="line.295"></a>
+<FONT color="green">296</FONT>          Progressable progress) throws IOException {<a name="line.296"></a>
+<FONT color="green">297</FONT>        FSDataOutputStream out = create(f,<a name="line.297"></a>
+<FONT color="green">298</FONT>            overwrite, false, bufferSize, replication, blockSize, progress);<a name="line.298"></a>
+<FONT color="green">299</FONT>        setPermission(f, permission);<a name="line.299"></a>
+<FONT color="green">300</FONT>        return out;<a name="line.300"></a>
+<FONT color="green">301</FONT>      }<a name="line.301"></a>
+<FONT color="green">302</FONT>    <a name="line.302"></a>
+<FONT color="green">303</FONT>      @Override<a name="line.303"></a>
+<FONT color="green">304</FONT>      public boolean rename(Path src, Path dst) throws IOException {<a name="line.304"></a>
+<FONT color="green">305</FONT>        // Attempt rename using Java API.<a name="line.305"></a>
+<FONT color="green">306</FONT>        File srcFile = pathToFile(src);<a name="line.306"></a>
+<FONT color="green">307</FONT>        File dstFile = pathToFile(dst);<a name="line.307"></a>
+<FONT color="green">308</FONT>        if (srcFile.renameTo(dstFile)) {<a name="line.308"></a>
+<FONT color="green">309</FONT>          return true;<a name="line.309"></a>
+<FONT color="green">310</FONT>        }<a name="line.310"></a>
+<FONT color="green">311</FONT>    <a name="line.311"></a>
+<FONT color="green">312</FONT>        // Enforce POSIX rename behavior that a source directory replaces an existing<a name="line.312"></a>
+<FONT color="green">313</FONT>        // destination if the destination is an empty directory.  On most platforms,<a name="line.313"></a>
+<FONT color="green">314</FONT>        // this is already handled by the Java API call above.  Some platforms<a name="line.314"></a>
+<FONT color="green">315</FONT>        // (notably Windows) do not provide this behavior, so the Java API call above<a name="line.315"></a>
+<FONT color="green">316</FONT>        // fails.  Delete destination and attempt rename again.<a name="line.316"></a>
+<FONT color="green">317</FONT>        if (this.exists(dst)) {<a name="line.317"></a>
+<FONT color="green">318</FONT>          FileStatus sdst = this.getFileStatus(dst);<a name="line.318"></a>
+<FONT color="green">319</FONT>          if (sdst.isDirectory() &amp;&amp; dstFile.list().length == 0) {<a name="line.319"></a>
+<FONT color="green">320</FONT>            if (LOG.isDebugEnabled()) {<a name="line.320"></a>
+<FONT color="green">321</FONT>              LOG.debug("Deleting empty destination and renaming " + src + " to " +<a name="line.321"></a>
+<FONT color="green">322</FONT>                dst);<a name="line.322"></a>
+<FONT color="green">323</FONT>            }<a name="line.323"></a>
+<FONT color="green">324</FONT>            if (this.delete(dst, false) &amp;&amp; srcFile.renameTo(dstFile)) {<a name="line.324"></a>
+<FONT color="green">325</FONT>              return true;<a name="line.325"></a>
+<FONT color="green">326</FONT>            }<a name="line.326"></a>
+<FONT color="green">327</FONT>          }<a name="line.327"></a>
+<FONT color="green">328</FONT>        }<a name="line.328"></a>
+<FONT color="green">329</FONT>    <a name="line.329"></a>
+<FONT color="green">330</FONT>        // The fallback behavior accomplishes the rename by a full copy.<a name="line.330"></a>
+<FONT color="green">331</FONT>        if (LOG.isDebugEnabled()) {<a name="line.331"></a>
+<FONT color="green">332</FONT>          LOG.debug("Falling through to a copy of " + src + " to " + dst);<a name="line.332"></a>
+<FONT color="green">333</FONT>        }<a name="line.333"></a>
+<FONT color="green">334</FONT>        return FileUtil.copy(this, src, this, dst, true, getConf());<a name="line.334"></a>
+<FONT color="green">335</FONT>      }<a name="line.335"></a>
+<FONT color="green">336</FONT>      <a name="line.336"></a>
+<FONT color="green">337</FONT>      /**<a name="line.337"></a>
+<FONT color="green">338</FONT>       * Delete the given path to a file or directory.<a name="line.338"></a>
+<FONT color="green">339</FONT>       * @param p the path to delete<a name="line.339"></a>
+<FONT color="green">340</FONT>       * @param recursive to delete sub-directories<a name="line.340"></a>
+<FONT color="green">341</FONT>       * @return true if the file or directory and all its contents were deleted<a name="line.341"></a>
+<FONT color="green">342</FONT>       * @throws IOException if p is non-empty and recursive is false <a name="line.342"></a>
+<FONT color="green">343</FONT>       */<a name="line.343"></a>
+<FONT color="green">344</FONT>      @Override<a name="line.344"></a>
+<FONT color="green">345</FONT>      public boolean delete(Path p, boolean recursive) throws IOException {<a name="line.345"></a>
+<FONT color="green">346</FONT>        File f = pathToFile(p);<a name="line.346"></a>
+<FONT color="green">347</FONT>        if (f.isFile()) {<a name="line.347"></a>
+<FONT color="green">348</FONT>          return f.delete();<a name="line.348"></a>
+<FONT color="green">349</FONT>        } else if (!recursive &amp;&amp; f.isDirectory() &amp;&amp; <a name="line.349"></a>
+<FONT color="green">350</FONT>            (FileUtil.listFiles(f).length != 0)) {<a name="line.350"></a>
+<FONT color="green">351</FONT>          throw new IOException("Directory " + f.toString() + " is not empty");<a name="line.351"></a>
+<FONT color="green">352</FONT>        }<a name="line.352"></a>
+<FONT color="green">353</FONT>        return FileUtil.fullyDelete(f);<a name="line.353"></a>
+<FONT color="green">354</FONT>      }<a name="line.354"></a>
+<FONT color="green">355</FONT>     <a name="line.355"></a>
+<FONT color="green">356</FONT>      @Override<a name="line.356"></a>
+<FONT color="green">357</FONT>      public FileStatus[] listStatus(Path f) throws IOException {<a name="line.357"></a>
+<FONT color="green">358</FONT>        File localf = pathToFile(f);<a name="line.358"></a>
+<FONT color="green">359</FONT>        FileStatus[] results;<a name="line.359"></a>
+<FONT color="green">360</FONT>    <a name="line.360"></a>
+<FONT color="green">361</FONT>        if (!localf.exists()) {<a name="line.361"></a>
+<FONT color="green">362</FONT>          throw new FileNotFoundException("File " + f + " does not exist");<a name="line.362"></a>
+<FONT color="green">363</FONT>        }<a name="line.363"></a>
+<FONT color="green">364</FONT>        if (localf.isFile()) {<a name="line.364"></a>
+<FONT color="green">365</FONT>          if (!useDeprecatedFileStatus) {<a name="line.365"></a>
+<FONT color="green">366</FONT>            return new FileStatus[] { getFileStatus(f) };<a name="line.366"></a>
+<FONT color="green">367</FONT>          }<a name="line.367"></a>
+<FONT color="green">368</FONT>          return new FileStatus[] {<a name="line.368"></a>
+<FONT color="green">369</FONT>            new DeprecatedRawLocalFileStatus(localf, getDefaultBlockSize(f), this)};<a name="line.369"></a>
+<FONT color="green">370</FONT>        }<a name="line.370"></a>
+<FONT color="green">371</FONT>    <a name="line.371"></a>
+<FONT color="green">372</FONT>        String[] names = localf.list();<a name="line.372"></a>
+<FONT color="green">373</FONT>        if (names == null) {<a name="line.373"></a>
+<FONT color="green">374</FONT>          return null;<a name="line.374"></a>
+<FONT color="green">375</FONT>        }<a name="line.375"></a>
+<FONT color="green">376</FONT>        results = new FileStatus[names.length];<a name="line.376"></a>
+<FONT color="green">377</FONT>        int j = 0;<a name="line.377"></a>
+<FONT color="green">378</FONT>        for (int i = 0; i &lt; names.length; i++) {<a name="line.378"></a>
+<FONT color="green">379</FONT>          try {<a name="line.379"></a>
+<FONT color="green">380</FONT>            // Assemble the path using the Path 3 arg constructor to make sure<a name="line.380"></a>
+<FONT color="green">381</FONT>            // paths with colon are properly resolved on Linux<a name="line.381"></a>
+<FONT color="green">382</FONT>            results[j] = getFileStatus(new Path(f, new Path(null, null, names[i])));<a name="line.382"></a>
+<FONT color="green">383</FONT>            j++;<a name="line.383"></a>
+<FONT color="green">384</FONT>          } catch (FileNotFoundException e) {<a name="line.384"></a>
+<FONT color="green">385</FONT>            // ignore the files not found since the dir list may have have changed<a name="line.385"></a>
+<FONT color="green">386</FONT>            // since the names[] list was generated.<a name="line.386"></a>
+<FONT color="green">387</FONT>          }<a name="line.387"></a>
+<FONT color="green">388</FONT>        }<a name="line.388"></a>
+<FONT color="green">389</FONT>        if (j == names.length) {<a name="line.389"></a>
+<FONT color="green">390</FONT>          return results;<a name="line.390"></a>
+<FONT color="green">391</FONT>        }<a name="line.391"></a>
+<FONT color="green">392</FONT>        return Arrays.copyOf(results, j);<a name="line.392"></a>
+<FONT color="green">393</FONT>      }<a name="line.393"></a>
+<FONT color="green">394</FONT>    <a name="line.394"></a>
+<FONT color="green">395</FONT>      /**<a name="line.395"></a>
+<FONT color="green">396</FONT>       * Creates the specified directory hierarchy. Does not<a name="line.396"></a>
+<FONT color="green">397</FONT>       * treat existence as an error.<a name="line.397"></a>
+<FONT color="green">398</FONT>       */<a name="line.398"></a>
+<FONT color="green">399</FONT>      @Override<a name="line.399"></a>
+<FONT color="green">400</FONT>      public boolean mkdirs(Path f) throws IOException {<a name="line.400"></a>
+<FONT color="green">401</FONT>        if(f == null) {<a name="line.401"></a>
+<FONT color="green">402</FONT>          throw new IllegalArgumentException("mkdirs path arg is null");<a name="line.402"></a>
+<FONT color="green">403</FONT>        }<a name="line.403"></a>
+<FONT color="green">404</FONT>        Path parent = f.getParent();<a name="line.404"></a>
+<FONT color="green">405</FONT>        File p2f = pathToFile(f);<a name="line.405"></a>
+<FONT color="green">406</FONT>        if(parent != null) {<a name="line.406"></a>
+<FONT color="green">407</FONT>          File parent2f = pathToFile(parent);<a name="line.407"></a>
+<FONT color="green">408</FONT>          if(parent2f != null &amp;&amp; parent2f.exists() &amp;&amp; !parent2f.isDirectory()) {<a name="line.408"></a>
+<FONT color="green">409</FONT>            throw new FileAlreadyExistsException("Parent path is not a directory: " <a name="line.409"></a>
+<FONT color="green">410</FONT>                + parent);<a name="line.410"></a>
+<FONT color="green">411</FONT>          }<a name="line.411"></a>
+<FONT color="green">412</FONT>        }<a name="line.412"></a>
+<FONT color="green">413</FONT>        return (parent == null || mkdirs(parent)) &amp;&amp;<a name="line.413"></a>
+<FONT color="green">414</FONT>          (p2f.mkdir() || p2f.isDirectory());<a name="line.414"></a>
+<FONT color="green">415</FONT>      }<a name="line.415"></a>
+<FONT color="green">416</FONT>    <a name="line.416"></a>
+<FONT color="green">417</FONT>      @Override<a name="line.417"></a>
+<FONT color="green">418</FONT>      public boolean mkdirs(Path f, FsPermission permission) throws IOException {<a name="line.418"></a>
+<FONT color="green">419</FONT>        boolean b = mkdirs(f);<a name="line.419"></a>
+<FONT color="green">420</FONT>        if(b) {<a name="line.420"></a>
+<FONT color="green">421</FONT>          setPermission(f, permission);<a name="line.421"></a>
+<FONT color="green">422</FONT>        }<a name="line.422"></a>
+<FONT color="green">423</FONT>        return b;<a name="line.423"></a>
+<FONT color="green">424</FONT>      }<a name="line.424"></a>
+<FONT color="green">425</FONT>      <a name="line.425"></a>
+<FONT color="green">426</FONT>    <a name="line.426"></a>
+<FONT color="green">427</FONT>      @Override<a name="line.427"></a>
+<FONT color="green">428</FONT>      protected boolean primitiveMkdir(Path f, FsPermission absolutePermission)<a name="line.428"></a>
+<FONT color="green">429</FONT>        throws IOException {<a name="line.429"></a>
+<FONT color="green">430</FONT>        boolean b = mkdirs(f);<a name="line.430"></a>
+<FONT color="green">431</FONT>        setPermission(f, absolutePermission);<a name="line.431"></a>
+<FONT color="green">432</FONT>        return b;<a name="line.432"></a>
+<FONT color="green">433</FONT>      }<a name="line.433"></a>
+<FONT color="green">434</FONT>      <a name="line.434"></a>
+<FONT color="green">435</FONT>      <a name="line.435"></a>
+<FONT color="green">436</FONT>      @Override<a name="line.436"></a>
+<FONT color="green">437</FONT>      public Path getHomeDirectory() {<a name="line.437"></a>
+<FONT color="green">438</FONT>        return this.makeQualified(new Path(System.getProperty("user.home")));<a name="line.438"></a>
+<FONT color="green">439</FONT>      }<a name="line.439"></a>
+<FONT color="green">440</FONT>    <a name="line.440"></a>
+<FONT color="green">441</FONT>      /**<a name="line.441"></a>
+<FONT color="green">442</FONT>       * Set the working directory to the given directory.<a name="line.442"></a>
+<FONT color="green">443</FONT>       */<a name="line.443"></a>
+<FONT color="green">444</FONT>      @Override<a name="line.444"></a>
+<FONT color="green">445</FONT>      public void setWorkingDirectory(Path newDir) {<a name="line.445"></a>
+<FONT color="green">446</FONT>        workingDir = makeAbsolute(newDir);<a name="line.446"></a>
+<FONT color="green">447</FONT>        checkPath(workingDir);<a name="line.447"></a>
+<FONT color="green">448</FONT>      }<a name="line.448"></a>
+<FONT color="green">449</FONT>      <a name="line.449"></a>
+<FONT color="green">450</FONT>      @Override<a name="line.450"></a>
+<FONT color="green">451</FONT>      public Path getWorkingDirectory() {<a name="line.451"></a>
+<FONT color="green">452</FONT>        return workingDir;<a name="line.452"></a>
+<FONT color="green">453</FONT>      }<a name="line.453"></a>
+<FONT color="green">454</FONT>      <a name="line.454"></a>
+<FONT color="green">455</FONT>      @Override<a name="line.455"></a>
+<FONT color="green">456</FONT>      protected Path getInitialWorkingDirectory() {<a name="line.456"></a>
+<FONT color="green">457</FONT>        return this.makeQualified(new Path(System.getProperty("user.dir")));<a name="line.457"></a>
+<FONT color="green">458</FONT>      }<a name="line.458"></a>
+<FONT color="green">459</FONT>    <a name="line.459"></a>
+<FONT color="green">460</FONT>      @Override<a name="line.460"></a>
+<FONT color="green">461</FONT>      public FsStatus getStatus(Path p) throws IOException {<a name="line.461"></a>
+<FONT color="green">462</FONT>        File partition = pathToFile(p == null ? new Path("/") : p);<a name="line.462"></a>
+<FONT color="green">463</FONT>        //File provides getUsableSpace() and getFreeSpace()<a name="line.463"></a>
+<FONT color="green">464</FONT>        //File provides no API to obtain used space, assume used = total - free<a name="line.464"></a>
+<FONT color="green">465</FONT>        return new FsStatus(partition.getTotalSpace(), <a name="line.465"></a>
+<FONT color="green">466</FONT>          partition.getTotalSpace() - partition.getFreeSpace(),<a name="line.466"></a>
+<FONT color="green">467</FONT>          partition.getFreeSpace());<a name="line.467"></a>
+<FONT color="green">468</FONT>      }<a name="line.468"></a>
+<FONT color="green">469</FONT>      <a name="line.469"></a>
+<FONT color="green">470</FONT>      // In the case of the local filesystem, we can just rename the file.<a name="line.470"></a>
+<FONT color="green">471</FONT>      @Override<a name="line.471"></a>
+<FONT color="green">472</FONT>      public void moveFromLocalFile(Path src, Path dst) throws IOException {<a name="line.472"></a>
+<FONT color="green">473</FONT>        rename(src, dst);<a name="line.473"></a>
+<FONT color="green">474</FONT>      }<a name="line.474"></a>
+<FONT color="green">475</FONT>      <a name="line.475"></a>
+<FONT color="green">476</FONT>      // We can write output directly to the final location<a name="line.476"></a>
+<FONT color="green">477</FONT>      @Override<a name="line.477"></a>
+<FONT color="green">478</FONT>      public Path startLocalOutput(Path fsOutputFile, Path tmpLocalFile)<a name="line.478"></a>
+<FONT color="green">479</FONT>        throws IOException {<a name="line.479"></a>
+<FONT color="green">480</FONT>        return fsOutputFile;<a name="line.480"></a>
+<FONT color="green">481</FONT>      }<a name="line.481"></a>
+<FONT color="green">482</FONT>      <a name="line.482"></a>
+<FONT color="green">483</FONT>      // It's in the right place - nothing to do.<a name="line.483"></a>
+<FONT color="green">484</FONT>      @Override<a name="line.484"></a>
+<FONT color="green">485</FONT>      public void completeLocalOutput(Path fsWorkingFile, Path tmpLocalFile)<a name="line.485"></a>
+<FONT color="green">486</FONT>        throws IOException {<a name="line.486"></a>
+<FONT color="green">487</FONT>      }<a name="line.487"></a>
+<FONT color="green">488</FONT>      <a name="line.488"></a>
+<FONT color="green">489</FONT>      @Override<a name="line.489"></a>
+<FONT color="green">490</FONT>      public void close() throws IOException {<a name="line.490"></a>
+<FONT color="green">491</FONT>        super.close();<a name="line.491"></a>
+<FONT color="green">492</FONT>      }<a name="line.492"></a>
+<FONT color="green">493</FONT>      <a name="line.493"></a>
+<FONT color="green">494</FONT>      @Override<a name="line.494"></a>
+<FONT color="green">495</FONT>      public String toString() {<a name="line.495"></a>
+<FONT color="green">496</FONT>        return "LocalFS";<a name="line.496"></a>
+<FONT color="green">497</FONT>      }<a name="line.497"></a>
+<FONT color="green">498</FONT>      <a name="line.498"></a>
+<FONT color="green">499</FONT>      @Override<a name="line.499"></a>
+<FONT color="green">500</FONT>      public FileStatus getFileStatus(Path f) throws IOException {<a name="line.500"></a>
+<FONT color="green">501</FONT>        return getFileLinkStatusInternal(f, true);<a name="line.501"></a>
+<FONT color="green">502</FONT>      }<a name="line.502"></a>
+<FONT color="green">503</FONT>    <a name="line.503"></a>
+<FONT color="green">504</FONT>      @Deprecated<a name="line.504"></a>
+<FONT color="green">505</FONT>      private FileStatus deprecatedGetFileStatus(Path f) throws IOException {<a name="line.505"></a>
+<FONT color="green">506</FONT>        File path = pathToFile(f);<a name="line.506"></a>
+<FONT color="green">507</FONT>        if (path.exists()) {<a name="line.507"></a>
+<FONT color="green">508</FONT>          return new DeprecatedRawLocalFileStatus(pathToFile(f),<a name="line.508"></a>
+<FONT color="green">509</FONT>              getDefaultBlockSize(f), this);<a name="line.509"></a>
+<FONT color="green">510</FONT>        } else {<a name="line.510"></a>
+<FONT color="green">511</FONT>          throw new FileNotFoundException("File " + f + " does not exist");<a name="line.511"></a>
+<FONT color="green">512</FONT>        }<a name="line.512"></a>
+<FONT color="green">513</FONT>      }<a name="line.513"></a>
+<FONT color="green">514</FONT>    <a name="line.514"></a>
+<FONT color="green">515</FONT>      @Deprecated<a name="line.515"></a>
+<FONT color="green">516</FONT>      static class DeprecatedRawLocalFileStatus extends FileStatus {<a name="line.516"></a>
+<FONT color="green">517</FONT>        /* We can add extra fields here. It breaks at least CopyFiles.FilePair().<a name="line.517"></a>
+<FONT color="green">518</FONT>         * We recognize if the information is already loaded by check if<a name="line.518"></a>
+<FONT color="green">519</FONT>         * onwer.equals("").<a name="line.519"></a>
+<FONT color="green">520</FONT>         */<a name="line.520"></a>
+<FONT color="green">521</FONT>        private boolean isPermissionLoaded() {<a name="line.521"></a>
+<FONT color="green">522</FONT>          return !super.getOwner().isEmpty(); <a name="line.522"></a>
+<FONT color="green">523</FONT>        }<a name="line.523"></a>
+<FONT color="green">524</FONT>        <a name="line.524"></a>
+<FONT color="green">525</FONT>        DeprecatedRawLocalFileStatus(File f, long defaultBlockSize, FileSystem fs) {<a name="line.525"></a>
+<FONT color="green">526</FONT>          super(f.length(), f.isDirectory(), 1, defaultBlockSize,<a name="line.526"></a>
+<FONT color="green">527</FONT>              f.lastModified(), new Path(f.getPath()).makeQualified(fs.getUri(),<a name="line.527"></a>
+<FONT color="green">528</FONT>                fs.getWorkingDirectory()));<a name="line.528"></a>
+<FONT color="green">529</FONT>        }<a name="line.529"></a>
+<FONT color="green">530</FONT>        <a name="line.530"></a>
+<FONT color="green">531</FONT>        @Override<a name="line.531"></a>
+<FONT color="green">532</FONT>        public FsPermission getPermission() {<a name="line.532"></a>
+<FONT color="green">533</FONT>          if (!isPermissionLoaded()) {<a name="line.533"></a>
+<FONT color="green">534</FONT>            loadPermissionInfo();<a name="line.534"></a>
+<FONT color="green">535</FONT>          }<a name="line.535"></a>
+<FONT color="green">536</FONT>          return super.getPermission();<a name="line.536"></a>
+<FONT color="green">537</FONT>        }<a name="line.537"></a>
+<FONT color="green">538</FONT>    <a name="line.538"></a>
+<FONT color="green">539</FONT>        @Override<a name="line.539"></a>
+<FONT color="green">540</FONT>        public String getOwner() {<a name="line.540"></a>
+<FONT color="green">541</FONT>          if (!isPermissionLoaded()) {<a name="line.541"></a>
+<FONT color="green">542</FONT>            loadPermissionInfo();<a name="line.542"></a>
+<FONT color="green">543</FONT>          }<a name="line.543"></a>
+<FONT color="green">544</FONT>          return super.getOwner();<a name="line.544"></a>
+<FONT color="green">545</FONT>        }<a name="line.545"></a>
+<FONT color="green">546</FONT>    <a name="line.546"></a>
+<FONT color="green">547</FONT>        @Override<a name="line.547"></a>
+<FONT color="green">548</FONT>        public String getGroup() {<a name="line.548"></a>
+<FONT color="green">549</FONT>          if (!isPermissionLoaded()) {<a name="line.549"></a>
+<FONT color="green">550</FONT>            loadPermissionInfo();<a name="line.550"></a>
+<FONT color="green">551</FONT>          }<a name="line.551"></a>
+<FONT color="green">552</FONT>          return super.getGroup();<a name="line.552"></a>
+<FONT color="green">553</FONT>        }<a name="line.553"></a>
+<FONT color="green">554</FONT>    <a name="line.554"></a>
+<FONT color="green">555</FONT>        /// loads permissions, owner, and group from `ls -ld`<a name="line.555"></a>
+<FONT color="green">556</FONT>        private void loadPermissionInfo() {<a name="line.556"></a>
+<FONT color="green">557</FONT>          IOException e = null;<a name="line.557"></a>
+<FONT color="green">558</FONT>          try {<a name="line.558"></a>
+<FONT color="green">559</FONT>            String output = FileUtil.execCommand(new File(getPath().toUri()), <a name="line.559"></a>
+<FONT color="green">560</FONT>                Shell.getGetPermissionCommand());<a name="line.560"></a>
+<FONT color="green">561</FONT>            StringTokenizer t =<a name="line.561"></a>
+<FONT color="green">562</FONT>                new StringTokenizer(output, Shell.TOKEN_SEPARATOR_REGEX);<a name="line.562"></a>
+<FONT color="green">563</FONT>            //expected format<a name="line.563"></a>
+<FONT color="green">564</FONT>            //-rw-------    1 username groupname ...<a name="line.564"></a>
+<FONT color="green">565</FONT>            String permission = t.nextToken();<a name="line.565"></a>
+<FONT color="green">566</FONT>            if (permission.length() &gt; FsPermission.MAX_PERMISSION_LENGTH) {<a name="line.566"></a>
+<FONT color="green">567</FONT>              //files with ACLs might have a '+'<a name="line.567"></a>
+<FONT color="green">568</FONT>              permission = permission.substring(0,<a name="line.568"></a>
+<FONT color="green">569</FONT>                FsPermission.MAX_PERMISSION_LENGTH);<a name="line.569"></a>
+<FONT color="green">570</FONT>            }<a name="line.570"></a>
+<FONT color="green">571</FONT>            setPermission(FsPermission.valueOf(permission));<a name="line.571"></a>
+<FONT color="green">572</FONT>            t.nextToken();<a name="line.572"></a>
+<FONT color="green">573</FONT>    <a name="line.573"></a>
+<FONT color="green">574</FONT>            String owner = t.nextToken();<a name="line.574"></a>
+<FONT color="green">575</FONT>            // If on windows domain, token format is DOMAIN\\user and we want to<a name="line.575"></a>
+<FONT color="green">576</FONT>            // extract only the user name<a name="line.576"></a>
+<FONT color="green">577</FONT>            if (Shell.WINDOWS) {<a name="line.577"></a>
+<FONT color="green">578</FONT>              int i = owner.indexOf('\\');<a name="line.578"></a>
+<FONT color="green">579</FONT>              if (i != -1)<a name="line.579"></a>
+<FONT color="green">580</FONT>                owner = owner.substring(i + 1);<a name="line.580"></a>
+<FONT color="green">581</FONT>            }<a name="line.581"></a>
+<FONT color="green">582</FONT>            setOwner(owner);<a name="line.582"></a>
+<FONT color="green">583</FONT>    <a name="line.583"></a>
+<FONT color="green">584</FONT>            setGroup(t.nextToken());<a name="line.584"></a>
+<FONT color="green">585</FONT>          } catch (Shell.ExitCodeException ioe) {<a name="line.585"></a>
+<FONT color="green">586</FONT>            if (ioe.getExitCode() != 1) {<a name="line.586"></a>
+<FONT color="green">587</FONT>              e = ioe;<a name="line.587"></a>
+<FONT color="green">588</FONT>            } else {<a name="line.588"></a>
+<FONT color="green">589</FONT>              setPermission(null);<a name="line.589"></a>
+<FONT color="green">590</FONT>              setOwner(null);<a name="line.590"></a>
+<FONT color="green">591</FONT>              setGroup(null);<a name="line.591"></a>
+<FONT color="green">592</FONT>            }<a name="line.592"></a>
+<FONT color="green">593</FONT>          } catch (IOException ioe) {<a name="line.593"></a>
+<FONT color="green">594</FONT>            e = ioe;<a name="line.594"></a>
+<FONT color="green">595</FONT>          } finally {<a name="line.595"></a>
+<FONT color="green">596</FONT>            if (e != null) {<a name="line.596"></a>
+<FONT color="green">597</FONT>              throw new RuntimeException("Error while running command to get " +<a name="line.597"></a>
+<FONT color="green">598</FONT>                                         "file permissions : " + <a name="line.598"></a>
+<FONT color="green">599</FONT>                                         StringUtils.stringifyException(e));<a name="line.599"></a>
+<FONT color="green">600</FONT>            }<a name="line.600"></a>
+<FONT color="green">601</FONT>          }<a name="line.601"></a>
+<FONT color="green">602</FONT>        }<a name="line.602"></a>
+<FONT color="green">603</FONT>    <a name="line.603"></a>
+<FONT color="green">604</FONT>        @Override<a name="line.604"></a>
+<FONT color="green">605</FONT>        public void write(DataOutput out) throws IOException {<a name="line.605"></a>
+<FONT color="green">606</FONT>          if (!isPermissionLoaded()) {<a name="line.606"></a>
+<FONT color="green">607</FONT>            loadPermissionInfo();<a name="line.607"></a>
+<FONT color="green">608</FONT>          }<a name="line.608"></a>
+<FONT color="green">609</FONT>          super.write(out);<a name="line.609"></a>
+<FONT color="green">610</FONT>        }<a name="line.610"></a>
+<FONT color="green">611</FONT>      }<a name="line.611"></a>
+<FONT color="green">612</FONT>    <a name="line.612"></a>
+<FONT color="green">613</FONT>      /**<a name="line.613"></a>
+<FONT color="green">614</FONT>       * Use the command chown to set owner.<a name="line.614"></a>
+<FONT color="green">615</FONT>       */<a name="line.615"></a>
+<FONT color="green">616</FONT>      @Override<a name="line.616"></a>
+<FONT color="green">617</FONT>      public void setOwner(Path p, String username, String groupname)<a name="line.617"></a>
+<FONT color="green">618</FONT>        throws IOException {<a name="line.618"></a>
+<FONT color="green">619</FONT>        FileUtil.setOwner(pathToFile(p), username, groupname);<a name="line.619"></a>
+<FONT color="green">620</FONT>      }<a name="line.620"></a>
+<FONT color="green">621</FONT>    <a name="line.621"></a>
+<FONT color="green">622</FONT>      /**<a name="line.622"></a>
+<FONT color="green">623</FONT>       * Use the command chmod to set permission.<a name="line.623"></a>
+<FONT color="green">624</FONT>       */<a name="line.624"></a>
+<FONT color="green">625</FONT>      @Override<a name="line.625"></a>
+<FONT color="green">626</FONT>      public void setPermission(Path p, FsPermission permission)<a name="line.626"></a>
+<FONT color="green">627</FONT>        throws IOException {<a name="line.627"></a>
+<FONT color="green">628</FONT>        if (NativeIO.isAvailable()) {<a name="line.628"></a>
+<FONT color="green">629</FONT>          NativeIO.POSIX.chmod(pathToFile(p).getCanonicalPath(),<a name="line.629"></a>
+<FONT color="green">630</FONT>                         permission.toShort());<a name="line.630"></a>
+<FONT color="green">631</FONT>        } else {<a name="line.631"></a>
+<FONT color="green">632</FONT>          String perm = String.format("%04o", permission.toShort());<a name="line.632"></a>
+<FONT color="green">633</FONT>          Shell.execCommand(Shell.getSetPermissionCommand(perm, false,<a name="line.633"></a>
+<FONT color="green">634</FONT>            FileUtil.makeShellPath(pathToFile(p), true)));<a name="line.634"></a>
+<FONT color="green">635</FONT>        }<a name="line.635"></a>
+<FONT color="green">636</FONT>      }<a name="line.636"></a>
+<FONT color="green">637</FONT>     <a name="line.637"></a>
+<FONT color="green">638</FONT>      /**<a name="line.638"></a>
+<FONT color="green">639</FONT>       * Sets the {@link Path}'s last modified time &lt;em&gt;only&lt;/em&gt; to the given<a name="line.639"></a>
+<FONT color="green">640</FONT>       * valid time.<a name="line.640"></a>
+<FONT color="green">641</FONT>       *<a name="line.641"></a>
+<FONT color="green">642</FONT>       * @param mtime the modification time to set (only if greater than zero).<a name="line.642"></a>
+<FONT color="green">643</FONT>       * @param atime currently ignored.<a name="line.643"></a>
+<FONT color="green">644</FONT>       * @throws IOException if setting the last modified time fails.<a name="line.644"></a>
+<FONT color="green">645</FONT>       */<a name="line.645"></a>
+<FONT color="green">646</FONT>      @Override<a name="line.646"></a>
+<FONT color="green">647</FONT>      public void setTimes(Path p, long mtime, long atime) throws IOException {<a name="line.647"></a>
+<FONT color="green">648</FONT>        File f = pathToFile(p);<a name="line.648"></a>
+<FONT color="green">649</FONT>        if(mtime &gt;= 0) {<a name="line.649"></a>
+<FONT color="green">650</FONT>          if(!f.setLastModified(mtime)) {<a name="line.650"></a>
+<FONT color="green">651</FONT>            throw new IOException(<a name="line.651"></a>
+<FONT color="green">652</FONT>              "couldn't set last-modified time to " +<a name="line.652"></a>
+<FONT color="green">653</FONT>              mtime +<a name="line.653"></a>
+<FONT color="green">654</FONT>              " for " +<a name="line.654"></a>
+<FONT color="green">655</FONT>              f.getAbsolutePath());<a name="line.655"></a>
+<FONT color="green">656</FONT>          }<a name="line.656"></a>
+<FONT color="green">657</FONT>        }<a name="line.657"></a>
+<FONT color="green">658</FONT>      }<a name="line.658"></a>
+<FONT color="green">659</FONT>    <a name="line.659"></a>
+<FONT color="green">660</FONT>      @Override<a name="line.660"></a>
+<FONT color="green">661</FONT>      public boolean supportsSymlinks() {<a name="line.661"></a>
+<FONT color="green">662</FONT>        return true;<a name="line.662"></a>
+<FONT color="green">663</FONT>      }<a name="line.663"></a>
+<FONT color="green">664</FONT>    <a name="line.664"></a>
+<FONT color="green">665</FONT>      @SuppressWarnings("deprecation")<a name="line.665"></a>
+<FONT color="green">666</FONT>      @Override<a name="line.666"></a>
+<FONT color="green">667</FONT>      public void createSymlink(Path target, Path link, boolean createParent)<a name="line.667"></a>
+<FONT color="green">668</FONT>          throws IOException {<a name="line.668"></a>
+<FONT color="green">669</FONT>        if (!FileSystem.areSymlinksEnabled()) {<a name="line.669"></a>
+<FONT color="green">670</FONT>          throw new UnsupportedOperationException("Symlinks not supported");<a name="line.670"></a>
+<FONT color="green">671</FONT>        }<a name="line.671"></a>
+<FONT color="green">672</FONT>        final String targetScheme = target.toUri().getScheme();<a name="line.672"></a>
+<FONT color="green">673</FONT>        if (targetScheme != null &amp;&amp; !"file".equals(targetScheme)) {<a name="line.673"></a>
+<FONT color="green">674</FONT>          throw new IOException("Unable to create symlink to non-local file "+<a name="line.674"></a>
+<FONT color="green">675</FONT>                                "system: "+target.toString());<a name="line.675"></a>
+<FONT color="green">676</FONT>        }<a name="line.676"></a>
+<FONT color="green">677</FONT>        if (createParent) {<a name="line.677"></a>
+<FONT color="green">678</FONT>          mkdirs(link.getParent());<a name="line.678"></a>
+<FONT color="green">679</FONT>        }<a name="line.679"></a>
+<FONT color="green">680</FONT>    <a name="line.680"></a>
+<FONT color="green">681</FONT>        // NB: Use createSymbolicLink in java.nio.file.Path once available<a name="line.681"></a>
+<FONT color="green">682</FONT>        int result = FileUtil.symLink(target.toString(),<a name="line.682"></a>
+<FONT color="green">683</FONT>            makeAbsolute(link).toString());<a name="line.683"></a>
+<FONT color="green">684</FONT>        if (result != 0) {<a name="line.684"></a>
+<FONT color="green">685</FONT>          throw new IOException("Error " + result + " creating symlink " +<a name="line.685"></a>
+<FONT color="green">686</FONT>              link + " to " + target);<a name="line.686"></a>
+<FONT color="green">687</FONT>        }<a name="line.687"></a>
+<FONT color="green">688</FONT>      }<a name="line.688"></a>
+<FONT color="green">689</FONT>    <a name="line.689"></a>
+<FONT color="green">690</FONT>      /**<a name="line.690"></a>
+<FONT color="green">691</FONT>       * Return a FileStatus representing the given path. If the path refers<a name="line.691"></a>
+<FONT color="green">692</FONT>       * to a symlink return a FileStatus representing the link rather than<a name="line.692"></a>
+<FONT color="green">693</FONT>       * the object the link refers to.<a name="line.693"></a>
+<FONT color="green">694</FONT>       */<a name="line.694"></a>
+<FONT color="green">695</FONT>      @Override<a name="line.695"></a>
+<FONT color="green">696</FONT>      public FileStatus getFileLinkStatus(final Path f) throws IOException {<a name="line.696"></a>
+<FONT color="green">697</FONT>        FileStatus fi = getFileLinkStatusInternal(f, false);<a name="line.697"></a>
+<FONT color="green">698</FONT>        // getFileLinkStatus is supposed to return a symlink with a<a name="line.698"></a>
+<FONT color="green">699</FONT>        // qualified path<a name="line.699"></a>
+<FONT color="green">700</FONT>        if (fi.isSymlink()) {<a name="line.700"></a>
+<FONT color="green">701</FONT>          Path targetQual = FSLinkResolver.qualifySymlinkTarget(this.getUri(),<a name="line.701"></a>
+<FONT color="green">702</FONT>              fi.getPath(), fi.getSymlink());<a name="line.702"></a>
+<FONT color="green">703</FONT>          fi.setSymlink(targetQual);<a name="line.703"></a>
+<FONT color="green">704</FONT>        }<a name="line.704"></a>
+<FONT color="green">705</FONT>        return fi;<a name="line.705"></a>
+<FONT color="green">706</FONT>      }<a name="line.706"></a>
+<FONT color="green">707</FONT>    <a name="line.707"></a>
+<FONT color="green">708</FONT>      /**<a name="line.708"></a>
+<FONT color="green">709</FONT>       * Public {@link FileStatus} methods delegate to this function, which in turn<a name="line.709"></a>
+<FONT color="green">710</FONT>       * either call the new {@link Stat} based implementation or the deprecated<a name="line.710"></a>
+<FONT color="green">711</FONT>       * methods based on platform support.<a name="line.711"></a>
+<FONT color="green">712</FONT>       * <a name="line.712"></a>
+<FONT color="green">713</FONT>       * @param f Path to stat<a name="line.713"></a>
+<FONT color="green">714</FONT>       * @param dereference whether to dereference the final path component if a<a name="line.714"></a>
+<FONT color="green">715</FONT>       *          symlink<a name="line.715"></a>
+<FONT color="green">716</FONT>       * @return FileStatus of f<a name="line.716"></a>
+<FONT color="green">717</FONT>       * @throws IOException<a name="line.717"></a>
+<FONT color="green">718</FONT>       */<a name="line.718"></a>
+<FONT color="green">719</FONT>      private FileStatus getFileLinkStatusInternal(final Path f,<a name="line.719"></a>
+<FONT color="green">720</FONT>          boolean dereference) throws IOException {<a name="line.720"></a>
+<FONT color="green">721</FONT>        if (!useDeprecatedFileStatus) {<a name="line.721"></a>
+<FONT color="green">722</FONT>          return getNativeFileLinkStatus(f, dereference);<a name="line.722"></a>
+<FONT color="green">723</FONT>        } else if (dereference) {<a name="line.723"></a>
+<FONT color="green">724</FONT>          return deprecatedGetFileStatus(f);<a name="line.724"></a>
+<FONT color="green">725</FONT>        } else {<a name="line.725"></a>
+<FONT color="green">726</FONT>          return deprecatedGetFileLinkStatusInternal(f);<a name="line.726"></a>
+<FONT color="green">727</FONT>        }<a name="line.727"></a>
+<FONT color="green">728</FONT>      }<a name="line.728"></a>
+<FONT color="green">729</FONT>    <a name="line.729"></a>
+<FONT color="green">730</FONT>      /**<a name="line.730"></a>
+<FONT color="green">731</FONT>       * Deprecated. Remains for legacy support. Should be removed when {@link Stat}<a name="line.731"></a>
+<FONT color="green">732</FONT>       * gains support for Windows and other operating systems.<a name="line.732"></a>
+<FONT color="green">733</FONT>       */<a name="line.733"></a>
+<FONT color="green">734</FONT>      @Deprecated<a name="line.734"></a>
+<FONT color="green">735</FONT>      private FileStatus deprecatedGetFileLinkStatusInternal(final Path f)<a name="line.735"></a>
+<FONT color="green">736</FONT>          throws IOException {<a name="line.736"></a>
+<FONT color="green">737</FONT>        String target = FileUtil.readLink(new File(f.toString()));<a name="line.737"></a>
+<FONT color="green">738</FONT>    <a name="line.738"></a>
+<FONT color="green">739</FONT>        try {<a name="line.739"></a>
+<FONT color="green">740</FONT>          FileStatus fs = getFileStatus(f);<a name="line.740"></a>
+<FONT color="green">741</FONT>          // If f refers to a regular file or directory<a name="line.741"></a>
+<FONT color="green">742</FONT>          if (target.isEmpty()) {<a name="line.742"></a>
+<FONT color="green">743</FONT>            return fs;<a name="line.743"></a>
+<FONT color="green">744</FONT>          }<a name="line.744"></a>
+<FONT color="green">745</FONT>          // Otherwise f refers to a symlink<a name="line.745"></a>
+<FONT color="green">746</FONT>          return new FileStatus(fs.getLen(),<a name="line.746"></a>
+<FONT color="green">747</FONT>              false,<a name="line.747"></a>
+<FONT color="green">748</FONT>              fs.getReplication(),<a name="line.748"></a>
+<FONT color="green">749</FONT>              fs.getBlockSize(),<a name="line.749"></a>
+<FONT color="green">750</FONT>              fs.getModificationTime(),<a name="line.750"></a>
+<FONT color="green">751</FONT>              fs.getAccessTime(),<a name="line.751"></a>
+<FONT color="green">752</FONT>              fs.getPermission(),<a name="line.752"></a>
+<FONT color="green">753</FONT>              fs.getOwner(),<a name="line.753"></a>
+<FONT color="green">754</FONT>              fs.getGroup(),<a name="line.754"></a>
+<FONT color="green">755</FONT>              new Path(target),<a name="line.755"></a>
+<FONT color="green">756</FONT>              f);<a name="line.756"></a>
+<FONT color="green">757</FONT>        } catch (FileNotFoundException e) {<a name="line.757"></a>
+<FONT color="green">758</FONT>          /* The exists method in the File class returns false for dangling<a name="line.758"></a>
+<FONT color="green">759</FONT>           * links so we can get a FileNotFoundException for links that exist.<a name="line.759"></a>
+<FONT color="green">760</FONT>           * It's also possible that we raced with a delete of the link. Use<a name="line.760"></a>
+<FONT color="green">761</FONT>           * the readBasicFileAttributes method in java.nio.file.attributes<a name="line.761"></a>
+<FONT color="green">762</FONT>           * when available.<a name="line.762"></a>
+<FONT color="green">763</FONT>           */<a name="line.763"></a>
+<FONT color="green">764</FONT>          if (!target.isEmpty()) {<a name="line.764"></a>
+<FONT color="green">765</FONT>            return new FileStatus(0, false, 0, 0, 0, 0, FsPermission.getDefault(),<a name="line.765"></a>
+<FONT color="green">766</FONT>                "", "", new Path(target), f);<a name="line.766"></a>
+<FONT color="green">767</FONT>          }<a name="line.767"></a>
+<FONT color="green">768</FONT>          // f refers to a file or directory that does not exist<a name="line.768"></a>
+<FONT color="green">769</FONT>          throw e;<a name="line.769"></a>
+<FONT color="green">770</FONT>        }<a name="line.770"></a>
+<FONT color="green">771</FONT>      }<a name="line.771"></a>
+<FONT color="green">772</FONT>      /**<a name="line.772"></a>
+<FONT color="green">773</FONT>       * Calls out to platform's native stat(1) implementation to get file metadata<a name="line.773"></a>
+<FONT color="green">774</FONT>       * (permissions, user, group, atime, mtime, etc). This works around the lack<a name="line.774"></a>
+<FONT color="green">775</FONT>       * of lstat(2) in Java 6.<a name="line.775"></a>
+<FONT color="green">776</FONT>       * <a name="line.776"></a>
+<FONT color="green">777</FONT>       *  Currently, the {@link Stat} class used to do this only supports Linux<a name="line.777"></a>
+<FONT color="green">778</FONT>       *  and FreeBSD, so the old {@link #deprecatedGetFileLinkStatusInternal(Path)}<a name="line.778"></a>
+<FONT color="green">779</FONT>       *  implementation (deprecated) remains further OS support is added.<a name="line.779"></a>
+<FONT color="green">780</FONT>       *<a name="line.780"></a>
+<FONT color="green">781</FONT>       * @param f File to stat<a name="line.781"></a>
+<FONT color="green">782</FONT>       * @param dereference whether to dereference symlinks<a name="line.782"></a>
+<FONT color="green">783</FONT>       * @return FileStatus of f<a name="line.783"></a>
+<FONT color="green">784</FONT>       * @throws IOException<a name="line.784"></a>
+<FONT color="green">785</FONT>       */<a name="line.785"></a>
+<FONT color="green">786</FONT>      private FileStatus getNativeFileLinkStatus(final Path f,<a name="line.786"></a>
+<FONT color="green">787</FONT>          boolean dereference) throws IOException {<a name="line.787"></a>
+<FONT color="green">788</FONT>        checkPath(f);<a name="line.788"></a>
+<FONT color="green">789</FONT>        Stat stat = new Stat(f, getDefaultBlockSize(f), dereference, this);<a name="line.789"></a>
+<FONT color="green">790</FONT>        FileStatus status = stat.getFileStatus();<a name="line.790"></a>
+<FONT color="green">791</FONT>        return status;<a name="line.791"></a>
+<FONT color="green">792</FONT>      }<a name="line.792"></a>
+<FONT color="green">793</FONT>    <a name="line.793"></a>
+<FONT color="green">794</FONT>      @Override<a name="line.794"></a>
+<FONT color="green">795</FONT>      public Path getLinkTarget(Path f) throws IOException {<a name="line.795"></a>
+<FONT color="green">796</FONT>        FileStatus fi = getFileLinkStatusInternal(f, false);<a name="line.796"></a>
+<FONT color="green">797</FONT>        // return an unqualified symlink target<a name="line.797"></a>
+<FONT color="green">798</FONT>        return fi.getSymlink();<a name="line.798"></a>
+<FONT color="green">799</FONT>      }<a name="line.799"></a>
+<FONT color="green">800</FONT>    }<a name="line.800"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

@@ -1,0 +1,136 @@
+MISSING @SINCE TAG: org.apache.hadoop.security.AccessControlException Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.BlockStoragePolicySpi Interface
+MISSING @SINCE TAG: org.apache.hadoop.fs.ByteBufferReadable Interface
+MISSING @SINCE TAG: org.apache.hadoop.fs.CanUnbuffer Interface
+MISSING @SINCE TAG: org.apache.hadoop.security.Credentials Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSInputStream Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.GlobalStorageStatistics Class
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.MetricStringBuilder Class
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableRatesWithAggregation Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.QuotaUsage Class
+MISSING @SINCE TAG: org.apache.hadoop.security.http.RestCsrfPreventionFilter Class
+MISSING @SINCE TAG: org.apache.hadoop.security.SecurityUtil Class
+MISSING @SINCE TAG: org.apache.hadoop.util.Shell Class
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.sink.StatsDSink Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.StorageStatistics Class
+MISSING @SINCE TAG: org.apache.hadoop.util.SysInfo Class
+MISSING @SINCE TAG: org.apache.hadoop.security.UserGroupInformation Class
+MISSING @SINCE TAG: org.apache.hadoop.security.http.XFrameOptionsFilter Class
+NO DOC BLOCK: org.apache.hadoop.fs.BlockLocation Constructor (java.lang.String[], java.lang.String[], java.lang.String[], java.lang.String[], java.lang.String[], org.apache.hadoop.fs.StorageType[], long, long, boolean)
+NO DOC BLOCK: org.apache.hadoop.metrics2.lib.MutableCounterLong Constructor (org.apache.hadoop.metrics2.MetricsInfo, long)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method addDelegationTokens(java.lang.String, org.apache.hadoop.security.Credentials)
+NO DOC BLOCK: org.apache.hadoop.fs.FileUtil Method compareFs(org.apache.hadoop.fs.FileSystem, org.apache.hadoop.fs.FileSystem)
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method createSnapshot(org.apache.hadoop.fs.Path, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method createSnapshot(org.apache.hadoop.fs.Path, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method createSnapshot(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.viewfs.ViewFileSystem Method createSnapshot(org.apache.hadoop.fs.Path, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.viewfs.ViewFs Method createSnapshot(org.apache.hadoop.fs.Path, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method deleteSnapshot(org.apache.hadoop.fs.Path, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method deleteSnapshot(org.apache.hadoop.fs.Path, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.viewfs.ViewFs Method deleteSnapshot(org.apache.hadoop.fs.Path, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.ContentSummary Method equals(java.lang.Object)
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method getAllStoragePolicies()
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method getAllStoragePolicies()
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getAllStoragePolicies()
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method getAllStoragePolicies()
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getCanonicalServiceName()
+NO DOC BLOCK: org.apache.hadoop.fs.Trash Method getCurrentTrashDir(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.TrashPolicy Method getCurrentTrashDir(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getGlobalStorageStatistics()
+MISSING @SINCE TAG: org.apache.hadoop.fs.ContentSummary Method getHeaderFields()
+MISSING @SINCE TAG: org.apache.hadoop.ha.HAServiceTarget Method getHealthMonitorAddress()
+MISSING @SINCE TAG: org.apache.hadoop.ha.HAServiceTarget Method getHealthMonitorProxy(org.apache.hadoop.conf.Configuration, int)
+MISSING @SINCE TAG: org.apache.hadoop.fs.TrashPolicy Method getInstance(org.apache.hadoop.conf.Configuration, org.apache.hadoop.fs.FileSystem)
+MISSING @SINCE TAG: org.apache.hadoop.fs.TrashPolicy Method getInstance(org.apache.hadoop.conf.Configuration, org.apache.hadoop.fs.FileSystem, org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.metrics2.util.MBeans Method getMbeanNameName(javax.management.ObjectName)
+NO DOC BLOCK: org.apache.hadoop.metrics2.util.MBeans Method getMbeanNameService(javax.management.ObjectName)
+MISSING @SINCE TAG: org.apache.hadoop.conf.Configuration Method getPropsWithPrefix(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.ContentSummary Method getQuotaHeaderFields()
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getQuotaUsage(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.viewfs.ViewFileSystem Method getQuotaUsage(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.ContentSummary Method getSnapshotDirectoryCount()
+NO DOC BLOCK: org.apache.hadoop.fs.ContentSummary Method getSnapshotFileCount()
+NO DOC BLOCK: org.apache.hadoop.fs.ContentSummary Method getSnapshotLength()
+NO DOC BLOCK: org.apache.hadoop.fs.ContentSummary Method getSnapshotSpaceConsumed()
+MISSING @SINCE TAG: org.apache.hadoop.fs.BlockLocation Method getStorageIds()
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method getStoragePolicy(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method getStoragePolicy(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getStoragePolicy(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method getStoragePolicy(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.viewfs.ViewFs Method getStoragePolicy(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getStorageStatistics()
+MISSING @SINCE TAG: org.apache.hadoop.fs.BlockLocation Method getStorageTypes()
+NO DOC BLOCK: org.apache.hadoop.conf.Configuration Method getTimeDurations(java.lang.String, java.util.concurrent.TimeUnit)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getTrashRoot(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method getTrashRoot(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getTrashRoots(boolean)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method getTrashRoots(boolean)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getUsed(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FilterFileSystem Method getUsed(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.RawLocalFileSystem Method handleEmptyDstDirectoryOnWindows(org.apache.hadoop.fs.Path, java.io.File, org.apache.hadoop.fs.Path, java.io.File)
+NO DOC BLOCK: org.apache.hadoop.fs.ContentSummary Method hashCode()
+NO DOC BLOCK: org.apache.hadoop.fs.GlobFilter Method hasPattern()
+MISSING @SINCE TAG: org.apache.hadoop.fs.TrashPolicy Method initialize(org.apache.hadoop.conf.Configuration, org.apache.hadoop.fs.FileSystem)
+MISSING @SINCE TAG: org.apache.hadoop.fs.TrashPolicy Method initialize(org.apache.hadoop.conf.Configuration, org.apache.hadoop.fs.FileSystem, org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableStat Method lastStat()
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method listLocatedStatus(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.PathFilter)
+MISSING @SINCE TAG: org.apache.hadoop.crypto.key.KeyProvider Method needsPassword()
+MISSING @SINCE TAG: org.apache.hadoop.security.alias.CredentialProvider Method needsPassword()
+NO DOC BLOCK: org.apache.hadoop.metrics2.lib.MetricsRegistry Method newRatesWithAggregation(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.crypto.key.KeyProvider Method noPasswordError()
+MISSING @SINCE TAG: org.apache.hadoop.security.alias.CredentialProvider Method noPasswordError()
+MISSING @SINCE TAG: org.apache.hadoop.crypto.key.KeyProvider Method noPasswordWarning()
+MISSING @SINCE TAG: org.apache.hadoop.security.alias.CredentialProvider Method noPasswordWarning()
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method renameSnapshot(org.apache.hadoop.fs.Path, java.lang.String, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method renameSnapshot(org.apache.hadoop.fs.Path, java.lang.String, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.viewfs.ViewFs Method renameSnapshot(org.apache.hadoop.fs.Path, java.lang.String, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.BlockLocation Method setStorageIds(java.lang.String[])
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method setStoragePolicy(org.apache.hadoop.fs.Path, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method setStoragePolicy(org.apache.hadoop.fs.Path, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method setStoragePolicy(org.apache.hadoop.fs.Path, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method setStoragePolicy(org.apache.hadoop.fs.Path, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.viewfs.ViewFs Method setStoragePolicy(org.apache.hadoop.fs.Path, java.lang.String)
+NO DOC BLOCK: org.apache.hadoop.fs.BlockLocation Method setStorageTypes(org.apache.hadoop.fs.StorageType[])
+MISSING @SINCE TAG: org.apache.hadoop.fs.ContentSummary Method toString(boolean, boolean, boolean)
+MISSING @SINCE TAG: org.apache.hadoop.fs.ContentSummary Method toString(boolean, boolean, boolean, boolean, java.util.List)
+MISSING @SINCE TAG: org.apache.hadoop.fs.ContentSummary Method toString(boolean, boolean, boolean, java.util.List)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSDataInputStream Method toString()
+NO DOC BLOCK: org.apache.hadoop.fs.permission.AclEntryType Method toString()
+NO DOC BLOCK: org.apache.hadoop.io.MapWritable Method toString()
+NO DOC BLOCK: org.apache.hadoop.metrics2.lib.MutableStat Method toString()
+MISSING @SINCE TAG: org.apache.hadoop.fs.permission.AclEntry Method toStringStable()
+MISSING @SINCE TAG: org.apache.hadoop.fs.permission.AclEntryType Method toStringStable()
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method unsetStoragePolicy(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method unsetStoragePolicy(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method unsetStoragePolicy(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method unsetStoragePolicy(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.viewfs.ViewFs Method unsetStoragePolicy(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field FS_PROTECTED_DIRECTORIES
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_CALLER_CONTEXT_ENABLED_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_CALLER_CONTEXT_ENABLED_KEY
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_CALLER_CONTEXT_MAX_SIZE_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_CALLER_CONTEXT_MAX_SIZE_KEY
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_CALLER_CONTEXT_SIGNATURE_MAX_SIZE_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_CALLER_CONTEXT_SIGNATURE_MAX_SIZE_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_KERBEROS_MIN_SECONDS_BEFORE_RELOGIN
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_KERBEROS_MIN_SECONDS_BEFORE_RELOGIN_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_CRYPTO_CODEC_CLASSES_AES_CTR_NOPADDING_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_CRYPTO_CODEC_CLASSES_AES_CTR_NOPADDING_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_DNS_INTERFACE_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_DNS_NAMESERVER_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_GROUPS_CACHE_BACKGROUND_RELOAD
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_GROUPS_CACHE_BACKGROUND_RELOAD_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_GROUPS_CACHE_BACKGROUND_RELOAD_THREADS
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_GROUPS_CACHE_BACKGROUND_RELOAD_THREADS_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_KEY_PROVIDER_PATH
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_SENSITIVE_CONFIG_KEYS
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_SENSITIVE_CONFIG_KEYS_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SHELL_MISSING_DEFAULT_FS_WARNING_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SHELL_MISSING_DEFAULT_FS_WARNING_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SHELL_SAFELY_DELETE_LIMIT_NUM_FILES
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SHELL_SAFELY_DELETE_LIMIT_NUM_FILES_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_CLIENT_LOW_LATENCY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_CLIENT_LOW_LATENCY_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_SERVER_LOG_SLOW_RPC
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_SERVER_LOG_SLOW_RPC_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.FileSystem Field TRASH_PREFIX

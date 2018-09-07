@@ -1,0 +1,14 @@
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getAllocatedCpuVcores()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getAllocatedMemoryMB()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getAmNodeLabelExpression()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getAppNodeLabelExpression()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo Method getFinishedTime()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getPriority()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method getRunningContainers()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo Method getStartedTime()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Method isUnmanagedApp()
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo Field finishedTime
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Field priority
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Field runningContainers
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppAttemptInfo Field startedTime
+NO DOC BLOCK: org.apache.hadoop.yarn.server.webapp.dao.AppInfo Field unmanagedApplication

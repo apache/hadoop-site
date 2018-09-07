@@ -1,0 +1,397 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    /**<a name="line.1"></a>
+<FONT color="green">002</FONT>     * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<FONT color="green">003</FONT>     * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<FONT color="green">004</FONT>     * distributed with this work for additional information<a name="line.4"></a>
+<FONT color="green">005</FONT>     * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<FONT color="green">006</FONT>     * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<FONT color="green">007</FONT>     * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<FONT color="green">008</FONT>     * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<FONT color="green">009</FONT>     *<a name="line.9"></a>
+<FONT color="green">010</FONT>     *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<FONT color="green">011</FONT>     *<a name="line.11"></a>
+<FONT color="green">012</FONT>     * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<FONT color="green">013</FONT>     * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<FONT color="green">014</FONT>     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<FONT color="green">015</FONT>     * See the License for the specific language governing permissions and<a name="line.15"></a>
+<FONT color="green">016</FONT>     * limitations under the License.<a name="line.16"></a>
+<FONT color="green">017</FONT>     */<a name="line.17"></a>
+<FONT color="green">018</FONT>    <a name="line.18"></a>
+<FONT color="green">019</FONT>    package org.apache.hadoop.filecache;<a name="line.19"></a>
+<FONT color="green">020</FONT>    <a name="line.20"></a>
+<FONT color="green">021</FONT>    import java.io.File;<a name="line.21"></a>
+<FONT color="green">022</FONT>    import java.io.IOException;<a name="line.22"></a>
+<FONT color="green">023</FONT>    import java.net.URI;<a name="line.23"></a>
+<FONT color="green">024</FONT>    <a name="line.24"></a>
+<FONT color="green">025</FONT>    import org.apache.hadoop.classification.InterfaceAudience;<a name="line.25"></a>
+<FONT color="green">026</FONT>    import org.apache.hadoop.classification.InterfaceStability;<a name="line.26"></a>
+<FONT color="green">027</FONT>    import org.apache.hadoop.conf.Configuration;<a name="line.27"></a>
+<FONT color="green">028</FONT>    import org.apache.hadoop.fs.FileStatus;<a name="line.28"></a>
+<FONT color="green">029</FONT>    import org.apache.hadoop.fs.FileSystem;<a name="line.29"></a>
+<FONT color="green">030</FONT>    import org.apache.hadoop.fs.Path;<a name="line.30"></a>
+<FONT color="green">031</FONT>    import org.apache.hadoop.mapreduce.MRJobConfig;<a name="line.31"></a>
+<FONT color="green">032</FONT>    <a name="line.32"></a>
+<FONT color="green">033</FONT>    /**<a name="line.33"></a>
+<FONT color="green">034</FONT>     * Distribute application-specific large, read-only files efficiently.<a name="line.34"></a>
+<FONT color="green">035</FONT>     * <a name="line.35"></a>
+<FONT color="green">036</FONT>     * &lt;p&gt;&lt;code&gt;DistributedCache&lt;/code&gt; is a facility provided by the Map-Reduce<a name="line.36"></a>
+<FONT color="green">037</FONT>     * framework to cache files (text, archives, jars etc.) needed by applications.<a name="line.37"></a>
+<FONT color="green">038</FONT>     * &lt;/p&gt;<a name="line.38"></a>
+<FONT color="green">039</FONT>     * <a name="line.39"></a>
+<FONT color="green">040</FONT>     * &lt;p&gt;Applications specify the files, via urls (hdfs:// or http://) to be cached <a name="line.40"></a>
+<FONT color="green">041</FONT>     * via the {@link org.apache.hadoop.mapred.JobConf}. The<a name="line.41"></a>
+<FONT color="green">042</FONT>     * &lt;code&gt;DistributedCache&lt;/code&gt; assumes that the files specified via urls are<a name="line.42"></a>
+<FONT color="green">043</FONT>     * already present on the {@link FileSystem} at the path specified by the url<a name="line.43"></a>
+<FONT color="green">044</FONT>     * and are accessible by every machine in the cluster.&lt;/p&gt;<a name="line.44"></a>
+<FONT color="green">045</FONT>     * <a name="line.45"></a>
+<FONT color="green">046</FONT>     * &lt;p&gt;The framework will copy the necessary files on to the slave node before <a name="line.46"></a>
+<FONT color="green">047</FONT>     * any tasks for the job are executed on that node. Its efficiency stems from <a name="line.47"></a>
+<FONT color="green">048</FONT>     * the fact that the files are only copied once per job and the ability to <a name="line.48"></a>
+<FONT color="green">049</FONT>     * cache archives which are un-archived on the slaves.&lt;/p&gt; <a name="line.49"></a>
+<FONT color="green">050</FONT>     *<a name="line.50"></a>
+<FONT color="green">051</FONT>     * &lt;p&gt;&lt;code&gt;DistributedCache&lt;/code&gt; can be used to distribute simple, read-only<a name="line.51"></a>
+<FONT color="green">052</FONT>     * data/text files and/or more complex types such as archives, jars etc. <a name="line.52"></a>
+<FONT color="green">053</FONT>     * Archives (zip, tar and tgz/tar.gz files) are un-archived at the slave nodes. <a name="line.53"></a>
+<FONT color="green">054</FONT>     * Jars may be optionally added to the classpath of the tasks, a rudimentary <a name="line.54"></a>
+<FONT color="green">055</FONT>     * software distribution mechanism.  Files have execution permissions.<a name="line.55"></a>
+<FONT color="green">056</FONT>     * In older version of Hadoop Map/Reduce users could optionally ask for symlinks<a name="line.56"></a>
+<FONT color="green">057</FONT>     * to be created in the working directory of the child task.  In the current <a name="line.57"></a>
+<FONT color="green">058</FONT>     * version symlinks are always created.  If the URL does not have a fragment <a name="line.58"></a>
+<FONT color="green">059</FONT>     * the name of the file or directory will be used. If multiple files or <a name="line.59"></a>
+<FONT color="green">060</FONT>     * directories map to the same link name, the last one added, will be used.  All<a name="line.60"></a>
+<FONT color="green">061</FONT>     * others will not even be downloaded.&lt;/p&gt;<a name="line.61"></a>
+<FONT color="green">062</FONT>     * <a name="line.62"></a>
+<FONT color="green">063</FONT>     * &lt;p&gt;&lt;code&gt;DistributedCache&lt;/code&gt; tracks modification timestamps of the cache <a name="line.63"></a>
+<FONT color="green">064</FONT>     * files. Clearly the cache files should not be modified by the application <a name="line.64"></a>
+<FONT color="green">065</FONT>     * or externally while the job is executing.&lt;/p&gt;<a name="line.65"></a>
+<FONT color="green">066</FONT>     * <a name="line.66"></a>
+<FONT color="green">067</FONT>     * &lt;p&gt;Here is an illustrative example on how to use the <a name="line.67"></a>
+<FONT color="green">068</FONT>     * &lt;code&gt;DistributedCache&lt;/code&gt;:&lt;/p&gt;<a name="line.68"></a>
+<FONT color="green">069</FONT>     * &lt;p&gt;&lt;blockquote&gt;&lt;pre&gt;<a name="line.69"></a>
+<FONT color="green">070</FONT>     *     // Setting up the cache for the application<a name="line.70"></a>
+<FONT color="green">071</FONT>     *     <a name="line.71"></a>
+<FONT color="green">072</FONT>     *     1. Copy the requisite files to the &lt;code&gt;FileSystem&lt;/code&gt;:<a name="line.72"></a>
+<FONT color="green">073</FONT>     *     <a name="line.73"></a>
+<FONT color="green">074</FONT>     *     $ bin/hadoop fs -copyFromLocal lookup.dat /myapp/lookup.dat  <a name="line.74"></a>
+<FONT color="green">075</FONT>     *     $ bin/hadoop fs -copyFromLocal map.zip /myapp/map.zip  <a name="line.75"></a>
+<FONT color="green">076</FONT>     *     $ bin/hadoop fs -copyFromLocal mylib.jar /myapp/mylib.jar<a name="line.76"></a>
+<FONT color="green">077</FONT>     *     $ bin/hadoop fs -copyFromLocal mytar.tar /myapp/mytar.tar<a name="line.77"></a>
+<FONT color="green">078</FONT>     *     $ bin/hadoop fs -copyFromLocal mytgz.tgz /myapp/mytgz.tgz<a name="line.78"></a>
+<FONT color="green">079</FONT>     *     $ bin/hadoop fs -copyFromLocal mytargz.tar.gz /myapp/mytargz.tar.gz<a name="line.79"></a>
+<FONT color="green">080</FONT>     *     <a name="line.80"></a>
+<FONT color="green">081</FONT>     *     2. Setup the application's &lt;code&gt;JobConf&lt;/code&gt;:<a name="line.81"></a>
+<FONT color="green">082</FONT>     *     <a name="line.82"></a>
+<FONT color="green">083</FONT>     *     JobConf job = new JobConf();<a name="line.83"></a>
+<FONT color="green">084</FONT>     *     DistributedCache.addCacheFile(new URI("/myapp/lookup.dat#lookup.dat"), <a name="line.84"></a>
+<FONT color="green">085</FONT>     *                                   job);<a name="line.85"></a>
+<FONT color="green">086</FONT>     *     DistributedCache.addCacheArchive(new URI("/myapp/map.zip", job);<a name="line.86"></a>
+<FONT color="green">087</FONT>     *     DistributedCache.addFileToClassPath(new Path("/myapp/mylib.jar"), job);<a name="line.87"></a>
+<FONT color="green">088</FONT>     *     DistributedCache.addCacheArchive(new URI("/myapp/mytar.tar", job);<a name="line.88"></a>
+<FONT color="green">089</FONT>     *     DistributedCache.addCacheArchive(new URI("/myapp/mytgz.tgz", job);<a name="line.89"></a>
+<FONT color="green">090</FONT>     *     DistributedCache.addCacheArchive(new URI("/myapp/mytargz.tar.gz", job);<a name="line.90"></a>
+<FONT color="green">091</FONT>     *     <a name="line.91"></a>
+<FONT color="green">092</FONT>     *     3. Use the cached files in the {@link org.apache.hadoop.mapred.Mapper}<a name="line.92"></a>
+<FONT color="green">093</FONT>     *     or {@link org.apache.hadoop.mapred.Reducer}:<a name="line.93"></a>
+<FONT color="green">094</FONT>     *     <a name="line.94"></a>
+<FONT color="green">095</FONT>     *     public static class MapClass extends MapReduceBase  <a name="line.95"></a>
+<FONT color="green">096</FONT>     *     implements Mapper&amp;lt;K, V, K, V&amp;gt; {<a name="line.96"></a>
+<FONT color="green">097</FONT>     *     <a name="line.97"></a>
+<FONT color="green">098</FONT>     *       private Path[] localArchives;<a name="line.98"></a>
+<FONT color="green">099</FONT>     *       private Path[] localFiles;<a name="line.99"></a>
+<FONT color="green">100</FONT>     *       <a name="line.100"></a>
+<FONT color="green">101</FONT>     *       public void configure(JobConf job) {<a name="line.101"></a>
+<FONT color="green">102</FONT>     *         // Get the cached archives/files<a name="line.102"></a>
+<FONT color="green">103</FONT>     *         File f = new File("./map.zip/some/file/in/zip.txt");<a name="line.103"></a>
+<FONT color="green">104</FONT>     *       }<a name="line.104"></a>
+<FONT color="green">105</FONT>     *       <a name="line.105"></a>
+<FONT color="green">106</FONT>     *       public void map(K key, V value, <a name="line.106"></a>
+<FONT color="green">107</FONT>     *                       OutputCollector&amp;lt;K, V&amp;gt; output, Reporter reporter) <a name="line.107"></a>
+<FONT color="green">108</FONT>     *       throws IOException {<a name="line.108"></a>
+<FONT color="green">109</FONT>     *         // Use data from the cached archives/files here<a name="line.109"></a>
+<FONT color="green">110</FONT>     *         // ...<a name="line.110"></a>
+<FONT color="green">111</FONT>     *         // ...<a name="line.111"></a>
+<FONT color="green">112</FONT>     *         output.collect(k, v);<a name="line.112"></a>
+<FONT color="green">113</FONT>     *       }<a name="line.113"></a>
+<FONT color="green">114</FONT>     *     }<a name="line.114"></a>
+<FONT color="green">115</FONT>     *     <a name="line.115"></a>
+<FONT color="green">116</FONT>     * &lt;/pre&gt;&lt;/blockquote&gt;&lt;/p&gt;<a name="line.116"></a>
+<FONT color="green">117</FONT>     *<a name="line.117"></a>
+<FONT color="green">118</FONT>     * It is also very common to use the DistributedCache by using<a name="line.118"></a>
+<FONT color="green">119</FONT>     * {@link org.apache.hadoop.util.GenericOptionsParser}.<a name="line.119"></a>
+<FONT color="green">120</FONT>     *<a name="line.120"></a>
+<FONT color="green">121</FONT>     * This class includes methods that should be used by users<a name="line.121"></a>
+<FONT color="green">122</FONT>     * (specifically those mentioned in the example above, as well<a name="line.122"></a>
+<FONT color="green">123</FONT>     * as {@link DistributedCache#addArchiveToClassPath(Path, Configuration)}),<a name="line.123"></a>
+<FONT color="green">124</FONT>     * as well as methods intended for use by the MapReduce framework<a name="line.124"></a>
+<FONT color="green">125</FONT>     * (e.g., {@link org.apache.hadoop.mapred.JobClient}).<a name="line.125"></a>
+<FONT color="green">126</FONT>     *<a name="line.126"></a>
+<FONT color="green">127</FONT>     * @see org.apache.hadoop.mapred.JobConf<a name="line.127"></a>
+<FONT color="green">128</FONT>     * @see org.apache.hadoop.mapred.JobClient<a name="line.128"></a>
+<FONT color="green">129</FONT>     * @see org.apache.hadoop.mapreduce.Job<a name="line.129"></a>
+<FONT color="green">130</FONT>     */<a name="line.130"></a>
+<FONT color="green">131</FONT>    @SuppressWarnings("deprecation")<a name="line.131"></a>
+<FONT color="green">132</FONT>    @InterfaceAudience.Public<a name="line.132"></a>
+<FONT color="green">133</FONT>    @InterfaceStability.Stable<a name="line.133"></a>
+<FONT color="green">134</FONT>    @Deprecated<a name="line.134"></a>
+<FONT color="green">135</FONT>    public class DistributedCache extends<a name="line.135"></a>
+<FONT color="green">136</FONT>        org.apache.hadoop.mapreduce.filecache.DistributedCache {<a name="line.136"></a>
+<FONT color="green">137</FONT>      /**<a name="line.137"></a>
+<FONT color="green">138</FONT>       * Warning: {@link #CACHE_FILES_SIZES} is not a *public* constant.<a name="line.138"></a>
+<FONT color="green">139</FONT>       * The variable is kept for M/R 1.x applications, M/R 2.x applications should<a name="line.139"></a>
+<FONT color="green">140</FONT>       * use {@link MRJobConfig#CACHE_FILES_SIZES}<a name="line.140"></a>
+<FONT color="green">141</FONT>       */<a name="line.141"></a>
+<FONT color="green">142</FONT>      @Deprecated<a name="line.142"></a>
+<FONT color="green">143</FONT>      public static final String CACHE_FILES_SIZES =<a name="line.143"></a>
+<FONT color="green">144</FONT>          "mapred.cache.files.filesizes";<a name="line.144"></a>
+<FONT color="green">145</FONT>    <a name="line.145"></a>
+<FONT color="green">146</FONT>      /**<a name="line.146"></a>
+<FONT color="green">147</FONT>       * Warning: {@link #CACHE_ARCHIVES_SIZES} is not a *public* constant.<a name="line.147"></a>
+<FONT color="green">148</FONT>       * The variable is kept for M/R 1.x applications, M/R 2.x applications should<a name="line.148"></a>
+<FONT color="green">149</FONT>       * use {@link MRJobConfig#CACHE_ARCHIVES_SIZES}<a name="line.149"></a>
+<FONT color="green">150</FONT>       */<a name="line.150"></a>
+<FONT color="green">151</FONT>      @Deprecated<a name="line.151"></a>
+<FONT color="green">152</FONT>      public static final String CACHE_ARCHIVES_SIZES =<a name="line.152"></a>
+<FONT color="green">153</FONT>        "mapred.cache.archives.filesizes";<a name="line.153"></a>
+<FONT color="green">154</FONT>    <a name="line.154"></a>
+<FONT color="green">155</FONT>      /**<a name="line.155"></a>
+<FONT color="green">156</FONT>       * Warning: {@link #CACHE_ARCHIVES_TIMESTAMPS} is not a *public* constant.<a name="line.156"></a>
+<FONT color="green">157</FONT>       * The variable is kept for M/R 1.x applications, M/R 2.x applications should<a name="line.157"></a>
+<FONT color="green">158</FONT>       * use {@link MRJobConfig#CACHE_ARCHIVES_TIMESTAMPS}<a name="line.158"></a>
+<FONT color="green">159</FONT>       */<a name="line.159"></a>
+<FONT color="green">160</FONT>      @Deprecated<a name="line.160"></a>
+<FONT color="green">161</FONT>      public static final String CACHE_ARCHIVES_TIMESTAMPS =<a name="line.161"></a>
+<FONT color="green">162</FONT>          "mapred.cache.archives.timestamps";<a name="line.162"></a>
+<FONT color="green">163</FONT>    <a name="line.163"></a>
+<FONT color="green">164</FONT>      /**<a name="line.164"></a>
+<FONT color="green">165</FONT>       * Warning: {@link #CACHE_FILES_TIMESTAMPS} is not a *public* constant.<a name="line.165"></a>
+<FONT color="green">166</FONT>       * The variable is kept for M/R 1.x applications, M/R 2.x applications should<a name="line.166"></a>
+<FONT color="green">167</FONT>       * use {@link MRJobConfig#CACHE_FILE_TIMESTAMPS}<a name="line.167"></a>
+<FONT color="green">168</FONT>       */<a name="line.168"></a>
+<FONT color="green">169</FONT>      @Deprecated<a name="line.169"></a>
+<FONT color="green">170</FONT>      public static final String CACHE_FILES_TIMESTAMPS =<a name="line.170"></a>
+<FONT color="green">171</FONT>          "mapred.cache.files.timestamps";<a name="line.171"></a>
+<FONT color="green">172</FONT>    <a name="line.172"></a>
+<FONT color="green">173</FONT>      /**<a name="line.173"></a>
+<FONT color="green">174</FONT>       * Warning: {@link #CACHE_ARCHIVES} is not a *public* constant.<a name="line.174"></a>
+<FONT color="green">175</FONT>       * The variable is kept for M/R 1.x applications, M/R 2.x applications should<a name="line.175"></a>
+<FONT color="green">176</FONT>       * use {@link MRJobConfig#CACHE_ARCHIVES}<a name="line.176"></a>
+<FONT color="green">177</FONT>       */<a name="line.177"></a>
+<FONT color="green">178</FONT>      @Deprecated<a name="line.178"></a>
+<FONT color="green">179</FONT>      public static final String CACHE_ARCHIVES = "mapred.cache.archives";<a name="line.179"></a>
+<FONT color="green">180</FONT>    <a name="line.180"></a>
+<FONT color="green">181</FONT>      /**<a name="line.181"></a>
+<FONT color="green">182</FONT>       * Warning: {@link #CACHE_FILES} is not a *public* constant.<a name="line.182"></a>
+<FONT color="green">183</FONT>       * The variable is kept for M/R 1.x applications, M/R 2.x applications should<a name="line.183"></a>
+<FONT color="green">184</FONT>       * use {@link MRJobConfig#CACHE_FILES}<a name="line.184"></a>
+<FONT color="green">185</FONT>       */<a name="line.185"></a>
+<FONT color="green">186</FONT>      @Deprecated<a name="line.186"></a>
+<FONT color="green">187</FONT>      public static final String CACHE_FILES = "mapred.cache.files";<a name="line.187"></a>
+<FONT color="green">188</FONT>    <a name="line.188"></a>
+<FONT color="green">189</FONT>      /**<a name="line.189"></a>
+<FONT color="green">190</FONT>       * Warning: {@link #CACHE_LOCALARCHIVES} is not a *public* constant.<a name="line.190"></a>
+<FONT color="green">191</FONT>       * The variable is kept for M/R 1.x applications, M/R 2.x applications should<a name="line.191"></a>
+<FONT color="green">192</FONT>       * use {@link MRJobConfig#CACHE_LOCALARCHIVES}<a name="line.192"></a>
+<FONT color="green">193</FONT>       */<a name="line.193"></a>
+<FONT color="green">194</FONT>      @Deprecated<a name="line.194"></a>
+<FONT color="green">195</FONT>      public static final String CACHE_LOCALARCHIVES =<a name="line.195"></a>
+<FONT color="green">196</FONT>          "mapred.cache.localArchives";<a name="line.196"></a>
+<FONT color="green">197</FONT>    <a name="line.197"></a>
+<FONT color="green">198</FONT>      /**<a name="line.198"></a>
+<FONT color="green">199</FONT>       * Warning: {@link #CACHE_LOCALFILES} is not a *public* constant.<a name="line.199"></a>
+<FONT color="green">200</FONT>       * The variable is kept for M/R 1.x applications, M/R 2.x applications should<a name="line.200"></a>
+<FONT color="green">201</FONT>       * use {@link MRJobConfig#CACHE_LOCALFILES}<a name="line.201"></a>
+<FONT color="green">202</FONT>       */<a name="line.202"></a>
+<FONT color="green">203</FONT>      @Deprecated<a name="line.203"></a>
+<FONT color="green">204</FONT>      public static final String CACHE_LOCALFILES = "mapred.cache.localFiles";<a name="line.204"></a>
+<FONT color="green">205</FONT>    <a name="line.205"></a>
+<FONT color="green">206</FONT>      /**<a name="line.206"></a>
+<FONT color="green">207</FONT>       * Warning: {@link #CACHE_SYMLINK} is not a *public* constant.<a name="line.207"></a>
+<FONT color="green">208</FONT>       * The variable is kept for M/R 1.x applications, M/R 2.x applications should<a name="line.208"></a>
+<FONT color="green">209</FONT>       * use {@link MRJobConfig#CACHE_SYMLINK}<a name="line.209"></a>
+<FONT color="green">210</FONT>       */<a name="line.210"></a>
+<FONT color="green">211</FONT>      @Deprecated<a name="line.211"></a>
+<FONT color="green">212</FONT>      public static final String CACHE_SYMLINK = "mapred.create.symlink";<a name="line.212"></a>
+<FONT color="green">213</FONT>    <a name="line.213"></a>
+<FONT color="green">214</FONT>      /**<a name="line.214"></a>
+<FONT color="green">215</FONT>       * Add a archive that has been localized to the conf.  Used<a name="line.215"></a>
+<FONT color="green">216</FONT>       * by internal DistributedCache code.<a name="line.216"></a>
+<FONT color="green">217</FONT>       * @param conf The conf to modify to contain the localized caches<a name="line.217"></a>
+<FONT color="green">218</FONT>       * @param str a comma separated list of local archives<a name="line.218"></a>
+<FONT color="green">219</FONT>       */<a name="line.219"></a>
+<FONT color="green">220</FONT>      @Deprecated<a name="line.220"></a>
+<FONT color="green">221</FONT>      public static void addLocalArchives(Configuration conf, String str) {<a name="line.221"></a>
+<FONT color="green">222</FONT>        String archives = conf.get(CACHE_LOCALARCHIVES);<a name="line.222"></a>
+<FONT color="green">223</FONT>        conf.set(CACHE_LOCALARCHIVES, archives == null ? str<a name="line.223"></a>
+<FONT color="green">224</FONT>            : archives + "," + str);<a name="line.224"></a>
+<FONT color="green">225</FONT>      }<a name="line.225"></a>
+<FONT color="green">226</FONT>    <a name="line.226"></a>
+<FONT color="green">227</FONT>      /**<a name="line.227"></a>
+<FONT color="green">228</FONT>       * Add a file that has been localized to the conf..  Used<a name="line.228"></a>
+<FONT color="green">229</FONT>       * by internal DistributedCache code.<a name="line.229"></a>
+<FONT color="green">230</FONT>       * @param conf The conf to modify to contain the localized caches<a name="line.230"></a>
+<FONT color="green">231</FONT>       * @param str a comma separated list of local files<a name="line.231"></a>
+<FONT color="green">232</FONT>       */<a name="line.232"></a>
+<FONT color="green">233</FONT>      @Deprecated<a name="line.233"></a>
+<FONT color="green">234</FONT>      public static void addLocalFiles(Configuration conf, String str) {<a name="line.234"></a>
+<FONT color="green">235</FONT>        String files = conf.get(CACHE_LOCALFILES);<a name="line.235"></a>
+<FONT color="green">236</FONT>        conf.set(CACHE_LOCALFILES, files == null ? str<a name="line.236"></a>
+<FONT color="green">237</FONT>            : files + "," + str);<a name="line.237"></a>
+<FONT color="green">238</FONT>      }<a name="line.238"></a>
+<FONT color="green">239</FONT>    <a name="line.239"></a>
+<FONT color="green">240</FONT>      /**<a name="line.240"></a>
+<FONT color="green">241</FONT>       * This method create symlinks for all files in a given dir in another<a name="line.241"></a>
+<FONT color="green">242</FONT>       * directory. Currently symlinks cannot be disabled. This is a NO-OP.<a name="line.242"></a>
+<FONT color="green">243</FONT>       *<a name="line.243"></a>
+<FONT color="green">244</FONT>       * @param conf the configuration<a name="line.244"></a>
+<FONT color="green">245</FONT>       * @param jobCacheDir the target directory for creating symlinks<a name="line.245"></a>
+<FONT color="green">246</FONT>       * @param workDir the directory in which the symlinks are created<a name="line.246"></a>
+<FONT color="green">247</FONT>       * @throws IOException<a name="line.247"></a>
+<FONT color="green">248</FONT>       * @deprecated Internal to MapReduce framework.  Use DistributedCacheManager<a name="line.248"></a>
+<FONT color="green">249</FONT>       * instead.<a name="line.249"></a>
+<FONT color="green">250</FONT>       */<a name="line.250"></a>
+<FONT color="green">251</FONT>      @Deprecated<a name="line.251"></a>
+<FONT color="green">252</FONT>      public static void createAllSymlink(<a name="line.252"></a>
+<FONT color="green">253</FONT>          Configuration conf, File jobCacheDir, File workDir)<a name="line.253"></a>
+<FONT color="green">254</FONT>        throws IOException{<a name="line.254"></a>
+<FONT color="green">255</FONT>        // Do nothing<a name="line.255"></a>
+<FONT color="green">256</FONT>      }<a name="line.256"></a>
+<FONT color="green">257</FONT>    <a name="line.257"></a>
+<FONT color="green">258</FONT>      /**<a name="line.258"></a>
+<FONT color="green">259</FONT>       * Returns {@link FileStatus} of a given cache file on hdfs. Internal to<a name="line.259"></a>
+<FONT color="green">260</FONT>       * MapReduce.<a name="line.260"></a>
+<FONT color="green">261</FONT>       * @param conf configuration<a name="line.261"></a>
+<FONT color="green">262</FONT>       * @param cache cache file<a name="line.262"></a>
+<FONT color="green">263</FONT>       * @return &lt;code&gt;FileStatus&lt;/code&gt; of a given cache file on hdfs<a name="line.263"></a>
+<FONT color="green">264</FONT>       * @throws IOException<a name="line.264"></a>
+<FONT color="green">265</FONT>       */<a name="line.265"></a>
+<FONT color="green">266</FONT>      @Deprecated<a name="line.266"></a>
+<FONT color="green">267</FONT>      public static FileStatus getFileStatus(Configuration conf, URI cache)<a name="line.267"></a>
+<FONT color="green">268</FONT>        throws IOException {<a name="line.268"></a>
+<FONT color="green">269</FONT>        FileSystem fileSystem = FileSystem.get(cache, conf);<a name="line.269"></a>
+<FONT color="green">270</FONT>        return fileSystem.getFileStatus(new Path(cache.getPath()));<a name="line.270"></a>
+<FONT color="green">271</FONT>      }<a name="line.271"></a>
+<FONT color="green">272</FONT>    <a name="line.272"></a>
+<FONT color="green">273</FONT>      /**<a name="line.273"></a>
+<FONT color="green">274</FONT>       * Returns mtime of a given cache file on hdfs. Internal to MapReduce.<a name="line.274"></a>
+<FONT color="green">275</FONT>       * @param conf configuration<a name="line.275"></a>
+<FONT color="green">276</FONT>       * @param cache cache file<a name="line.276"></a>
+<FONT color="green">277</FONT>       * @return mtime of a given cache file on hdfs<a name="line.277"></a>
+<FONT color="green">278</FONT>       * @throws IOException<a name="line.278"></a>
+<FONT color="green">279</FONT>       */<a name="line.279"></a>
+<FONT color="green">280</FONT>      @Deprecated<a name="line.280"></a>
+<FONT color="green">281</FONT>      public static long getTimestamp(Configuration conf, URI cache)<a name="line.281"></a>
+<FONT color="green">282</FONT>        throws IOException {<a name="line.282"></a>
+<FONT color="green">283</FONT>        return getFileStatus(conf, cache).getModificationTime();<a name="line.283"></a>
+<FONT color="green">284</FONT>      }<a name="line.284"></a>
+<FONT color="green">285</FONT>    <a name="line.285"></a>
+<FONT color="green">286</FONT>      /**<a name="line.286"></a>
+<FONT color="green">287</FONT>       * This is to check the timestamp of the archives to be localized.<a name="line.287"></a>
+<FONT color="green">288</FONT>       * Used by internal MapReduce code.<a name="line.288"></a>
+<FONT color="green">289</FONT>       * @param conf Configuration which stores the timestamp's<a name="line.289"></a>
+<FONT color="green">290</FONT>       * @param timestamps comma separated list of timestamps of archives.<a name="line.290"></a>
+<FONT color="green">291</FONT>       * The order should be the same as the order in which the archives are added.<a name="line.291"></a>
+<FONT color="green">292</FONT>       */<a name="line.292"></a>
+<FONT color="green">293</FONT>      @Deprecated<a name="line.293"></a>
+<FONT color="green">294</FONT>      public static void setArchiveTimestamps(Configuration conf, String timestamps) {<a name="line.294"></a>
+<FONT color="green">295</FONT>        conf.set(CACHE_ARCHIVES_TIMESTAMPS, timestamps);<a name="line.295"></a>
+<FONT color="green">296</FONT>      }<a name="line.296"></a>
+<FONT color="green">297</FONT>    <a name="line.297"></a>
+<FONT color="green">298</FONT>      /**<a name="line.298"></a>
+<FONT color="green">299</FONT>       * This is to check the timestamp of the files to be localized.<a name="line.299"></a>
+<FONT color="green">300</FONT>       * Used by internal MapReduce code.<a name="line.300"></a>
+<FONT color="green">301</FONT>       * @param conf Configuration which stores the timestamp's<a name="line.301"></a>
+<FONT color="green">302</FONT>       * @param timestamps comma separated list of timestamps of files.<a name="line.302"></a>
+<FONT color="green">303</FONT>       * The order should be the same as the order in which the files are added.<a name="line.303"></a>
+<FONT color="green">304</FONT>       */<a name="line.304"></a>
+<FONT color="green">305</FONT>      @Deprecated<a name="line.305"></a>
+<FONT color="green">306</FONT>      public static void setFileTimestamps(Configuration conf, String timestamps) {<a name="line.306"></a>
+<FONT color="green">307</FONT>        conf.set(CACHE_FILES_TIMESTAMPS, timestamps);<a name="line.307"></a>
+<FONT color="green">308</FONT>      }<a name="line.308"></a>
+<FONT color="green">309</FONT>    <a name="line.309"></a>
+<FONT color="green">310</FONT>      /**<a name="line.310"></a>
+<FONT color="green">311</FONT>       * Set the conf to contain the location for localized archives.  Used<a name="line.311"></a>
+<FONT color="green">312</FONT>       * by internal DistributedCache code.<a name="line.312"></a>
+<FONT color="green">313</FONT>       * @param conf The conf to modify to contain the localized caches<a name="line.313"></a>
+<FONT color="green">314</FONT>       * @param str a comma separated list of local archives<a name="line.314"></a>
+<FONT color="green">315</FONT>       */<a name="line.315"></a>
+<FONT color="green">316</FONT>      @Deprecated<a name="line.316"></a>
+<FONT color="green">317</FONT>      public static void setLocalArchives(Configuration conf, String str) {<a name="line.317"></a>
+<FONT color="green">318</FONT>        conf.set(CACHE_LOCALARCHIVES, str);<a name="line.318"></a>
+<FONT color="green">319</FONT>      }<a name="line.319"></a>
+<FONT color="green">320</FONT>    <a name="line.320"></a>
+<FONT color="green">321</FONT>      /**<a name="line.321"></a>
+<FONT color="green">322</FONT>       * Set the conf to contain the location for localized files.  Used<a name="line.322"></a>
+<FONT color="green">323</FONT>       * by internal DistributedCache code.<a name="line.323"></a>
+<FONT color="green">324</FONT>       * @param conf The conf to modify to contain the localized caches<a name="line.324"></a>
+<FONT color="green">325</FONT>       * @param str a comma separated list of local files<a name="line.325"></a>
+<FONT color="green">326</FONT>       */<a name="line.326"></a>
+<FONT color="green">327</FONT>      @Deprecated<a name="line.327"></a>
+<FONT color="green">328</FONT>      public static void setLocalFiles(Configuration conf, String str) {<a name="line.328"></a>
+<FONT color="green">329</FONT>        conf.set(CACHE_LOCALFILES, str);<a name="line.329"></a>
+<FONT color="green">330</FONT>      }<a name="line.330"></a>
+<FONT color="green">331</FONT>    }<a name="line.331"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>

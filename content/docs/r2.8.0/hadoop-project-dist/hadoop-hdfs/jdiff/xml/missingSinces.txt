@@ -1,0 +1,2 @@
+NO DOC BLOCK: org.apache.hadoop.hdfs.server.namenode.INodeAttributeProvider Method getAttributes(byte[][], org.apache.hadoop.hdfs.server.namenode.INodeAttributes)
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.server.namenode.HdfsAuditLogger Method logAuditEvent(boolean, java.lang.String, java.net.InetAddress, java.lang.String, java.lang.String, java.lang.String, org.apache.hadoop.fs.FileStatus, org.apache.hadoop.ipc.CallerContext, org.apache.hadoop.security.UserGroupInformation, org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenSecretManager)

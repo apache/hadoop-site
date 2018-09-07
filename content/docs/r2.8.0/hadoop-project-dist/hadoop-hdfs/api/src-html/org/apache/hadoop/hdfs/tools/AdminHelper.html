@@ -1,0 +1,264 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/**<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * Licensed to the Apache Software Foundation (ASF) under one<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * or more contributor license agreements.  See the NOTICE file<a name="line.3"></a>
+<span class="sourceLineNo">004</span> * distributed with this work for additional information<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * regarding copyright ownership.  The ASF licenses this file<a name="line.5"></a>
+<span class="sourceLineNo">006</span> * to you under the Apache License, Version 2.0 (the<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * "License"); you may not use this file except in compliance<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * with the License.  You may obtain a copy of the License at<a name="line.8"></a>
+<span class="sourceLineNo">009</span> *<a name="line.9"></a>
+<span class="sourceLineNo">010</span> *     http://www.apache.org/licenses/LICENSE-2.0<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * Unless required by applicable law or agreed to in writing, software<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * distributed under the License is distributed on an "AS IS" BASIS,<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * See the License for the specific language governing permissions and<a name="line.15"></a>
+<span class="sourceLineNo">016</span> * limitations under the License.<a name="line.16"></a>
+<span class="sourceLineNo">017</span> */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>package org.apache.hadoop.hdfs.tools;<a name="line.18"></a>
+<span class="sourceLineNo">019</span><a name="line.19"></a>
+<span class="sourceLineNo">020</span>import com.google.common.base.Preconditions;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.apache.hadoop.conf.Configuration;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import org.apache.hadoop.fs.FileSystem;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.apache.hadoop.hdfs.DFSUtil;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.apache.hadoop.hdfs.DistributedFileSystem;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.apache.hadoop.hdfs.protocol.CachePoolInfo;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.apache.hadoop.tools.TableListing;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>import java.io.IOException;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import java.util.List;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>/**<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * Helper methods for CacheAdmin/CryptoAdmin/StoragePolicyAdmin<a name="line.32"></a>
+<span class="sourceLineNo">033</span> */<a name="line.33"></a>
+<span class="sourceLineNo">034</span>public class AdminHelper {<a name="line.34"></a>
+<span class="sourceLineNo">035</span>  /**<a name="line.35"></a>
+<span class="sourceLineNo">036</span>   * Maximum length for printed lines<a name="line.36"></a>
+<span class="sourceLineNo">037</span>   */<a name="line.37"></a>
+<span class="sourceLineNo">038</span>  static final int MAX_LINE_WIDTH = 80;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>  static final String HELP_COMMAND_NAME = "-help";<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>  static DistributedFileSystem getDFS(Configuration conf)<a name="line.41"></a>
+<span class="sourceLineNo">042</span>      throws IOException {<a name="line.42"></a>
+<span class="sourceLineNo">043</span>    FileSystem fs = FileSystem.get(conf);<a name="line.43"></a>
+<span class="sourceLineNo">044</span>    if (!(fs instanceof DistributedFileSystem)) {<a name="line.44"></a>
+<span class="sourceLineNo">045</span>      throw new IllegalArgumentException("FileSystem " + fs.getUri() +<a name="line.45"></a>
+<span class="sourceLineNo">046</span>          " is not an HDFS file system");<a name="line.46"></a>
+<span class="sourceLineNo">047</span>    }<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    return (DistributedFileSystem)fs;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>  }<a name="line.49"></a>
+<span class="sourceLineNo">050</span><a name="line.50"></a>
+<span class="sourceLineNo">051</span>  /**<a name="line.51"></a>
+<span class="sourceLineNo">052</span>   * NN exceptions contain the stack trace as part of the exception message.<a name="line.52"></a>
+<span class="sourceLineNo">053</span>   * When it's a known error, pretty-print the error and squish the stack trace.<a name="line.53"></a>
+<span class="sourceLineNo">054</span>   */<a name="line.54"></a>
+<span class="sourceLineNo">055</span>  static String prettifyException(Exception e) {<a name="line.55"></a>
+<span class="sourceLineNo">056</span>    return e.getClass().getSimpleName() + ": "<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        + e.getLocalizedMessage().split("\n")[0];<a name="line.57"></a>
+<span class="sourceLineNo">058</span>  }<a name="line.58"></a>
+<span class="sourceLineNo">059</span><a name="line.59"></a>
+<span class="sourceLineNo">060</span>  static TableListing getOptionDescriptionListing() {<a name="line.60"></a>
+<span class="sourceLineNo">061</span>    return new TableListing.Builder()<a name="line.61"></a>
+<span class="sourceLineNo">062</span>        .addField("").addField("", true)<a name="line.62"></a>
+<span class="sourceLineNo">063</span>        .wrapWidth(MAX_LINE_WIDTH).hideHeaders().build();<a name="line.63"></a>
+<span class="sourceLineNo">064</span>  }<a name="line.64"></a>
+<span class="sourceLineNo">065</span><a name="line.65"></a>
+<span class="sourceLineNo">066</span>  /**<a name="line.66"></a>
+<span class="sourceLineNo">067</span>   * Parses a time-to-live value from a string<a name="line.67"></a>
+<span class="sourceLineNo">068</span>   * @return The ttl in milliseconds<a name="line.68"></a>
+<span class="sourceLineNo">069</span>   * @throws IOException if it could not be parsed<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   */<a name="line.70"></a>
+<span class="sourceLineNo">071</span>  static Long parseTtlString(String maxTtlString) throws IOException {<a name="line.71"></a>
+<span class="sourceLineNo">072</span>    Long maxTtl = null;<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    if (maxTtlString != null) {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>      if (maxTtlString.equalsIgnoreCase("never")) {<a name="line.74"></a>
+<span class="sourceLineNo">075</span>        maxTtl = CachePoolInfo.RELATIVE_EXPIRY_NEVER;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>      } else {<a name="line.76"></a>
+<span class="sourceLineNo">077</span>        maxTtl = DFSUtil.parseRelativeTime(maxTtlString);<a name="line.77"></a>
+<span class="sourceLineNo">078</span>      }<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    }<a name="line.79"></a>
+<span class="sourceLineNo">080</span>    return maxTtl;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>  }<a name="line.81"></a>
+<span class="sourceLineNo">082</span><a name="line.82"></a>
+<span class="sourceLineNo">083</span>  static Long parseLimitString(String limitString) {<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    Long limit = null;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    if (limitString != null) {<a name="line.85"></a>
+<span class="sourceLineNo">086</span>      if (limitString.equalsIgnoreCase("unlimited")) {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        limit = CachePoolInfo.LIMIT_UNLIMITED;<a name="line.87"></a>
+<span class="sourceLineNo">088</span>      } else {<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        limit = Long.parseLong(limitString);<a name="line.89"></a>
+<span class="sourceLineNo">090</span>      }<a name="line.90"></a>
+<span class="sourceLineNo">091</span>    }<a name="line.91"></a>
+<span class="sourceLineNo">092</span>    return limit;<a name="line.92"></a>
+<span class="sourceLineNo">093</span>  }<a name="line.93"></a>
+<span class="sourceLineNo">094</span><a name="line.94"></a>
+<span class="sourceLineNo">095</span>  static Command determineCommand(String commandName, Command[] commands) {<a name="line.95"></a>
+<span class="sourceLineNo">096</span>    Preconditions.checkNotNull(commands);<a name="line.96"></a>
+<span class="sourceLineNo">097</span>    if (HELP_COMMAND_NAME.equals(commandName)) {<a name="line.97"></a>
+<span class="sourceLineNo">098</span>      return new HelpCommand(commands);<a name="line.98"></a>
+<span class="sourceLineNo">099</span>    }<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    for (Command command : commands) {<a name="line.100"></a>
+<span class="sourceLineNo">101</span>      if (command.getName().equals(commandName)) {<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        return command;<a name="line.102"></a>
+<span class="sourceLineNo">103</span>      }<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    }<a name="line.104"></a>
+<span class="sourceLineNo">105</span>    return null;<a name="line.105"></a>
+<span class="sourceLineNo">106</span>  }<a name="line.106"></a>
+<span class="sourceLineNo">107</span><a name="line.107"></a>
+<span class="sourceLineNo">108</span>  static void printUsage(boolean longUsage, String toolName,<a name="line.108"></a>
+<span class="sourceLineNo">109</span>      Command[] commands) {<a name="line.109"></a>
+<span class="sourceLineNo">110</span>    Preconditions.checkNotNull(commands);<a name="line.110"></a>
+<span class="sourceLineNo">111</span>    System.err.println("Usage: bin/hdfs " + toolName + " [COMMAND]");<a name="line.111"></a>
+<span class="sourceLineNo">112</span>    final HelpCommand helpCommand = new HelpCommand(commands);<a name="line.112"></a>
+<span class="sourceLineNo">113</span>    for (AdminHelper.Command command : commands) {<a name="line.113"></a>
+<span class="sourceLineNo">114</span>      if (longUsage) {<a name="line.114"></a>
+<span class="sourceLineNo">115</span>        System.err.print(command.getLongUsage());<a name="line.115"></a>
+<span class="sourceLineNo">116</span>      } else {<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        System.err.print("          " + command.getShortUsage());<a name="line.117"></a>
+<span class="sourceLineNo">118</span>      }<a name="line.118"></a>
+<span class="sourceLineNo">119</span>    }<a name="line.119"></a>
+<span class="sourceLineNo">120</span>    System.err.print(longUsage ? helpCommand.getLongUsage() :<a name="line.120"></a>
+<span class="sourceLineNo">121</span>        ("          " + helpCommand.getShortUsage()));<a name="line.121"></a>
+<span class="sourceLineNo">122</span>    System.err.println();<a name="line.122"></a>
+<span class="sourceLineNo">123</span>  }<a name="line.123"></a>
+<span class="sourceLineNo">124</span><a name="line.124"></a>
+<span class="sourceLineNo">125</span>  interface Command {<a name="line.125"></a>
+<span class="sourceLineNo">126</span>    String getName();<a name="line.126"></a>
+<span class="sourceLineNo">127</span>    String getShortUsage();<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    String getLongUsage();<a name="line.128"></a>
+<span class="sourceLineNo">129</span>    int run(Configuration conf, List&lt;String&gt; args) throws IOException;<a name="line.129"></a>
+<span class="sourceLineNo">130</span>  }<a name="line.130"></a>
+<span class="sourceLineNo">131</span><a name="line.131"></a>
+<span class="sourceLineNo">132</span>  static class HelpCommand implements Command {<a name="line.132"></a>
+<span class="sourceLineNo">133</span>    private final Command[] commands;<a name="line.133"></a>
+<span class="sourceLineNo">134</span><a name="line.134"></a>
+<span class="sourceLineNo">135</span>    public HelpCommand(Command[] commands) {<a name="line.135"></a>
+<span class="sourceLineNo">136</span>      Preconditions.checkNotNull(commands != null);<a name="line.136"></a>
+<span class="sourceLineNo">137</span>      this.commands = commands;<a name="line.137"></a>
+<span class="sourceLineNo">138</span>    }<a name="line.138"></a>
+<span class="sourceLineNo">139</span><a name="line.139"></a>
+<span class="sourceLineNo">140</span>    @Override<a name="line.140"></a>
+<span class="sourceLineNo">141</span>    public String getName() {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>      return HELP_COMMAND_NAME;<a name="line.142"></a>
+<span class="sourceLineNo">143</span>    }<a name="line.143"></a>
+<span class="sourceLineNo">144</span><a name="line.144"></a>
+<span class="sourceLineNo">145</span>    @Override<a name="line.145"></a>
+<span class="sourceLineNo">146</span>    public String getShortUsage() {<a name="line.146"></a>
+<span class="sourceLineNo">147</span>      return "[-help &lt;command-name&gt;]\n";<a name="line.147"></a>
+<span class="sourceLineNo">148</span>    }<a name="line.148"></a>
+<span class="sourceLineNo">149</span><a name="line.149"></a>
+<span class="sourceLineNo">150</span>    @Override<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    public String getLongUsage() {<a name="line.151"></a>
+<span class="sourceLineNo">152</span>      final TableListing listing = AdminHelper.getOptionDescriptionListing();<a name="line.152"></a>
+<span class="sourceLineNo">153</span>      listing.addRow("&lt;command-name&gt;", "The command for which to get " +<a name="line.153"></a>
+<span class="sourceLineNo">154</span>          "detailed help. If no command is specified, print detailed help for " +<a name="line.154"></a>
+<span class="sourceLineNo">155</span>          "all commands");<a name="line.155"></a>
+<span class="sourceLineNo">156</span>      return getShortUsage() + "\n" +<a name="line.156"></a>
+<span class="sourceLineNo">157</span>          "Get detailed help about a command.\n\n" +<a name="line.157"></a>
+<span class="sourceLineNo">158</span>          listing.toString();<a name="line.158"></a>
+<span class="sourceLineNo">159</span>    }<a name="line.159"></a>
+<span class="sourceLineNo">160</span><a name="line.160"></a>
+<span class="sourceLineNo">161</span>    @Override<a name="line.161"></a>
+<span class="sourceLineNo">162</span>    public int run(Configuration conf, List&lt;String&gt; args) throws IOException {<a name="line.162"></a>
+<span class="sourceLineNo">163</span>      if (args.size() == 0) {<a name="line.163"></a>
+<span class="sourceLineNo">164</span>        for (AdminHelper.Command command : commands) {<a name="line.164"></a>
+<span class="sourceLineNo">165</span>          System.err.println(command.getLongUsage());<a name="line.165"></a>
+<span class="sourceLineNo">166</span>        }<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        return 0;<a name="line.167"></a>
+<span class="sourceLineNo">168</span>      }<a name="line.168"></a>
+<span class="sourceLineNo">169</span>      if (args.size() != 1) {<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        System.out.println("You must give exactly one argument to -help.");<a name="line.170"></a>
+<span class="sourceLineNo">171</span>        return 0;<a name="line.171"></a>
+<span class="sourceLineNo">172</span>      }<a name="line.172"></a>
+<span class="sourceLineNo">173</span>      final String commandName = args.get(0);<a name="line.173"></a>
+<span class="sourceLineNo">174</span>      // prepend a dash to match against the command names<a name="line.174"></a>
+<span class="sourceLineNo">175</span>      final AdminHelper.Command command = AdminHelper<a name="line.175"></a>
+<span class="sourceLineNo">176</span>          .determineCommand("-" + commandName, commands);<a name="line.176"></a>
+<span class="sourceLineNo">177</span>      if (command == null) {<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        System.err.print("Unknown command '" + commandName + "'.\n");<a name="line.178"></a>
+<span class="sourceLineNo">179</span>        System.err.print("Valid help command names are:\n");<a name="line.179"></a>
+<span class="sourceLineNo">180</span>        String separator = "";<a name="line.180"></a>
+<span class="sourceLineNo">181</span>        for (AdminHelper.Command c : commands) {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>          System.err.print(separator + c.getName().substring(1));<a name="line.182"></a>
+<span class="sourceLineNo">183</span>          separator = ", ";<a name="line.183"></a>
+<span class="sourceLineNo">184</span>        }<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        System.err.print("\n");<a name="line.185"></a>
+<span class="sourceLineNo">186</span>        return 1;<a name="line.186"></a>
+<span class="sourceLineNo">187</span>      }<a name="line.187"></a>
+<span class="sourceLineNo">188</span>      System.err.print(command.getLongUsage());<a name="line.188"></a>
+<span class="sourceLineNo">189</span>      return 0;<a name="line.189"></a>
+<span class="sourceLineNo">190</span>    }<a name="line.190"></a>
+<span class="sourceLineNo">191</span>  }<a name="line.191"></a>
+<span class="sourceLineNo">192</span>}<a name="line.192"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
