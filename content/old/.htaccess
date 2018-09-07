@@ -1,0 +1,50 @@
+# .htaccess for Hadoop
+RedirectMatch Permanent ^/core$ http://hadoop.apache.org/
+RedirectMatch Permanent ^/core/$ http://hadoop.apache.org/
+RedirectMatch Permanent ^/core/index.html$ http://hadoop.apache.org/index.html
+RedirectMatch Permanent ^/core/(.+)$ http://hadoop.apache.org/common/$1
+
+# Redirect former subprojects to the main site.
+RedirectMatch Permanent ^/common/(.+)$ http://hadoop.apache.org/$1
+RedirectMatch Permanent ^/hdfs/docs/(.+)$ http://hadoop.apache.org/docs/hdfs/$1
+RedirectMatch Permanent ^/hdfs/(.+)$ http://hadoop.apache.org/$1
+RedirectMatch Permanent ^/mapreduce/docs/(.+)$ http://hadoop.apache.org/docs/mapreduce/$1
+RedirectMatch Permanent ^/mapreduce/(.+)$ http://hadoop.apache.org/$1
+RedirectMatch Permanent ^/credits.html$ http://hadoop.apache.org/who.html$1
+
+# promote Avro to TLP
+RedirectMatch Permanent ^/avro/(.*)$ http://avro.apache.org/$1
+# promote Chukwa to TLP
+RedirectMatch Permanent ^/chukwa/(.*)$ http://incubator.apache.org/chukwa/$1
+# promote HBase to TLP
+RedirectMatch Permanent ^/hbase/(.*)$ http://hbase.apache.org/$1
+# promote Hive to TLP
+RedirectMatch Permanent ^/hive/(.*)$ http://hive.apache.org/$1
+# promote Pig to TLP
+RedirectMatch Permanent ^/pig/(.*)$ http://pig.apache.org/$1
+# promote ZooKeeper to TLP
+RedirectMatch Permanent ^/zookeeper/(.*)$ http://zookeeper.apache.org/$1
+
+# Redirect HDFS javadoc links to HDFS user guide
+RedirectMatch Permanent ^/docs/(.+)/api/org/apache/hadoop/hdfs/.* http://hadoop.apache.org/docs/$1/hdfs_user_guide.html
+
+#Redirect old versions of the doc
+RedirectMatch Permanent ^/docs/r0.23.6/(.*)$ http://hadoop.apache.org/docs/r0.23.11/$1
+RedirectMatch Permanent ^/docs/r0.23.7/(.*)$ http://hadoop.apache.org/docs/r0.23.11/$1
+RedirectMatch Permanent ^/docs/r0.23.8/(.*)$ http://hadoop.apache.org/docs/r0.23.11/$1
+RedirectMatch Permanent ^/docs/r0.23.9/(.*)$ http://hadoop.apache.org/docs/r0.23.11/$1
+RedirectMatch Permanent ^/docs/r0.23.10/(.*)$ http://hadoop.apache.org/docs/r0.23.11/$1
+RedirectMatch Permanent ^/docs/r1.1.1/(.*)$ http://hadoop.apache.org/docs/r1.2.1/$1
+RedirectMatch Permanent ^/docs/r1.1.2/(.*)$ http://hadoop.apache.org/docs/r1.2.1/$1
+RedirectMatch Permanent ^/docs/r1.2.0/(.*)$ http://hadoop.apache.org/docs/r1.2.1/$1
+RedirectMatch Permanent ^/docs/r2.0.2-alpha/(.*)$ http://hadoop.apache.org/docs/r2.4.1/$1
+RedirectMatch Permanent ^/docs/r2.0.3-alpha/(.*)$ http://hadoop.apache.org/docs/r2.4.1/$1
+RedirectMatch Permanent ^/docs/r2.0.4-alpha/(.*)$ http://hadoop.apache.org/docs/r2.4.1/$1
+RedirectMatch Permanent ^/docs/r2.0.5-alpha/(.*)$ http://hadoop.apache.org/docs/r2.4.1/$1
+RedirectMatch Permanent ^/docs/r2.0.6-alpha/(.*)$ http://hadoop.apache.org/docs/r2.4.1/$1
+RedirectMatch Permanent ^/docs/r2.1.0-beta/(.*)$ http://hadoop.apache.org/docs/r2.4.1/$1
+RedirectMatch Permanent ^/docs/r2.2.0/(.*)$ http://hadoop.apache.org/docs/r2.4.1/$1
+RedirectMatch Permanent ^/docs/r2.3.0/(.*)$ http://hadoop.apache.org/docs/r2.4.1/$1
+RedirectMatch Permanent ^/docs/r2.4.0/(.*)$ http://hadoop.apache.org/docs/r2.4.1/$1
+RedirectMatch Permanent ^/docs/r2.5.0/(.*)$ http://hadoop.apache.org/docs/r2.5.2/$1
+RedirectMatch Permanent ^/docs/r2.5.1/(.*)$ http://hadoop.apache.org/docs/r2.5.2/$1
