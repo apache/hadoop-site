@@ -39,6 +39,7 @@ order):
   ---------------- |---------------------------------------------------------------------------- |-------------- |----------- |----------
   aajisaka         |Akira Ajisaka                                                                |Yahoo! JAPAN   |            |+9
   acmurthy         |[Arun C Murthy](http://people.apache.org/~acmurthy)                          |Hortonworks    |            |-8
+  aengineer        |Anu Engineer                                                                 |Hortonworks    |            |-8
   amareshwari      |Amareshwari Sriramadasu                                                      |InMobi         |            |+5.5
   arp              |[Arpit Agarwal](http://people.apache.org/~arp)                               |Hortonworks    |            |-8
   asuresh          |Arun Suresh                                                                  |Microsoft      |            |-8
@@ -133,6 +134,7 @@ ab                  |Andrzej Bialecki                                           
 acmurthy            |[Arun C Murthy](http://people.apache.org/~acmurthy)                                 |Hortonworks                     |        |-8
 adhoot              |Anubhav Dhoot                                                                       |Cloudera                        |        |-8
 aengineer           |Anu Engineer                                                                        |Hortonworks                     |        |-8
+ajay                |Ajay Kumar                                                                          |Hortonworks                     |        |-8
 amareshwari         |[Amareshwari Sriramadasu](http://people.apache.org/~amareshwari)                    |InMobi                          |        |+5.5
 amarrk              |[Amar Ramesh Kamat](http://people.apache.org/~amarrk)                               |Yahoo!                          |        |+5.5
 arp                 |[Arpit Agarwal](http://people.apache.org/~arp)                                      |Hortonworks                     |        |-8
@@ -141,6 +143,7 @@ asuresh             |Arun Suresh                                                
 atm                 |[Aaron T. Myers](http://people.apache.org/~atm)                                     |Cloudera                        |        |-8
 aw                  |Allen Wittenauer                                                                    |Effective Machines              |        |-8
 benoy               |[Benoy Antony](http://people.apache.org/~benoy)                                     |eBay                            |        |-8
+bharat              |Bharat Viswanadham                                                                  |Hortonworks                     |        |-8
 bibinchundatt       |Bibin A Chundatt                                                                    |Huawei                          |        |+5.5
 bikas               |Bikas Saha                                                                          |Hortonworks                     |        |-8
 bobby               |Robert(Bobby) Evans                                                                 |Oath                            |        |-6
@@ -169,6 +172,7 @@ gkesavan            |[Giridharan Kesavan](http://people.apache.org/~gkesavan)   
 gtcarrera9          |Li Lu                                                                               |Hortonworks                     |        |-8
 hitesh              |Hitesh Shah                                                                         |Hortonworks                     |        |-8
 hairong             |[Hairong Kuang](http://people.apache.org/~hairong)                                  |Facebook                        |HDFS    |-8
+hanishakoneru       |Hanisha Koneru                                                                      |Hortonworks                     |        |-8
 harsh               |[Harsh J](http://harshj.com/)                                                       |Cloudera                        |        |+5.5
 ivanmi              |Ivan Mitic                                                                          |Microsoft                       |        |-8
 iwasakims           |Masatake Iwasaki                                                                    |NTT DATA                        |        |+9
@@ -200,7 +204,9 @@ mayank              |[Mayank Bansal](http://people.apache.org/~mayank)          
 molkov              |[Dmytro Molkov](http://people.apache.org/~molkov)                                   |Facebook                        |HDFS    |-8
 mukund              |[Mukund Madhugiri](http://people.apache.org/~mukund)                                |Yahoo!                          |QA      |-8
 mingma              |Ming Ma                                                                             |Twitter                         |        |-8
+msingh              |Mukul Kumar Singh                                                                   |Hortonworks                     |        |+5.5
 naganarasimha\_gr   |[Naganarasimha G R](http://people.apache.org/~naganarasimha_gr/)                    |Huawei                          |        |+5.5
+nanda               |Nanda kumar                                                                         |Hortonworks                     |        |+5.5
 nigel               |[Nigel Daley](http://people.apache.org/~nigel)                                      |                                |QA      |-8
 nroberts            |Nathan Roberts                                                                      |Oath                            |        |-6
 omalley             |[Owen O\'Malley](http://people.apache.org/~omalley)                                 |Hortonworks                     |        |-8
