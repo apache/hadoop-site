@@ -59,7 +59,7 @@ publishDir = "content"
 
 [[menu.main]]
   name = "How to Contribute"
-  url = "https://wiki.apache.org/hadoop/HowToContribute"
+  url = "https://cwiki.apache.org/confluence/display/HADOOP/How+To+Contribute"
   parent = "development"
 
 [[menu.main]]
