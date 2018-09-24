@@ -1,0 +1,5 @@
+NO DOC BLOCK: org.apache.hadoop.security.UserGroupInformation Method isInitialized()
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_CRYPTO_JCEKS_KEY_SERIALFILTER
+NO DOC BLOCK: org.apache.hadoop.crypto.key.KeyProvider Field JCEKS_KEY_SERIAL_FILTER
+NO DOC BLOCK: org.apache.hadoop.crypto.key.KeyProvider Field JCEKS_KEY_SERIALFILTER_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.security.token.delegation.web.DelegationTokenAuthenticator Field SERVICE_PARAM
