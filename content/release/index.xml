@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018 Apache Software Foundation</copyright>
-    <lastBuildDate>Wed, 08 Aug 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hadoop.apache.org/release/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Release 2.8.5 available</title>
+      <link>https://hadoop.apache.org/release/2.8.5.html</link>
+      <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/release/2.8.5.html</guid>
+      <description>This is the next release of Apache Hadoop 2.8 line. It contains 33 bug fixes, improvements and enhancements since 2.8.5.
+Users are encouraged to read the overview of major changes for major features and improvements for Apache Hadoop 2.8. For details of 33 fixes, improvements, and other enhancements since the 2.8.4 release, please check release notes and changelog.</description>
+    </item>
     
     <item>
       <title>Release 3.1.1 available</title>

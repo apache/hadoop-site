@@ -151,6 +151,61 @@
     <h1 id="title">Releases Archive</h1>
         <ul id="list">
             
+            <h1><a href="/release/2.2.0.html">Release 2.2.0 available</a></h1>
+            <p><small>2013 Oct 15 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>Apache Hadoop 2.2.0 is the <strong>GA</strong> release of Apache Hadoop 2.x.</p>
+
+<p>Users are encouraged to immediately move to 2.2.0 since this release is
+significantly more stable and is guaranteed to remain compatible in
+terms of both APIs and protocols.</p>
+
+<p>To recap, this release has a number of significant highlights compared
+to Hadoop 1.x:</p>
+
+<ul>
+<li>YARN - A general purpose resource management system for Hadoop to
+allow MapReduce and other other data processing frameworks and
+services</li>
+<li>High Availability for HDFS</li>
+<li>HDFS Federation</li>
+<li>HDFS Snapshots</li>
+<li>NFSv3 access to data in HDFS</li>
+<li>Support for running Hadoop on Microsoft Windows</li>
+<li>Binary Compatibility for MapReduce applications built on hadoop-1.x</li>
+<li>Substantial amount of integration testing with rest of projects in
+the ecosystem</li>
+</ul>
+
+<p>A couple of important points to note while upgrading to hadoop-2.2.0:</p>
+
+<ul>
+<li>HDFS - The HDFS community decided to push the symlinks feature out
+to a future 2.3.0 release and is currently disabled.</li>
+<li>YARN/MapReduce - Users need to change ShuffleHandler service name
+from mapreduce.shuffle to mapreduce_shuffle.</li>
+</ul>
+
+<p>Please see the <a href="http://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 2.2.0 Release
+Notes</a>
+for details.</p>
+
+
+            
             <h1><a href="/release/2.1.1-beta.html">Release 2.1.1-beta available</a></h1>
             <p><small>2013 Sep 23 </small></p>
 
@@ -406,32 +461,6 @@ details.</p>
 uncovered during integration testing.</p>
 
 <p>Please see the <a href="http://hadoop.apache.org/docs/r2.0.4-alpha/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 2.0.4-alpha Release
-Notes</a>
-for details.</p>
-
-
-            
-            <h1><a href="/release/0.23.7.html">Release 0.23.7 available</a></h1>
-            <p><small>2013 Apr 18 </small></p>
-
-            <!---
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License. See accompanying LICENSE file.
--->
-
-<p>A point release for the 0.23.X line. Bug fixes to continue
-stabilization.</p>
-
-<p>Please see the <a href="http://hadoop.apache.org/docs/r0.23.7/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 0.23.7 Release
 Notes</a>
 for details.</p>
 
