@@ -11,14 +11,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License. See accompanying LICENSE file.
 #
-baseurl = "/"
+baseurl = "https://hadoop.apache.org/hadoop/"
 title = "Apache Ozone"
 copyright = "&copy; 2018 Apache Software Foundation"
 enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 uglyurls = true
 contentDir = "sitecontent"
-publishDir = "content"
+publishDir = "../content/ozone"
 
 [[menu.main]]
   name = "Download"
