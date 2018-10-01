@@ -20,12 +20,9 @@ Choose a version:
 
 <p>
   <table class="table table-striped">
-    <tr>
-      <td><a href="/docs/latest">latest</a></td>
-    </tr>
    {{range first 5 (where (where .Site.Pages "Section" "release") ".Params.linked" true) }}
      <tr>
-       <td><a href="/docs/{{.BaseFileName }}">{{.BaseFileName}}</a></td>
+       <td><a href="/ozone/docs/{{.BaseFileName }}">{{.BaseFileName}}</a></td>
      </tr>
   {{end}}
   </table>
