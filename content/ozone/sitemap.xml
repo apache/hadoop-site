@@ -3,17 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/ozone/release/0.2.1-alpha/</loc>
+    <lastmod>2018-09-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/ozone/downloads/</loc>
+  </url>
+  
+  <url>
     <loc>/ozone/</loc>
+    <lastmod>2018-09-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/ozone/categories.html</loc>
+    <loc>/ozone/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/ozone/tags.html</loc>
+    <loc>/ozone/docs/</loc>
+  </url>
+  
+  <url>
+    <loc>/ozone/qa/</loc>
+  </url>
+  
+  <url>
+    <loc>/ozone/release/</loc>
+    <lastmod>2018-09-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/ozone/tags/</loc>
     <priority>0</priority>
   </url>
   

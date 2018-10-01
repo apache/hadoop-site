@@ -17,7 +17,7 @@
 
     <base href="/ozone/">
 
-    <link rel="canonical" href="https://hadoop.apache.org/ozone/">
+    <link rel="canonical" href="https://hadoop.apache.org/ozone">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -63,8 +63,10 @@
             <div id="ratis-menu" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#qa">Q&A</a></li>
+                    <li><a href="downloads">Download</a></li>
+                    <li><a href="docs">Documentation</a></li>
                     <li><a href="https://github.com/apache/hadoop">Source</a></li>
-                    <li><a href="https://cwiki.apache.org/confluence/display/HADOOP/Hadoop+Distributed+Data+Store+and+Applications">Wiki</a></li>
+                    <li><a href="https://cwiki.apache.org/confluence/display/HADOOP/Ozone+Contributor+Guide">Wiki</a></li>
                     <li><a href="https://www.katacoda.com/elek/scenarios/ozone101"><b>Try it out!</b></a></li>
                 </ul>
             </div>
@@ -140,28 +142,26 @@
 <div class="main-section">
     <div class="container">
         <div class="row header">
-            <h2>Question and Answers</h2>
-            <h3>Where can I download it?</h3>
-            <p>Apache Hadoop Ozone is not yet released. It's being actively developed on
-              the trunk branch of Apache Hadoop. It will be released independently from
-              the main Hadoop release.</p>
-            <h3>How can I contribute</h3>
-            <p>The contribution process is the same as is for any other
-              <a href="https://wiki.apache.org/hadoop/HowToContribute">
-                Hadoop subproject.</a></p>
-            <h3>Does it mean a new Hadoop server component?</h3>
-              <p>Both Ozone and HDDS requires one additional master component - 
-               Ozone Manager and Storage Container Manger, respectively. The 
-               worker parts of Ozone/HDDS can be started as a HDFS 
-               Datanode plugin. 
-            </p>
-            <h3>How can I try it out?</h3>
-              <p>There is a
-                <a href="https://www.katacoda.com/elek/scenarios/ozone101">katacoda</a>
-                which can be used to try out Ozone. Please note that this is for 
-                demostration and is not released by Apache.</p>
-              <p>For the Apache version, you can download and build the latest version
-               from <a href="https://github.com/apache/hadoop">trunk</a></p>
+        
+        <h2>Questions and Answers</h2>
+
+
+<h3 id="how-can-i-contribute">How can I contribute</h3>
+
+<p>The contribution process is the same as for any other <a href="https://wiki.apache.org/hadoop/HowToContribute">Hadoop subproject</a>. The Ozone Contribution Guidelines is available from the <a href="https://cwiki.apache.org/confluence/display/HADOOP/Ozone+Contributor+Guide">wiki</a>.</p>
+
+<h3 id="does-it-mean-a-new-hadoop-server-component">Does it mean a new Hadoop server component?</h3>
+
+<p>Both Ozone and HDDS requires one additional master component - Ozone Manager and Storage Container Manger, respectively.
+The worker parts of Ozone/HDDS can be started as a HDFS Datanode plugin or standalone.</p>
+
+<h3 id="how-can-i-try-it-out">How can I try it out?</h3>
+
+<p>There is a <a href="https://www.katacoda.com/elek/scenarios/ozone101">katacoda example</a> which can be used to try out Ozone without download.</p>
+
+<p>You can also <a href="/downloads/">download</a> it and <a href="/docs/latest/runningviadocker.html">try it out</a></p>
+
+        
         </div>
     </div>
 </div>
@@ -179,7 +179,6 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="./js/underscore-min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>

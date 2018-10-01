@@ -16,8 +16,8 @@ title = "Apache Ozone"
 copyright = "&copy; 2018 Apache Software Foundation"
 enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
-uglyurls = true
-contentDir = "sitecontent"
+uglyurls = false
+contentDir = "src"
 publishDir = "../content/ozone"
 
 [[menu.main]]
