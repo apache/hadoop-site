@@ -14,7 +14,7 @@ The worker parts of Ozone/HDDS can be started as a HDFS Datanode plugin or stand
 ### How can I try it out?
 There is a [katacoda example][3] which can be used to try out Ozone without download.
 
-You can also [download](/downloads/) it and [try it out](/docs/latest/runningviadocker.html)
+You can also [download](/ozone/downloads/) it and [try it out](/ozone/docs/0.2.1-alpha/runningviadocker.html)
 
 [1]: https://wiki.apache.org/hadoop/HowToContribute
 [2]: https://cwiki.apache.org/confluence/display/HADOOP/Ozone+Contributor+Guide
