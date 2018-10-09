@@ -171,6 +171,7 @@ gera                |Gera Shegalov                                              
 gkesavan            |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                            |Hortonworks                     |RE      |-8
 gtcarrera9          |Li Lu                                                                               |Hortonworks                     |        |-8
 hitesh              |Hitesh Shah                                                                         |Hortonworks                     |        |-8
+haibochen           |Haibo Chen                                                                          |Cloudera                        |        |-8
 hairong             |[Hairong Kuang](http://people.apache.org/~hairong)                                  |Facebook                        |HDFS    |-8
 hanishakoneru       |Hanisha Koneru                                                                      |Hortonworks                     |        |-8
 harsh               |[Harsh J](http://harshj.com/)                                                       |Cloudera                        |        |+5.5
