@@ -47,6 +47,8 @@ The Hadoop security mailing list is : <security@hadoop.apache.org>.
 In order to post to the list, it is **NOT** necessary to first subscribe
 to it.
 
+For information on published vulnerabilities please see our [CVE list](cve_list.html).
+
 ## General
 
 This mailing list is **NOT** for end-user questions and discussion.

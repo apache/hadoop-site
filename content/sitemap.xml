@@ -574,6 +574,10 @@
   </url>
   
   <url>
+    <loc>https://hadoop.apache.org/cve_list.html</loc>
+  </url>
+  
+  <url>
     <loc>https://hadoop.apache.org/issue_tracking.html</loc>
   </url>
   

@@ -77,7 +77,7 @@
           
        
           
-            <li class="dropdown ">
+            <li class="dropdown  active">
              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Community <span class="caret"></span></a>
              <ul class="dropdown-menu">
                
@@ -147,8 +147,9 @@
     </nav>
 
 <div class="container">
-<div class="col-md-8">
-<h1>Release 0.23.3 available</h1>
+<h1>Hadoop CVE List</h1>
+
+
 <!---
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -163,29 +164,107 @@
   limitations under the License. See accompanying LICENSE file.
 -->
 
-<p>This release contains YARN and MRv2 but does not have Name Node High
-Avalability</p>
+<p>This page lists security fixes that the Hadoop PMC felt warranted a CVE. If you think something is missing from this list or if you think the set of impacted or fixed versions is incomplete then please <a href="mailing_lists.html#Security">ask on the Security list</a>.</p>
 
-<p>Please see the <a href="http://hadoop.apache.org/docs/r0.23.3/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 0.23.3 Release
-Notes</a>
-for details.</p>
+<p>CVEs are presented in most-recent-first order of announcement.</p>
 
-<small>2012 Sep 17 </small>
-</div>
-<div class="col-md-4">
-   <p><a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-0.23.3/hadoop-0.23.3.tar.gz" class="btn btn-success">Download tar.gz</a></p>
-   <p>
-     (<a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-0.23.3/hadoop-0.23.3.tar.gz.mds">checksum</a>
-     <a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-0.23.3/hadoop-0.23.3.tar.gz.asc">signature</a>)
-   </p>
-   <p><a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-0.23.3/hadoop-0.23.3-src.tar.gz" class="btn btn-warning">Download src</a></p>
-   <p>
-     (<a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-0.23.3/hadoop-0.23.3-src.tar.gz.mds">checksum</a>
-     <a href="https://dist.apache.org/repos/dist/release/hadoop/common/hadoop-0.23.3/hadoop-0.23.3-src.tar.gz.asc">signature</a>)
-   </p>
-      <p><a href="https://hadoop.apache.org/docs/r0.23.3" class="btn btn-primary">Documentation</a></p>
+<!-- These should be sorted as most-recent-first. Please copy this template and fill in as needed.
 
-</div>
+## [CVE-YYYY-XXXX](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-YYYY-XXXX) Short Description
+
+One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough for a reader to guage applicability to their deployment.
+
+- **Versions affected**:
+- **Fixed versions**:
+- **Impact**:
+- **Reporter**:
+- **Reported Date**:
+- **Issue Announced**:
+-->
+
+<h2 id="cve-2018-8009-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-8009-zip-slip-impact-on-apache-hadoop"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8009">CVE-2018-8009</a> Zip Slip impact on Apache Hadoop</h2>
+
+<p>Details to follow. <a href="https://snyk.io/research/zip-slip-vulnerability">See the extended vulnerability description from the reporter</a>.</p>
+
+<ul>
+<li><strong>Versions affected</strong>: 3.1.0, 3.0.0-alpha to 3.0.2, 2.9.0 to 2.9.1, 2.8.0 to 2.8.4, 2.0.0-alpha to 2.7.6, 0.23.0 to 0.23.11</li>
+<li><strong>Fixed versions</strong>: 3.1.1, 3.0.3, 2.8.5, 2.7.7</li>
+<li><strong>Impact</strong>: TBD</li>
+<li><strong>Credit</strong>: Snyk Security Research Team</li>
+<li><strong>Reported Date</strong>: 2018/04/19</li>
+<li><strong>Issue Announced</strong>: TBD</li>
+</ul>
+
+<h2 id="cve-2016-6811-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2016-6811-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6811">CVE-2016-6811</a> Apache Hadoop Privilege escalation vulnerability</h2>
+
+<p>A user who can escalate to yarn user can possibly run arbitrary commands as root user.</p>
+
+<ul>
+<li><strong>Versions affected</strong>: 2.2.0 to 2.7.3</li>
+<li><strong>Fixed versions</strong>: 2.7.4 or newer</li>
+<li><strong>Impact</strong>: privilege escalation</li>
+<li><strong>Reporter</strong>: Freddie Rice</li>
+<li><strong>Reported Date</strong>: 2016/07/06</li>
+<li><strong>Issue Announced</strong>: 2018/05/01 (<a href="https://lists.apache.org/thread.html/ff3859a2188c3662240311acddba9cf97992b839792ec0a14d61b4e5@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
+</ul>
+
+<h2 id="cve-2017-15718-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2017-15718-apache-hadoop-yarn-nodemanager-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15718">CVE-2017-15718</a> Apache Hadoop YARN NodeManager vulnerability</h2>
+
+<p>In Apache Hadoop 2.7.3 and 2.7.4, the security fix for CVE-2016-3086 is incomplete.
+The YARN NodeManager can leak the password for credential store provider
+used by the NodeManager to YARN Applications.</p>
+
+<p>If you use the CredentialProvider feature to encrypt passwords used in
+NodeManager configs, it may be possible for any Container launched
+by that NodeManager to gain access to the encryption password.
+The other passwords themselves are not directly exposed.</p>
+
+<ul>
+<li><strong>Versions affected</strong>: 2.7.3, 2.7.4</li>
+<li><strong>Fixed versions</strong>: 2.7.5</li>
+<li><strong>Impact</strong>: privilege escalation</li>
+<li><strong>Reporter</strong>: Vinayakumar B.</li>
+<li><strong>Reported Date</strong>: 2017/09/18</li>
+<li><strong>Issue Announced</strong>: 2018/01/24 (<a href="https://lists.apache.org/thread.html/23a277506bc0d85c1bbe5c0766ffe55e8c3923c8d6f58893b6966957@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
+</ul>
+
+<h2 id="cve-2017-15713-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2017-15713-apache-hadoop-mapreduce-job-history-server-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15713">CVE-2017-15713</a> Apache Hadoop MapReduce job history server vulnerability</h2>
+
+<p>Vulnerability allows a cluster user to expose private files
+owned by the user running the MapReduce job history server process.
+The malicious user can construct a configuration file containing XML
+directives that reference sensitive files on the MapReduce job history
+server host.</p>
+
+<ul>
+<li><strong>Versions affected</strong>: 3.0.0-alpha to 3.0.0-beta1, 2.8.0 to 2.8.2, 2.0.0-alpha to 2.7.4, 0.23.0 to 0.23.11</li>
+<li><strong>Fixed versions</strong>: 3.0.0, 2.9.0, 2.8.3, 2.7.5</li>
+<li><strong>Impact</strong>: privilege escalation</li>
+<li><strong>Reporter</strong>: Man Yue Mo of lgtm.com</li>
+<li><strong>Reported Date</strong>: 2017/06/30</li>
+<li><strong>Issue Announced</strong>: 2018/01/19 (<a href="https://lists.apache.org/thread.html/9e5d86d5792d04f8a3b458f735e63fa9bdfe28ff454de257a2e02f18@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
+</ul>
+
+<h2 id="cve-2017-3166-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2017-3166-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-3166">CVE-2017-3166</a> Apache Hadoop Privilege escalation vulnerability</h2>
+
+<p>In a cluster where the YARN user has been granted access to all HDFS
+encryption keys, if a file in an encryption zone with access permissions
+that make it world readable is localized via YARN&rsquo;s localization mechanism,
+e.g. via the MapReduce distributed cache, that file will be stored
+in a world-readable location and shared freely with any application
+that requests to localize that file, no matter who the application owner
+is or whether that user should be allowed to access files from the
+target encryption zone.</p>
+
+<ul>
+<li><strong>Versions affected</strong>: 3.0.0-alpha1 - 3.0.0-alpha3 , 2.7.0 to 2.7.3, 2.6.1-2.6.5</li>
+<li><strong>Fixed versions</strong>: 3.0.0-alpha4, 2.8.0, 2.7.4</li>
+<li><strong>Impact</strong>: privilege escalation</li>
+<li><strong>Reporter</strong>: Luke Herbert</li>
+<li><strong>Reported Date</strong>: 2016/11/18</li>
+<li><strong>Issue Announced</strong>: 2017/11/08 (<a href="https://lists.apache.org/thread.html/2e16689b44bdd1976b6368c143a4017fc7159d1f2d02a5d54fe9310f@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
+</ul>
+
 </div>
 
 <div class="container">
