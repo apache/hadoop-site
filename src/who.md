@@ -150,6 +150,7 @@ bobby               |Robert(Bobby) Evans                                        
 boryas              |[Boris Shkolnik](http://people.apache.org/~boryas)                                  |LinkedIn                        |        |-8
 brahma              |Brahma Reddy Battula                                                                |Huawei                          |        |+5.5
 brandonli           |Brandon Li                                                                          |Hortonworks                     |        |-8
+busbey              |Sean Busbey                                                                         |Cloudera                        |        |-6
 cdouglas            |Chris Douglas                                                                       |Microsoft                       |        |-8
 cmccabe             |[Colin Patrick McCabe](http://www.club.cc.cmu.edu/~cmccabe)                         |Cloudera                        |HDFS    |-8
 cnauroth            |Chris Nauroth                                                                       |Hortonworks                     |        |-8
