@@ -60,6 +60,7 @@ order):
   enis             |[Enis Soztutar](http://people.apache.org/~enis)                              |Hortonworks    |            |-8
   epayne           |[Eric Payne](http://people.apache.org/~epayne)                               |Oath           |            |-6
   gkesavan         |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                     |Hortonworks    |            |-8
+  haibochen        |Haibo Chen                                                                   |Cloudera       |            |-8
   hairong          |Hairong Kuang                                                                |Facebook       |            |-8
   hitesh           |Hitesh Shah                                                                  |Hortonworks    |            |-8
   jeagles          |[Jonathan Eagles](http://people.apache.org/~jeagles)                         |Oath           |            |-6
