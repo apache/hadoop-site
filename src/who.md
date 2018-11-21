@@ -96,6 +96,7 @@ order):
   stevel           |Steve Loughran                                                               |Hortonworks    |            |0
   suresh           |[Suresh Srinivas](http://people.apache.org/~suresh)                          |Hortonworks    |            |-8
   szetszwo         |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                  |Hortonworks    |            |-8
+  templedf         |Daniel Templeton                                                             |Cloudera       |            |-8
   tgraves          |Thomas Graves                                                                |Oath           |            |-6
   todd             |[Todd Lipcon](http://people.apache.org/~todd)                                |Cloudera       |            |-8
   tomwhite         |[Tom White](http://weblogs.java.net/blog/tomwhite/)                          |Cloudera       |            |-8
@@ -243,6 +244,7 @@ szetszwo            |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)
 tanping             |[Tanping Wang](http://people.apache.org/~tanping)                                   |Yahoo!                          |        |-8
 tasanuma            |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                              |Yahoo! JAPAN                    |        |+9
 taton               |[Christophe Taton](http://people.apache.org/~taton)                                 |INRIA                           |        |+1
+templedf            |Daniel Templeton                                                                    |Cloudera                        |        |-8
 tgraves             |Thomas Graves                                                                       |Oath                            |        |-6
 todd                |[Todd Lipcon](http://people.apache.org/~todd)                                       |Cloudera                        |        |-8
 tomwhite            |[Tom White](http://www.lexemetech.com)                                              |Cloudera                        |        |-8
