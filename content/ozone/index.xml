@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018 Apache Software Foundation</copyright>
-    <lastBuildDate>Mon, 01 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Nov 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/ozone/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Release 0.3.0-alpha available</title>
+      <link>/ozone/release/0.3.0-alpha/</link>
+      <pubDate>Thu, 22 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/ozone/release/0.3.0-alpha/</guid>
+      <description>Apache Hadoop Ozone 0.3.0-alpha is released.
+ A new S3 compatible rest server is added. Ozone can be used from any S3 compatible tools (docs, HDDS-434) Ozone Hadoop file system URL prefix is renamed from o3:// to o3fs:// (HDDS-651) Extensive testing and stability improvements of OzoneFs. Spark, YARN and Hive support and stability improvements. Improved Pipeline handling and recovery. Separated/dedicated classpath definitions for all the Ozone components. (HDDS-447)  This is an alpha release.</description>
+    </item>
     
     <item>
       <title>Release 0.2.1-alpha available</title>
