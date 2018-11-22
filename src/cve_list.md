@@ -37,16 +37,20 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
-## [CVE-2018-8009](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8009) Zip Slip impact on Apache Hadoop
+## [CVE-2018-8009](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8009) Apache Hadoop distributed cache archive vulnerability
 
-Details to follow. [See the extended vulnerability description from the reporter](https://snyk.io/research/zip-slip-vulnerability).
+Vulnerability allows a cluster user to publish a public
+archive that can affect other files owned by the user running the YARN
+NodeManager daemon. If the impacted files belong to another already
+localized, public archive on the node then code can be injected into
+the jobs of other cluster users using the public archive.
 
 - **Versions affected**: 3.1.0, 3.0.0-alpha to 3.0.2, 2.9.0 to 2.9.1, 2.8.0 to 2.8.4, 2.0.0-alpha to 2.7.6, 0.23.0 to 0.23.11
-- **Fixed versions**: 3.1.1, 3.0.3, 2.8.5, 2.7.7
-- **Impact**: TBD
+- **Fixed versions**: 3.1.1, 3.0.3, 2.9.2, 2.8.5, 2.7.7
+- **Impact**: injection attack
 - **Credit**: Snyk Security Research Team
 - **Reported Date**: 2018/04/19
-- **Issue Announced**: TBD
+- **Issue Announced**: 2018/11/22 ([user@hadoop](https://lists.apache.org/thread.html/a1c227745ce30acbcf388c5b0cc8423e8bf495d619cd0fa973f7f38d@%3Cuser.hadoop.apache.org%3E))
 
 ## [CVE-2016-6811](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6811) Apache Hadoop Privilege escalation vulnerability
 
