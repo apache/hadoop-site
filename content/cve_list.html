@@ -182,6 +182,21 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+<h2 id="cve-2018-11766-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-11766-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11766">CVE-2018-11766</a> Apache Hadoop privilege escalation vulnerability</h2>
+
+<p>In Apache Hadoop 2.7.4 to 2.7.6, the security fix for CVE-2016-6811 is
+incomplete. A user who can escalate to yarn user can possibly run arbitrary
+commands as root user.</p>
+
+<ul>
+<li><strong>Versions affected</strong>: 2.7.4 to 2.7.6</li>
+<li><strong>Fixed versions</strong>: 2.7.7</li>
+<li><strong>Impact</strong>: privilege escalation</li>
+<li><strong>Reporter</strong>: Wilfred Spiegelenburg</li>
+<li><strong>Reported Date</strong>: 2018/05/04</li>
+<li><strong>Issue Announced</strong>: 2018/11/27 (<a href="https://lists.apache.org/thread.html/ff37bbbe09d5f03090e2dd2c3dea95de16ef4249e731f19b8959ce4c@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
+</ul>
+
 <h2 id="cve-2018-8009-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-8009-apache-hadoop-distributed-cache-archive-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8009">CVE-2018-8009</a> Apache Hadoop distributed cache archive vulnerability</h2>
 
 <p>Vulnerability allows a cluster user to publish a public
@@ -211,6 +226,8 @@ the jobs of other cluster users using the public archive.</p>
 <li><strong>Reported Date</strong>: 2016/07/06</li>
 <li><strong>Issue Announced</strong>: 2018/05/01 (<a href="https://lists.apache.org/thread.html/ff3859a2188c3662240311acddba9cf97992b839792ec0a14d61b4e5@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
 </ul>
+
+<p>Note: The fix for this vulnerability is incomplete in Apache Hadoop 2.7.4 to 2.7.6 (CVE-2018-11766).</p>
 
 <h2 id="cve-2017-15718-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2017-15718-apache-hadoop-yarn-nodemanager-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15718">CVE-2017-15718</a> Apache Hadoop YARN NodeManager vulnerability</h2>
 

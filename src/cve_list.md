@@ -37,6 +37,20 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+
+## [CVE-2018-11766](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11766) Apache Hadoop privilege escalation vulnerability
+
+In Apache Hadoop 2.7.4 to 2.7.6, the security fix for CVE-2016-6811 is
+incomplete. A user who can escalate to yarn user can possibly run arbitrary
+commands as root user.
+
+- **Versions affected**: 2.7.4 to 2.7.6
+- **Fixed versions**: 2.7.7
+- **Impact**: privilege escalation
+- **Reporter**: Wilfred Spiegelenburg
+- **Reported Date**: 2018/05/04
+- **Issue Announced**: 2018/11/27 ([general@hadoop](https://lists.apache.org/thread.html/ff37bbbe09d5f03090e2dd2c3dea95de16ef4249e731f19b8959ce4c@%3Cgeneral.hadoop.apache.org%3E))
+
 ## [CVE-2018-8009](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8009) Apache Hadoop distributed cache archive vulnerability
 
 Vulnerability allows a cluster user to publish a public
@@ -62,6 +76,8 @@ A user who can escalate to yarn user can possibly run arbitrary commands as root
 - **Reporter**: Freddie Rice
 - **Reported Date**: 2016/07/06
 - **Issue Announced**: 2018/05/01 ([user@hadoop](https://lists.apache.org/thread.html/ff3859a2188c3662240311acddba9cf97992b839792ec0a14d61b4e5@%3Cuser.hadoop.apache.org%3E))
+
+Note: The fix for this vulnerability is incomplete in Apache Hadoop 2.7.4 to 2.7.6 (CVE-2018-11766).
 
 ## [CVE-2017-15718](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15718) Apache Hadoop YARN NodeManager vulnerability
 
