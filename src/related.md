@@ -17,7 +17,7 @@ title: Related projects
 
 Other Hadoop-related projects at Apache include:
 
--   [**Ambari™**](https://apache.ambari.org): A web-based tool for provisioning,
+-   [**Ambari™**](https://ambari.apache.org): A web-based tool for provisioning,
     managing, and monitoring Apache Hadoop clusters which includes
     support for Hadoop HDFS, Hadoop MapReduce, Hive, HCatalog, HBase,
     ZooKeeper, Oozie, Pig and Sqoop. Ambari also provides a dashboard
