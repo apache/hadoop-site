@@ -70,6 +70,7 @@ order):
   jing9            |Jing Zhao                                                                    |Hortonworks    |            |-8
   jitendra         |[Jitendra Nath Pandey](http://people.apache.org/~jitendra)                   |Hortonworks    |            |-8
   jlowe            |Jason Lowe                                                                   |Oath           |            |-6
+  jzhuge           |John Zhuge                                                                   |Netflix        |            |-8
   junping\_du      |Junping Du                                                                   |Tencent        |            |+8
   kasha            |[Karthik Kambatla](http://people.apache.org/~kasha)                          |Cloudera       |            |-8
   kihwal           |[Kihwal Lee](http://people.apache.org/~kihwal)                               |Oath           |            |-6
@@ -194,7 +195,7 @@ jitendra            |[Jitendra Nath Pandey](http://people.apache.org/~jitendra) 
 jlowe               |Jason Lowe                                                                          |Oath                            |        |-6
 johan               |[Johan Oskarsson](http://people.apache.org/~johan)                                  |Twitter                         |        |0
 junping\_du         |Junping Du                                                                          |Tencent                         |        |+8
-jzhuge              |[John Zhuge](http://people.apache.org/~jzhuge)                                      |Netflix                         |        |-8
+jzhuge              |John Zhuge                                                                          |Netflix                         |        |-8
 kasha               |[Karthik Kambatla](http://people.apache.org/~kasha)                                 |Cloudera                        |        |-8
 kihwal              |[Kihwal Lee](http://people.apache.org/~kihwal)                                      |Oath                            |        |-6
 kkaranasos          |[Konstantinos Karanasos](http://www.microsoft.com/en-us/research/people/kokarana)   |Microsoft                       |        |-8
