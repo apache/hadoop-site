@@ -42,7 +42,7 @@ order):
   aengineer        |Anu Engineer                                                                 |Hortonworks    |            |-8
   amareshwari      |Amareshwari Sriramadasu                                                      |InMobi         |            |+5.5
   arp              |[Arpit Agarwal](http://people.apache.org/~arp)                               |Hortonworks    |            |-8
-  asuresh          |Arun Suresh                                                                  |Microsoft      |            |-8
+  asuresh          |Arun Suresh                                                                  |LinkedIn       |            |-8
   atm              |[Aaron T. Myers](http://people.apache.org/~atm)                              |Cloudera       |            |-8
   bikas            |Bikas Saha                                                                   |Hortonworks    |            |-8
   bobby            |Robert(Bobby) Evans                                                          |Oath           |            |-6
@@ -63,6 +63,7 @@ order):
   haibochen        |Haibo Chen                                                                   |Cloudera       |            |-8
   hairong          |Hairong Kuang                                                                |Facebook       |            |-8
   hitesh           |Hitesh Shah                                                                  |Hortonworks    |            |-8
+  inigoiri         |Íñigo Goiri                                                                  |Microsoft      |            |-8
   jeagles          |[Jonathan Eagles](http://people.apache.org/~jeagles)                         |Oath           |            |-6
   jghoman          |[Jakob Homan](http://people.apache.org/~jghoman)                             |LinkedIn       |            |-8
   jianhe           |[Jian He](http://people.apache.org/~jianhe)                                  |Hortonworks    |            |-8
@@ -72,6 +73,7 @@ order):
   junping\_du      |Junping Du                                                                   |Tencent        |            |+8
   kasha            |[Karthik Kambatla](http://people.apache.org/~kasha)                          |Cloudera       |            |-8
   kihwal           |[Kihwal Lee](http://people.apache.org/~kihwal)                               |Oath           |            |-6
+  kkaranasos       |[Konstantinos Karanasos](http://www.microsoft.com/en-us/research/people/kokarana)|Microsoft  |            |-8
   lei              |[Lei Xu](http://people.apache.org/~lei)                                      |Cloudera       |            |-8
   liuml07          |[Mingliang Liu](http://people.apache.org/~liuml07)                           |Salesforce     |HDFS        |-8
   llu              |[Luke Lu](http://people.apache.org/~llu)                                     |VMware         |            |-8
@@ -94,6 +96,7 @@ order):
   sseth            |Siddharth Seth                                                               |Hortonworks    |            |-8
   stack            |Michael Stack                                                                |Cloudera       |HBase       |-8
   stevel           |Steve Loughran                                                               |Hortonworks    |            |0
+  subru            |Subru Krishnan                                                               |Microsoft      |            |-8
   suresh           |[Suresh Srinivas](http://people.apache.org/~suresh)                          |Hortonworks    |            |-8
   szetszwo         |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                  |Hortonworks    |            |-8
   templedf         |Daniel Templeton                                                             |Cloudera       |            |-8
@@ -142,7 +145,7 @@ amareshwari         |[Amareshwari Sriramadasu](http://people.apache.org/~amaresh
 amarrk              |[Amar Ramesh Kamat](http://people.apache.org/~amarrk)                               |Yahoo!                          |        |+5.5
 arp                 |[Arpit Agarwal](http://people.apache.org/~arp)                                      |Hortonworks                     |        |-8
 arpit               |[Arpit Gupta](http://people.apache.org/~arpit)                                      |Hortonworks                     |        |-8
-asuresh             |Arun Suresh                                                                         |Microsoft                       |        |-8
+asuresh             |Arun Suresh                                                                         |LinkedIn                        |        |-8
 atm                 |[Aaron T. Myers](http://people.apache.org/~atm)                                     |Cloudera                        |        |-8
 aw                  |Allen Wittenauer                                                                    |Effective Machines              |        |-8
 benoy               |[Benoy Antony](http://people.apache.org/~benoy)                                     |eBay                            |        |-8
@@ -172,6 +175,7 @@ epayne              |[Eric Payne](http://people.apache.org/~epayne)             
 enis                |[Enis Soztutar](http://people.apache.org/~enis)                                     |Hortonworks                     |        |-8
 eyang               |[Eric Yang](http://people.apache.org/~eyang)                                        |IBM                             |        |-8
 gera                |Gera Shegalov                                                                       |Salesforce, Einstein Platform   |        |-8
+gifuma              |Giovanni Matteo Fumarola                                                            |Microsoft                       |        |-8
 gkesavan            |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                            |Hortonworks                     |RE      |-8
 gtcarrera9          |Li Lu                                                                               |Hortonworks                     |        |-8
 hitesh              |Hitesh Shah                                                                         |Hortonworks                     |        |-8
@@ -179,6 +183,7 @@ haibochen           |Haibo Chen                                                 
 hairong             |[Hairong Kuang](http://people.apache.org/~hairong)                                  |Facebook                        |HDFS    |-8
 hanishakoneru       |Hanisha Koneru                                                                      |Hortonworks                     |        |-8
 harsh               |[Harsh J](http://harshj.com/)                                                       |Cloudera                        |        |+5.5
+inigoiri            |Íñigo Goiri                                                                         |Microsoft                       |        |-8
 ivanmi              |Ivan Mitic                                                                          |Microsoft                       |        |-8
 iwasakims           |Masatake Iwasaki                                                                    |NTT DATA                        |        |+9
 jeagles             |[Jonathan Eagles](http://people.apache.org/~jeagles)                                |Oath                            |        |-6
