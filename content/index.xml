@@ -1222,7 +1222,7 @@ Security The security mailing list is a private list for discussion of potential
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hadoop.apache.org/version_control.html</guid>
-      <description>Overview The Hadoop source code resides in the Apache git repository, and available from here: https://git-wip-us.apache.org/repos/asf?p=hadoop.git
+      <description>Overview The Hadoop source code resides in the Apache git repository, and available from here: https://gitbox.apache.org/repos/asf?p=hadoop.git
 The changes are also mirrored to the github repository https://github.com/apache/hadoop
 Hdfs, Yarn, Mapreduce and other components all are parts of this one repository.</description>
     </item>
