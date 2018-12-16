@@ -115,7 +115,7 @@ order):
   wangda           |Wangda Tan                                                                   |Hortonworks    |            |-8
   wheat9           |[Haohui Mai](http://haohui.me)                                               |Uber           |            |-8
   xgong            |[Xuan Gong](http://people.apache.org/~xgong)                                 |Hortonworks    |            |-8
-  xiao             |Xiao Chen                                                                    |Cloudera       |HDFS        |-8
+  xiao             |Xiao Chen                                                                    |Netflix        |            |-8
   xyao             |[Xiaoyu Yao](http://people.apache.org/~xyao)                                 |Hortonworks    |            |-8
   yjzhangal        |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                         |Cloudera       |            |-8
   yliu             |[Yi Liu](http://people.apache.org/~yliu)                                     |Intel          |            |+8
@@ -268,7 +268,7 @@ weichiu             |[Wei-Chiu Chuang](http://weichiu.com/about-wei-chiu/)      
 weiy                |Wei Yan                                                                             |Uber                            |        |-8
 wheat9              |[Haohui Mai](http://haohui.me)                                                      |Uber                            |        |-8
 xgong               |[Xuan Gong](http://people.apache.org/~xgong)                                        |Hortonworks                     |        |-8
-xiao                |Xiao Chen                                                                           |Cloudera                        |HDFS    |-8
+xiao                |Xiao Chen                                                                           |Netflix                         |        |-8
 xyao                |[Xiaoyu Yao](http://people.apache.org/~xyao)                                        |Hortonworks                     |        |-8
 yufei               |[Yufei Gu](http://people.apache.org/~yufei)                                         |Apple                           |        |-8
 yjzhangal           |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                                |Cloudera                        |        |-8
