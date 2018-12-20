@@ -79,7 +79,7 @@ order):
   liuml07          |[Mingliang Liu](http://people.apache.org/~liuml07)                           |Salesforce     |HDFS        |-8
   llu              |[Luke Lu](http://people.apache.org/~llu)                                     |VMware         |            |-8
   mahadev          |Mahadev Konar                                                                |Hortonworks    |            |-8
-  mattf            |Matt Foley                                                                   |Hortonworks    |            |-8
+  mattf            |Matt Foley                                                                   |Apple          |            |-8
   mingma           |Ming Ma                                                                      |Twitter        |            |-8
   nigel            |Nigel Daley                                                                  |Jive           |            |-8
   omalley          |[Owen O\'Malley](http://people.apache.org/~omalley)                          |Hortonworks    |            |-8
@@ -210,7 +210,7 @@ mackrorysd          |Sean Mackrory                                              
 mahadev             |Mahadev Konar                                                                       |Hortonworks                     |        |-8
 manojpec            |Manoj Govindassamy                                                                  |Cloudera                        |        |-8
 matei               |[Matei Zaharia](http://www.cs.berkeley.edu/~matei)                                  |UC Berkeley                     |        |-8
-mattf               |[Matthew Foley](http://people.apache.org/~mattf)                                    |Hortonworks                     |HDFS    |-8
+mattf               |[Matthew Foley](http://people.apache.org/~mattf)                                    |Apple                           |HDFS    |-8
 mayank              |[Mayank Bansal](http://people.apache.org/~mayank)                                   |uber                            |        |-8
 molkov              |[Dmytro Molkov](http://people.apache.org/~molkov)                                   |Facebook                        |HDFS    |-8
 mukund              |[Mukund Madhugiri](http://people.apache.org/~mukund)                                |Yahoo!                          |QA      |-8
