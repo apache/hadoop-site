@@ -155,6 +155,7 @@ bibinchundatt       |Bibin A Chundatt                                           
 bikas               |Bikas Saha                                                                          |Hortonworks                     |        |-8
 bobby               |Robert(Bobby) Evans                                                                 |Oath                            |        |-6
 boryas              |[Boris Shkolnik](http://people.apache.org/~boryas)                                  |LinkedIn                        |        |-8
+botong              |Botong Huang                                                                        |Alibaba                         |        |-8
 brahma              |Brahma Reddy Battula                                                                |Huawei                          |        |+5.5
 brandonli           |Brandon Li                                                                          |Hortonworks                     |        |-8
 busbey              |Sean Busbey                                                                         |Cloudera                        |        |-6
