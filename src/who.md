@@ -95,7 +95,7 @@ order):
   sjlee            |[Sangjin Lee](http://people.apache.org/~sjlee)                               |PayPal         |            |-8
   sradia           |[Sanjay Radia](http://people.apache.org/~sradia)                             |Hortonworks    |            |-8
   sseth            |Siddharth Seth                                                               |Hortonworks    |            |-8
-  stack            |Michael Stack                                                                |Cloudera       |HBase       |-8
+  stack            |Michael Stack                                                                |Apple          |HBase       |-8
   stevel           |Steve Loughran                                                               |Hortonworks    |            |0
   subru            |Subru Krishnan                                                               |Microsoft      |            |-8
   suresh           |[Suresh Srinivas](http://people.apache.org/~suresh)                          |Hortonworks    |            |-8
