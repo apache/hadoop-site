@@ -114,6 +114,7 @@ order):
   wang             |Andrew Wang                                                                  |Cloudera       |            |-8
   wangda           |Wangda Tan                                                                   |Hortonworks    |            |-8
   wheat9           |[Haohui Mai](http://haohui.me)                                               |Uber           |            |-8
+  wwei             |[Weiwei Yang](https://yangwwei.github.io/)                                   |Hortonworks    |            |+8
   xgong            |[Xuan Gong](http://people.apache.org/~xgong)                                 |Hortonworks    |            |-8
   xiao             |Xiao Chen                                                                    |Netflix        |            |-8
   xyao             |[Xiaoyu Yao](http://people.apache.org/~xyao)                                 |Hortonworks    |            |-8
@@ -268,6 +269,7 @@ wangda              |Wangda Tan                                                 
 weichiu             |[Wei-Chiu Chuang](http://weichiu.com/about-wei-chiu/)                               |Cloudera                        |        |-8
 weiy                |Wei Yan                                                                             |Uber                            |        |-8
 wheat9              |[Haohui Mai](http://haohui.me)                                                      |Uber                            |        |-8
+wwei                |[Weiwei Yang](https://yangwwei.github.io/)                                          |Hortonworks                     |        |+8
 xgong               |[Xuan Gong](http://people.apache.org/~xgong)                                        |Hortonworks                     |        |-8
 xiao                |Xiao Chen                                                                           |Netflix                         |        |-8
 xyao                |[Xiaoyu Yao](http://people.apache.org/~xyao)                                        |Hortonworks                     |        |-8
