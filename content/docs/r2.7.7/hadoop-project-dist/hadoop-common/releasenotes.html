@@ -1,0 +1,40 @@
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hadoop  2.7.7 Release Notes</title>
+<STYLE type="text/css">
+	H1 {font-family: sans-serif}
+	H2 {font-family: sans-serif; margin-left: 7mm}
+	TABLE {margin-left: 7mm}
+</STYLE>
+</head>
+<body>
+<h1>Hadoop  2.7.7 Release Notes</h1>
+These release notes include new developer and user-facing incompatibilities, features, and major improvements. 
+<a name="changes"/>
+<h2>Changes since Hadoop 2.7.6</h2>
+<ul>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-13602">HDFS-13602</a>.
+     Major improvement reported by Erik Krogen and fixed by Chao Sun (ha , namenode)<br>
+     <b>Add checkOperation(WRITE) checks in FSNamesystem</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-13486">HDFS-13486</a>.
+     Major bug reported by Wei-Chiu Chuang and fixed by Wei-Chiu Chuang <br>
+     <b>Backport HDFS-11817 (A faulty node can cause a lease leak and NPE on accessing data) to branch-2.7</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HDFS-12156">HDFS-12156</a>.
+     Major bug reported by Akira Ajisaka and fixed by Akira Ajisaka (test)<br>
+     <b>TestFSImage fails without -Pnative</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-15486">HADOOP-15486</a>.
+     Major improvement reported by Nanda kumar and fixed by Nanda kumar (net)<br>
+     <b>Make NetworkTopology#netLock fair</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-15473">HADOOP-15473</a>.
+     Critical bug reported by Gabor Bota and fixed by Gabor Bota (kms)<br>
+     <b>Configure serialFilter in KeyProvider to avoid UnrecoverableKeyException caused by JDK-8189997</b><br>
+     <blockquote></blockquote></li>
+<li> <a href="https://issues.apache.org/jira/browse/HADOOP-14970">HADOOP-14970</a>.
+     Minor bug reported by Erik Krogen and fixed by Erik Krogen <br>
+     <b>MiniHadoopClusterManager doesn't respect lack of format option</b><br>
+     <blockquote></blockquote></li>
+</ul>
+</body></html>
