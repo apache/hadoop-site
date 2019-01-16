@@ -97,7 +97,7 @@ order):
   sradia           |[Sanjay Radia](http://people.apache.org/~sradia)                             |Hortonworks    |            |-8
   sseth            |Siddharth Seth                                                               |Hortonworks    |            |-8
   stack            |Michael Stack                                                                |Apple          |HBase       |-8
-  stevel           |Steve Loughran                                                               |Hortonworks    |            |0
+  stevel           |Steve Loughran                                                               |Cloudera       |            |0
   subru            |Subru Krishnan                                                               |Microsoft      |            |-8
   suresh           |[Suresh Srinivas](http://people.apache.org/~suresh)                          |Hortonworks    |            |-8
   szetszwo         |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                  |Hortonworks    |            |-8
@@ -243,7 +243,7 @@ sradia              |[Sanjay Radia](http://people.apache.org/~sradia)           
 sreekanth           |Sreekanth Ramakrishnan                                                              |InMobi                          |        |+5.5
 sidharta            |Sidharta Seethana                                                                   |Hortonworks                     |        |-8
 sseth               |Siddharth Seth                                                                      |Hortonworks                     |        |-8
-stevel              |Steve Loughran                                                                      |Hortonworks                     |        |0
+stevel              |Steve Loughran                                                                      |Cloudera                     |        |0
 subru               |Subru Krishnan                                                                      |Microsoft                       |        |-8
 sunilg              |Sunil G                                                                             |Hortonworks                     |        |+5.5
 surendralilhore     |Surendra Singh Lilhore                                                              |Huawei                          |HDFS    |+5.5
