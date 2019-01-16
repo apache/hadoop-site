@@ -75,7 +75,7 @@ order):
   kasha            |[Karthik Kambatla](http://people.apache.org/~kasha)                          |Cloudera       |            |-8
   kihwal           |[Kihwal Lee](http://people.apache.org/~kihwal)                               |Oath           |            |-6
   kkaranasos       |[Konstantinos Karanasos](http://www.microsoft.com/en-us/research/people/kokarana)|Microsoft  |            |-8
-  lei              |[Lei Xu](http://people.apache.org/~lei)                                      |Cloudera       |            |-8
+  lei              |[Lei Xu](http://people.apache.org/~lei)                                      |Cruise Automation |            |-8
   liuml07          |[Mingliang Liu](http://people.apache.org/~liuml07)                           |Salesforce     |HDFS        |-8
   llu              |[Luke Lu](http://people.apache.org/~llu)                                     |VMware         |            |-8
   mahadev          |Mahadev Konar                                                                |Hortonworks    |            |-8
