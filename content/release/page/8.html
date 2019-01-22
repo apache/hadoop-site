@@ -59,6 +59,8 @@
                
                <li role="separator" class="divider"></li>
                
+               <li><a href="https://hadoop.apache.org/docs/r3.2.0/">3.2.0</a></li>
+               
                <li><a href="https://hadoop.apache.org/docs/r2.9.2/">2.9.2</a></li>
                
                <li><a href="https://hadoop.apache.org/docs/r2.8.5/">2.8.5</a></li>
@@ -152,6 +154,59 @@
   <div>
     <h1 id="title">Releases Archive</h1>
         <ul id="list">
+            
+            <h1><a href="/release/0.22.0.html">release 0.22.0 available</a></h1>
+            <p><small>2011 Dec 10 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p>This release contains many bug fixes and optimizations compared to its
+predecessor 0.21.0. See the <a href="http://hadoop.apache.org/docs/r0.22.0/releasenotes.html">Hadoop 0.22.0 Release
+Notes</a> for
+details. Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.22.0/changes.html">change log for
+this release</a></p>
+
+<p>Notes:</p>
+
+<p>The following features are not supported in Hadoop 0.22.0.</p>
+
+<ul>
+<li>Security.</li>
+<li>Latest optimizations of the MapReduce framework introduced in the
+Hadoop 0.20.security line of releases.</li>
+<li>Disk-fail-in-place.</li>
+<li>JMX-based metrics v2.</li>
+</ul>
+
+<p>Hadoop 0.22.0 features</p>
+
+<ul>
+<li>HBase support with <code>hflush</code> and <code>hsync</code>.</li>
+<li>New implementation of file append.</li>
+<li>Symbolic links.</li>
+<li>BackupNode and CheckpointNode.</li>
+<li>Hierarchical job queues.</li>
+<li>Job limits per queue/pool.</li>
+<li>Dynamically stop/start job queues.</li>
+<li>Andvances in new mapreduce API: Input/Output formats,
+ChainMapper/Reducer.</li>
+<li>TaskTracker blacklisting.</li>
+<li>DistributedCache sharing.</li>
+</ul>
+
+
             
             <h1><a href="/release/0.23.0.html">release 0.23.0 available</a></h1>
             <p><small>2011 Nov 11 </small></p>
@@ -439,38 +494,6 @@ releases</a>.</p>
 
 
             
-            <h1><a href="/release/0.19.1.html">release 0.19.1 available</a></h1>
-            <p><small>2009 Feb 24 </small></p>
-
-            <!---
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License. See accompanying LICENSE file.
--->
-
-<p>This release contains many critical bug fixes, including <strong>some data
-loss issues</strong>. The release also introduces an <strong>incompatible change</strong> by
-disabling the file append API
-(<a href="http://issues.apache.org/jira/browse/HADOOP-5224">HADOOP-5224</a>) until
-it can be stabilized.</p>
-
-<p>See the <a href="http://hadoop.apache.org/docs/r0.19.1/releasenotes.html">Hadoop 0.19.1 Release
-Notes</a> for
-details. Alternatively, you can look at the complete <a href="http://hadoop.apache.org/docs/r0.19.1/changes.html">change log for
-this release</a> or the
-<a href="http://issues.apache.org/jira/browse/HADOOP?report=com.atlassian.jira.plugin.system.project:changelog-panel">Jira issue log for all
-releases</a>.</p>
-
-
-            
         </ul>
   </div>
 
@@ -589,7 +612,18 @@ releases</a>.</p>
         
     
     
-    <li class="page-item"><a class="page-link" href="/release/page/10.html">10</a></li>
+    <li class="page-item disabled"><span aria-hidden="true">&nbsp;&hellip;&nbsp;</span></li>
+    
+    
+    
+    
+    
+    
+        
+        
+    
+    
+    <li class="page-item"><a class="page-link" href="/release/page/11.html">11</a></li>
     
     
     <li class="page-item">
@@ -597,7 +631,7 @@ releases</a>.</p>
     </li>
     
     <li class="page-item">
-        <a href="/release/page/10.html" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
+        <a href="/release/page/11.html" class="page-link" aria-label="Last"><span aria-hidden="true">&raquo;&raquo;</span></a>
     </li>
     
 </ul>

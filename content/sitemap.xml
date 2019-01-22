@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://hadoop.apache.org/release/3.2.0.html</loc>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://hadoop.apache.org/news/2018-11-22-ozone-0.3.0-alpha.html</loc>
     <lastmod>2018-11-22T00:00:00+00:00</lastmod>
   </url>
@@ -554,7 +559,7 @@
   
   <url>
     <loc>https://hadoop.apache.org/</loc>
-    <lastmod>2018-11-22T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -619,7 +624,7 @@
   
   <url>
     <loc>https://hadoop.apache.org/release.html</loc>
-    <lastmod>2018-11-19T00:00:00+00:00</lastmod>
+    <lastmod>2019-01-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
