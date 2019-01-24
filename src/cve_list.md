@@ -37,6 +37,20 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2018-1296](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1296) Apache Hadoop HDFS Permissive listXAttr Authorization
+
+HDFS exposes extended attribute key/value pairs during listXAttrs,
+verifying only path-level search access to the directory rather than
+path-level read permission to the referent. This affects features that
+store sensitive data in extended attributes, such as HDFS encryption 
+secrets.
+
+- **Versions affected**: 3.0.0-alpha1 to 3.0.0, 2.9.0, 2.8.0 to 2.8.3, 2.5.0 to 2.7.5
+- **Fixed versions**: 3.0.1, 2.9.1, 2.8.4, 2.7.6
+- **Impact**: information disclosure
+- **Reporter**: Rushabh Shah
+- **Reported Date**: 2018/02/09
+- **Issue Announced**: 2019/01/24 ([general@hadoop](https://lists.apache.org/thread.html/752d5fe697ca6be6f472eabb1bcae7961a47d416e4013ac803a2ab2c@%3Cgeneral.hadoop.apache.org%3E))
 
 ## [CVE-2018-11766](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11766) Apache Hadoop privilege escalation vulnerability
 
