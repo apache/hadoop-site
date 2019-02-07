@@ -274,6 +274,7 @@ wheat9              |[Haohui Mai](http://haohui.me)                             
 wwei                |[Weiwei Yang](https://yangwwei.github.io/)                                          |Hortonworks                     |        |+8
 xgong               |[Xuan Gong](http://people.apache.org/~xgong)                                        |Hortonworks                     |        |-8
 xiao                |Xiao Chen                                                                           |Netflix                         |        |-8
+xkrogen             |[Erik Krogen](https://www.linkedin.com/in/xkrogen/)                                 |LinkedIn                        |HDFS    |-8
 xyao                |[Xiaoyu Yao](http://people.apache.org/~xyao)                                        |Hortonworks                     |        |-8
 yufei               |[Yufei Gu](http://people.apache.org/~yufei)                                         |Apple                           |        |-8
 yjzhangal           |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                                |Cloudera                        |        |-8
