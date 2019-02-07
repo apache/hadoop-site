@@ -193,6 +193,7 @@ ivanmi              |Ivan Mitic                                                 
 iwasakims           |Masatake Iwasaki                                                                    |NTT DATA                        |        |+9
 jeagles             |[Jonathan Eagles](http://people.apache.org/~jeagles)                                |Oath                            |        |-6
 jghoman             |[Jakob Homan](http://people.apache.org/~jghoman)                                    |LinkedIn                        |        |-8
+jhung               |Jonathan Hung                                                                       |LinkedIn                        |        |-8
 jianhe              |[Jian He](http://people.apache.org/~jianhe)                                         |Hortonworks                     |        |-8
 jing9               |Jing Zhao                                                                           |Hortonworks                     |        |-8
 jitendra            |[Jitendra Nath Pandey](http://people.apache.org/~jitendra)                          |Hortonworks                     |        |-8
