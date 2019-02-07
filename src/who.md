@@ -261,6 +261,7 @@ todd                |[Todd Lipcon](http://people.apache.org/~todd)              
 tomwhite            |[Tom White](http://www.lexemetech.com)                                              |Cloudera                        |        |-8
 tucu                |Alejandro Abdelnur                                                                  |Cloudera                        |        |-8
 umamahesh           |[Uma Maheswara Rao G](https://people.apache.org/~umamahesh/umamahesh.html)          |Intel                           |HDFS    |+5.5
+vagarychen          |Chen Liang                                                                          |LinkedIn                        |        |-8
 varunsaxena         |[Varun Saxena](http://people.apache.org/~varunsaxena)                               |Huawei                          |        |+5.5
 vinayakumarb        |[Vinayakumar B](http://people.apache.org/~vinayakumarb)                             |Huawei                          |HDFS    |+5.5
 vinodkv             |[Vinod Kumar Vavilapalli](http://people.apache.org/~vinodkv)                        |Hortonworks                     |        |-8
