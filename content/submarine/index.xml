@@ -55,7 +55,7 @@ Since the distributed deep learning framework needs to run in multiple Docker co
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/submarine/activity/</guid>
-      <description>Community Activity DataWorks Summit in Barcelona, Spain  MARCH 18–21, 2019
+      <description>Upcoming Activities DataWorks Summit in Barcelona, Spain  MARCH 18–21, 2019
  Hadoop {Submarine} Project: Running Deep Learning Workloads on YARN.
 Deep learning is useful for enterprises tasks in the field of speech recognition, image classification, AI chatbots and machine translation, just to name a few.
 In order to train deep learning/machine learning models, applications such as TensorFlow / MXNet / Caffe / XGBoost can be leveraged. And sometimes these applications will be used together to solve different problems.</description>

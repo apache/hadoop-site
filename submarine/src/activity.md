@@ -4,7 +4,7 @@ layout: default
 type: custompage
 ---
 
-# Community Activity
+# Upcoming Activities
 
 ------
 
@@ -21,6 +21,6 @@ To make distributed deep learning/machine learning applications easily launched,
 
 In this session, we will take a closer look at Submarine project as well as other improvements and show how to run these deep learning workloads on YARN with demos. Audiences can start trying running these workloads on YARN after this talk.
 
-https://dataworkssummit.com/barcelona-2019/session/hadoop-submarine-project-running-deep-learning-workloads-on-yarn/
+More infomation: https://dataworkssummit.com/barcelona-2019/session/hadoop-submarine-project-running-deep-learning-workloads-on-yarn/
 
 ------
