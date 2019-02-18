@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Releases on Apache Hadoop Submarine</title>
-    <link>http://localhost:1313/release/</link>
+    <link>/submarine/release/</link>
     <description>Recent content in Releases on Apache Hadoop Submarine</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2019 Apache Software Foundation</copyright>
     <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
-
-	<atom:link href="http://localhost:1313/release/index.xml" rel="self" type="application/rss+xml" />
-
-
+    
+	<atom:link href="/submarine/release/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Release 0.1.0-alpha available</title>
-      <link>http://localhost:1313/release/0.1.0-alpha/</link>
+      <link>/submarine/release/0.1.0-alpha/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
-
-      <guid>http://localhost:1313/release/0.1.0-alpha/</guid>
+      
+      <guid>/submarine/release/0.1.0-alpha/</guid>
       <description>_ _ | | (_) ___ _ _ | |__ _ __ ___ __ _ _ __ _ _ __ ___ / __|| | | || &#39;_ \ | &#39;_ ` _ \ / _` || &#39;__|| || &#39;_ \ / _ \ \__ \| |_| || |_) || | | | | || (_| || | | || | | || __/ |___/ \__,_||_.__/ |_| |_| |_| \__,_||_| |_||_| |_| \___| ?</description>
     </item>
-
+    
   </channel>
 </rss>

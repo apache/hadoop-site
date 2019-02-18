@@ -2,82 +2,82 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Hadoop Submarine</title>
-    <link>http://localhost:1313/</link>
+    <link>/submarine/</link>
     <description>Recent content on Apache Hadoop Submarine</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2019 Apache Software Foundation</copyright>
     <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
-
-	<atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
-
-
+    
+	<atom:link href="/submarine/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Release 0.1.0-alpha available</title>
-      <link>http://localhost:1313/release/0.1.0-alpha/</link>
+      <link>/submarine/release/0.1.0-alpha/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
-
-      <guid>http://localhost:1313/release/0.1.0-alpha/</guid>
+      
+      <guid>/submarine/release/0.1.0-alpha/</guid>
       <description>_ _ | | (_) ___ _ _ | |__ _ __ ___ __ _ _ __ _ _ __ ___ / __|| | | || &#39;_ \ | &#39;_ ` _ \ / _` || &#39;__|| || &#39;_ \ / _ \ \__ \| |_| || |_) || | | | | || (_| || | | || | | || __/ |___/ \__,_||_.__/ |_| |_| |_| \__,_||_| |_||_| |_| \___| ?</description>
     </item>
-
+    
     <item>
       <title>Apache Hadoop Submarine Releases</title>
-      <link>http://localhost:1313/downloads/</link>
+      <link>/submarine/downloads/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-
-      <guid>http://localhost:1313/downloads/</guid>
+      
+      <guid>/submarine/downloads/</guid>
       <description>To verify Hadoop Submarine releases using GPG:  Download the release hadoop-submarine-X.Y.Z-src.tar.gz from a mirror site. Download the signature file hadoop-submarine-X.Y.Z-src.tar.gz.asc from Apache. Download the Hadoop KEYS file. gpg &amp;ndash;import KEYS gpg &amp;ndash;verify hadoop-X.Y.Z-src.tar.gz.asc  To perform a quick check using SHA-256:  Download the release hadoop-submarine-X.Y.Z-src.tar.gz from a mirror site. Download the checksum hadoop-submarine-X.Y.Z-src.tar.gz.mds from Apache. shasum -a 256 hadoop-submarine-X.Y.Z-src.tar.gz  All previous releases of Hadoop Ozone are available from the Apache release archive site.</description>
     </item>
-
+    
     <item>
       <title>Documentation</title>
-      <link>http://localhost:1313/docs/</link>
+      <link>/submarine/docs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-
-      <guid>http://localhost:1313/docs/</guid>
+      
+      <guid>/submarine/docs/</guid>
       <description>Documentation is also part the binary release packages and available online from the running Storage Container Manager or Ozone Manager webui.</description>
     </item>
-
+    
     <item>
       <title>Hadoop Submarine Eco-system</title>
-      <link>http://localhost:1313/ecosystem/</link>
+      <link>/submarine/ecosystem/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-
-      <guid>http://localhost:1313/ecosystem/</guid>
+      
+      <guid>/submarine/ecosystem/</guid>
       <description>Eco-system Submarine installer Hadoop has enabled YARN to support Docker container since 2.x. Hadoop Submarine then uses YARN to schedule and run the distributed deep learning framework in the form of a Docker container.
 Since the distributed deep learning framework needs to run in multiple Docker containers and needs to be able to coordinate the various services running in the container, complete the services of model training and model publishing for distributed machine learning.</description>
     </item>
-
+    
     <item>
       <title>Hadoop submarine community activity</title>
-      <link>http://localhost:1313/activity/</link>
+      <link>/submarine/activity/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-
-      <guid>http://localhost:1313/activity/</guid>
+      
+      <guid>/submarine/activity/</guid>
       <description>Community Activity DataWorks Summit in Barcelona, Spain  MARCH 18–21, 2019
  Hadoop {Submarine} Project: Running Deep Learning Workloads on YARN.
 Deep learning is useful for enterprises tasks in the field of speech recognition, image classification, AI chatbots and machine translation, just to name a few.
 In order to train deep learning/machine learning models, applications such as TensorFlow / MXNet / Caffe / XGBoost can be leveraged. And sometimes these applications will be used together to solve different problems.</description>
     </item>
-
+    
     <item>
       <title>Questions and Answers</title>
-      <link>http://localhost:1313/qa/</link>
+      <link>/submarine/qa/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-
-      <guid>http://localhost:1313/qa/</guid>
+      
+      <guid>/submarine/qa/</guid>
       <description>How can I contribute The contribution process is the same as for any other Hadoop subproject. The Submarine Contribution Guidelines is available from the wiki.</description>
     </item>
-
+    
     <item>
       <title>Submarine development team</title>
-      <link>http://localhost:1313/team/</link>
+      <link>/submarine/team/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-
-      <guid>http://localhost:1313/team/</guid>
+      
+      <guid>/submarine/team/</guid>
       <description></description>
     </item>
-
+    
   </channel>
 </rss>
