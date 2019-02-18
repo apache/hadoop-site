@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Object store for Hadoop">
+    <meta name="keywords" content="hadoop, ozone, hdds, objectstore, scale"/>
+    <meta name="robots" content="index,follow"/>
+    <meta name="language" content="en"/>
+
+    <title>Apache Hadoop Submarine</title>
+
+    <base href="http://localhost:1313">
+
+    <link rel="canonical" href="https://hadoop.apache.org/submarine">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+
+<div class="topnav">
+    <div class="container">
+        <ul class="breadcrumb col-md-6">
+            <li>
+                <img class="asf-logo" src="asf_feather.png"/>
+                <a  href="https://www.apache.org">Apache Software Foundation</span></a>
+            </li>
+            <li><a href="https://hadoop.apache.org">Apache Hadoop&trade;</a></li>
+            <li><a href="http://localhost:1313">Submarine&trade;</a></li>
+        </ul>
+        <div class="col-md-6">
+            <ul class="pull-right breadcrumb">
+                <li><a href="http://www.apache.org/licenses/">License</a></li>
+                <li><a href="http://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+                <li><a href="http://www.apache.org/foundation/thanks.html">Thanks</a></li>
+                <li><a href="http://www.apache.org/security/">Security</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#ratis-menu" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div id="ratis-menu" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li><a href="https://hadoop.apache.org/docs/r3.2.0/hadoop-yarn/hadoop-yarn-applications/hadoop-yarn-submarine/Index.html">Documentation</a></li>
+                    <li><a href="https://github.com/apache/hadoop">Source</a></li>
+                    <li><a href="ecosystem">Ecosystem</a></li>
+                    <li><a href="#qa">Q&A</a></li>
+                    <li><a href="https://cwiki.apache.org/confluence/display/HADOOP/Submarine+Contributor+Guide">Wiki</a></li>
+                    <li><a href="activity">Activity</a></li>
+                    <li><a href="team">Team</a></li>
+                </ul>
+            </div>
+
+    </nav>
+
+    <div style="max-height: 200px; overflow: hidden;">
+      <img src="cloud.png" style="width: 100%; left:0px;"/>
+    </div>
+
+</div>
+
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+<h1>Release 0.1.0-alpha available</h1>
+<!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<p><img src="releases/0.1.0.png" alt="acadia-haiku" /></p>
+
+<pre><code class="language-$xslt">              _                              _
+             | |                            (_)
+  ___  _   _ | |__   _ __ ___    __ _  _ __  _  _ __    ___
+ / __|| | | || '_ \ | '_ ` _ \  / _` || '__|| || '_ \  / _ \
+ \__ \| |_| || |_) || | | | | || (_| || |   | || | | ||  __/
+ |___/ \__,_||_.__/ |_| |_| |_| \__,_||_|   |_||_| |_| \___|
+
+                             ?
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~|^&quot;~~~~~~~~~~~~~~~~~~~~~~~~~o~~~~~~~~~~~
+        o                   |                  o      __o
+         o                  |                 o     |X__&gt;
+       ___o                 |                __o
+     (X___&gt;--             __|__            |X__&gt;     o
+                         |     \                   __o
+                         |      \                |X__&gt;
+  _______________________|_______\________________
+ &lt;                                                \____________   _
+  \                                                            \ (_)
+   \    O       O       O                                       &gt;=)
+    \__________________________________________________________/ (_)
+</code></pre>
+
+<p>Submarine is a project which allows infra engineer / data scientist to run <em>unmodified</em> Tensorflow programs on YARN.</p>
+
+<p>Goals of Submarine:
+- It allows jobs easy access data/models in HDFS and other storages.
+- Can launch services to serve Tensorflow/MXNet models.
+- Support run distributed Tensorflow jobs with simple configs.
+- Support run user-specified Docker images.
+- Support specify GPU and other resources.
+- Support launch tensorboard for training jobs if user specified.
+- Support customized DNS name for roles (like tensorboard.$user.$domain:6006)</p>
+
+<p>This release is fully functional, but alpha quality.</p>
+
+</div>
+<div class="col-md-4" style="padding: 20px;">
+
+</div>
+</div>
+</div>
+
+<footer>
+    <div class="container">
+
+        <div class="col-md-12 trademark">
+            <p>&copy; 2019 <a href="http://apache.org">The Apache Software Foundation</a>,<br/>
+                Apache, Apache Hadoop, the Apache feather logo, are trademarks of The Apache Software Foundation.
+            <p>
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+
+
+</body>
+</html>

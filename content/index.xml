@@ -1254,7 +1254,7 @@ Hdfs, Yarn, Mapreduce and other components all are parts of this one repository.
       
       <guid>https://hadoop.apache.org/modules.html</guid>
       <description>The project includes these modules:
- Hadoop Common: The common utilities that support the other Hadoop modules. Hadoop Distributed File System (HDFS™): A distributed file system that provides high-throughput access to application data. Hadoop YARN: A framework for job scheduling and cluster resource management. Hadoop MapReduce: A YARN-based system for parallel processing of large data sets. Hadoop Ozone: An object store for Hadoop.  </description>
+ Hadoop Common: The common utilities that support the other Hadoop modules. Hadoop Distributed File System (HDFS™): A distributed file system that provides high-throughput access to application data. Hadoop YARN: A framework for job scheduling and cluster resource management. Hadoop MapReduce: A YARN-based system for parallel processing of large data sets. Hadoop Ozone: An object store for Hadoop. Hadoop Submarine: A machine learning engine for Hadoop.  </description>
     </item>
     
     <item>

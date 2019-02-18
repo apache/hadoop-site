@@ -1,0 +1,82 @@
+<!--
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License. See accompanying LICENSE file.
+-->
+{{ partial "header.html" . }}
+<div class="main-section">
+
+</div>
+
+<div class="whatis">
+    <div class="container">
+        <div class="row header">
+            <h2>What is Apache Hadoop Submarine?</h2>
+            <p class="lead">
+                Submarine is a new subproject of Apache Hadoop.</p>
+            <p class="lead">Submarine is a project which allows infra engineer / data scientist
+            to run deep learning applications (Tensorflow, Pytorch, etc.) on resource management platform (like YARN).
+            </p>
+            </p>
+            <p></p>
+        </div>
+    </div>
+</div>
+
+
+<div class="main-section feature-list-group" style="padding: 80px;">
+    <div class="container">
+        <div class="row feature-list">
+            <div class="col-md-4 col-sm-4 feature-item">
+
+                <h4><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> Scalable</h4>
+                <p>
+                 The submarine program supports YARN and Kubernetes as resource scheduling frameworks.
+                </p>
+                <p>
+                  Containers and dockers are supported as containers for machine learning algorithms in YARN.
+                </p>
+                <p></p>
+            </div>
+            <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                   Compatibility</h4>
+                <p>
+                    Supports multiple machine learning frameworks such as tensorflow, Pytorch, MxNet, etc.
+                </p>
+            </div>
+            <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>Integration</h4>
+                <p>Submarine is not just a machine learning engine. </p>
+                <p>It covers the entire process of machine learning, from algorithm development, model batch training, model incremental training, model online services, and model management.
+                </p>
+            </div>
+
+
+        </div><!-- /.feature-list -->
+
+
+    </div><!-- /.container -->
+</div><!-- /.feature-list-group -->
+
+
+<a name="qa"></a>
+<div class="main-section">
+    <div class="container">
+        <div class="row header">
+        {{range where .Site.Pages "Title" "Questions and Answers"}}
+        <h2>{{ .Title }}</h2>
+{{ .Content }}
+        {{end}}
+        </div>
+    </div>
+</div>
+{{ partial "footer.html" . }}
