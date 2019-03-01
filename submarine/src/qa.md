@@ -2,9 +2,8 @@
 title: Questions and Answers
 ---
 
-### How can I contribute
+### Regarding to developer/user resources like email list, community calls, how to contribute
 
-The contribution process is the same as for any other [Hadoop subproject][1]. The Submarine Contribution Guidelines is available from the [wiki][2].
+Please refer to [wiki][1] for all these questions.
 
-[1]: https://wiki.apache.org/hadoop/HowToContribute
-[2]: https://cwiki.apache.org/confluence/display/HADOOP/Submarine+Contributor+Guide
+[1]: https://cwiki.apache.org/confluence/display/HADOOP/Submarine+Wiki+Resources
