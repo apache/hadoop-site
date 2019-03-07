@@ -11,6 +11,8 @@
  See the License for the specific language governing permissions and
  limitations under the License. See accompanying LICENSE file.
 -->
+{{ $checksum_suffix := "mds" }}
+{{ if .BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | float | gt 0.22 }}{{ $checksum_suffix = "md5" }}{{ end }}
 {{partial "header.html" .}}
 <div class="container">
 <div class="col-md-8">
@@ -21,12 +23,12 @@
 <div class="col-md-4">
    <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz" class="btn btn-success">Download tar.gz</a></p>
    <p>
-     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz.mds">checksum</a>
+     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz.{{ $checksum_suffix }}">checksum</a>
      <a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz.asc">signature</a>)
    </p>
    <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz" class="btn btn-warning">Download src</a></p>
    <p>
-     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz.mds">checksum</a>
+     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz.{{ $checksum_suffix }}">checksum</a>
      <a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz.asc">signature</a>)
    </p>
       <p><a href="https://hadoop.apache.org/docs/r{{.BaseFileName }}" class="btn btn-primary">Documentation</a></p>
