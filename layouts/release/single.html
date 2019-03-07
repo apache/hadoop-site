@@ -11,8 +11,19 @@
  See the License for the specific language governing permissions and
  limitations under the License. See accompanying LICENSE file.
 -->
-{{ $checksum_suffix := "mds" }}
-{{ if .BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | float | gt 0.22 }}{{ $checksum_suffix = "md5" }}{{ end }}
+
+{{ $checksum_suffix := "md5" }}
+<!-- if the version > 0.21 -->
+{{ if .BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | float | lt 0.21 }}
+  {{ $checksum_suffix = "mds" }}
+{{ end }}
+<!-- if the version > 0.20.2 -->
+{{ if .BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | eq "0.20" }}
+  {{ if .BaseFileName | replaceRE "^[0-9]+.[0-9]+.([0-9]+).*" "$1" | float | lt 2 }}
+    {{ $checksum_suffix = "mds" }}
+  {{ end }}
+{{ end }}
+
 {{partial "header.html" .}}
 <div class="container">
 <div class="col-md-8">
