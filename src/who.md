@@ -45,35 +45,35 @@ order):
   asuresh          |Arun Suresh                                                                  |LinkedIn       |            |-8
   atm              |[Aaron T. Myers](http://people.apache.org/~atm)                              |Cloudera       |            |-8
   bikas            |Bikas Saha                                                                   |Hortonworks    |            |-8
-  bobby            |Robert(Bobby) Evans                                                          |Oath           |            |-6
+  bobby            |Robert(Bobby) Evans                                                          |Nvidia         |            |-6
   brahma           |Brahma Reddy Battula                                                         |Huawei         |            |+5.5
   brandonli        |Brandon Li                                                                   |Hortonworks    |            |-8
   cdouglas         |[Chris Douglas](http://people.apache.org/~cdouglas)                          |Microsoft      |            |-8
   cmccabe          |[Colin Patrick McCabe](http://www.club.cc.cmu.edu/~cmccabe)                  |Cloudera       |HDFS        |-8
   cnauroth         |Chris Nauroth                                                                |Hortonworks    |            |-8
   cutting          |[Doug Cutting](http://blog.lucene.com/)                                      |Cloudera       |            |-8
-  daryn            |Daryn Sharp                                                                  |Oath           |            |-6
+  daryn            |Daryn Sharp                                                                  |Verizon Media  |            |-6
   ddas             |[Devaraj Das](http://people.apache.org/~ddas)                                |Hortonworks    |            |-8
   devaraj          |Devaraj K                                                                    |Intel          |            |+5.5
   dhruba           |[Dhruba Borthakur](http://people.apache.org/~dhruba)                         |Facebook       |            |-8
   eli              |[Eli Collins](http://people.apache.org/~eli)                                 |Cloudera       |            |-8
   enis             |[Enis Soztutar](http://people.apache.org/~enis)                              |Hortonworks    |            |-8
-  epayne           |[Eric Payne](http://people.apache.org/~epayne)                               |Oath           |            |-6
+  epayne           |[Eric Payne](http://people.apache.org/~epayne)                               |Verizon Media  |            |-6
   gkesavan         |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                     |Hortonworks    |            |-8
   haibochen        |Haibo Chen                                                                   |Cloudera       |            |-8
   hairong          |Hairong Kuang                                                                |Facebook       |            |-8
   hitesh           |Hitesh Shah                                                                  |Hortonworks    |            |-8
   inigoiri         |Íñigo Goiri                                                                  |Microsoft      |            |-8
-  jeagles          |[Jonathan Eagles](http://people.apache.org/~jeagles)                         |Oath           |            |-6
+  jeagles          |[Jonathan Eagles](http://people.apache.org/~jeagles)                         |Verizon Media  |            |-6
   jghoman          |[Jakob Homan](http://people.apache.org/~jghoman)                             |LinkedIn       |            |-8
   jianhe           |[Jian He](http://people.apache.org/~jianhe)                                  |Hortonworks    |            |-8
   jing9            |Jing Zhao                                                                    |Hortonworks    |            |-8
   jitendra         |[Jitendra Nath Pandey](http://people.apache.org/~jitendra)                   |Hortonworks    |            |-8
-  jlowe            |Jason Lowe                                                                   |Oath           |            |-6
+  jlowe            |Jason Lowe                                                                   |Nvidia         |            |-6
   jzhuge           |John Zhuge                                                                   |Netflix        |            |-8
   junping\_du      |Junping Du                                                                   |Tencent        |            |+8
   kasha            |[Karthik Kambatla](http://people.apache.org/~kasha)                          |Cloudera       |            |-8
-  kihwal           |[Kihwal Lee](http://people.apache.org/~kihwal)                               |Oath           |            |-6
+  kihwal           |[Kihwal Lee](http://people.apache.org/~kihwal)                               |Verizon Media  |            |-6
   kkaranasos       |[Konstantinos Karanasos](http://www.microsoft.com/en-us/research/people/kokarana)|Microsoft  |            |-8
   lei              |[Lei Xu](http://people.apache.org/~lei)                                      |Cruise Automation |            |-8
   liuml07          |[Mingliang Liu](http://people.apache.org/~liuml07)                           |Salesforce     |HDFS        |-8
@@ -103,7 +103,7 @@ order):
   suresh           |[Suresh Srinivas](http://people.apache.org/~suresh)                          |Hortonworks    |            |-8
   szetszwo         |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                  |Hortonworks    |            |-8
   templedf         |Daniel Templeton                                                             |Cloudera       |            |-8
-  tgraves          |Thomas Graves                                                                |Oath           |            |-6
+  tgraves          |Thomas Graves                                                                |Nvidia         |            |-6
   todd             |[Todd Lipcon](http://people.apache.org/~todd)                                |Cloudera       |            |-8
   tomwhite         |[Tom White](http://weblogs.java.net/blog/tomwhite/)                          |Cloudera       |            |-8
   tucu             |Alejandro Abdelnur                                                           |Cloudera       |            |-8
@@ -156,7 +156,7 @@ benoy               |[Benoy Antony](http://people.apache.org/~benoy)            
 bharat              |Bharat Viswanadham                                                                  |Hortonworks                     |        |-8
 bibinchundatt       |Bibin A Chundatt                                                                    |Huawei                          |        |+5.5
 bikas               |Bikas Saha                                                                          |Hortonworks                     |        |-8
-bobby               |Robert(Bobby) Evans                                                                 |Oath                            |        |-6
+bobby               |Robert(Bobby) Evans                                                                 |Nvidia                          |        |-6
 boryas              |[Boris Shkolnik](http://people.apache.org/~boryas)                                  |LinkedIn                        |        |-8
 botong              |Botong Huang                                                                        |Alibaba                         |        |-8
 brahma              |Brahma Reddy Battula                                                                |Huawei                          |        |+5.5
@@ -170,14 +170,15 @@ cos                 |[Konstantin Boudnik](http://people.apache.org/~cos)        
 ctrezzo             |Chris Trezzo                                                                        |Twitter                         |        |-8
 curino              |Carlo Curino                                                                        |Microsoft                       |        |-8
 cutting             |[Doug Cutting](http://blog.lucene.com/)                                             |Cloudera                        |        |-8
-daryn               |Daryn Sharp                                                                         |Oath                            |        |-6
+daryn               |Daryn Sharp                                                                         |Verizon Media                   |        |-6
 ddas                |[Devaraj Das](http://people.apache.org/~ddas)                                       |Hortonworks                     |        |-8
 devaraj             |Devaraj K                                                                           |Intel                           |        |+5.5
 dhruba              |[Dhruba Borthakur](http://people.apache.org/~dhruba)                                |Facebook                        |        |-8
 drankye             |[Kai Zheng](http://people.apache.org/~drankye)                                      |Intel                           |        |+8
+ebadger             |Eric Badger                                                                         |Verizon Media                   |        |-6
 elek                |[Márton Elek](https://github.com/elek)                                              |Hortonworks                     |        |+1
 eli                 |[Eli Collins](http://people.apache.org/~eli)                                        |Cloudera                        |        |-8
-epayne              |[Eric Payne](http://people.apache.org/~epayne)                                      |Oath                            |        |-6
+epayne              |[Eric Payne](http://people.apache.org/~epayne)                                      |Verizon Media                   |        |-6
 enis                |[Enis Soztutar](http://people.apache.org/~enis)                                     |Hortonworks                     |        |-8
 eyang               |[Eric Yang](http://people.apache.org/~eyang)                                        |IBM                             |        |-8
 gera                |Gera Shegalov                                                                       |Salesforce, Einstein Platform   |        |-8
@@ -192,20 +193,20 @@ harsh               |[Harsh J](http://harshj.com/)                              
 inigoiri            |Íñigo Goiri                                                                         |Microsoft                       |        |-8
 ivanmi              |Ivan Mitic                                                                          |Microsoft                       |        |-8
 iwasakims           |Masatake Iwasaki                                                                    |NTT DATA                        |        |+9
-jeagles             |[Jonathan Eagles](http://people.apache.org/~jeagles)                                |Oath                            |        |-6
+jeagles             |[Jonathan Eagles](http://people.apache.org/~jeagles)                                |Verizon Media                   |        |-6
 jghoman             |[Jakob Homan](http://people.apache.org/~jghoman)                                    |LinkedIn                        |        |-8
 jhung               |Jonathan Hung                                                                       |LinkedIn                        |        |-8
 jianhe              |[Jian He](http://people.apache.org/~jianhe)                                         |Hortonworks                     |        |-8
 jing9               |Jing Zhao                                                                           |Hortonworks                     |        |-8
 jitendra            |[Jitendra Nath Pandey](http://people.apache.org/~jitendra)                          |Hortonworks                     |        |-8
-jlowe               |Jason Lowe                                                                          |Oath                            |        |-6
+jlowe               |Jason Lowe                                                                          |Nvidia                          |        |-6
 johan               |[Johan Oskarsson](http://people.apache.org/~johan)                                  |Twitter                         |        |0
 junping\_du         |Junping Du                                                                          |Tencent                         |        |+8
 jzhuge              |John Zhuge                                                                          |Netflix                         |        |-8
 kasha               |[Karthik Kambatla](http://people.apache.org/~kasha)                                 |Cloudera                        |        |-8
-kihwal              |[Kihwal Lee](http://people.apache.org/~kihwal)                                      |Oath                            |        |-6
+kihwal              |[Kihwal Lee](http://people.apache.org/~kihwal)                                      |Verizon Media                   |        |-6
 kkaranasos          |[Konstantinos Karanasos](http://www.microsoft.com/en-us/research/people/kokarana)   |Microsoft                       |        |-8
-knoguchi            |[Koji Noguchi](http://people.apache.org/~knoguchi)                                  |Oath                            |        |-8
+knoguchi            |[Koji Noguchi](http://people.apache.org/~knoguchi)                                  |Verizon Media                   |        |-8
 kzhang              |Kan Zhang                                                                           |IBM                             |        |-8
 lei                 |[Lei Xu](http://people.apache.org/~lei)                                             |Cloudera                        |        |-8
 liuml07             |[Mingliang Liu](http://people.apache.org/~liuml07)                                  |Salesforce                      |HDFS    |-8
@@ -225,7 +226,7 @@ msingh              |Mukul Kumar Singh                                          
 naganarasimha\_gr   |[Naganarasimha G R](http://people.apache.org/~naganarasimha_gr/)                    |SCB                             |        |+8.0
 nanda               |Nanda kumar                                                                         |Hortonworks                     |        |+5.5
 nigel               |[Nigel Daley](http://people.apache.org/~nigel)                                      |                                |QA      |-8
-nroberts            |Nathan Roberts                                                                      |Oath                            |        |-6
+nroberts            |Nathan Roberts                                                                      |Verizon Media                   |        |-6
 omalley             |[Owen O\'Malley](http://people.apache.org/~omalley)                                 |Hortonworks                     |        |-8
 ozawa               |[Tsuyoshi Ozawa](http://people.apache.org/~ozawa)                                   |NTT                             |        |+9
 rakeshr             |[Rakesh Radhakrishnan](https://people.apache.org/~rakeshr)                          |Intel                           |        |+5.5
@@ -257,7 +258,7 @@ tanping             |[Tanping Wang](http://people.apache.org/~tanping)          
 tasanuma            |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                              |Yahoo! JAPAN                    |        |+9
 taton               |[Christophe Taton](http://people.apache.org/~taton)                                 |INRIA                           |        |+1
 templedf            |Daniel Templeton                                                                    |Cloudera                        |        |-8
-tgraves             |Thomas Graves                                                                       |Oath                            |        |-6
+tgraves             |Thomas Graves                                                                       |Nvidia                          |        |-6
 todd                |[Todd Lipcon](http://people.apache.org/~todd)                                       |Cloudera                        |        |-8
 tomwhite            |[Tom White](http://www.lexemetech.com)                                              |Cloudera                        |        |-8
 tucu                |Alejandro Abdelnur                                                                  |Cloudera                        |        |-8
