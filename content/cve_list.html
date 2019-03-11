@@ -184,6 +184,22 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+<h2 id="cve-2018-11767-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-11767-apache-hadoop-kms-acl-regression"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11767">CVE-2018-11767</a> Apache Hadoop KMS ACL regression</h2>
+
+<p>After the security fix for CVE-2017-15713, KMS has an access control regression,
+blocking users or granting access to users incorrectly, if the system
+uses non-default groups mapping mechanisms such as LdapGroupsMapping,
+CompositeGroupsMapping, or NullGroupsMapping.</p>
+
+<ul>
+<li><strong>Versions affected</strong>: 2.9.0 to 2.9.1, 2.8.3 to 2.8.4, 2.7.5 to 2.7.6</li>
+<li><strong>Fixed versions</strong>: 2.9.2, 2.8.5, 2.7.7</li>
+<li><strong>Impact</strong>: privilege escalation</li>
+<li><strong>Reporter</strong>: Wei-Chiu Chuang</li>
+<li><strong>Reported Date</strong>: 2018/05/09</li>
+<li><strong>Issue Announced</strong>: 2019/03/11 (<a href="https://lists.apache.org/thread.html/5fb771f66946dd5c99a8a5713347c24873846f555d716f9ac17bccca@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
+</ul>
+
 <h2 id="cve-2018-1296-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-1296-apache-hadoop-hdfs-permissive-listxattr-authorization"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1296">CVE-2018-1296</a> Apache Hadoop HDFS Permissive listXAttr Authorization</h2>
 
 <p>HDFS exposes extended attribute key/value pairs during listXAttrs,

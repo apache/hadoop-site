@@ -37,6 +37,20 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2018-11767](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11767) Apache Hadoop KMS ACL regression
+
+After the security fix for CVE-2017-15713, KMS has an access control regression,
+blocking users or granting access to users incorrectly, if the system
+uses non-default groups mapping mechanisms such as LdapGroupsMapping,
+CompositeGroupsMapping, or NullGroupsMapping.
+
+- **Versions affected**: 2.9.0 to 2.9.1, 2.8.3 to 2.8.4, 2.7.5 to 2.7.6
+- **Fixed versions**: 2.9.2, 2.8.5, 2.7.7
+- **Impact**: privilege escalation
+- **Reporter**: Wei-Chiu Chuang
+- **Reported Date**: 2018/05/09
+- **Issue Announced**: 2019/03/11 ([general@hadoop](https://lists.apache.org/thread.html/5fb771f66946dd5c99a8a5713347c24873846f555d716f9ac17bccca@%3Cgeneral.hadoop.apache.org%3E))
+
 ## [CVE-2018-1296](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1296) Apache Hadoop HDFS Permissive listXAttr Authorization
 
 HDFS exposes extended attribute key/value pairs during listXAttrs,
