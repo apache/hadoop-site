@@ -122,7 +122,7 @@ order):
   xyao             |[Xiaoyu Yao](http://people.apache.org/~xyao)                                 |Hortonworks    |            |-8
   yjzhangal        |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                         |Cloudera       |            |-8
   yliu             |[Yi Liu](http://people.apache.org/~yliu)                                     |Intel          |            |+8
-  yqlin            |[Yiqun Lin](https://github.com/linyiqun)                                     |Vipshop        |            |+8
+  yqlin            |[Yiqun Lin](https://github.com/linyiqun)                                     |EBay           |            |+8
   yufei            |[Yufei Gu](http://people.apache.org/~yufei)                                  |Apple          |            |-8
   zhz              |[Zhe Zhang](http://zhe-thoughts.github.io/about/)                            |LinkedIn       |            |-8
   zjshen           |[Zhijie Shen](http://people.apache.org/~zjshen)                              |Hortonworks    |            |-8
@@ -282,7 +282,7 @@ xyao                |[Xiaoyu Yao](http://people.apache.org/~xyao)               
 yufei               |[Yufei Gu](http://people.apache.org/~yufei)                                         |Apple                           |        |-8
 yjzhangal           |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                                |Cloudera                        |        |-8
 yliu                |[Yi Liu](http://people.apache.org/~yliu)                                            |Intel                           |        |+8
-yqlin               |[Yiqun Lin](https://github.com/linyiqun)                                            |Vipshop                         |        |+8
+yqlin               |[Yiqun Lin](https://github.com/linyiqun)                                            |EBay                            |        |+8
 zhz                 |[Zhe Zhang](http://zhe-thoughts.github.io/about/)                                   |LinkedIn                        |HDFS    |-8
 zjshen              |[Zhijie Shen](http://people.apache.org/~zjshen)                                     |Hortonworks                     |        |-8
 zshao               |[Zheng Shao](http://people.apache.org/~zshao)                                       |Facebook                        |        |-8
