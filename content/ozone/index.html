@@ -4,7 +4,7 @@
 <html>
 
 <head>
-	<meta name="generator" content="Hugo 0.53" />
+	<meta name="generator" content="Hugo 0.54.0" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,19 +62,18 @@
 
             <div id="ratis-menu" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#qa">Q&A</a></li>
+                    <li><a href="faq">FAQ</a></li>
                     <li><a href="downloads">Download</a></li>
                     <li><a href="docs">Documentation</a></li>
                     <li><a href="https://github.com/apache/hadoop">Source</a></li>
                     <li><a href="https://cwiki.apache.org/confluence/display/HADOOP/Ozone+Contributor+Guide">Wiki</a></li>
-                    <li><a href="https://www.katacoda.com/elek/scenarios/ozone101"><b>Try it out!</b></a></li>
                 </ul>
             </div>
 
     </nav>
 
     <div style="max-height: 200px; overflow: hidden;">
-      <img src="cloud.png" style="width: 100%; left:0px;"/>
+      <img src="sunrise-ozone.jpg" style="width: 100%; left:0px;"/>
     </div>
 
 </div>
@@ -88,12 +87,9 @@
 <div class="whatis">
     <div class="container">
         <div class="row header">
-            <h2>What is Apache Hadoop Ozone?</h2>
             <p class="lead">
-                Ozone is a new subproject of Apache Hadoop. It provides an
-                 object store semantic for Hadoop.</p>
-            <p class="lead">It uses Hadoop Distributed Data Storage (HDDS) for storage layer. HDDS is 
-             another new subproject of Apache Hadoop.
+                Ozone is a scalable, redundant, and distributed object store for Hadoop. Apart from scaling to billions of objects of varying sizes, Ozone can function effectively in containerized environments such as Kubernetes and YARN. </p> <p>Applications using frameworks like Apache Spark, YARN and Hive work natively without any modifications.</p>
+            <p class="lead">Ozone is built on a highly available, replicated block storage layer called Hadoop Distributed Data Store (HDDS).
             </p>
             </p>
             <p></p>
@@ -107,30 +103,50 @@
         <div class="row feature-list">
             <div class="col-md-4 col-sm-4 feature-item">
 
-                <h4><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Scalable</h4>
+                <h4><span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Scalable</h4>
                 <p>
                  Ozone is designed to scale to tens of billions of files and
                  blocks and, in the future, even more.
                 </p>
-                <p>
-                  Small files or huge number of datanodes are no longer a limitation.
-                </p>
+      
                 <p></p>
             </div>
             <div class="col-md-4 col-sm-4 feature-item">
-                <h4><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                <h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span>
                    Consistent</h4>
                 <p>
-                    Storage Layer uses RAFT protocol for consistency.
+                    Ozone is a strongly consistent object store. This consistency is achieved by using protocols like RAFT.
                 </p>
             </div>
             <div class="col-md-4 col-sm-4 feature-item">
                 <h4><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>Cloud-native</h4>
-                <p>Hadoop Ozone is designed to work well in containerized environments like YARN and Kubernetes.
+                <p>Ozone is designed to work well in containerized environments like YARN and Kubernetes.
+                </p>
+            </div>
+
+                 <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-tower" aria-hidden="true"></span>Secure</h4>
+                <p>Ozone intgrates with kerberos infrastructure for access control and supports TDE and on-wire encryption.
+                </p>
+            </div>
+
+ <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-asterisk
+" aria-hidden="true"></span>Multi-Protocol Support</h4>
+                <p>Ozone supports different protocols like S3 
+                and Hadoop File System APIs.
+
                 </p>
             </div>
 
 
+ <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-random
+" aria-hidden="true"></span>Highly Available</h4>
+                <p>Ozone is a fully replicated system that is designed to survive multiple failures.
+                </p>
+            </div>
+
         </div>
 
 
@@ -138,33 +154,7 @@
 </div>
 
 
-<a name="qa"></a>
-<div class="main-section">
-    <div class="container">
-        <div class="row header">
-        
-        <h2>Questions and Answers</h2>
 
-
-<h3 id="how-can-i-contribute">How can I contribute</h3>
-
-<p>The contribution process is the same as for any other <a href="https://wiki.apache.org/hadoop/HowToContribute">Hadoop subproject</a>. The Ozone Contribution Guidelines is available from the <a href="https://cwiki.apache.org/confluence/display/HADOOP/Ozone+Contributor+Guide">wiki</a>.</p>
-
-<h3 id="does-it-mean-a-new-hadoop-server-component">Does it mean a new Hadoop server component?</h3>
-
-<p>Both Ozone and HDDS requires one additional master component - Ozone Manager and Storage Container Manger, respectively.
-The worker parts of Ozone/HDDS can be started as a HDFS Datanode plugin or standalone.</p>
-
-<h3 id="how-can-i-try-it-out">How can I try it out?</h3>
-
-<p>There is a <a href="https://www.katacoda.com/elek/scenarios/ozone101">katacoda example</a> which can be used to try out Ozone without download.</p>
-
-<p>You can also <a href="/ozone/downloads/">download</a> it and <a href="/ozone/docs/0.2.1-alpha/runningviadocker.html">try it out</a></p>
-
-        
-        </div>
-    </div>
-</div>
 
 <footer>
     <div class="container">

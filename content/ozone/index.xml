@@ -52,14 +52,13 @@ This release is fully functional, but alpha quality.
     </item>
     
     <item>
-      <title>Questions and Answers</title>
-      <link>/ozone/qa/</link>
+      <title>Frequently Asked Questions</title>
+      <link>/ozone/faq/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/ozone/qa/</guid>
-      <description>How can I contribute The contribution process is the same as for any other Hadoop subproject. The Ozone Contribution Guidelines is available from the wiki.
-Does it mean a new Hadoop server component? Both Ozone and HDDS requires one additional master component - Ozone Manager and Storage Container Manger, respectively. The worker parts of Ozone/HDDS can be started as a HDFS Datanode plugin or standalone.
-How can I try it out?</description>
+      <guid>/ozone/faq/</guid>
+      <description>What is Ozone? Ozone is an object store designed for big data applications. Big data workloads tend to be very different from standard workloads and Ozone is born out of lessons learned from running Hadoop in thousands of clusters.
+Why an Object Store? Object stores are more straightforward to build and use than standard file systems. It is also easier to scale an object store. The fact that most big data applications and frameworks like Apache Spark, YARN and Hive can run both on cloud and on-prem, makes having an object store on-prem very attractive.</description>
     </item>
     
   </channel>
