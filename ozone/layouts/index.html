@@ -19,12 +19,9 @@
 <div class="whatis">
     <div class="container">
         <div class="row header">
-            <h2>What is Apache Hadoop Ozone?</h2>
             <p class="lead">
-                Ozone is a new subproject of Apache Hadoop. It provides an
-                 object store semantic for Hadoop.</p>
-            <p class="lead">It uses Hadoop Distributed Data Storage (HDDS) for storage layer. HDDS is 
-             another new subproject of Apache Hadoop.
+                Ozone is a scalable, redundant, and distributed object store for Hadoop. Apart from scaling to billions of objects of varying sizes, Ozone can function effectively in containerized environments such as Kubernetes and YARN. </p> <p>Applications using frameworks like Apache Spark, YARN and Hive work natively without any modifications.</p>
+            <p class="lead">Ozone is built on a highly available, replicated block storage layer called Hadoop Distributed Data Store (HDDS).
             </p>
             </p>
             <p></p>
@@ -38,29 +35,49 @@
         <div class="row feature-list">
             <div class="col-md-4 col-sm-4 feature-item">
 
-                <h4><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span> Scalable</h4>
+                <h4><span class="glyphicon glyphicon-signal" aria-hidden="true"></span> Scalable</h4>
                 <p>
                  Ozone is designed to scale to tens of billions of files and
                  blocks and, in the future, even more.
                 </p>
-                <p>
-                  Small files or huge number of datanodes are no longer a limitation.
-                </p>
+      
                 <p></p>
             </div>
             <div class="col-md-4 col-sm-4 feature-item">
-                <h4><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                <h4><span class="glyphicon glyphicon-link" aria-hidden="true"></span>
                    Consistent</h4>
                 <p>
-                    Storage Layer uses RAFT protocol for consistency.
+                    Ozone is a strongly consistent object store. This consistency is achieved by using protocols like RAFT.
                 </p>
             </div>
             <div class="col-md-4 col-sm-4 feature-item">
                 <h4><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>Cloud-native</h4>
-                <p>Hadoop Ozone is designed to work well in containerized environments like YARN and Kubernetes.
+                <p>Ozone is designed to work well in containerized environments like YARN and Kubernetes.
                 </p>
             </div>
 
+                 <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-tower" aria-hidden="true"></span>Secure</h4>
+                <p>Ozone intgrates with kerberos infrastructure for access control and supports TDE and on-wire encryption.
+                </p>
+            </div>
+
+ <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-asterisk
+" aria-hidden="true"></span>Multi-Protocol Support</h4>
+                <p>Ozone supports different protocols like S3 
+                and Hadoop File System APIs.
+
+                </p>
+            </div>
+
+
+ <div class="col-md-4 col-sm-4 feature-item">
+                <h4><span class="glyphicon glyphicon-random
+" aria-hidden="true"></span>Highly Available</h4>
+                <p>Ozone is a fully replicated system that is designed to survive multiple failures.
+                </p>
+            </div>
 
         </div><!-- /.feature-list -->
 
@@ -69,7 +86,7 @@
 </div><!-- /.feature-list-group -->
 
 
-<a name="qa"></a>
+<!-- <a name="qa"></a>
 <div class="main-section">
     <div class="container">
         <div class="row header">
@@ -79,5 +96,5 @@
         {{end}}
         </div>
     </div>
-</div>
+</div> -->
 {{ partial "footer.html" . }}
