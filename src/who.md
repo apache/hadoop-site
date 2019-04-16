@@ -286,6 +286,7 @@ yqlin               |[Yiqun Lin](https://github.com/linyiqun)                   
 zhz                 |[Zhe Zhang](http://zhe-thoughts.github.io/about/)                                   |LinkedIn                        |HDFS    |-8
 zjshen              |[Zhijie Shen](http://people.apache.org/~zjshen)                                     |Hortonworks                     |        |-8
 zshao               |[Zheng Shao](http://people.apache.org/~zshao)                                       |Facebook                        |        |-8
+ztang               |Zhankun Tang                                                                        |Cloudera                        |        |+8
 zxu                 |[Zhihai Xu](http://people.apache.org/~zxu)                                          |Uber                            |        |-8
 
 ## Emeritus Hadoop Committers
