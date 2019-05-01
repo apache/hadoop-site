@@ -82,7 +82,7 @@ order):
   mattf            |Matt Foley                                                                   |Apple          |            |-8
   mingma           |Ming Ma                                                                      |Twitter        |            |-8
   naganarasimha\_gr|[Naganarasimha G R](http://people.apache.org/~naganarasimha_gr/)             |SCB            |            |+8.0
-  nigel            |Nigel Daley                                                                  |Jive           |            |-8
+  nigel            |Nigel Daley                                                                  |Pinterest      |            |-8
   omalley          |[Owen O\'Malley](http://people.apache.org/~omalley)                          |Hortonworks    |            |-8
   ozawa            |[Tsuyoshi Ozawa](http://people.apache.org/~ozawa)                            |NTT            |            |+9
   phunt            |[Patrick Hunt](http://people.apache.org/~phunt)                              |Cloudera       |ZooKeeper   |-8
@@ -120,7 +120,7 @@ order):
   xgong            |[Xuan Gong](http://people.apache.org/~xgong)                                 |Hortonworks    |            |-8
   xiao             |Xiao Chen                                                                    |Netflix        |            |-8
   xyao             |[Xiaoyu Yao](http://people.apache.org/~xyao)                                 |Hortonworks    |            |-8
-  yjzhangal        |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                         |Cloudera       |            |-8
+  yjzhangal        |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                         |Pinterest      |            |-8
   yliu             |[Yi Liu](http://people.apache.org/~yliu)                                     |Intel          |            |+8
   yqlin            |[Yiqun Lin](https://github.com/linyiqun)                                     |EBay           |            |+8
   yufei            |[Yufei Gu](http://people.apache.org/~yufei)                                  |Apple          |            |-8
@@ -225,7 +225,7 @@ mingma              |Ming Ma                                                    
 msingh              |Mukul Kumar Singh                                                                   |Hortonworks                     |        |+5.5
 naganarasimha\_gr   |[Naganarasimha G R](http://people.apache.org/~naganarasimha_gr/)                    |SCB                             |        |+8.0
 nanda               |Nanda kumar                                                                         |Hortonworks                     |        |+5.5
-nigel               |[Nigel Daley](http://people.apache.org/~nigel)                                      |                                |QA      |-8
+nigel               |[Nigel Daley](http://people.apache.org/~nigel)                                      |Pinterest                       |QA      |-8
 nroberts            |Nathan Roberts                                                                      |Verizon Media                   |        |-6
 omalley             |[Owen O\'Malley](http://people.apache.org/~omalley)                                 |Hortonworks                     |        |-8
 ozawa               |[Tsuyoshi Ozawa](http://people.apache.org/~ozawa)                                   |NTT                             |        |+9
@@ -280,7 +280,7 @@ xiao                |Xiao Chen                                                  
 xkrogen             |[Erik Krogen](https://www.linkedin.com/in/xkrogen/)                                 |LinkedIn                        |HDFS    |-8
 xyao                |[Xiaoyu Yao](http://people.apache.org/~xyao)                                        |Hortonworks                     |        |-8
 yufei               |[Yufei Gu](http://people.apache.org/~yufei)                                         |Apple                           |        |-8
-yjzhangal           |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                                |Cloudera                        |        |-8
+yjzhangal           |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                                |Pinterest                       |        |-8
 yliu                |[Yi Liu](http://people.apache.org/~yliu)                                            |Intel                           |        |+8
 yqlin               |[Yiqun Lin](https://github.com/linyiqun)                                            |EBay                            |        |+8
 zhz                 |[Zhe Zhang](http://zhe-thoughts.github.io/about/)                                   |LinkedIn                        |HDFS    |-8
