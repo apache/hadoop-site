@@ -167,6 +167,7 @@ cliang              |Chen Liang                                                 
 cmccabe             |[Colin Patrick McCabe](http://www.club.cc.cmu.edu/~cmccabe)                         |Cloudera                        |HDFS    |-8
 cnauroth            |Chris Nauroth                                                                       |Hortonworks                     |        |-8
 cos                 |[Konstantin Boudnik](http://people.apache.org/~cos)                                 |WANdisco                        |        |-8
+csingh              |Chandni Singh                                                                       |Cloudera                        |        |-8
 ctrezzo             |Chris Trezzo                                                                        |Twitter                         |        |-8
 curino              |Carlo Curino                                                                        |Microsoft                       |        |-8
 cutting             |[Doug Cutting](http://blog.lucene.com/)                                             |Cloudera                        |        |-8
