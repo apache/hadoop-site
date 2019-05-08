@@ -73,7 +73,7 @@ publishDir = "content"
    parent = "help"
 
 [[menu.main]]
-   name = "Sponsorshop"
+   name = "Sponsorship"
    url = "http://www.apache.org/foundation/sponsorship.html"
    parent = "help"
 
