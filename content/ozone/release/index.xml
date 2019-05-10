@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018 Apache Software Foundation</copyright>
-    <lastBuildDate>Thu, 22 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 May 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/ozone/release/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Release 0.4.0-alpha available</title>
+      <link>/ozone/release/0.4.0-alpha/</link>
+      <pubDate>Tue, 07 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/ozone/release/0.4.0-alpha/</guid>
+      <description>Apache Hadoop Ozone 0.4.0-alpha is released with following main features:
+ Hadoop Delegation Tokens and Block Tokens supported for Ozone. Transparent Data Encryption (TDE) Support - Allows data blocks to be encrypted-at-rest. Kerberos support for Ozone. Certificate Infrastructure for Ozone - Tokens use PKI instead of shared secrets. Datanode to Datanode communication secured via mutual TLS. Ability secure ozone cluster that works with Yarn, Hive, and Spark. Helm/Skaffold support to deploy Ozone clusters on K8s.</description>
+    </item>
     
     <item>
       <title>Release 0.3.0-alpha available</title>

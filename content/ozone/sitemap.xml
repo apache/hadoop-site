@@ -3,6 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/ozone/</loc>
+    <lastmod>2019-05-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/ozone/release/0.4.0-alpha/</loc>
+    <lastmod>2019-05-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/ozone/release/</loc>
+    <lastmod>2019-05-07T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/ozone/release/0.3.0-alpha/</loc>
     <lastmod>2018-11-22T00:00:00+00:00</lastmod>
   </url>
@@ -17,12 +34,6 @@
   </url>
   
   <url>
-    <loc>/ozone/</loc>
-    <lastmod>2018-11-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/ozone/categories/</loc>
     <priority>0</priority>
   </url>
@@ -33,12 +44,6 @@
   
   <url>
     <loc>/ozone/faq/</loc>
-  </url>
-  
-  <url>
-    <loc>/ozone/release/</loc>
-    <lastmod>2018-11-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
