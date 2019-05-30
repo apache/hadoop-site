@@ -37,6 +37,18 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2018-8029](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8029) Apache Hadoop Privilege escalation vulnerability
+
+A user who can escalate to yarn user can possibly run arbitrary
+commands as root user.
+
+- **Versions affected**: 3.0.0-alpha1 to 3.1.0, 2.9.0 to 2.9.1, 2.2.0 to 2.8.4
+- **Fixed versions**: 3.1.1, 2.9.2, 2.8.5
+- **Impact**: privilege escalation
+- **Reporter**: Miklos Szegedi
+- **Reported Date**: 2018/05/08
+- **Issue Announced**: 2019/05/30 ([general@hadoop](https://lists.apache.org/thread.html/17084c09e6dedf60efe08028b429c92ffd28aacc28454e4fa924578a@%3Cgeneral.hadoop.apache.org%3E))
+
 ## [CVE-2018-11767](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11767) Apache Hadoop KMS ACL regression
 
 After the security fix for CVE-2017-15713, KMS has an access control regression,
