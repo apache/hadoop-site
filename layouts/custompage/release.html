@@ -33,20 +33,20 @@
   </thead>
   {{range first 5 (where (where .Site.Pages "Section" "release") ".Params.linked" true) }}
      <tr>
-       <td>{{.BaseFileName }}</td>
+       <td>{{.File.BaseFileName }}</td>
        <td>{{dateFormat "2006 Jan 2 " .Date}}</td>
        <td>
-         <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz">source</a>
-         (<a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz.mds">checksum</a>
-         <a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz.asc">signature</a>)
+         <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz">source</a>
+         (<a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz.mds">checksum</a>
+         <a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz.asc">signature</a>)
         </td>
         <td>
-          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz">binary</a>
-          (<a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz.mds">checksum</a>
-          <a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz.asc">signature</a>)
+          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz">binary</a>
+          (<a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.mds">checksum</a>
+          <a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.asc">signature</a>)
          </td>
          <td>
-           <a href="/release/{{.BaseFileName }}.html">Announcement</a>
+           <a href="/release/{{.File.BaseFileName }}.html">Announcement</a>
          </td>
      </tr>
   {{end}}

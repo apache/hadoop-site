@@ -14,12 +14,12 @@
 
 {{ $checksum_suffix := "md5" }}
 <!-- if the version > 0.21 -->
-{{ if .BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | float | lt 0.21 }}
+{{ if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | float | lt 0.21 }}
   {{ $checksum_suffix = "mds" }}
 {{ end }}
 <!-- if the version > 0.20.2 -->
-{{ if .BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | eq "0.20" }}
-  {{ if .BaseFileName | replaceRE "^[0-9]+.[0-9]+.([0-9]+).*" "$1" | float | lt 2 }}
+{{ if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | eq "0.20" }}
+  {{ if .File.BaseFileName | replaceRE "^[0-9]+.[0-9]+.([0-9]+).*" "$1" | float | lt 2 }}
     {{ $checksum_suffix = "mds" }}
   {{ end }}
 {{ end }}
@@ -32,17 +32,17 @@
 <small>{{dateFormat "2006 Jan 2 " .Date}}</small>
 </div>
 <div class="col-md-4">
-   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz" class="btn btn-success">Download tar.gz</a></p>
+   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz" class="btn btn-success">Download tar.gz</a></p>
    <p>
-     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz.{{ $checksum_suffix }}">checksum</a>
-     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}.tar.gz.asc">signature</a>)
+     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.{{ $checksum_suffix }}">checksum</a>
+     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.asc">signature</a>)
    </p>
-   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz" class="btn btn-warning">Download src</a></p>
+   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz" class="btn btn-warning">Download src</a></p>
    <p>
-     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz.{{ $checksum_suffix }}">checksum</a>
-     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.BaseFileName }}/hadoop-{{.BaseFileName }}-src.tar.gz.asc">signature</a>)
+     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz.{{ $checksum_suffix }}">checksum</a>
+     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz.asc">signature</a>)
    </p>
-      <p><a href="https://hadoop.apache.org/docs/r{{.BaseFileName }}" class="btn btn-primary">Documentation</a></p>
+      <p><a href="https://hadoop.apache.org/docs/r{{.File.BaseFileName }}" class="btn btn-primary">Documentation</a></p>
 
 </div>
 </div>

@@ -33,20 +33,20 @@
   </thead>
    {{range first 5 (where (where .Site.Pages "Section" "release") ".Params.linked" true) }}
      <tr>
-       <td>{{.BaseFileName }}</td>
+       <td>{{.File.BaseFileName }}</td>
        <td>{{dateFormat "2006 Jan 2 " .Date}}</td>
        <td>
-         <a href="https://www.apache.org/dyn/closer.cgi/hadoop/ozone/ozone-{{.BaseFileName }}/hadoop-ozone-{{.BaseFileName }}-src.tar.gz">source</a>
-         (<a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.BaseFileName }}/hadoop-ozone-{{.BaseFileName }}-src.tar.gz.mds">checksum</a>
-         <a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.BaseFileName }}/hadoop-ozone-{{.BaseFileName }}-src.tar.gz.asc">signature</a>)
+         <a href="https://www.apache.org/dyn/closer.cgi/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}-src.tar.gz">source</a>
+         (<a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}-src.tar.gz.mds">checksum</a>
+         <a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}-src.tar.gz.asc">signature</a>)
         </td>
         <td>
-          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/ozone/ozone-{{.BaseFileName }}/hadoop-ozone-{{.BaseFileName }}.tar.gz">binary</a>
-          (<a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.BaseFileName }}/hadoop-ozone-{{.BaseFileName }}.tar.gz.mds">checksum</a>
-          <a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.BaseFileName }}/hadoop-ozone-{{.BaseFileName }}.tar.gz.asc">signature</a>)
+          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}.tar.gz">binary</a>
+          (<a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}.tar.gz.mds">checksum</a>
+          <a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}.tar.gz.asc">signature</a>)
          </td>
          <td>
-           <a href="release/{{.BaseFileName }}/">Announcement</a>
+           <a href="release/{{.File.BaseFileName }}/">Announcement</a>
          </td>
      </tr>
   {{end}}
