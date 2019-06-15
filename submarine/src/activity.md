@@ -8,6 +8,19 @@ type: custompage
 
 ------
 
+## Qcon 2019, Beijing
+> MAY 06–08, 2019
+
+**Apache Hadoop machine learning engine Submarine and ecology.**
+
+Submarine is a machine learning platform jointly developed by the Hadoop and Zeppelin communities. It supports Tensorflow, and machine learning frameworks such as Pytorch run in Kubernetes and YARN in a stand-alone or distributed manner.
+
+Now you can use the `Submarine-installer` to easily install and deploy `NVIDIA-Docker`, `ETCD`, `Calico` and other machines to learn the running environment. In `Zeppelin`, you can visualize the interactive notebook before the Spark machine learning data processing. Develop and validate Tensorflow's Pythone algorithm, complete data processing of machine learning jobs and model training in Zeppelin's Workflow for full-link, and periodically perform offline model training in `Kubernetes`/`Hadoop`.
+
+More infomation: https://2019.qconbeijing.com/presentation/1440
+
+------
+
 ## DataWorks Summit in Barcelona, Spain
 > MARCH 18–21, 2019
 

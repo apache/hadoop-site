@@ -37,7 +37,7 @@ type: custompage
     [Apache](https://dist.apache.org/repos/dist/release/hadoop/submarine/).
 3.  shasum -a 256 hadoop-submarine-X.Y.Z-src.tar.gz
 
-All previous releases of Hadoop Ozone are available from the [Apache release
+All previous releases of Hadoop Submarine are available from the [Apache release
 archive](https://archive.apache.org/dist/hadoop/submarine/) site.
 
 ## License

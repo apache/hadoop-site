@@ -19,6 +19,7 @@ footnotereturnlinkcontents = "<sup>^</sup>"
 uglyurls = false
 contentDir = "src"
 publishDir = "../content/submarine"
+disablePathToLower = true
 
 [[menu.main]]
   name = "Download"

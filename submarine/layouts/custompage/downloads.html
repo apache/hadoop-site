@@ -30,26 +30,46 @@
       <th>Binary download</th>
       <th>Release notes</th>
     </tr>
-  </thead>
+ </thead>
+<!--
    {{range first 5 (where (where .Site.Pages "Section" "release") ".Params.linked" true) }}
      <tr>
        <td>{{.File.BaseFileName }}</td>
        <td>{{dateFormat "2006 Jan 2 " .Date}}</td>
        <td>
-         <a href="https://www.apache.org/dyn/closer.cgi/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}-src.tar.gz">source</a>
-         (<a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}-src.tar.gz.mds">checksum</a>
-         <a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}-src.tar.gz.asc">signature</a>)
+         <a href="https://www.apache.org/dyn/closer.cgi/hadoop/submarine/submarine-{{.BaseFileName }}/hadoop-submarine-{{.BaseFileName }}-src.tar.gz">source</a>
+         (<a href="https://dist.apache.org/repos/dist/release/hadoop/submarine/submarine-{{.BaseFileName }}/hadoop-submarine-{{.BaseFileName }}-src.tar.gz.mds">checksum</a>
+         <a href="https://dist.apache.org/repos/dist/release/hadoop/submarine/submarine-{{.BaseFileName }}/hadoop-submarine-{{.BaseFileName }}-src.tar.gz.asc">signature</a>)
         </td>
         <td>
-          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}.tar.gz">binary</a>
-          (<a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}.tar.gz.mds">checksum</a>
-          <a href="https://dist.apache.org/repos/dist/release/hadoop/ozone/ozone-{{.File.BaseFileName }}/hadoop-ozone-{{.File.BaseFileName }}.tar.gz.asc">signature</a>)
+          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/submarine/submarine-{{.BaseFileName }}/hadoop-submarine-{{.BaseFileName }}.tar.gz">binary</a>
+          (<a href="https://dist.apache.org/repos/dist/release/hadoop/submarine/submarine-{{.BaseFileName }}/hadoop-submarine-{{.BaseFileName }}.tar.gz.mds">checksum</a>
+          <a href="https://dist.apache.org/repos/dist/release/hadoop/submarine/submarine-{{.BaseFileName }}/hadoop-submarine-{{.BaseFileName }}.tar.gz.asc">signature</a>)
          </td>
          <td>
            <a href="release/{{.File.BaseFileName }}/">Announcement</a>
          </td>
      </tr>
   {{end}}
+-->
+      <tr>
+       <td>0.1.0 (Apache Hadoop 3.2.0)</td>
+       <td>2019 Jan 16</td>
+       <td>
+         <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.0/hadoop-3.2.0-src.tar.gz">source</a>
+         (<a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.0/hadoop-3.2.0-src.tar.gz.mds">checksum</a>
+         <a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.0/hadoop-3.2.0-src.tar.gz.asc">signature</a>)
+        </td>
+        <td>
+          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.0/hadoop-3.2.0.tar.gz">binary</a>
+          (<a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.0/hadoop-3.2.0.tar.gz.mds">checksum</a>
+          <a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.0/hadoop-3.2.0.tar.gz.asc">signature</a>)
+         </td>
+         <td>
+           <a href="https://hadoop.apache.org/docs/r3.2.0/index.html">Announcement</a>
+         </td>
+     </tr>
+
   </table>
 </p>
 
