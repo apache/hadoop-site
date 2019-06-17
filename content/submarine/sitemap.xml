@@ -3,14 +3,76 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/submarine/release/0.1.0-alpha/</loc>
+    <loc>/submarine/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/submarine/release/0.2.0/</loc>
     <lastmod>2019-02-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/submarine/</loc>
+    <loc>/submarine/release/</loc>
     <lastmod>2019-02-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/BuildFromCode/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/Examples/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/HowToInstall/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/Index/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/InstallationGuide/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/InstallationGuideChineseVersion/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/QuickStart/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/RunningDistributedCifar10TFJobs/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/RunningSingleNodeCifar10PTJobs/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/TestAndTroubleshooting/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/TonYRuntimeGuide/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/WriteDockerfilePT/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/0.2.0/WriteDockerfileTF/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/docs/Index/</loc>
   </url>
   
   <url>
@@ -24,6 +86,7 @@
   
   <url>
     <loc>/submarine/docs/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -36,12 +99,6 @@
   
   <url>
     <loc>/submarine/qa/</loc>
-  </url>
-  
-  <url>
-    <loc>/submarine/release/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

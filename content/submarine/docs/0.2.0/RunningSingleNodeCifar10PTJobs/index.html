@@ -85,45 +85,67 @@
 <div class="container">
   
 
-<h1 id="upcoming-activities">Upcoming Activities</h1>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+   http://www.apache.org/licenses/LICENSE-2.0
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
 
-<hr />
+<h1 id="tutorial-running-a-standalone-cifar10-pytorch-estimator-example">Tutorial: Running a standalone Cifar10 PyTorch Estimator Example.</h1>
 
-<h2 id="qcon-2019-beijing">Qcon 2019, Beijing</h2>
+<p>Currently, PyTorch integration with Submarine only supports PyTorch in standalone (non-distributed mode).
+Please also note that HDFS as a data source is not yet supported by PyTorch.</p>
 
-<blockquote>
-<p>MAY 06–08, 2019</p>
-</blockquote>
+<h2 id="what-is-cifar-10">What is CIFAR-10?</h2>
 
-<p><strong>Apache Hadoop machine learning engine Submarine and ecology.</strong></p>
+<p>CIFAR-10 is a common benchmark in machine learning for image recognition. Below example is based on CIFAR-10 dataset.</p>
 
-<p>Submarine is a machine learning platform jointly developed by the Hadoop and Zeppelin communities. It supports Tensorflow, and machine learning frameworks such as Pytorch run in Kubernetes and YARN in a stand-alone or distributed manner.</p>
+<p><strong>Warning:</strong></p>
 
-<p>Now you can use the <code>Submarine-installer</code> to easily install and deploy <code>NVIDIA-Docker</code>, <code>ETCD</code>, <code>Calico</code> and other machines to learn the running environment. In <code>Zeppelin</code>, you can visualize the interactive notebook before the Spark machine learning data processing. Develop and validate Tensorflow&rsquo;s Pythone algorithm, complete data processing of machine learning jobs and model training in Zeppelin&rsquo;s Workflow for full-link, and periodically perform offline model training in <code>Kubernetes</code>/<code>Hadoop</code>.</p>
+<p>Please note that YARN service doesn&rsquo;t allow multiple services with the same name, so please run following command</p>
 
-<p>More infomation: <a href="https://2019.qconbeijing.com/presentation/1440">https://2019.qconbeijing.com/presentation/1440</a></p>
+<pre><code>yarn application -destroy &lt;service-name&gt;
+</code></pre>
 
-<hr />
+<p>to delete services if you want to reuse the same service name.</p>
 
-<h2 id="dataworks-summit-in-barcelona-spain">DataWorks Summit in Barcelona, Spain</h2>
+<h2 id="prepare-docker-images">Prepare Docker images</h2>
 
-<blockquote>
-<p>MARCH 18–21, 2019</p>
-</blockquote>
+<p>Refer to <a href="docs/0.2.0/WriteDockerfilePT">Write Dockerfile</a> to build a Docker image or use prebuilt one.</p>
 
-<p><strong>Hadoop {Submarine} Project: Running Deep Learning Workloads on YARN.</strong></p>
+<h2 id="running-pytorch-jobs">Running PyTorch jobs</h2>
 
-<p>Deep learning is useful for enterprises tasks in the field of speech recognition, image classification, AI chatbots and machine translation, just to name a few.</p>
+<h3 id="run-standalone-training">Run standalone training</h3>
 
-<p>In order to train deep learning/machine learning models, applications such as <code>TensorFlow</code> / <code>MXNet</code> / <code>Caffe</code> / <code>XGBoost</code> can be leveraged. And sometimes these applications will be used together to solve different problems.</p>
+<pre><code class="language-shell">export HADOOP_CLASSPATH=&quot;/home/systest/hadoop-submarine-score-yarnservice-runtime-0.2.0-SNAPSHOT.jar:/home/systest/hadoop-submarine-core-0.2.0-SNAPSHOT.jar&quot;
+/opt/hadoop/bin/yarn jar /home/systest/hadoop-submarine-core-0.2.0-SNAPSHOT.jar job run \
+--name pytorch-job-001 \
+--verbose \
+--framework pytorch \
+--wait_job_finish \
+--docker_image pytorch-latest-gpu:0.0.1 \
+--input_path hdfs://unused \
+--env DOCKER_JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre \
+--env DOCKER_HADOOP_HDFS_HOME=/hadoop-3.1.2 \
+--env YARN_CONTAINER_RUNTIME_DOCKER_DELAYED_REMOVAL=true \
+--num_workers 1 \
+--worker_resources memory=5G,vcores=2 \
+--worker_launch_cmd &quot;cd /test/ &amp;&amp; python cifar10_tutorial.py&quot;
+</code></pre>
 
-<p>To make distributed deep learning/machine learning applications easily launched, managed, monitored. Hadoop community has introduced Submarine project along with other improvements such as first-class GPU support, container-DNS support, scheduling improvements, etc. These improvements make distributed deep learning/machine learning applications run on YARN as simple as running it locally, which can let machine-learning engineers focus on algorithms instead of worrying about underlying infrastructure. Also, YARN can better manage a shared cluster which runs deep learning/machine learning and other services/ETL jobs with these improvements.</p>
+<p>For the meaning of the individual parameters, see the <a href="docs/0.2.0/QuickStart">QuickStart</a> page!</p>
 
-<p>In this session, we will take a closer look at Submarine project as well as other improvements and show how to run these deep learning workloads on YARN with demos. Audiences can start trying running these workloads on YARN after this talk.</p>
-
-<p>More infomation: <a href="https://dataworkssummit.com/barcelona-2019/session/hadoop-submarine-project-running-deep-learning-workloads-on-yarn/">https://dataworkssummit.com/barcelona-2019/session/hadoop-submarine-project-running-deep-learning-workloads-on-yarn/</a></p>
-
-<hr />
+<p><strong>Remarks:</strong>
+Please note that the input path parameter is mandatory, but not yet used by the PyTorch docker container.</p>
 
 </div>
 
