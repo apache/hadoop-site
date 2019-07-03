@@ -7,18 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2019 Apache Software Foundation</copyright>
-    <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Jul 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/submarine/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Release 0.1.0-alpha available</title>
+      <title>Release 0.2.0 available</title>
       <link>/submarine/release/0.2.0/</link>
-      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>/submarine/release/0.2.0/</guid>
-      <description>_ _ | | (_) ___ _ _ | |__ _ __ ___ __ _ _ __ _ _ __ ___ / __|| | | || &#39;_ \ | &#39;_ ` _ \ / _` || &#39;__|| || &#39;_ \ / _ \ \__ \| |_| || |_) || | | | | || (_| || | | || | | || __/ |___/ \__,_||_.__/ |_| |_| |_| \__,_||_| |_||_| |_| \___| ?</description>
+      <description>Apache Hadoop Submarine 0.2.0 is released with following features:
+ Linkedin&amp;rsquo;s TonY runtime support in Submarine
+ PyTorch enabled in Submarine with both YARN native service runtime (single node) and TonY runtime
+ Support uber jar of Submarine to submit the job
+ The YAML file to describe a job
+ The Notebook support (by Apache Zeppelin Submarine interpreter)
+  </description>
     </item>
     
     <item>
@@ -193,7 +199,9 @@ Here&amp;rsquo;s an example of a base image (w/o GPU support) to install Tensorf
       
       <guid>/submarine/docs/Index/</guid>
       <description> Documentation Choose a version:
- 0.1.0 (Apache Hadoop 3.2.0)  </description>
+ 0.2.0
+ 0.1.0 (Apache Hadoop 3.2.0)
+  </description>
     </item>
     
     <item>

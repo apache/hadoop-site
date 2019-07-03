@@ -183,7 +183,9 @@ Here&amp;rsquo;s an example of a base image (w/o GPU support) to install Tensorf
       
       <guid>/submarine/docs/Index/</guid>
       <description> Documentation Choose a version:
- 0.1.0 (Apache Hadoop 3.2.0)  </description>
+ 0.2.0
+ 0.1.0 (Apache Hadoop 3.2.0)
+  </description>
     </item>
     
   </channel>
