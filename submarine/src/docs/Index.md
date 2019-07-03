@@ -23,8 +23,6 @@ type: custompage
 
 Choose a version:
 
-<!--
 - [0.2.0](docs/0.2.0/Index)
--->
 
 - [0.1.0 (Apache Hadoop 3.2.0)](https://hadoop.apache.org/docs/r3.2.0/hadoop-yarn/hadoop-yarn-applications/hadoop-yarn-submarine/Index.html)

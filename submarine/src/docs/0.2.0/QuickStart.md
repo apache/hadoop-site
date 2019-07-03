@@ -50,15 +50,7 @@ table to choose your runtime.
 
 Note that if you want to quickly try Submarine on new or existing YARN cluster, use TonY runtime will help you get start easier(0.2.0+)
 
-| Hadoop (YARN) Version | Is Docker Enabled | Is GPU Enabled | Acceptable Runtime |
-| ---------- |-------------| -------- | ----------------- |
-| 2.7.3 ~ 3.0.X | X | X | TonY |
-| 3.1.0+ | X | X | TonY |
-| 3.1.0+ | X | √ | TonY |
-| 3.1.0+ | √ | X | TonY/YARN-Service |
-| 3.1.0+ | √ | √ | TonY/YARN-Service |
-
-<br />
+![alt text](./images/tony-vs-service-runtime.png "Choose Runtime")
 
 For the environment setup, please check [InstallationGuide](docs/0.2.0/InstallationGuide) or [InstallationGuideCN](docs/0.2.0/InstallationGuideChineseVersion)
 
