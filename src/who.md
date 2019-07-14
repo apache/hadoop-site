@@ -142,6 +142,7 @@ username            |name                                                       
 --------------------|-----------------------------------------------------------------------------------|--------------------|-------|----------|
 aajisaka            |Akira Ajisaka                                                                       |Yahoo! JAPAN                    |        |+9
 ab                  |Andrzej Bialecki                                                                    |Getopt                          |        |+1
+abmodi              |Abhishek Modi                                                                       |Microsoft                       |        |+5.5
 acmurthy            |[Arun C Murthy](http://people.apache.org/~acmurthy)                                 |Hortonworks                     |        |-8
 adhoot              |Anubhav Dhoot                                                                       |Cloudera                        |        |-8
 aengineer           |Anu Engineer                                                                        |Hortonworks                     |        |-8
