@@ -154,6 +154,7 @@ arpit               |[Arpit Gupta](http://people.apache.org/~arpit)             
 asuresh             |Arun Suresh                                                                         |LinkedIn                        |        |-8
 atm                 |[Aaron T. Myers](http://people.apache.org/~atm)                                     |Cloudera                        |        |-8
 aw                  |Allen Wittenauer                                                                    |Effective Machines              |        |-8
+ayushsaxena         |Ayush Saxena                                                                        |Wipro                           |        |+5.5
 benoy               |[Benoy Antony](http://people.apache.org/~benoy)                                     |eBay                            |        |-8
 bharat              |Bharat Viswanadham                                                                  |Hortonworks                     |        |-8
 bibinchundatt       |Bibin A Chundatt                                                                    |Huawei                          |        |+5.5
