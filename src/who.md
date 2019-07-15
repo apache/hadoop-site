@@ -261,6 +261,7 @@ suresh              |[Suresh Srinivas](http://people.apache.org/~suresh)        
 szegedim            |Miklos Szegedi                                                                      |Cloudera                        |YARN    |-8
 szetszwo            |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                         |Hortonworks                     |        |-8
 tanping             |[Tanping Wang](http://people.apache.org/~tanping)                                   |Yahoo!                          |        |-8
+taoyang             |Tao Yang                                                                            |Alibaba                         |        |+8
 tasanuma            |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                              |Yahoo! JAPAN                    |        |+9
 taton               |[Christophe Taton](http://people.apache.org/~taton)                                 |INRIA                           |        |+1
 templedf            |Daniel Templeton                                                                    |Cloudera                        |        |-8
