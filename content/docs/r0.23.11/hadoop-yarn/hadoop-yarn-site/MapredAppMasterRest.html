@@ -14,11 +14,11 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="http://hadoop.apache.org/" id="bannerLeft">
-                                        <img src="http://hadoop.apache.org/images/hadoop-logo.jpg" alt="" />
+                  <a href="https://hadoop.apache.org/" id="bannerLeft">
+                                        <img src="https://hadoop.apache.org/images/hadoop-logo.jpg" alt="" />
                 </a>
-                        <a href="http://www.apache.org/" id="bannerRight">
-                                        <img src="http://www.apache.org/images/asf_logo_wide.png" alt="" />
+                        <a href="https://www.apache.org/" id="bannerRight">
+                                        <img src="https://www.apache.org/images/asf_logo_wide.png" alt="" />
                 </a>
             <div class="clear">
         <hr/>
@@ -27,19 +27,19 @@
     <div id="breadcrumbs">
             
                                 <div class="xleft">
-                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+                          <a href="https://www.apache.org/" class="externalLink">Apache</a>
                 &gt;
-                      <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+                      <a href="https://hadoop.apache.org/" class="externalLink">Hadoop</a>
                 &gt;
                       <a href="../">hadoop-yarn</a>
                 &gt;
                 Apache Hadoop 0.23.11
                 </div>
-            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            <div class="xright">            <a href="https://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
             |
                 <a href="https://svn.apache.org/repos/asf/hadoop/" class="externalLink">SVN</a>
             |
-                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+                <a href="https://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
               
                                 &nbsp;| Last Published: 2014-06-19
               &nbsp;| Version: 0.23.11
@@ -204,7 +204,7 @@
                   <a href="../../hadoop-project-dist/hadoop-common/DeprecatedProperties.html">Deprecated Properties</a>
             </li>
           </ul>
-                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+                                 <a href="https://maven.apache.org/" title="Built by Maven" class="poweredBy">
           <img alt="Built by Maven" src="./images/logos/maven-feather.png"/>
         </a>
                        
@@ -212,7 +212,7 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <!-- Licensed under the Apache License, Version 2.0 (the "License"); --><!-- you may not use this file except in compliance with the License. --><!-- You may obtain a copy of the License at --><!--  --><!-- http://www.apache.org/licenses/LICENSE-2.0 --><!--  --><!-- Unless required by applicable law or agreed to in writing, software --><!-- distributed under the License is distributed on an "AS IS" BASIS, --><!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. --><!-- See the License for the specific language governing permissions and --><!-- limitations under the License. See accompanying LICENSE file. --><div class="section"><h2>MapReduce Application Master REST API's.<a name="MapReduce_Application_Master_REST_APIs."></a></h2><p>[ <a href="./index.html">Go Back</a> ]</p><ul><li><a href="#MapReduce_Application_Master_REST_APIs.">MapReduce Application Master REST API's.</a><ul><li><a href="#Overview">Overview</a></li><li><a href="#Mapreduce_Application_Master_Info_API">Mapreduce Application Master Info API</a></li><li><a href="#Jobs_API">Jobs API</a></li><li><a href="#Job_API">Job API</a></li><li><a href="#Job_Attempts_API">Job Attempts API</a></li><li><a href="#Job_Counters_API">Job Counters API</a></li><li><a href="#Job_Conf_API">Job Conf API</a></li><li><a href="#Tasks_API">Tasks API</a></li><li><a href="#Task_API">Task API</a></li><li><a href="#Task_Counters_API">Task Counters API</a></li><li><a href="#Task_Attempts_API">Task Attempts API</a></li><li><a href="#Task_Attempt_API">Task Attempt API</a></li><li><a href="#Task_Attempt_Counters_API">Task Attempt Counters API</a></li></ul></li></ul><div class="section"><h3>Overview<a name="Overview"></a></h3><p>The MapReduce Application Master REST API's allow the user to get status on the running MapReduce application master. Currently this is the equivalent to a running MapReduce job. The information includes the jobs the app master is running and all the job particulars like tasks, counters, configuration, attempts, etc. The application master should be accessed via the proxy. This proxy is configurable to run either on the resource manager or on a separate host. The proxy URL usually looks like: http://<i>proxy http address:port</i>/proxy/<a name="appid">appid</a>.</p></div><div class="section"><h3>Mapreduce Application Master Info API<a name="Mapreduce_Application_Master_Info_API"></a></h3><p>The MapReduce application master information resource provides overall information about that mapreduce application master. This includes application id, time it was started, user, name, etc. </p><div class="section"><h4>URI<a name="URI"></a></h4><p>Both of the following URI's give you the MapReduce application master information, from an application id identified by the appid value. </p><div><pre>  * http://&lt;proxy http address:port&gt;/proxy/{appid}/ws/v1/mapreduce
+        <!-- Licensed under the Apache License, Version 2.0 (the "License"); --><!-- you may not use this file except in compliance with the License. --><!-- You may obtain a copy of the License at --><!--  --><!-- https://www.apache.org/licenses/LICENSE-2.0 --><!--  --><!-- Unless required by applicable law or agreed to in writing, software --><!-- distributed under the License is distributed on an "AS IS" BASIS, --><!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. --><!-- See the License for the specific language governing permissions and --><!-- limitations under the License. See accompanying LICENSE file. --><div class="section"><h2>MapReduce Application Master REST API's.<a name="MapReduce_Application_Master_REST_APIs."></a></h2><p>[ <a href="./index.html">Go Back</a> ]</p><ul><li><a href="#MapReduce_Application_Master_REST_APIs.">MapReduce Application Master REST API's.</a><ul><li><a href="#Overview">Overview</a></li><li><a href="#Mapreduce_Application_Master_Info_API">Mapreduce Application Master Info API</a></li><li><a href="#Jobs_API">Jobs API</a></li><li><a href="#Job_API">Job API</a></li><li><a href="#Job_Attempts_API">Job Attempts API</a></li><li><a href="#Job_Counters_API">Job Counters API</a></li><li><a href="#Job_Conf_API">Job Conf API</a></li><li><a href="#Tasks_API">Tasks API</a></li><li><a href="#Task_API">Task API</a></li><li><a href="#Task_Counters_API">Task Counters API</a></li><li><a href="#Task_Attempts_API">Task Attempts API</a></li><li><a href="#Task_Attempt_API">Task Attempt API</a></li><li><a href="#Task_Attempt_Counters_API">Task Attempt Counters API</a></li></ul></li></ul><div class="section"><h3>Overview<a name="Overview"></a></h3><p>The MapReduce Application Master REST API's allow the user to get status on the running MapReduce application master. Currently this is the equivalent to a running MapReduce job. The information includes the jobs the app master is running and all the job particulars like tasks, counters, configuration, attempts, etc. The application master should be accessed via the proxy. This proxy is configurable to run either on the resource manager or on a separate host. The proxy URL usually looks like: http://<i>proxy http address:port</i>/proxy/<a name="appid">appid</a>.</p></div><div class="section"><h3>Mapreduce Application Master Info API<a name="Mapreduce_Application_Master_Info_API"></a></h3><p>The MapReduce application master information resource provides overall information about that mapreduce application master. This includes application id, time it was started, user, name, etc. </p><div class="section"><h4>URI<a name="URI"></a></h4><p>Both of the following URI's give you the MapReduce application master information, from an application id identified by the appid value. </p><div><pre>  * http://&lt;proxy http address:port&gt;/proxy/{appid}/ws/v1/mapreduce
   * http://&lt;proxy http address:port&gt;/proxy/{appid}/ws/v1/mapreduce/info</pre></div></div><div class="section"><h4>HTTP Operations Supported<a name="HTTP_Operations_Supported"></a></h4><div><pre>  * GET</pre></div></div><div class="section"><h4>Query Parameters Supported<a name="Query_Parameters_Supported"></a></h4><div><pre>  None</pre></div></div><div class="section"><h4>Elements of the <i>info</i> object<a name="Elements_of_the_info_object"></a></h4><p>When you make a request for the mapreduce application master information, the information will be returned as an info object.</p><table border="1" class="bodyTable"><tr class="a"><th align="left">Item</th><th align="left">Data Type</th><th align="left">Description</th></tr><tr class="b"><td align="left">appId</td><td align="left">long</td><td align="left">The application id</td></tr><tr class="a"><td align="left">startedOn</td><td align="left">long</td><td align="left">The time the application started (in ms since epoch)</td></tr><tr class="b"><td align="left">name</td><td align="left">string</td><td align="left">The name of the application</td></tr><tr class="a"><td align="left">user</td><td align="left">string</td><td align="left">The user name of the user who started the application</td></tr><tr class="b"><td align="left">elapsedTime</td><td align="left">long</td><td align="left">The time since the application was started (in ms)</td></tr></table></div><div class="section"><h4>Response Examples<a name="Response_Examples"></a></h4><p><b>JSON response</b></p><p>HTTP Request:</p><div><pre>  GET http://&lt;proxy http address:port&gt;/proxy/application_1326232085508_0003/ws/v1/mapreduce/info</pre></div><p>Response Header:</p><div class="source"><pre>  HTTP/1.1 200 OK
   Content-Type: application/json
   Transfer-Encoding: chunked
@@ -1793,7 +1793,7 @@
       <div class="xright">&#169;            2014
               Apache Software Foundation
             
-                       - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a></div>
+                       - <a href="https://maven.apache.org/privacy-policy.html">Privacy Policy</a></div>
       <div class="clear">
         <hr/>
       </div>

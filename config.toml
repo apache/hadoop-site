@@ -3,7 +3,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#   http://www.apache.org/licenses/LICENSE-2.0
+#   https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,12 +35,12 @@ publishDir = "content"
 [[menu.main]]
    name = "Latest"
    parent = "documentation"
-   url = "http://hadoop.apache.org/docs/current/"
+   url = "https://hadoop.apache.org/docs/current/"
 
 [[menu.main]]
    name = "Stable"
    parent = "documentation"
-   url = "http://hadoop.apache.org/docs/stable/"
+   url = "https://hadoop.apache.org/docs/stable/"
 
 
 
@@ -69,17 +69,17 @@ publishDir = "content"
 
 [[menu.main]]
    name = "Buy Stuff"
-   url = "http://www.cafepress.com/hadoop"
+   url = "https://www.cafepress.com/hadoop"
    parent = "help"
 
 [[menu.main]]
    name = "Sponsorship"
-   url = "http://www.apache.org/foundation/sponsorship.html"
+   url = "https://www.apache.org/foundation/sponsorship.html"
    parent = "help"
 
 [[menu.main]]
    name = "Thanks"
-   url = "http://www.apache.org/foundation/thanks.html"
+   url = "https://www.apache.org/foundation/thanks.html"
    parent = "help"
 
 

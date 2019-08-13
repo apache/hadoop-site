@@ -9,7 +9,7 @@ menu:
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+   https://www.apache.org/licenses/LICENSE-2.0
 
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,10 +23,10 @@ operates. It defines the roles and responsibilities of the project, who
 may vote, how voting works, how conflicts are resolved, etc.
 
 Hadoop is a project of the [Apache Software
-Foundation](http://www.apache.org/foundation/). The foundation holds the
+Foundation](https://www.apache.org/foundation/). The foundation holds the
 trademark on the name "Hadoop" and copyright on Apache code including
 the code in the Hadoop codebase. The [foundation
-FAQ](http://www.apache.org/foundation/faq.html) explains the operation
+FAQ](https://www.apache.org/foundation/faq.html) explains the operation
 and background of the foundation.
 
 Hadoop is typical of Apache projects in that it operates under a set of
@@ -86,7 +86,7 @@ sections
     All Apache committers are required to have a signed Contributor
     License Agreement (CLA) on file with the Apache Software Foundation.
     There is a [Committer
-    FAQ](http://www.apache.org/dev/committers.html) which provides more
+    FAQ](https://www.apache.org/dev/committers.html) which provides more
     details on the requirements for Committers
 
     A committer who makes a sustained contribution to the project may be
@@ -140,7 +140,7 @@ sections
     The chair of the PMC is rotated annually. When the chair is rotated
     or if the current chair of the PMC resigns, the PMC votes to
     recommend a new chair using Single Transferable Vote (STV) voting.
-    See http://wiki.apache.org/general/BoardVoting for specifics. The
+    See https://wiki.apache.org/general/BoardVoting for specifics. The
     decision must be ratified by the Apache board.
 
 

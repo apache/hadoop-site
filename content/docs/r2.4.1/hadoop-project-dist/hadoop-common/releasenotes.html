@@ -3873,7 +3873,7 @@ To avoid this, the data should be written to a temporary file and renamed to the
 <li> <a href="https://issues.apache.org/jira/browse/YARN-1180">YARN-1180</a>.
      Trivial bug reported by Thomas Graves and fixed by Chen He (capacityscheduler)<br>
      <b>Update capacity scheduler docs to include types on the configs</b><br>
-     <blockquote>The capacity scheduler docs (http://hadoop.apache.org/docs/r2.1.0-beta/hadoop-yarn/hadoop-yarn-site/CapacityScheduler.html) don't include types for all the configs. For instance the minimum-user-limit-percent doesn't say its an Int.  It also the only setting for the Resource Allocation configs that is an Int rather then a float.</blockquote></li>
+     <blockquote>The capacity scheduler docs (https://hadoop.apache.org/docs/r2.1.0-beta/hadoop-yarn/hadoop-yarn-site/CapacityScheduler.html) don't include types for all the configs. For instance the minimum-user-limit-percent doesn't say its an Int.  It also the only setting for the Resource Allocation configs that is an Int rather then a float.</blockquote></li>
 <li> <a href="https://issues.apache.org/jira/browse/YARN-1176">YARN-1176</a>.
      Critical bug reported by Thomas Graves and fixed by Jonathan Eagles (resourcemanager)<br>
      <b>RM web services ClusterMetricsInfo total nodes doesn't include unhealthy nodes</b><br>
@@ -5759,7 +5759,7 @@ hadoop.ssl.enabled and dfs.https.enabled are deprecated. When the deprecated con
      <blockquote></blockquote></li>
 <li> <a href="https://issues.apache.org/jira/browse/HADOOP-9830">HADOOP-9830</a>.
      Trivial bug reported by Dmitry Lysnichenko and fixed by Kousuke Saruta (documentation)<br>
-     <b>Typo at http://hadoop.apache.org/docs/current/</b><br>
+     <b>Typo at https://hadoop.apache.org/docs/current/</b><br>
      <blockquote></blockquote></li>
 <li> <a href="https://issues.apache.org/jira/browse/HADOOP-9820">HADOOP-9820</a>.
      Blocker bug reported by Daryn Sharp and fixed by Daryn Sharp (ipc , security)<br>
@@ -5985,7 +5985,7 @@ Additional information specified on github: https://github.com/DmitryMezhensky/H
    (the "License"); you may not use this file except in compliance with
    the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+       https://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -7020,7 +7020,7 @@ Current checks are not sufficient and we should prevent this..... thoughts?</blo
      <b>In Fair Scheduler documentation, inconsistency on which properties have prefix</b><br>
      <blockquote>locality.threshold.node and locality.threshold.rack should have the yarn.scheduler.fair prefix like the items before them
 
-http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/FairScheduler.html</blockquote></li>
+https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/FairScheduler.html</blockquote></li>
 <li> <a href="https://issues.apache.org/jira/browse/YARN-910">YARN-910</a>.
      Major improvement reported by Sandy Ryza and fixed by Alejandro Abdelnur (nodemanager)<br>
      <b>Allow auxiliary services to listen for container starts and completions</b><br>
@@ -8611,7 +8611,7 @@ On normal NM shutdown, this is not a problem since normal stop happens on shutdo
 <li> <a href="https://issues.apache.org/jira/browse/YARN-646">YARN-646</a>.
      Major bug reported by Dapeng Sun and fixed by Dapeng Sun (documentation)<br>
      <b>Some issues in Fair Scheduler's document</b><br>
-     <blockquote>Issues are found in the doc page for Fair Scheduler http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/FairScheduler.html:
+     <blockquote>Issues are found in the doc page for Fair Scheduler https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/FairScheduler.html:
 1.In the section &#8220;Configuration&#8221;, It contains two properties named &#8220;yarn.scheduler.fair.minimum-allocation-mb&#8221;, the second one should be &#8220;yarn.scheduler.fair.maximum-allocation-mb&#8221;
 2.In the section &#8220;Allocation file format&#8221;, the document tells &#8220; The format contains three types of elements&#8221;, but it lists four types of elements following that.
 </blockquote></li>
@@ -9007,7 +9007,7 @@ There's no that we need to perform this resolution on every page load.
 <li> <a href="https://issues.apache.org/jira/browse/YARN-518">YARN-518</a>.
      Major improvement reported by Dapeng Sun and fixed by Sandy Ryza (documentation)<br>
      <b>Fair Scheduler's document link could be added to the hadoop 2.x main doc page</b><br>
-     <blockquote>Currently the doc page for Fair Scheduler looks good and it&#8217;s here, http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/FairScheduler.html.
+     <blockquote>Currently the doc page for Fair Scheduler looks good and it&#8217;s here, https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/FairScheduler.html.
 It would be better to add the document link to the YARN section in the Hadoop 2.x main doc page, so that users can easily find the doc to experimentally try Fair Scheduler as Capacity Scheduler. 
 </blockquote></li>
 <li> <a href="https://issues.apache.org/jira/browse/YARN-515">YARN-515</a>.
@@ -9626,12 +9626,12 @@ Caused by: java.lang.reflect.UndeclaredThrowableException
 	at org.apache.hadoop.yarn.server.nodemanager.NodeStatusUpdaterImpl.registerWithRM(NodeStatusUpdaterImpl.java:182)
 	at org.apache.hadoop.yarn.server.nodemanager.NodeStatusUpdaterImpl.start(NodeStatusUpdaterImpl.java:145)
 	... 3 more
-Caused by: com.google.protobuf.ServiceException: java.net.ConnectException: Call From HOST-10-18-52-230/10.18.52.230 to HOST-10-18-52-250:8025 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
+Caused by: com.google.protobuf.ServiceException: java.net.ConnectException: Call From HOST-10-18-52-230/10.18.52.230 to HOST-10-18-52-250:8025 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  https://wiki.apache.org/hadoop/ConnectionRefused
 	at org.apache.hadoop.yarn.ipc.ProtoOverHadoopRpcEngine$Invoker.invoke(ProtoOverHadoopRpcEngine.java:131)
 	at $Proxy23.registerNodeManager(Unknown Source)
 	at org.apache.hadoop.yarn.server.api.impl.pb.client.ResourceTrackerPBClientImpl.registerNodeManager(ResourceTrackerPBClientImpl.java:59)
 	... 5 more
-Caused by: java.net.ConnectException: Call From HOST-10-18-52-230/10.18.52.230 to HOST-10-18-52-250:8025 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
+Caused by: java.net.ConnectException: Call From HOST-10-18-52-230/10.18.52.230 to HOST-10-18-52-250:8025 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  https://wiki.apache.org/hadoop/ConnectionRefused
 	at org.apache.hadoop.net.NetUtils.wrapException(NetUtils.java:857)
 	at org.apache.hadoop.ipc.Client.call(Client.java:1141)
 	at org.apache.hadoop.ipc.Client.call(Client.java:1100)
@@ -12969,7 +12969,7 @@ java.lang.InterruptedException
 <li> <a href="https://issues.apache.org/jira/browse/YARN-133">YARN-133</a>.
      Major bug reported by Thomas Graves and fixed by Ravi Prakash (resourcemanager)<br>
      <b>update web services docs for RM clusterMetrics</b><br>
-     <blockquote>Looks like jira https://issues.apache.org/jira/browse/MAPREDUCE-3747 added in more RM cluster metrics but the docs didn't get updated: http://hadoop.apache.org/docs/r0.23.3/hadoop-yarn/hadoop-yarn-site/ResourceManagerRest.html#Cluster_Metrics_API
+     <blockquote>Looks like jira https://issues.apache.org/jira/browse/MAPREDUCE-3747 added in more RM cluster metrics but the docs didn't get updated: https://hadoop.apache.org/docs/r0.23.3/hadoop-yarn/hadoop-yarn-site/ResourceManagerRest.html#Cluster_Metrics_API
 
 
 </blockquote></li>

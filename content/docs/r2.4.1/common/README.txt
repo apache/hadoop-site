@@ -1,10 +1,10 @@
 For the latest information about Hadoop, please visit our website at:
 
-   http://hadoop.apache.org/core/
+   https://hadoop.apache.org/core/
 
 and our wiki, at:
 
-   http://wiki.apache.org/hadoop/
+   https://wiki.apache.org/hadoop/
 
 This distribution includes cryptographic software.  The country in 
 which you currently reside may have restrictions on the import, 

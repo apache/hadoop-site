@@ -23940,7 +23940,7 @@ their respective packages.]]>
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27648,7 +27648,7 @@ Plugging in an implementation involves writing a concrete subclass of
   <class name="BinaryRecordInput" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <implements name="org.apache.hadoop.record.RecordInput"/>
     <constructor name="BinaryRecordInput" type="java.io.InputStream"
       static="false" final="false" visibility="public"
@@ -27774,7 +27774,7 @@ Plugging in an implementation involves writing a concrete subclass of
       <exception name="IOException" type="java.io.IOException"/>
     </method>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.BinaryRecordInput -->
@@ -27782,7 +27782,7 @@ Plugging in an implementation involves writing a concrete subclass of
   <class name="BinaryRecordOutput" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <implements name="org.apache.hadoop.record.RecordOutput"/>
     <constructor name="BinaryRecordOutput" type="java.io.OutputStream"
       static="false" final="false" visibility="public"
@@ -27922,7 +27922,7 @@ Plugging in an implementation involves writing a concrete subclass of
       <exception name="IOException" type="java.io.IOException"/>
     </method>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.BinaryRecordOutput -->
@@ -28129,7 +28129,7 @@ Plugging in an implementation involves writing a concrete subclass of
   <class name="CsvRecordInput" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <implements name="org.apache.hadoop.record.RecordInput"/>
     <constructor name="CsvRecordInput" type="java.io.InputStream"
       static="false" final="false" visibility="public"
@@ -28237,7 +28237,7 @@ Plugging in an implementation involves writing a concrete subclass of
       <exception name="IOException" type="java.io.IOException"/>
     </method>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.CsvRecordInput -->
@@ -28245,7 +28245,7 @@ Plugging in an implementation involves writing a concrete subclass of
   <class name="CsvRecordOutput" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <implements name="org.apache.hadoop.record.RecordOutput"/>
     <constructor name="CsvRecordOutput" type="java.io.OutputStream"
       static="false" final="false" visibility="public"
@@ -28367,14 +28367,14 @@ Plugging in an implementation involves writing a concrete subclass of
       <exception name="IOException" type="java.io.IOException"/>
     </method>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.CsvRecordOutput -->
   <!-- start interface org.apache.hadoop.record.Index -->
   <interface name="Index"    abstract="true"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <method name="done" return="boolean"
       abstract="false" native="false" synchronized="false"
       static="false" final="false" visibility="public"
@@ -28398,7 +28398,7 @@ Plugging in an implementation involves writing a concrete subclass of
  }
  </code>
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </interface>
   <!-- end interface org.apache.hadoop.record.Index -->
@@ -28406,7 +28406,7 @@ Plugging in an implementation involves writing a concrete subclass of
   <class name="Record" extends="java.lang.Object"
     abstract="true"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <implements name="org.apache.hadoop.io.WritableComparable"/>
     <implements name="java.lang.Cloneable"/>
     <constructor name="Record"
@@ -28490,7 +28490,7 @@ Plugging in an implementation involves writing a concrete subclass of
     <doc>
     <![CDATA[Abstract class that is extended by generated classes.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.Record -->
@@ -28498,7 +28498,7 @@ Plugging in an implementation involves writing a concrete subclass of
   <class name="RecordComparator" extends="org.apache.hadoop.io.WritableComparator"
     abstract="true"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="RecordComparator" type="java.lang.Class"
       static="false" final="false" visibility="protected"
       deprecated="not deprecated">
@@ -28533,14 +28533,14 @@ Plugging in an implementation involves writing a concrete subclass of
     <doc>
     <![CDATA[A raw record comparator base class
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.RecordComparator -->
   <!-- start interface org.apache.hadoop.record.RecordInput -->
   <interface name="RecordInput"    abstract="true"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <method name="readByte" return="byte"
       abstract="false" native="false" synchronized="false"
       static="false" final="false" visibility="public"
@@ -28708,14 +28708,14 @@ Plugging in an implementation involves writing a concrete subclass of
     <doc>
     <![CDATA[Interface that all the Deserializers have to implement.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </interface>
   <!-- end interface org.apache.hadoop.record.RecordInput -->
   <!-- start interface org.apache.hadoop.record.RecordOutput -->
   <interface name="RecordOutput"    abstract="true"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <method name="writeByte"
       abstract="false" native="false" synchronized="false"
       static="false" final="false" visibility="public"
@@ -28915,7 +28915,7 @@ Plugging in an implementation involves writing a concrete subclass of
     <doc>
     <![CDATA[Interface that all the serializers have to implement.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </interface>
   <!-- end interface org.apache.hadoop.record.RecordOutput -->
@@ -29078,7 +29078,7 @@ Plugging in an implementation involves writing a concrete subclass of
   <class name="XmlRecordInput" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <implements name="org.apache.hadoop.record.RecordInput"/>
     <constructor name="XmlRecordInput" type="java.io.InputStream"
       static="false" final="false" visibility="public"
@@ -29188,7 +29188,7 @@ Plugging in an implementation involves writing a concrete subclass of
     <doc>
     <![CDATA[XML Deserializer.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.XmlRecordInput -->
@@ -29196,7 +29196,7 @@ Plugging in an implementation involves writing a concrete subclass of
   <class name="XmlRecordOutput" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <implements name="org.apache.hadoop.record.RecordOutput"/>
     <constructor name="XmlRecordOutput" type="java.io.OutputStream"
       static="false" final="false" visibility="public"
@@ -29320,7 +29320,7 @@ Plugging in an implementation involves writing a concrete subclass of
     <doc>
     <![CDATA[XML Serializer.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.XmlRecordOutput -->
@@ -29332,7 +29332,7 @@ Plugging in an implementation involves writing a concrete subclass of
     </p>
     
     <p>
-    DEPRECATED: Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.
+    DEPRECATED: Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.
     </p>
   
   <h2>Introduction</h2>
@@ -30111,7 +30111,7 @@ is serialized as
   <class name="CodeBuffer" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <method name="toString" return="java.lang.String"
       abstract="false" native="false" synchronized="false"
       static="false" final="false" visibility="public"
@@ -30120,7 +30120,7 @@ is serialized as
     <doc>
     <![CDATA[A wrapper around StringBuffer that automatically does indentation
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.CodeBuffer -->
@@ -30128,7 +30128,7 @@ is serialized as
   <class name="Consts" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <field name="RIO_PREFIX" type="java.lang.String"
       transient="false" volatile="false"
       static="true" final="true" visibility="public"
@@ -30167,7 +30167,7 @@ is serialized as
     <doc>
     <![CDATA[const definitions for Record I/O compiler
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.Consts -->
@@ -30175,7 +30175,7 @@ is serialized as
   <class name="JBoolean" extends="org.apache.hadoop.record.compiler.JType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JBoolean"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30184,7 +30184,7 @@ is serialized as
       </doc>
     </constructor>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JBoolean -->
@@ -30192,7 +30192,7 @@ is serialized as
   <class name="JBuffer" extends="org.apache.hadoop.record.compiler.JCompType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JBuffer"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30203,7 +30203,7 @@ is serialized as
     <doc>
     <![CDATA[Code generator for "buffer" type.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JBuffer -->
@@ -30211,7 +30211,7 @@ is serialized as
   <class name="JByte" extends="org.apache.hadoop.record.compiler.JType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JByte"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30219,7 +30219,7 @@ is serialized as
     <doc>
     <![CDATA[Code generator for "byte" type.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JByte -->
@@ -30227,7 +30227,7 @@ is serialized as
   <class name="JDouble" extends="org.apache.hadoop.record.compiler.JType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JDouble"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30236,7 +30236,7 @@ is serialized as
       </doc>
     </constructor>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JDouble -->
@@ -30244,7 +30244,7 @@ is serialized as
   <class name="JField" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JField" type="java.lang.String, T"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30255,7 +30255,7 @@ is serialized as
     <doc>
     <![CDATA[A thin wrappper around record field.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JField -->
@@ -30263,7 +30263,7 @@ is serialized as
   <class name="JFile" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JFile" type="java.lang.String, java.util.ArrayList, java.util.ArrayList"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30293,7 +30293,7 @@ is serialized as
  The main components of the file are filename, list of included files,
  and records defined in that file.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JFile -->
@@ -30301,7 +30301,7 @@ is serialized as
   <class name="JFloat" extends="org.apache.hadoop.record.compiler.JType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JFloat"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30310,7 +30310,7 @@ is serialized as
       </doc>
     </constructor>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JFloat -->
@@ -30318,7 +30318,7 @@ is serialized as
   <class name="JInt" extends="org.apache.hadoop.record.compiler.JType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JInt"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30329,7 +30329,7 @@ is serialized as
     <doc>
     <![CDATA[Code generator for "int" type
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JInt -->
@@ -30337,7 +30337,7 @@ is serialized as
   <class name="JLong" extends="org.apache.hadoop.record.compiler.JType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JLong"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30348,7 +30348,7 @@ is serialized as
     <doc>
     <![CDATA[Code generator for "long" type
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JLong -->
@@ -30356,7 +30356,7 @@ is serialized as
   <class name="JMap" extends="org.apache.hadoop.record.compiler.JCompType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JMap" type="org.apache.hadoop.record.compiler.JType, org.apache.hadoop.record.compiler.JType"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30365,7 +30365,7 @@ is serialized as
       </doc>
     </constructor>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JMap -->
@@ -30373,7 +30373,7 @@ is serialized as
   <class name="JRecord" extends="org.apache.hadoop.record.compiler.JCompType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JRecord" type="java.lang.String, java.util.ArrayList"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30382,7 +30382,7 @@ is serialized as
       </doc>
     </constructor>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JRecord -->
@@ -30390,7 +30390,7 @@ is serialized as
   <class name="JString" extends="org.apache.hadoop.record.compiler.JCompType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JString"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30399,7 +30399,7 @@ is serialized as
       </doc>
     </constructor>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JString -->
@@ -30407,7 +30407,7 @@ is serialized as
   <class name="JType" extends="java.lang.Object"
     abstract="true"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JType"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30415,7 +30415,7 @@ is serialized as
     <doc>
     <![CDATA[Abstract Base class for all types supported by Hadoop Record I/O.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JType -->
@@ -30423,7 +30423,7 @@ is serialized as
   <class name="JVector" extends="org.apache.hadoop.record.compiler.JCompType"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="JVector" type="org.apache.hadoop.record.compiler.JType"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30432,7 +30432,7 @@ is serialized as
       </doc>
     </constructor>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.JVector -->
@@ -30446,7 +30446,7 @@ is serialized as
     </p>
     
     <p>
-    DEPRECATED: Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.
+    DEPRECATED: Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.
     </p>]]>
   </doc>
 </package>
@@ -30455,7 +30455,7 @@ is serialized as
   <class name="RccTask" extends="org.apache.tools.ant.Task"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="RccTask"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30543,7 +30543,7 @@ is serialized as
  &lt;/recordcc&gt;
  </pre>
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.ant.RccTask -->
@@ -30553,7 +30553,7 @@ is serialized as
   <class name="ParseException" extends="java.lang.Exception"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="ParseException" type="org.apache.hadoop.record.compiler.generated.Token, int[][], java.lang.String[]"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -30670,7 +30670,7 @@ is serialized as
  You can modify this class to customize your error reporting
  mechanisms so long as you retain the public fields.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.generated.ParseException -->
@@ -30678,7 +30678,7 @@ is serialized as
   <class name="Rcc" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <implements name="org.apache.hadoop.record.compiler.generated.RccConstants"/>
     <constructor name="Rcc" type="java.io.InputStream"
       static="false" final="false" visibility="public"
@@ -30840,14 +30840,14 @@ is serialized as
       deprecated="not deprecated">
     </field>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.generated.Rcc -->
   <!-- start interface org.apache.hadoop.record.compiler.generated.RccConstants -->
   <interface name="RccConstants"    abstract="true"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <field name="EOF" type="int"
       transient="false" volatile="false"
       static="true" final="true" visibility="public"
@@ -30984,7 +30984,7 @@ is serialized as
       deprecated="not deprecated">
     </field>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </interface>
   <!-- end interface org.apache.hadoop.record.compiler.generated.RccConstants -->
@@ -30992,7 +30992,7 @@ is serialized as
   <class name="RccTokenManager" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <implements name="org.apache.hadoop.record.compiler.generated.RccConstants"/>
     <constructor name="RccTokenManager" type="org.apache.hadoop.record.compiler.generated.SimpleCharStream"
       static="false" final="false" visibility="public"
@@ -31068,7 +31068,7 @@ is serialized as
       deprecated="not deprecated">
     </field>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.generated.RccTokenManager -->
@@ -31076,7 +31076,7 @@ is serialized as
   <class name="SimpleCharStream" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="SimpleCharStream" type="java.io.Reader, int, int, int"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -31354,7 +31354,7 @@ is serialized as
     <![CDATA[An implementation of interface CharStream, where the stream is assumed to
  contain only ASCII characters (without unicode processing).
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.generated.SimpleCharStream -->
@@ -31362,7 +31362,7 @@ is serialized as
   <class name="Token" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="Token"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -31484,7 +31484,7 @@ is serialized as
     <doc>
     <![CDATA[Describes the input token stream.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.generated.Token -->
@@ -31492,7 +31492,7 @@ is serialized as
   <class name="TokenMgrError" extends="java.lang.Error"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="TokenMgrError"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -31553,7 +31553,7 @@ is serialized as
       </doc>
     </method>
     <doc>
-    <![CDATA[@deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+    <![CDATA[@deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.compiler.generated.TokenMgrError -->
@@ -31565,7 +31565,7 @@ is serialized as
     </p>
   
     <p>
-    DEPRECATED: Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.
+    DEPRECATED: Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.
     </p>]]>
   </doc>
 </package>
@@ -31574,7 +31574,7 @@ is serialized as
   <class name="FieldTypeInfo" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <method name="getTypeID" return="org.apache.hadoop.record.meta.TypeID"
       abstract="false" native="false" synchronized="false"
       static="false" final="false" visibility="public"
@@ -31619,7 +31619,7 @@ is serialized as
     <![CDATA[Represents a type information for a field, which is made up of its 
  ID (name) and its type (a TypeID object).
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.meta.FieldTypeInfo -->
@@ -31627,7 +31627,7 @@ is serialized as
   <class name="MapTypeID" extends="org.apache.hadoop.record.meta.TypeID"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="MapTypeID" type="org.apache.hadoop.record.meta.TypeID, org.apache.hadoop.record.meta.TypeID"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -31670,7 +31670,7 @@ is serialized as
     <doc>
     <![CDATA[Represents typeID for a Map 
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.meta.MapTypeID -->
@@ -31678,7 +31678,7 @@ is serialized as
   <class name="RecordTypeInfo" extends="org.apache.hadoop.record.Record"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="RecordTypeInfo"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -31783,7 +31783,7 @@ is serialized as
  Type information for a record comprises metadata about the record, 
  as well as a collection of type information for each field in the record. 
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.meta.RecordTypeInfo -->
@@ -31791,7 +31791,7 @@ is serialized as
   <class name="StructTypeID" extends="org.apache.hadoop.record.meta.TypeID"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="StructTypeID" type="org.apache.hadoop.record.meta.RecordTypeInfo"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -31818,7 +31818,7 @@ is serialized as
     <doc>
     <![CDATA[Represents typeID for a struct 
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.meta.StructTypeID -->
@@ -31826,7 +31826,7 @@ is serialized as
   <class name="TypeID" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <method name="getTypeVal" return="byte"
       abstract="false" native="false" synchronized="false"
       static="false" final="false" visibility="public"
@@ -31904,7 +31904,7 @@ is serialized as
     <doc>
     <![CDATA[Represents typeID for basic types.
   
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.meta.TypeID -->
@@ -31912,7 +31912,7 @@ is serialized as
   <class name="Utils" extends="java.lang.Object"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <method name="skip"
       abstract="false" native="false" synchronized="false"
       static="true" final="false" visibility="public"
@@ -31928,7 +31928,7 @@ is serialized as
     <doc>
     <![CDATA[Various utility functions for Hadooop record I/O platform.
  
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.meta.Utils -->
@@ -31936,7 +31936,7 @@ is serialized as
   <class name="VectorTypeID" extends="org.apache.hadoop.record.meta.TypeID"
     abstract="false"
     static="false" final="false" visibility="public"
-    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttp://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
+    deprecated="Replaced by lEsS_tHaNa href=quote_cHaRhttps://hadoop.apache.org/avro/quote_cHaR>AvrolEsS_tHaN/a>.">
     <constructor name="VectorTypeID" type="org.apache.hadoop.record.meta.TypeID"
       static="false" final="false" visibility="public"
       deprecated="not deprecated">
@@ -31967,7 +31967,7 @@ is serialized as
     </method>
     <doc>
     <![CDATA[Represents typeID for vector. 
- @deprecated Replaced by <a href="http://hadoop.apache.org/avro/">Avro</a>.]]>
+ @deprecated Replaced by <a href="https://hadoop.apache.org/avro/">Avro</a>.]]>
     </doc>
   </class>
   <!-- end class org.apache.hadoop.record.meta.VectorTypeID -->

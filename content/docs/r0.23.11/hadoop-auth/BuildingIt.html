@@ -14,11 +14,11 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="http://hadoop.apache.org/" id="bannerLeft">
-                                        <img src="http://hadoop.apache.org/images/hadoop-logo.jpg" alt="" />
+                  <a href="https://hadoop.apache.org/" id="bannerLeft">
+                                        <img src="https://hadoop.apache.org/images/hadoop-logo.jpg" alt="" />
                 </a>
-                        <a href="http://www.apache.org/" id="bannerRight">
-                                        <img src="http://www.apache.org/images/asf_logo_wide.png" alt="" />
+                        <a href="https://www.apache.org/" id="bannerRight">
+                                        <img src="https://www.apache.org/images/asf_logo_wide.png" alt="" />
                 </a>
             <div class="clear">
         <hr/>
@@ -27,17 +27,17 @@
     <div id="breadcrumbs">
             
                                 <div class="xleft">
-                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+                          <a href="https://www.apache.org/" class="externalLink">Apache</a>
                 &gt;
-                      <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+                      <a href="https://hadoop.apache.org/" class="externalLink">Hadoop</a>
                 &gt;
                 Hadoop Auth
                 </div>
-            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            <div class="xright">            <a href="https://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
             |
                 <a href="https://svn.apache.org/repos/asf/hadoop/" class="externalLink">SVN</a>
             |
-                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+                <a href="https://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
               
                                 &nbsp;| Last Published: 2014-06-19
               &nbsp;| Version: 0.23.11
@@ -202,7 +202,7 @@
                   <a href="../hadoop-project-dist/hadoop-common/DeprecatedProperties.html">Deprecated Properties</a>
             </li>
           </ul>
-                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+                                 <a href="https://maven.apache.org/" title="Built by Maven" class="poweredBy">
           <img alt="Built by Maven" src="./images/logos/maven-feather.png"/>
         </a>
                        
@@ -210,7 +210,7 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <!-- Licensed under the Apache License, Version 2.0 (the "License"); --><!-- you may not use this file except in compliance with the License. --><!-- You may obtain a copy of the License at --><!--  --><!-- http://www.apache.org/licenses/LICENSE-2.0 --><!--  --><!-- Unless required by applicable law or agreed to in writing, software --><!-- distributed under the License is distributed on an "AS IS" BASIS, --><!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. --><!-- See the License for the specific language governing permissions and --><!-- limitations under the License. See accompanying LICENSE file. --><div class="section"><h2>Hadoop Auth, Java HTTP SPNEGO 0.23.11 - Building It<a name="Hadoop_Auth_Java_HTTP_SPNEGO_0.23.11_-_Building_It"></a></h2><p>[ <a href="./index.html">Go Back</a> ]</p><div class="section"><h3>Requirements<a name="Requirements"></a></h3><ul><li>Java 6+</li><li>Maven 3+</li><li>Kerberos KDC (for running Kerberos test cases)</li></ul></div><div class="section"><h3>Building<a name="Building"></a></h3><p>Use Maven goals: clean, test, compile, package, install</p><p>Available profiles: docs, testKerberos</p></div><div class="section"><h3>Testing<a name="Testing"></a></h3><p>By default Kerberos testcases are not run.</p><p>The requirements to run Kerberos testcases are a running KDC, a keytab file with a client principal and a kerberos principal.</p><p>To run Kerberos tescases use the <tt>testKerberos</tt> Maven profile:</p><div class="source"><pre>$ mvn test -PtestKerberos</pre></div><p>The following Maven <tt>-D</tt> options can be used to change the default values:</p><ul><li><tt>hadoop-auth.test.kerberos.realm</tt>: default value <b>LOCALHOST</b></li><li><tt>hadoop-auth.test.kerberos.client.principal</tt>: default value <b>client</b></li><li><tt>hadoop-auth.test.kerberos.server.principal</tt>: default value <b>HTTP/localhost</b> (it must start 'HTTP/')</li><li><tt>hadoop-auth.test.kerberos.keytab.file</tt>: default value <b>$<a name="HOME">HOME</a>/$<a name="USER">USER</a>.keytab</b></li></ul><div class="section"><h4>Generating Documentation<a name="Generating_Documentation"></a></h4><p>To create the documentation use the <tt>docs</tt> Maven profile:</p><div class="source"><pre>$ mvn package -Pdocs</pre></div><p>The generated documentation is available at <tt>hadoop-auth/target/site/</tt>.</p><p>[ <a href="./index.html">Go Back</a> ]</p></div></div></div>
+        <!-- Licensed under the Apache License, Version 2.0 (the "License"); --><!-- you may not use this file except in compliance with the License. --><!-- You may obtain a copy of the License at --><!--  --><!-- https://www.apache.org/licenses/LICENSE-2.0 --><!--  --><!-- Unless required by applicable law or agreed to in writing, software --><!-- distributed under the License is distributed on an "AS IS" BASIS, --><!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. --><!-- See the License for the specific language governing permissions and --><!-- limitations under the License. See accompanying LICENSE file. --><div class="section"><h2>Hadoop Auth, Java HTTP SPNEGO 0.23.11 - Building It<a name="Hadoop_Auth_Java_HTTP_SPNEGO_0.23.11_-_Building_It"></a></h2><p>[ <a href="./index.html">Go Back</a> ]</p><div class="section"><h3>Requirements<a name="Requirements"></a></h3><ul><li>Java 6+</li><li>Maven 3+</li><li>Kerberos KDC (for running Kerberos test cases)</li></ul></div><div class="section"><h3>Building<a name="Building"></a></h3><p>Use Maven goals: clean, test, compile, package, install</p><p>Available profiles: docs, testKerberos</p></div><div class="section"><h3>Testing<a name="Testing"></a></h3><p>By default Kerberos testcases are not run.</p><p>The requirements to run Kerberos testcases are a running KDC, a keytab file with a client principal and a kerberos principal.</p><p>To run Kerberos tescases use the <tt>testKerberos</tt> Maven profile:</p><div class="source"><pre>$ mvn test -PtestKerberos</pre></div><p>The following Maven <tt>-D</tt> options can be used to change the default values:</p><ul><li><tt>hadoop-auth.test.kerberos.realm</tt>: default value <b>LOCALHOST</b></li><li><tt>hadoop-auth.test.kerberos.client.principal</tt>: default value <b>client</b></li><li><tt>hadoop-auth.test.kerberos.server.principal</tt>: default value <b>HTTP/localhost</b> (it must start 'HTTP/')</li><li><tt>hadoop-auth.test.kerberos.keytab.file</tt>: default value <b>$<a name="HOME">HOME</a>/$<a name="USER">USER</a>.keytab</b></li></ul><div class="section"><h4>Generating Documentation<a name="Generating_Documentation"></a></h4><p>To create the documentation use the <tt>docs</tt> Maven profile:</p><div class="source"><pre>$ mvn package -Pdocs</pre></div><p>The generated documentation is available at <tt>hadoop-auth/target/site/</tt>.</p><p>[ <a href="./index.html">Go Back</a> ]</p></div></div></div>
       </div>
     </div>
     <div class="clear">
@@ -220,7 +220,7 @@
       <div class="xright">&#169;            2014
               Apache Software Foundation
             
-                       - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a></div>
+                       - <a href="https://maven.apache.org/privacy-policy.html">Privacy Policy</a></div>
       <div class="clear">
         <hr/>
       </div>
