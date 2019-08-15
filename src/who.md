@@ -93,6 +93,7 @@ order):
   rohithsharmaks   |Rohith Sharma K S                                                            |Hortonworks    |            |+5.5
   sharad           |Sharad Agarwal                                                               |InMobi         |            |+5.5
   shv              |[Konstantin Shvachko](http://people.apache.org/~shv)                         |LinkedIn       |HDFS        |-8
+  sammichen        |Sammi Chen                                                                   |Tencent        |            |+8
   sandy            |[Sandy Ryza](http://people.apache.org/~sandy)                                |Cloudera       |            |-8
   sjlee            |[Sangjin Lee](http://people.apache.org/~sjlee)                               |PayPal         |            |-8
   sradia           |[Sanjay Radia](http://people.apache.org/~sradia)                             |Hortonworks    |            |-8
@@ -243,7 +244,7 @@ rchiang             |Ray Chiang                                                 
 rkanter             |Robert Kanter                                                                       |Cloudera                        |        |-8
 rohithsharmaks      |Rohith Sharma K S                                                                   |Hortonworks                     |        |+5.5
 rvs                 |[Roman Shaposhnik](http://people.apache.org/~rvs)                                   |Pivotal                         |        |-8
-sammichen           |Sammi Chen                                                                          |Intel                           |        |+8
+sammichen           |Sammi Chen                                                                          |Tencent                         |        |+8
 schen               |[Scott Chun-Yang Chen](http://people.apache.org/~schen)                             |Facebook                        |        |-8
 sharad              |Sharad Agarwal                                                                      |InMobi                          |        |+5.5
 shv                 |[Konstantin Shvachko](http://people.apache.org/~shv)                                |LinkedIn                        |HDFS    |-8
