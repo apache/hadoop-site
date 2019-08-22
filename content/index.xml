@@ -89,7 +89,7 @@ Users are encouraged to read the overview of major changes for major features an
       
       <guid>https://hadoop.apache.org/release/3.1.1.html</guid>
       <description>This is the first stable release of Apache Hadoop 3.1 line. It contains 435 bug fixes, improvements and enhancements since 3.1.0.
-Users are encouraged to read the overview of major changes since 3.1.0. For details of 435 bug fixes, improvements, and other enhancements since the previous 3.1.0 release, please check (http://hadoop.apache.org/docs/r3.1.1/hadoop-project-dist/hadoop-common/release/3.1.1/RELEASENOTES.3.1.1.html) and changelog detail the changes since 3.1.0.</description>
+Users are encouraged to read the overview of major changes since 3.1.0. For details of 435 bug fixes, improvements, and other enhancements since the previous 3.1.0 release, please check (https://hadoop.apache.org/docs/r3.1.1/hadoop-project-dist/hadoop-common/release/3.1.1/RELEASENOTES.3.1.1.html) and changelog detail the changes since 3.1.0.</description>
     </item>
     
     <item>
@@ -1070,7 +1070,7 @@ See the Hadoop 0.17.0 Release Notes for details.</description>
       
       <guid>https://hadoop.apache.org/release/0.16.2.html</guid>
       <description>This release fixes critical bugs in release 0.16.1.
-HBase has been removed from this release. HBase releases are now maintained at http://hadoop.apache.org/hbase/</description>
+HBase has been removed from this release. HBase releases are now maintained at https://hadoop.apache.org/hbase/</description>
     </item>
     
     <item>
@@ -1080,7 +1080,7 @@ HBase has been removed from this release. HBase releases are now maintained at h
       
       <guid>https://hadoop.apache.org/release/0.16.1.html</guid>
       <description>This release fixes critical bugs in release 0.16.0.
-HBase releases are now maintained at http://hadoop.apache.org/hbase/</description>
+HBase releases are now maintained at https://hadoop.apache.org/hbase/</description>
     </item>
     
     <item>

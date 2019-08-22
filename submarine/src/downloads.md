@@ -20,7 +20,7 @@ type: custompage
 ## To verify Hadoop Submarine releases using GPG:
 
 1.  Download the release hadoop-submarine-X.Y.Z-src.tar.gz from a [mirror
-    site](http://www.apache.org/dyn/closer.cgi/hadoop/submarine).
+    site](https://www.apache.org/dyn/closer.cgi/hadoop/submarine).
 2.  Download the signature file hadoop-submarine-X.Y.Z-src.tar.gz.asc from
     [Apache](https://dist.apache.org/repos/dist/release/hadoop/submarine/).
 3.  Download the [Hadoop
@@ -32,7 +32,7 @@ type: custompage
 ## To perform a quick check using SHA-256:
 
 1.  Download the release hadoop-submarine-X.Y.Z-src.tar.gz from a [mirror
-    site](http://www.apache.org/dyn/closer.cgi/hadoop/submarine).
+    site](https://www.apache.org/dyn/closer.cgi/hadoop/submarine).
 2.  Download the checksum hadoop-submarine-X.Y.Z-src.tar.gz.mds from
     [Apache](https://dist.apache.org/repos/dist/release/hadoop/submarine/).
 3.  shasum -a 256 hadoop-submarine-X.Y.Z-src.tar.gz
@@ -42,4 +42,4 @@ archive](https://archive.apache.org/dist/hadoop/submarine/) site.
 
 ## License
 
-_The software licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)_
+_The software licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)_

@@ -42,8 +42,8 @@ archive](https://archive.apache.org/dist/hadoop/common/) site.
 
 Many third parties distribute products that include Apache Hadoop and
 related tools. Some of these are listed on the [Distributions wiki
-page](http://wiki.apache.org/hadoop/Distribution).
+page](https://wiki.apache.org/hadoop/Distribution).
 
 ## License
 
-_The software licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)_
+_The software licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)_

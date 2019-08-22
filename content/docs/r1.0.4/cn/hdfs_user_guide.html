@@ -22,7 +22,7 @@
     |breadtrail
     +-->
 <div class="breadtrail">
-<a href="http://www.apache.org/">Apache</a> &gt; <a href="http://hadoop.apache.org/">Hadoop</a> &gt; <a href="http://hadoop.apache.org/core/">Core</a><script src="skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+<a href="https://www.apache.org/">Apache</a> &gt; <a href="https://hadoop.apache.org/">Hadoop</a> &gt; <a href="https://hadoop.apache.org/core/">Core</a><script src="skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
 </div>
 <!--+
     |header
@@ -32,7 +32,7 @@
     |start group logo
     +-->
 <div class="grouplogo">
-<a href="http://hadoop.apache.org/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo.jpg" title="Apache Hadoop"></a>
+<a href="https://hadoop.apache.org/"><img class="logoImage" alt="Hadoop" src="images/hadoop-logo.jpg" title="Apache Hadoop"></a>
 </div>
 <!--+
     |end group logo
@@ -41,7 +41,7 @@
     |start Project Logo
     +-->
 <div class="projectlogo">
-<a href="http://hadoop.apache.org/core/"><img class="logoImage" alt="Hadoop" src="images/core-logo.gif" title="Scalable Computing Platform"></a>
+<a href="https://hadoop.apache.org/core/"><img class="logoImage" alt="Hadoop" src="images/core-logo.gif" title="Scalable Computing Platform"></a>
 </div>
 <!--+
     |end Project Logo
@@ -63,10 +63,10 @@
     +-->
 <ul id="tabs">
 <li>
-<a class="unselected" href="http://hadoop.apache.org/core/">项目</a>
+<a class="unselected" href="https://hadoop.apache.org/core/">项目</a>
 </li>
 <li>
-<a class="unselected" href="http://wiki.apache.org/hadoop">维基</a>
+<a class="unselected" href="https://wiki.apache.org/hadoop">维基</a>
 </li>
 <li class="current">
 <a class="selected" href="index.html">Hadoop 0.18文档</a>
@@ -152,25 +152,25 @@ document.write("Last Published: " + document.lastModified);
 <a href="hod.html">Hadoop On Demand</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/core/docs/r0.18.2/api/index.html">API参考</a>
+<a href="https://hadoop.apache.org/core/docs/r0.18.2/api/index.html">API参考</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/core/docs/r0.18.2/jdiff/changes.html">API Changes</a>
+<a href="https://hadoop.apache.org/core/docs/r0.18.2/jdiff/changes.html">API Changes</a>
 </div>
 <div class="menuitem">
-<a href="http://wiki.apache.org/hadoop/">维基</a>
+<a href="https://wiki.apache.org/hadoop/">维基</a>
 </div>
 <div class="menuitem">
-<a href="http://wiki.apache.org/hadoop/FAQ">常见问题</a>
+<a href="https://wiki.apache.org/hadoop/FAQ">常见问题</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/core/mailing_lists.html">邮件列表</a>
+<a href="https://hadoop.apache.org/core/mailing_lists.html">邮件列表</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/core/docs/r0.18.2/releasenotes.html">发行说明</a>
+<a href="https://hadoop.apache.org/core/docs/r0.18.2/releasenotes.html">发行说明</a>
 </div>
 <div class="menuitem">
-<a href="http://hadoop.apache.org/core/docs/r0.18.2/changes.html">变更日志</a>
+<a href="https://hadoop.apache.org/core/docs/r0.18.2/changes.html">变更日志</a>
 </div>
 </div>
 <div id="credit"></div>
@@ -251,7 +251,7 @@ document.write("Last Published: " + document.lastModified);
 <h2 class="h3">目的</h2>
 <div class="section">
 <p>
-	本文档的目标是为Hadoop分布式文件系统（HDFS）的用户提供一个学习的起点，这里的HDFS既可以作为<a href="http://hadoop.apache.org/">Hadoop</a>集群的一部分，也可以作为一个独立的分布式文件系统。虽然HDFS在很多环境下被设计成是可正确工作的，但是了解HDFS的工作原理对在特定集群上改进HDFS的运行性能和错误诊断都有极大的帮助。
+	本文档的目标是为Hadoop分布式文件系统（HDFS）的用户提供一个学习的起点，这里的HDFS既可以作为<a href="https://hadoop.apache.org/">Hadoop</a>集群的一部分，也可以作为一个独立的分布式文件系统。虽然HDFS在很多环境下被设计成是可正确工作的，但是了解HDFS的工作原理对在特定集群上改进HDFS的运行性能和错误诊断都有极大的帮助。
       </p>
 </div>
 <!--DCCOMMENT:diff end
@@ -270,7 +270,7 @@ document.write("Last Published: " + document.lastModified);
 - This document aims to be the starting point for users working with
 + This document is a starting point for users working with
   Hadoop Distributed File System (HDFS) either as a part of a
-  <a href="http://hadoop.apache.org/">Hadoop</a>
+  <a href="https://hadoop.apache.org/">Hadoop</a>
   cluster or as a stand-alone general purpose distributed file system.
 - While HDFS is designed to "just-work" in many environments, a working
 + While HDFS is designed to "just work" in many environments, a working
@@ -578,7 +578,7 @@ Secondary NameNode的检查点进程启动，是由两个配置参数控制的�
 <h2 class="h3"> 安全模式 </h2>
 <div class="section">
 <p>
-     NameNode启动时会从fsimage和edits日志文件中装载文件系统的状态信息，接着它等待各个DataNode向它报告它们各自的数据块状态，这样，NameNode就不会过早地开始复制数据块，即使在副本充足的情况下。这个阶段，NameNode处于安全模式下。NameNode的安全模式本质上是HDFS集群的一种只读模式，此时集群不允许任何对文件系统或者数据块修改的操作。通常NameNode会在开始阶段自动地退出安全模式。如果需要，你也可以通过<span class="codefrag">'bin/hadoop dfsadmin -safemode'</span>命令显式地将HDFS置于安全模式。NameNode首页会显示当前是否处于安全模式。关于安全模式的更多介绍和配置信息请参考JavaDoc：<a href="http://hadoop.apache.org/core/docs/current/api/org/apache/hadoop/dfs/NameNode.html#setSafeMode(org.apache.hadoop.dfs.FSConstants.SafeModeAction)"><span class="codefrag">setSafeMode()</span></a>。
+     NameNode启动时会从fsimage和edits日志文件中装载文件系统的状态信息，接着它等待各个DataNode向它报告它们各自的数据块状态，这样，NameNode就不会过早地开始复制数据块，即使在副本充足的情况下。这个阶段，NameNode处于安全模式下。NameNode的安全模式本质上是HDFS集群的一种只读模式，此时集群不允许任何对文件系统或者数据块修改的操作。通常NameNode会在开始阶段自动地退出安全模式。如果需要，你也可以通过<span class="codefrag">'bin/hadoop dfsadmin -safemode'</span>命令显式地将HDFS置于安全模式。NameNode首页会显示当前是否处于安全模式。关于安全模式的更多介绍和配置信息请参考JavaDoc：<a href="https://hadoop.apache.org/core/docs/current/api/org/apache/hadoop/dfs/NameNode.html#setSafeMode(org.apache.hadoop.dfs.FSConstants.SafeModeAction)"><span class="codefrag">setSafeMode()</span></a>。
     </p>
 </div> 
 <a name="N101A2"></a><a name="fsck"></a>
@@ -602,7 +602,7 @@ Secondary NameNode的检查点进程启动，是由两个配置参数控制的�
 <a name="N101BF"></a><a name="%E5%8D%87%E7%BA%A7%E5%92%8C%E5%9B%9E%E6%BB%9A"></a>
 <h2 class="h3"> 升级和回滚 </h2>
 <div class="section">
-<p>当在一个已有集群上升级Hadoop时，像其他的软件升级一样，可能会有新的bug或一些会影响到现有应用的非兼容性变更出现。在任何有实际意义的HDSF系统上，丢失数据是不被允许的，更不用说重新搭建启动HDFS了。HDFS允许管理员退回到之前的Hadoop版本，并将集群的状态回滚到升级之前。更多关于HDFS升级的细节在<a href="http://wiki.apache.org/hadoop/Hadoop%20Upgrade">升级wiki</a>上可以找到。HDFS在一个时间可以有一个这样的备份。在升级之前，管理员需要用<span class="codefrag">bin/hadoop dfsadmin -finalizeUpgrade</span>（升级终结操作）命令删除存在的备份文件。下面简单介绍一下一般的升级过程：
+<p>当在一个已有集群上升级Hadoop时，像其他的软件升级一样，可能会有新的bug或一些会影响到现有应用的非兼容性变更出现。在任何有实际意义的HDSF系统上，丢失数据是不被允许的，更不用说重新搭建启动HDFS了。HDFS允许管理员退回到之前的Hadoop版本，并将集群的状态回滚到升级之前。更多关于HDFS升级的细节在<a href="https://wiki.apache.org/hadoop/Hadoop%20Upgrade">升级wiki</a>上可以找到。HDFS在一个时间可以有一个这样的备份。在升级之前，管理员需要用<span class="codefrag">bin/hadoop dfsadmin -finalizeUpgrade</span>（升级终结操作）命令删除存在的备份文件。下面简单介绍一下一般的升级过程：
      </p>
 <ul>
       
@@ -639,7 +639,7 @@ Secondary NameNode的检查点进程启动，是由两个配置参数控制的�
 <h2 class="h3"> 可扩展性 </h2>
 <div class="section">
 <p>
-      现在，Hadoop已经运行在上千个节点的集群上。<a href="http://wiki.apache.org/hadoop/PoweredBy">Powered By Hadoop</a>页面列出了一些已将Hadoop部署在他们的大型集群上的组织。HDFS集群只有一个NameNode节点。目前，NameNode上可用内存大小是一个主要的扩展限制。在超大型的集群中，增大HDFS存储文件的平均大小能够增大集群的规模，而不需要增加NameNode的内存。默认配置也许并不适合超大规模的集群。<a href="http://wiki.apache.org/hadoop/FAQ">Hadoop FAQ</a>页面列举了针对大型Hadoop集群的配置改进。</p>
+      现在，Hadoop已经运行在上千个节点的集群上。<a href="https://wiki.apache.org/hadoop/PoweredBy">Powered By Hadoop</a>页面列出了一些已将Hadoop部署在他们的大型集群上的组织。HDFS集群只有一个NameNode节点。目前，NameNode上可用内存大小是一个主要的扩展限制。在超大型的集群中，增大HDFS存储文件的平均大小能够增大集群的规模，而不需要增加NameNode的内存。默认配置也许并不适合超大规模的集群。<a href="https://wiki.apache.org/hadoop/FAQ">Hadoop FAQ</a>页面列举了针对大型Hadoop集群的配置改进。</p>
 </div> 
 <a name="N10217"></a><a name="%E7%9B%B8%E5%85%B3%E6%96%87%E6%A1%A3"></a>
 <h2 class="h3"> 相关文档 </h2>
@@ -651,18 +651,18 @@ Secondary NameNode的检查点进程启动，是由两个配置参数控制的�
       
 <li>
         
-<a href="http://hadoop.apache.org/">Hadoop官方主页</a>：所有Hadoop相关的起始页。
+<a href="https://hadoop.apache.org/">Hadoop官方主页</a>：所有Hadoop相关的起始页。
       </li>
       
 <li>
         
-<a href="http://wiki.apache.org/hadoop/FrontPage">Hadoop Wiki</a>：Hadoop Wiki文档首页。这个指南是Hadoop代码树中的一部分，与此不同，Hadoop Wiki是由Hadoop社区定期编辑的。
+<a href="https://wiki.apache.org/hadoop/FrontPage">Hadoop Wiki</a>：Hadoop Wiki文档首页。这个指南是Hadoop代码树中的一部分，与此不同，Hadoop Wiki是由Hadoop社区定期编辑的。
       </li>
       
-<li>Hadoop Wiki上的<a href="http://wiki.apache.org/hadoop/FAQ">FAQ</a>。
+<li>Hadoop Wiki上的<a href="https://wiki.apache.org/hadoop/FAQ">FAQ</a>。
       </li>
       
-<li>Hadoop <a href="http://hadoop.apache.org/core/docs/current/api/">JavaDoc API</a>。</li>
+<li>Hadoop <a href="https://hadoop.apache.org/core/docs/current/api/">JavaDoc API</a>。</li>
       
 <li>Hadoop用户邮件列表：<a href="mailto:core-user@hadoop.apache.org">core-user[at]hadoop.apache.org</a>。</li>
       
@@ -708,7 +708,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="copyright">
         Copyright &copy;
-         2007 <a href="http://www.apache.org/licenses/">The Apache Software Foundation.</a>
+         2007 <a href="https://www.apache.org/licenses/">The Apache Software Foundation.</a>
 </div>
 <!--+
     |end bottomstrip

@@ -1,5 +1,5 @@
 This product includes software developed by The Apache Software
-Foundation (http://www.apache.org/).
+Foundation (https://www.apache.org/).
 
 The binary distribution of this product bundles binaries of
 org.iq80.leveldb:leveldb-api (https://github.com/dain/leveldb), which has the

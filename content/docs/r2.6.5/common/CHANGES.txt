@@ -1811,7 +1811,7 @@ Release 2.3.0 - 2014-02-18
     HADOOP-10212. Incorrect compile command in Native Library document.
     (Akira Ajisaka via Arpit Agarwal)
 
-    HADOOP-9830. Fix typo at http://hadoop.apache.org/docs/current/
+    HADOOP-9830. Fix typo at https://hadoop.apache.org/docs/current/
     (Kousuke Saruta via Arpit Agarwal)
 
     HADOOP-10255. Rename HttpServer to HttpServer2 to retain older 
@@ -12141,7 +12141,7 @@ Release 0.16.0 - 2008-02-07
     HADOOP-2723. Fixed the check for checking whether to do user task
     profiling. (Amareshwari Sri Ramadasu via omalley)
 
-    HADOOP-2734. Link forrest docs to new http://hadoop.apache.org
+    HADOOP-2734. Link forrest docs to new https://hadoop.apache.org
     (Doug Cutting via nigel)
 
     HADOOP-2641. Added Apache license headers to 95 files. (nigel)

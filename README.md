@@ -52,7 +52,7 @@ linked: true
 ---
 
 Please see the [Hadoop 2.7.3 Release
-Notes](http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-common/releasenotes.html)
+Notes](https://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-common/releasenotes.html)
 for the list of 221 bug fixes and patches since the previous release
 2.7.2.
 ```

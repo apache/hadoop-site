@@ -14,11 +14,11 @@
       </head>
   <body class="composite">
     <div id="banner">
-                  <a href="http://hadoop.apache.org/" id="bannerLeft">
-                                        <img src="http://hadoop.apache.org/images/hadoop-logo.jpg" alt="" />
+                  <a href="https://hadoop.apache.org/" id="bannerLeft">
+                                        <img src="https://hadoop.apache.org/images/hadoop-logo.jpg" alt="" />
                 </a>
-                        <a href="http://www.apache.org/" id="bannerRight">
-                                        <img src="http://www.apache.org/images/asf_logo_wide.png" alt="" />
+                        <a href="https://www.apache.org/" id="bannerRight">
+                                        <img src="https://www.apache.org/images/asf_logo_wide.png" alt="" />
                 </a>
             <div class="clear">
         <hr/>
@@ -27,19 +27,19 @@
     <div id="breadcrumbs">
             
                                 <div class="xleft">
-                          <a href="http://www.apache.org/" class="externalLink">Apache</a>
+                          <a href="https://www.apache.org/" class="externalLink">Apache</a>
                 &gt;
-                      <a href="http://hadoop.apache.org/" class="externalLink">Hadoop</a>
+                      <a href="https://hadoop.apache.org/" class="externalLink">Hadoop</a>
                 &gt;
                       <a href="../">hadoop-yarn</a>
                 &gt;
                 Apache Hadoop 2.7.7
                 </div>
-            <div class="xright">            <a href="http://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
+            <div class="xright">            <a href="https://wiki.apache.org/hadoop" class="externalLink">Wiki</a>
             |
                 <a href="https://git-wip-us.apache.org/repos/asf/hadoop.git" class="externalLink">git</a>
             |
-                <a href="http://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
+                <a href="https://hadoop.apache.org/" class="externalLink">Apache Hadoop</a>
               
                                 &nbsp;| Last Published: 2018-07-19
               &nbsp;| Version: 2.7.7
@@ -375,7 +375,7 @@
                   <a href="../../hadoop-project-dist/hadoop-common/DeprecatedProperties.html">Deprecated Properties</a>
             </li>
           </ul>
-                                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+                                 <a href="https://maven.apache.org/" title="Built by Maven" class="poweredBy">
           <img alt="Built by Maven" src="./images/logos/maven-feather.png"/>
         </a>
                        
@@ -401,7 +401,7 @@
 <p><img src="./yarn_architecture.gif" alt="MapReduce NextGen Architecture" /></p>
 <p>The ResourceManager has two main components: Scheduler and ApplicationsManager.</p>
 <p>The Scheduler is responsible for allocating resources to the various running applications subject to familiar constraints of capacities, queues etc. The Scheduler is pure scheduler in the sense that it performs no monitoring or tracking of status for the application. Also, it offers no guarantees about restarting failed tasks either due to application failure or hardware failures. The Scheduler performs its scheduling function based the resource requirements of the applications; it does so based on the abstract notion of a resource <i>Container</i> which incorporates elements such as memory, cpu, disk, network etc.</p>
-<p>The Scheduler has a pluggable policy which is responsible for partitioning the cluster resources among the various queues, applications etc. The current schedulers such as the <a class="externalLink" href="http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/CapacityScheduler.html">CapacityScheduler</a> and the <a class="externalLink" href="http://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/FairScheduler.html">FairScheduler</a> would be some examples of plug-ins.</p>
+<p>The Scheduler has a pluggable policy which is responsible for partitioning the cluster resources among the various queues, applications etc. The current schedulers such as the <a class="externalLink" href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/CapacityScheduler.html">CapacityScheduler</a> and the <a class="externalLink" href="https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/FairScheduler.html">FairScheduler</a> would be some examples of plug-ins.</p>
 <p>The ApplicationsManager is responsible for accepting job-submissions, negotiating the first container for executing the application specific ApplicationMaster and provides the service for restarting the ApplicationMaster container on failure. The per-application ApplicationMaster has the responsibility of negotiating appropriate resource containers from the Scheduler, tracking their status and monitoring for progress.</p>
 <p>MapReduce in hadoop-2.x maintains <b>API compatibility</b> with previous stable release (hadoop-1.x). This means that all MapReduce jobs should still run unchanged on top of YARN with just a recompile.</p>
       </div>
@@ -413,7 +413,7 @@
       <div class="xright">&#169;            2018
               Apache Software Foundation
             
-                       - <a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a></div>
+                       - <a href="https://maven.apache.org/privacy-policy.html">Privacy Policy</a></div>
       <div class="clear">
         <hr/>
       </div>

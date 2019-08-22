@@ -34,12 +34,12 @@ publishDir = "../content/ozone"
 [[menu.main]]
    name = "Latest"
    parent = "documentation"
-   url = "http://hadoop.apache.org/docs/current/"
+   url = "https://hadoop.apache.org/docs/current/"
 
 [[menu.main]]
    name = "Stable"
    parent = "documentation"
-   url = "http://hadoop.apache.org/docs/stable/"
+   url = "https://hadoop.apache.org/docs/stable/"
 
 
 
@@ -68,17 +68,17 @@ publishDir = "../content/ozone"
 
 [[menu.main]]
    name = "Buy Stuff"
-   url = "http://www.cafepress.com/hadoop"
+   url = "https://www.cafepress.com/hadoop"
    parent = "help"
 
 [[menu.main]]
    name = "Sponsorshop"
-   url = "http://www.apache.org/foundation/sponsorship.html"
+   url = "https://www.apache.org/foundation/sponsorship.html"
    parent = "help"
 
 [[menu.main]]
    name = "Thanks"
-   url = "http://www.apache.org/foundation/thanks.html"
+   url = "https://www.apache.org/foundation/thanks.html"
    parent = "help"
 
 
