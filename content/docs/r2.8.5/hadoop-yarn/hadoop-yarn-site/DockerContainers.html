@@ -684,8 +684,8 @@
 <div class="source">
 <pre>    spark-shell --master yarn --conf spark.executorEnv.YARN_CONTAINER_RUNTIME_TYPE=docker \
         --conf spark.executorEnv.YARN_CONTAINER_RUNTIME_DOCKER_IMAGE=hadoop-docker \
-        --conf spark.yarn.AppMasterEnv.YARN_CONTAINER_RUNTIME_DOCKER_IMAGE=hadoop-docker \
-        --conf spark.yarn.AppMasterEnv.YARN_CONTAINER_RUNTIME_TYPE=docker
+        --conf spark.yarn.appMasterEnv.YARN_CONTAINER_RUNTIME_DOCKER_IMAGE=hadoop-docker \
+        --conf spark.yarn.appMasterEnv.YARN_CONTAINER_RUNTIME_TYPE=docker
 </pre></div></div>
 <p>Note that the application master and executors are configured independently. In this example, we are using the hadoop-docker image for both.</p></div>
       </div>
