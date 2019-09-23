@@ -4,14 +4,22 @@
   
   <url>
     <loc>https://hadoop.apache.org/</loc>
-    <lastmod>2019-05-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-09-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://hadoop.apache.org/release/3.2.1.html</loc>
+    <lastmod>2019-09-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://hadoop.apache.org/release.html</loc>
+    <lastmod>2019-09-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://hadoop.apache.org/news.html</loc>
     <lastmod>2019-05-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -22,12 +30,6 @@
   <url>
     <loc>https://hadoop.apache.org/release/3.1.2.html</loc>
     <lastmod>2019-02-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://hadoop.apache.org/release.html</loc>
-    <lastmod>2019-02-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -599,7 +601,6 @@
   
   <url>
     <loc>https://hadoop.apache.org/categories.html</loc>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -640,7 +641,6 @@
   
   <url>
     <loc>https://hadoop.apache.org/tags.html</loc>
-    <priority>0</priority>
   </url>
   
   <url>
