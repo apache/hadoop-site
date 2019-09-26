@@ -1187,7 +1187,7 @@ Major versions are used to introduce substantial, potentially incompatible, chan
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hadoop.apache.org/releases.html</guid>
-      <description>To verify Hadoop releases using GPG:  Download the release hadoop-X.Y.Z-src.tar.gz from a mirror site. Download the signature file hadoop-X.Y.Z-src.tar.gz.asc from Apache. Download the Hadoop KEYS file. gpg &amp;ndash;import KEYS gpg &amp;ndash;verify hadoop-X.Y.Z-src.tar.gz.asc  To perform a quick check using SHA-256:  Download the release hadoop-X.Y.Z-src.tar.gz from a mirror site. Download the checksum hadoop-X.Y.Z-src.tar.gz.mds from Apache. shasum -a 256 hadoop-X.Y.Z-src.tar.gz  All previous releases of Hadoop are available from the Apache release archive site.</description>
+      <description>To verify Hadoop releases using GPG:  Download the release hadoop-X.Y.Z-src.tar.gz from a mirror site. Download the signature file hadoop-X.Y.Z-src.tar.gz.asc from Apache. Download the Hadoop KEYS file. gpg &amp;ndash;import KEYS gpg &amp;ndash;verify hadoop-X.Y.Z-src.tar.gz.asc  To perform a quick check using SHA-512:  Download the release hadoop-X.Y.Z-src.tar.gz from a mirror site. Download the checksum hadoop-X.Y.Z-src.tar.gz.sha512 or hadoop-X.Y.Z-src.tar.gz.mds from Apache. shasum -a 512 hadoop-X.Y.Z-src.tar.gz  All previous releases of Hadoop are available from the Apache release archive site.</description>
     </item>
     
     <item>

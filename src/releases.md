@@ -29,13 +29,13 @@ type: custompage
 4.  gpg --import KEYS
 5.  gpg --verify hadoop-X.Y.Z-src.tar.gz.asc
 
-## To perform a quick check using SHA-256:
+## To perform a quick check using SHA-512:
 
 1.  Download the release hadoop-X.Y.Z-src.tar.gz from a [mirror
     site](https://www.apache.org/dyn/closer.cgi/hadoop/common).
-2.  Download the checksum hadoop-X.Y.Z-src.tar.gz.mds from
+2.  Download the checksum hadoop-X.Y.Z-src.tar.gz.sha512 or hadoop-X.Y.Z-src.tar.gz.mds from
     [Apache](https://www.apache.org/dist/hadoop/common/).
-3.  shasum -a 256 hadoop-X.Y.Z-src.tar.gz
+3.  shasum -a 512 hadoop-X.Y.Z-src.tar.gz
 
 All previous releases of Hadoop are available from the [Apache release
 archive](https://archive.apache.org/dist/hadoop/common/) site.

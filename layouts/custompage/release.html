@@ -18,7 +18,7 @@
 
   <p>Hadoop is released as source code tarballs with corresponding binary
   tarballs for convenience. The downloads are distributed via mirror sites
-  and should be checked for tampering using GPG or SHA-256.</p>
+  and should be checked for tampering using GPG or SHA-512.</p>
 
 <p>
   <table class="table table-striped">
@@ -32,17 +32,42 @@
     </tr>
   </thead>
   {{range first 5 (where (where .Site.Pages "Section" "release") ".Params.linked" true) }}
+
+    <!-- Define the suffix of the checksum file for each release -->
+    {{ $checksum_suffix := "mds" }}
+    <!-- if the version >= 3.3 -->
+    {{ if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | float | le 3.3 }}
+      {{ $checksum_suffix = "sha512" }}
+    <!-- else if the version > 3.2.0, 3.1.2, 2.9.2, 2.8.5 -->
+    {{ else if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]).*" "$1" | eq "3.2" }}
+      {{ if .File.BaseFileName | replaceRE "^[0-9]+.[0-9]+.([0-9]+).*" "$1" | float | lt 0 }}
+        {{ $checksum_suffix = "sha512" }}
+      {{ end }}
+    {{ else if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]).*" "$1" | eq "3.1" }}
+      {{ if .File.BaseFileName | replaceRE "^[0-9]+.[0-9]+.([0-9]+).*" "$1" | float | lt 2 }}
+        {{ $checksum_suffix = "sha512" }}
+      {{ end }}
+    {{ else if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]).*" "$1" | eq "2.9" }}
+      {{ if .File.BaseFileName | replaceRE "^[0-9]+.[0-9]+.([0-9]+).*" "$1" | float | lt 2 }}
+        {{ $checksum_suffix = "sha512" }}
+      {{ end }}
+    {{ else if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]).*" "$1" | eq "2.8" }}
+      {{ if .File.BaseFileName | replaceRE "^[0-9]+.[0-9]+.([0-9]+).*" "$1" | float | lt 5 }}
+        {{ $checksum_suffix = "sha512" }}
+      {{ end }}
+    {{ end }}
+
      <tr>
        <td>{{.File.BaseFileName }}</td>
        <td>{{dateFormat "2006 Jan 2 " .Date}}</td>
        <td>
          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz">source</a>
-         (<a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz.mds">checksum</a>
+         (<a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz.{{ $checksum_suffix }}">checksum</a>
          <a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz.asc">signature</a>)
         </td>
         <td>
           <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz">binary</a>
-          (<a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.mds">checksum</a>
+          (<a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.{{ $checksum_suffix }}">checksum</a>
           <a href="https://www.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.asc">signature</a>)
          </td>
          <td>
