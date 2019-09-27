@@ -154,7 +154,7 @@
 
   <p>Hadoop is released as source code tarballs with corresponding binary
   tarballs for convenience. The downloads are distributed via mirror sites
-  and should be checked for tampering using GPG or SHA-256.</p>
+  and should be checked for tampering using GPG or SHA-512.</p>
 
 <p>
   <table class="table table-striped">
@@ -168,17 +168,27 @@
     </tr>
   </thead>
   
+
+    
+    
+    
+    
+      
+        
+      
+    
+
      <tr>
        <td>3.2.1</td>
        <td>2019 Sep 22 </td>
        <td>
          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.1/hadoop-3.2.1-src.tar.gz">source</a>
-         (<a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.1/hadoop-3.2.1-src.tar.gz.mds">checksum</a>
+         (<a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.1/hadoop-3.2.1-src.tar.gz.sha512">checksum</a>
          <a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.1/hadoop-3.2.1-src.tar.gz.asc">signature</a>)
         </td>
         <td>
           <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz">binary</a>
-          (<a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz.mds">checksum</a>
+          (<a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz.sha512">checksum</a>
           <a href="https://www.apache.org/dist/hadoop/common/hadoop-3.2.1/hadoop-3.2.1.tar.gz.asc">signature</a>)
          </td>
          <td>
@@ -186,6 +196,14 @@
          </td>
      </tr>
   
+
+    
+    
+    
+    
+      
+    
+
      <tr>
        <td>3.1.2</td>
        <td>2019 Feb 6 </td>
@@ -204,6 +222,14 @@
          </td>
      </tr>
   
+
+    
+    
+    
+    
+      
+    
+
      <tr>
        <td>2.9.2</td>
        <td>2018 Nov 19 </td>
@@ -222,6 +248,14 @@
          </td>
      </tr>
   
+
+    
+    
+    
+    
+      
+    
+
      <tr>
        <td>2.8.5</td>
        <td>2018 Sep 15 </td>
@@ -240,6 +274,12 @@
          </td>
      </tr>
   
+
+    
+    
+    
+    
+
      <tr>
        <td>2.7.7</td>
        <td>2018 May 31 </td>
@@ -290,14 +330,14 @@ KEYS</a> file.</li>
 <li>gpg &ndash;verify hadoop-X.Y.Z-src.tar.gz.asc</li>
 </ol>
 
-<h2 id="to-perform-a-quick-check-using-sha-256">To perform a quick check using SHA-256:</h2>
+<h2 id="to-perform-a-quick-check-using-sha-512">To perform a quick check using SHA-512:</h2>
 
 <ol>
 <li>Download the release hadoop-X.Y.Z-src.tar.gz from a <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common">mirror
 site</a>.</li>
-<li>Download the checksum hadoop-X.Y.Z-src.tar.gz.mds from
+<li>Download the checksum hadoop-X.Y.Z-src.tar.gz.sha512 or hadoop-X.Y.Z-src.tar.gz.mds from
 <a href="https://www.apache.org/dist/hadoop/common/">Apache</a>.</li>
-<li>shasum -a 256 hadoop-X.Y.Z-src.tar.gz</li>
+<li>shasum -a 512 hadoop-X.Y.Z-src.tar.gz</li>
 </ol>
 
 <p>All previous releases of Hadoop are available from the <a href="https://archive.apache.org/dist/hadoop/common/">Apache release
