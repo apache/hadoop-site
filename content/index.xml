@@ -1229,7 +1229,7 @@ The Apache Hadoop software library is a framework that allows for the distribute
       <guid>https://hadoop.apache.org/cve_list.html</guid>
       <description>This page lists security fixes that the Hadoop PMC felt warranted a CVE. If you think something is missing from this list or if you think the set of impacted or fixed versions is incomplete then please ask on the Security list.
 CVEs are presented in most-recent-first order of announcement.
-CVE-2018-8029 Apache Hadoop Privilege escalation vulnerability A user who can escalate to yarn user can possibly run arbitrary commands as root user.</description>
+CVE-2018-11768 Apache Hadoop HDFS FSImage Corruption There is a mismatch in the size of the fields used to store user/group information between memory and disk representation.</description>
     </item>
     
     <item>

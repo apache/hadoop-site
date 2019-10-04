@@ -37,6 +37,27 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2018-11768](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11768) Apache Hadoop HDFS FSImage Corruption
+
+There is a mismatch in the size of the fields used to store user/group
+information between memory and disk representation. This causes the user/group
+information to be corrupted across storing in fsimage and reading back from
+fsimage.
+
+This vulnerability fix contains a fsimage layout change, so once the image is
+saved in the new layout format you cannot go back to a version that doesn’t
+support the newer layout. This means that once 2.7.x users upgraded to the
+fixed version, they cannot downgrade to 2.7.x because there is no fixed version
+in 2.7.x. We suggest downgrade to 2.8.5 or upper version that contains the
+vulnerability fix.
+
+- **Versions affected**: 3.1.0 to 3.1.1, 3.0.0-alpha1 to 3.0.3, 2.9.0 to 2.9.1, 2.0.0-alpha to 2.8.4
+- **Fixed versions**: 3.1.2, 2.9.2, 2.8.5
+- **Impact**: information disclosure
+- **Reporter**: Ekanth Sethuramalingam
+- **Reported Date**: 2018/06/05
+- **Issue Announced**: 2019/10/03 ([general@hadoop](https://lists.apache.org/thread.html/2067a797b330530a6932f4b08f703b3173253d0a2b7c8c524e54adaf@%3Cgeneral.hadoop.apache.org%3E))
+
 ## [CVE-2018-8029](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8029) Apache Hadoop Privilege escalation vulnerability
 
 A user who can escalate to yarn user can possibly run arbitrary
