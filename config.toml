@@ -13,7 +13,7 @@
 #
 baseurl = "https://hadoop.apache.org"
 title = "Apache Hadoop"
-copyright = "&copy; 2018 Apache Software Foundation"
+copyright = "Copyright © 2006-{year} The Apache Software Foundation"
 enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 uglyurls = true
