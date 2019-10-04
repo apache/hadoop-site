@@ -61,12 +61,13 @@ order):
   enis             |[Enis Soztutar](http://people.apache.org/~enis)                              |Hortonworks    |            |-8
   epayne           |[Eric Payne](http://people.apache.org/~epayne)                               |Verizon Media  |            |-6
   gkesavan         |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                     |Hortonworks    |            |-8
-  haibochen        |Haibo Chen                                                                   |Cloudera       |            |-8
+  haibochen        |Haibo Chen                                                                   |LinkedIn       |            |-8
   hairong          |Hairong Kuang                                                                |Facebook       |            |-8
   hitesh           |Hitesh Shah                                                                  |Hortonworks    |            |-8
   inigoiri         |Íñigo Goiri                                                                  |Microsoft      |            |-8
   jeagles          |[Jonathan Eagles](http://people.apache.org/~jeagles)                         |Verizon Media  |            |-6
   jghoman          |[Jakob Homan](http://people.apache.org/~jghoman)                             |LinkedIn       |            |-8
+  jhung            |Jonathan Hung                                                                |LinkedIn       |            |-8
   jianhe           |[Jian He](http://people.apache.org/~jianhe)                                  |Hortonworks    |            |-8
   jing9            |Jing Zhao                                                                    |Hortonworks    |            |-8
   jitendra         |[Jitendra Nath Pandey](http://people.apache.org/~jitendra)                   |Hortonworks    |            |-8
@@ -110,7 +111,7 @@ order):
   tomwhite         |[Tom White](http://weblogs.java.net/blog/tomwhite/)                          |Cloudera       |            |-8
   tucu             |Alejandro Abdelnur                                                           |Cloudera       |            |-8
   umamahesh        |[Uma Maheswara Rao G](https://people.apache.org/~umamahesh/umamahesh.html)   |Intel          |            |+5.5
-  varunsaxena      |[Varun Saxena](http://people.apache.org/~varunsaxena)                        |Huawei         |            |+5.5
+  varunsaxena      |[Varun Saxena](http://people.apache.org/~varunsaxena)                        |LinkedIn       |            |+5.5
   vinayakumarb     |[Vinayakumar B](https://people.apache.org/~vinayakumarb/)                    |Huawei         |            |+5.5
   vinodkv          |Vinod Kumar Vavilapalli                                                      |Hortonworks    |            |-8
   vvasudev         |Varun Vasudev                                                                |               |            |+5.5
@@ -172,7 +173,7 @@ cliang              |Chen Liang                                                 
 cmccabe             |[Colin Patrick McCabe](http://www.club.cc.cmu.edu/~cmccabe)                         |Cloudera                        |HDFS    |-8
 cnauroth            |Chris Nauroth                                                                       |Hortonworks                     |        |-8
 cos                 |[Konstantin Boudnik](http://people.apache.org/~cos)                                 |WANdisco                        |        |-8
-csingh              |Chandni Singh                                                                       |Cloudera                        |        |-8
+csingh              |Chandni Singh                                                                       |LinkedIn                        |        |-8
 ctrezzo             |Chris Trezzo                                                                        |Twitter                         |        |-8
 curino              |Carlo Curino                                                                        |Microsoft                       |        |-8
 cutting             |[Doug Cutting](http://blog.lucene.com/)                                             |Cloudera                        |        |-8
@@ -193,7 +194,7 @@ gifuma              |Giovanni Matteo Fumarola                                   
 gkesavan            |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                            |Hortonworks                     |RE      |-8
 gtcarrera9          |Li Lu                                                                               |Hortonworks                     |        |-8
 hitesh              |Hitesh Shah                                                                         |Hortonworks                     |        |-8
-haibochen           |Haibo Chen                                                                          |Cloudera                        |        |-8
+haibochen           |Haibo Chen                                                                          |LinkedIn                        |        |-8
 hairong             |[Hairong Kuang](http://people.apache.org/~hairong)                                  |Facebook                        |HDFS    |-8
 hanishakoneru       |Hanisha Koneru                                                                      |Hortonworks                     |        |-8
 harsh               |[Harsh J](http://harshj.com/)                                                       |Cloudera                        |        |+5.5
@@ -272,7 +273,7 @@ todd                |[Todd Lipcon](http://people.apache.org/~todd)              
 tomwhite            |[Tom White](http://www.lexemetech.com)                                              |Cloudera                        |        |-8
 tucu                |Alejandro Abdelnur                                                                  |Cloudera                        |        |-8
 umamahesh           |[Uma Maheswara Rao G](https://people.apache.org/~umamahesh/umamahesh.html)          |Intel                           |HDFS    |+5.5
-varunsaxena         |[Varun Saxena](http://people.apache.org/~varunsaxena)                               |Huawei                          |        |+5.5
+varunsaxena         |[Varun Saxena](http://people.apache.org/~varunsaxena)                               |LinkedIn                        |        |+5.5
 vinayakumarb        |[Vinayakumar B](http://people.apache.org/~vinayakumarb)                             |Huawei                          |HDFS    |+5.5
 vinodkv             |[Vinod Kumar Vavilapalli](http://people.apache.org/~vinodkv)                        |Hortonworks                     |        |-8
 vrushali            |[Vrushali Channapattan](http://people.apache.org/~vrushali)                         |Twitter                         |        |-8
