@@ -218,6 +218,7 @@ knoguchi            |[Koji Noguchi](http://people.apache.org/~knoguchi)         
 kzhang              |Kan Zhang                                                                           |IBM                             |        |-8
 lei                 |[Lei Xu](http://people.apache.org/~lei)                                             |Cloudera                        |        |-8
 liuml07             |[Mingliang Liu](http://people.apache.org/~liuml07)                                  |Salesforce                      |HDFS    |-8
+liuxun              |[Xun Liu](https://github.com/liuxunorg/)                                            |PingCAP                         |        |+8
 lohit               |[Lohit Vijayarenu](http://people.apache.org/~lohit)                                 |Twitter                         |        |-8
 llu                 |[Luke Lu](http://people.apache.org/~llu)                                            |VMware                          |        |-8
 lmccay              |[Larry McCay](http://people.apache.org/~lmccay)                                     |Hortonworks                     |        |-5
