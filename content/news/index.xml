@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Tue, 07 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 13 Oct 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hadoop.apache.org/news/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ozone 0.4.1-alpha is released</title>
+      <link>https://hadoop.apache.org/news/2019-10-13-ozone-0.4.1-alpha.html</link>
+      <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2019-10-13-ozone-0.4.1-alpha.html</guid>
+      <description>Next version of Apache Hadoop Ozone is released with Native ACLs, K8s support and improved stability.
+For more information check the ozone site.</description>
+    </item>
     
     <item>
       <title>Ozone 0.4.0-alpha is released</title>

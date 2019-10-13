@@ -4,19 +4,22 @@
   
   <url>
     <loc>/ozone/</loc>
-    <lastmod>2019-05-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-10-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/ozone/release/0.4.1-alpha/</loc>
+    <lastmod>2019-10-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/ozone/release/</loc>
+    <lastmod>2019-10-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/ozone/release/0.4.0-alpha/</loc>
     <lastmod>2019-05-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/ozone/release/</loc>
-    <lastmod>2019-05-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -35,7 +38,6 @@
   
   <url>
     <loc>/ozone/categories/</loc>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -48,7 +50,6 @@
   
   <url>
     <loc>/ozone/tags/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>

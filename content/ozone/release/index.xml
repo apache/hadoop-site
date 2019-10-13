@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018 Apache Software Foundation</copyright>
-    <lastBuildDate>Tue, 07 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 13 Oct 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/ozone/release/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Release 0.4.1-alpha available</title>
+      <link>/ozone/release/0.4.1-alpha/</link>
+      <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/ozone/release/0.4.1-alpha/</guid>
+      <description>Apache Hadoop Ozone 0.4.1-alpha is released with following features:
+ Ozone Native ACL support First class K8s support Stability improvements  This is an alpha release and not production ready.
+ Image credit: Catholic 85, Biscayne, CC-BY-SA-4.0 The haiku is a inspired work.</description>
+    </item>
     
     <item>
       <title>Release 0.4.0-alpha available</title>
