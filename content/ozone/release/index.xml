@@ -20,7 +20,8 @@
       <guid>/ozone/release/0.4.1-alpha/</guid>
       <description>Apache Hadoop Ozone 0.4.1-alpha is released with following features:
  Ozone Native ACL support First class K8s support Stability improvements  This is an alpha release and not production ready.
- Image credit: Catholic 85, Biscayne, CC-BY-SA-4.0 The haiku is a inspired work.</description>
+ Image credit: Catholic 85, Biscayne, CC-BY-SA-4.0
+The haiku is inspired work.</description>
     </item>
     
     <item>
