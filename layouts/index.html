@@ -33,7 +33,7 @@
         <div class="col-md-4">
           <h2>Latest news</h2>
             <div class="col-md-12">
-            {{range first 5 (where (where .Site.Pages "Section" "in" "release news") ".Title" "!=" "Releases") }}
+            {{range first 5 (where (where .Site.Pages "Section" "in" (slice "release" "news")) ".Name" "not in" (slice "News" "Releases")) }}
             <div class="panel panel-default">
                <div class="panel-heading clearfix"><a class="pull-left" href={{.RelPermalink}}>{{.Title}}</a> <small class="pull-right">{{dateFormat "2006 Jan 2 " .Date}}</small></div>
                <div class="panel-body">
