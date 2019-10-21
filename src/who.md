@@ -181,6 +181,7 @@ daryn               |Daryn Sharp                                                
 ddas                |[Devaraj Das](http://people.apache.org/~ddas)                                       |Hortonworks                     |        |-8
 devaraj             |Devaraj K                                                                           |Intel                           |        |+5.5
 dhruba              |[Dhruba Borthakur](http://people.apache.org/~dhruba)                                |Facebook                        |        |-8
+dineshc		    |[Dinesh Chitlangia](https://www.linkedin.com/in/dineshchitlangia/)			 |Cloudera			  |	   |-5
 drankye             |[Kai Zheng](http://people.apache.org/~drankye)                                      |Intel                           |        |+8
 ebadger             |Eric Badger                                                                         |Verizon Media                   |        |-6
 elek                |[Márton Elek](https://github.com/elek)                                              |Hortonworks                     |        |+1
