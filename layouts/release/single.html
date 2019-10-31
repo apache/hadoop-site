@@ -44,6 +44,9 @@
   {{ if .File.BaseFileName | replaceRE "^[0-9]+.[0-9]+.([0-9]+).*" "$1" | float | lt 5 }}
     {{ $checksum_suffix = "sha512" }}
   {{ end }}
+<!-- else if the version >= 2.10.0 -->
+{{ else if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | eq "2.10" }}
+  {{ $checksum_suffix = "sha512" }}
 {{ end }}
 
 {{partial "header.html" .}}
