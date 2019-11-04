@@ -1062,7 +1062,7 @@ public class WordCount2 {
 <p>Run it once more, this time switch-off case-sensitivity:</p>
 <p><tt>$ bin/hadoop jar wc.jar WordCount2 -Dwordcount.case.sensitive=false /user/joe/wordcount/input /user/joe/wordcount/output -skip /user/joe/wordcount/patterns.txt</tt></p>
 <p>Sure enough, the output:</p>
-<p><tt>$ bin/hdfs dfs -cat /user/joe/wordcount/output/part-r-00000</tt> <br /><tt>bye 1</tt> <br /><tt>goodbye 1</tt> <br /><tt>hadoop 2</tt> <br /><tt>hello 2</tt> <br /><tt>horld 2</tt></p></div>
+<p><tt>$ bin/hdfs dfs -cat /user/joe/wordcount/output/part-r-00000</tt> <br /><tt>bye 1</tt> <br /><tt>goodbye 1</tt> <br /><tt>hadoop 2</tt> <br /><tt>hello 2</tt> <br /><tt>world 2</tt></p></div>
 <div class="section">
 <h5>Highlights<a name="Highlights"></a></h5>
 <p>The second version of <tt>WordCount</tt> improves upon the previous one by using some features offered by the MapReduce framework:</p>
