@@ -240,3 +240,49 @@ The Hadoop MapReduce issues mailing list is:
 -   [Unsubscribe from
     List](mailto:mapreduce-issues-unsubscribe@hadoop.apache.org)
 -   [Archives](http://mail-archives.apache.org/mod_mbox/hadoop-mapreduce-issues/)
+
+## Ozone
+
+### Developers
+If you'd like to contribute to Ozone, please subscribe to the
+Hadoop developer mailing list.
+
+The Ozone developer mailing list is:
+<ozone-dev@hadoop.apache.org>.
+
+-   [Subscribe to List](mailto:ozone-dev-subscribe@hadoop.apache.org)
+-   [Unsubscribe from
+    List](mailto:ozone-dev-unsubscribe@hadoop.apache.org)
+-   [Archives](http://mail-archives.apache.org/mod_mbox/hadoop-ozone-dev/)
+
+### Commits
+
+If you'd like to see changes made in the Ozone [version control
+system](version_control.html), please subscribe to the Ozone
+commits mailing list.
+
+The Ozone commits mailing list is:
+<ozone-commits@hadoop.apache.org>.
+
+-   [Subscribe to
+    List](mailto:ozone-commits-subscribe@hadoop.apache.org)
+-   [Unsubscribe from
+    List](mailto:ozone-commits-unsubscribe@hadoop.apache.org)
+-   [Archives](http://mail-archives.apache.org/mod_mbox/hadoop-ozone-commits/)
+
+
+### Issues
+
+If you'd like to see changes made in the Ozone [issue tracking
+system](issue_tracking.html), please subscribe to the Ozone
+issues mailing list.
+
+The Ozone issues mailing list is:
+<ozone-issues@hadoop.apache.org>.
+
+-   [Subscribe to
+    List](mailto:ozone-issues-subscribe@hadoop.apache.org)
+-   [Unsubscribe from
+    List](mailto:ozone-issues-unsubscribe@hadoop.apache.org)
+-   [Archives](http://mail-archives.apache.org/mod_mbox/hadoop-ozone-issues/)
+
