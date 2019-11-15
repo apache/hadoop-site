@@ -19,61 +19,17 @@
 <div class="whatis">
     <div class="container">
         <div class="row header">
-            <h2>What is Apache Hadoop Submarine?</h2>
+            <h2>Submarine officially became the top level project of Apache!</h2>
             <p class="lead">
-                Submarine is a new subproject of Apache Hadoop.</p>
-            <p class="lead">Submarine is a project which allows infra engineer / data scientist
-            to run deep learning applications (Tensorflow, Pytorch, etc.) on resource management platform (like YARN).
+                Apache Submarine is a unified AI platform which allows engineers and data scientists to run Machine Learning and Deep Learning workload in distributed cluster.
             </p>
             </p>
+            Project Domain: <a href="https://submarine.apache.org">https://submarine.apache.org</a></p>
+            Project Repo: <a href="https://github.com/apache/submarine">https://github.com/apache/submarine</a>
             <p></p>
         </div>
     </div>
 </div>
 
 
-<div class="main-section feature-list-group" style="padding: 80px;">
-    <div class="container">
-        <div class="row feature-list">
-            <div class="col-md-4 col-sm-4 feature-item">
-
-                <h4><span class="glyphicon glyphicon-cloud" aria-hidden="true"></span> Run on existing cluster</h4>
-                <p>
-                 The submarine program supports YARN and other projects like Kubernetes in the future as resource scheduling frameworks.
-                </p>
-                <p></p>
-            </div>
-            <div class="col-md-4 col-sm-4 feature-item">
-                <h4><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
-                   Various frameworks</h4>
-                <p>
-                    Multiple machine learning frameworks are supported such as Tensorflow, Pytorch, MxNet, etc.
-                </p>
-            </div>
-            <div class="col-md-4 col-sm-4 feature-item">
-                <h4><span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>Everything about ML</h4>
-                <p>Submarine is not just a machine learning engine. </p>
-                <p>It covers the entire process of machine learning: algorithm development, model batch training, model incremental training, model online services and model management.
-                </p>
-            </div>
-
-
-        </div><!-- /.feature-list -->
-
-
-    </div><!-- /.container -->
-</div><!-- /.feature-list-group -->
-
-
-<a name="qa"></a>
-<div class="main-section">
-    <div class="container">
-        <div class="row header">
-        {{range where .Site.Pages "Title" "Questions and Answers"}}
-        <h2>{{ .Title }}</h2>
-{{ .Content }}
-        {{end}}
-        </div>
-    </div>
-</div>
 {{ partial "footer.html" . }}
