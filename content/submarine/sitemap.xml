@@ -3,18 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/submarine/</loc>
-    <lastmod>2019-07-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/submarine/release/0.2.0/</loc>
     <lastmod>2019-07-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/submarine/release/</loc>
+    <loc>/submarine/</loc>
     <lastmod>2019-07-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -99,6 +93,12 @@
   
   <url>
     <loc>/submarine/qa/</loc>
+  </url>
+  
+  <url>
+    <loc>/submarine/release/</loc>
+    <lastmod>2019-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
