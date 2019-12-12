@@ -48,7 +48,7 @@ Both Ozone and HDDS requires one additional master component - Ozone Manager and
 The worker parts of Ozone/HDDS can be started as an HDFS Datanode plugin or as standalone.
 
 ## I see that Ozone is an Alpha/Beta release. Do you have a road map to GA?
-Yes, We do. Thanks for asking. Here is the [road map][3] to GA.
+Yes, We do. Thanks for asking. Here is the [road map][1] to GA.
 
 ### This sounds very interesting. How can I contribute? I have never contributed to Open source/I am a novice/I don't know how to contribute/I am intimidated, what can I do?
 
@@ -58,9 +58,8 @@ Ask us, please don't feel shy. We are an open and welcoming community. Feel free
 
 You are also welcome to join our weekly community call, and just talk to us. There are several ways to start contributing to Ozone.
 
-The contribution process is the same as for any other [Hadoop subproject][1]. The Ozone Contribution Guidelines is available from the [wiki][2].
+The contribution process is the same as for any other Hadoop subproject. The Ozone Contribution Guidelines is available from the [wiki][2].
 
 
-[1]: https://wiki.apache.org/hadoop/HowToContribute
+[1]: https://cwiki.apache.org/confluence/display/HADOOP/Ozone+Road+Map
 [2]: https://cwiki.apache.org/confluence/display/HADOOP/Ozone+Contributor+Guide
-[3]: https://cwiki.apache.org/confluence/display/HADOOP/Ozone+Road+Map
