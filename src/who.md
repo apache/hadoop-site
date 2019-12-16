@@ -50,6 +50,7 @@ order):
   brahma           |Brahma Reddy Battula                                                         |Huawei         |            |+5.5
   brandonli        |Brandon Li                                                                   |Hortonworks    |            |-8
   cdouglas         |[Chris Douglas](http://people.apache.org/~cdouglas)                          |Microsoft      |            |-8
+  cliang           |Chen Liang                                                                   |LinkedIn       |            |-8
   cmccabe          |[Colin Patrick McCabe](http://www.club.cc.cmu.edu/~cmccabe)                  |Cloudera       |HDFS        |-8
   cnauroth         |Chris Nauroth                                                                |Hortonworks    |            |-8
   cutting          |[Doug Cutting](http://blog.lucene.com/)                                      |Cloudera       |            |-8
