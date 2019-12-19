@@ -97,6 +97,7 @@ order):
   shv              |[Konstantin Shvachko](http://people.apache.org/~shv)                         |LinkedIn       |HDFS        |-8
   sammichen        |Sammi Chen                                                                   |Tencent        |            |+8
   sandy            |[Sandy Ryza](http://people.apache.org/~sandy)                                |Cloudera       |            |-8
+  shashikant       |Shashikant Banerjee                                                          |Cloudera                    |+5.5
   sjlee            |[Sangjin Lee](http://people.apache.org/~sjlee)                               |PayPal         |            |-8
   sradia           |[Sanjay Radia](http://people.apache.org/~sradia)                             |Hortonworks    |            |-8
   sseth            |Siddharth Seth                                                               |Hortonworks    |            |-8
@@ -253,6 +254,7 @@ schen               |[Scott Chun-Yang Chen](http://people.apache.org/~schen)    
 sharad              |Sharad Agarwal                                                                      |InMobi                          |        |+5.5
 shv                 |[Konstantin Shvachko](http://people.apache.org/~shv)                                |LinkedIn                        |HDFS    |-8
 sandy               |[Sandy Ryza](http://people.apache.org/~sandy)                                       |Cloudera                        |        |-8
+shashikant          |Shashikant Banerjee                                                                 |Cloudera                        |        |+5.5
 sjlee               |[Sangjin Lee](http://people.apache.org/~sjlee)                                      |PayPal                          |        |-8
 sradia              |[Sanjay Radia](http://people.apache.org/~sradia)                                    |Hortonworks                     |        |-8
 sreekanth           |Sreekanth Ramakrishnan                                                              |InMobi                          |        |+5.5
