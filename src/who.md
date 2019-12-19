@@ -225,6 +225,7 @@ liuxun              |[Xun Liu](https://github.com/liuxunorg/)                   
 lohit               |[Lohit Vijayarenu](http://people.apache.org/~lohit)                                 |Twitter                         |        |-8
 llu                 |[Luke Lu](http://people.apache.org/~llu)                                            |VMware                          |        |-8
 lmccay              |[Larry McCay](http://people.apache.org/~lmccay)                                     |Hortonworks                     |        |-5
+ljain               |Lokesh Jain                                                                         |Cloudera                        |        |+5.5
 mackrorysd          |Sean Mackrory                                                                       |Cloudera                        |        |-7
 mahadev             |Mahadev Konar                                                                       |Hortonworks                     |        |-8
 manojpec            |Manoj Govindassamy                                                                  |Cloudera                        |        |-8
