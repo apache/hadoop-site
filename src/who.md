@@ -84,7 +84,9 @@ order):
   mahadev          |Mahadev Konar                                                                |Hortonworks    |            |-8
   mattf            |Matt Foley                                                                   |Apple          |            |-8
   mingma           |Ming Ma                                                                      |Twitter        |            |-8
+  msingh           |Mukul Kumar Singh                                                            |Hortonworks    |            |+5.5
   naganarasimha\_gr|[Naganarasimha G R](http://people.apache.org/~naganarasimha_gr/)             |SCB            |            |+8.0
+  nanda            |Nanda kumar                                                                  |Hortonworks    |            |+5.5
   nigel            |Nigel Daley                                                                  |Pinterest      |            |-8
   omalley          |[Owen O\'Malley](http://people.apache.org/~omalley)                          |Hortonworks    |            |-8
   ozawa            |[Tsuyoshi Ozawa](http://people.apache.org/~ozawa)                            |NTT            |            |+9
