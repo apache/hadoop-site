@@ -244,6 +244,7 @@ nigel               |[Nigel Daley](http://people.apache.org/~nigel)             
 nroberts            |Nathan Roberts                                                                      |Verizon Media                   |        |-6
 omalley             |[Owen O\'Malley](http://people.apache.org/~omalley)                                 |Hortonworks                     |        |-8
 ozawa               |[Tsuyoshi Ozawa](http://people.apache.org/~ozawa)                                   |NTT                             |        |+9
+prabhujoseph        |Prabhu Joseph                                                                       |Cloudera                        |        |+5.5
 rakeshr             |[Rakesh Radhakrishnan](https://people.apache.org/~rakeshr)                          |Intel                           |        |+5.5
 rangadi             |[Raghu Angadi](http://people.apache.org/~rangadi)                                   |Twitter                         |HDFS    |-8
 ramya               |[Ramya Sunil](http://people.apache.org/~ramya)                                      |Hortonworks                     |        |-8
