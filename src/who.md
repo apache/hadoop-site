@@ -107,6 +107,7 @@ order):
   stevel           |Steve Loughran                                                               |Cloudera       |            |0
   subru            |Subru Krishnan                                                               |Microsoft      |            |-8
   sunilg            |Sunil Govindan                                                              |Cloudera      |            |+5.5
+  surendralilhore  |Surendra Singh Lilhore                                                       |Huawei         |HDFS        |+5.5
   suresh           |[Suresh Srinivas](http://people.apache.org/~suresh)                          |Hortonworks    |            |-8
   szetszwo         |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                  |Hortonworks    |            |-8
   templedf         |Daniel Templeton                                                             |Cloudera       |            |-8
