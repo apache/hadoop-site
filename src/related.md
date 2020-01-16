@@ -42,6 +42,9 @@ Other Hadoop-related projects at Apache include:
     Hadoop data. Spark provides a simple and expressive programming
     model that supports a wide range of applications, including ETL,
     machine learning, stream processing, and graph computation.
+-   [**Submarine**](https://submarine.apache.org): A unified AI platform which allows 
+    engineers and data scientists to run Machine Learning and Deep Learning workload in 
+    distributed cluster.
 -   [**Tez™**](https://tez.apache.org): A generalized data-flow programming framework,
     built on Hadoop YARN, which provides a powerful and flexible engine
     to execute an arbitrary DAG of tasks to process data for both batch
