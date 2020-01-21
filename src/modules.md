@@ -21,4 +21,3 @@ The project includes these modules:
   - __Hadoop YARN__: A framework for job scheduling and cluster resource management.
   - __Hadoop MapReduce__: A YARN-based system for parallel processing of large data sets.
   - __[Hadoop Ozone](https://hadoop.apache.org/ozone/)__: An object store for Hadoop.
-  - __[Hadoop Submarine](https://hadoop.apache.org/submarine/)__: A machine learning engine for Hadoop.
