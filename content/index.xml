@@ -1282,7 +1282,8 @@ We welcome input, however, before filing a request, please make sure you do the 
       <guid>https://hadoop.apache.org/mailing_lists.html</guid>
       <description>User The user@ mailing list is the preferred mailing list for end-user questions and discussion.
 Please use the specific module&amp;rsquo;s -dev@ mailing list to address developers on a specific technical question. The Hadoop user mailing list is : user@hadoop.apache.org.
- Subscribe to List Unsubscribe from List Archives  In order to post to the list, it is necessary to first subscribe to it.
+ Subscribe to List Unsubscribe from List Archives  中文用户可利用user-zh邮件列表以中文发问
+ 订阅邮件列表 取消订阅 归档邮件  In order to post to the list, it is necessary to first subscribe to it.
 Security The security mailing list is a private list for discussion of potential security vulnerabilities issues.</description>
     </item>
     

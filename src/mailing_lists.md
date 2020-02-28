@@ -31,6 +31,12 @@ The Hadoop user mailing list is : <user@hadoop.apache.org>.
 -   [Unsubscribe from List](mailto:user-unsubscribe@hadoop.apache.org)
 -   [Archives](http://mail-archives.apache.org/mod_mbox/hadoop-user/)
 
+中文用户可利用user-zh邮件列表以中文发问
+
+-   [订阅邮件列表](mailto:user-zh-subscribe@hadoop.apache.org)
+-   [取消订阅](mailto:user-zh-unsubscribe@hadoop.apache.org)
+-   [归档邮件](http://mail-archives.apache.org/mod_mbox/hadoop-user-zh/)
+
 In order to post to the list, it is necessary to first subscribe to it.
 
 ## Security
