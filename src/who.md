@@ -46,6 +46,7 @@ order):
   atm              |[Aaron T. Myers](http://people.apache.org/~atm)                              |Cloudera       |            |-8
   bikas            |Bikas Saha                                                                   |Hortonworks    |            |-8
   billie           |Billie Rinaldi                                                               |Microsoft      |            |-5
+  bibinchundatt    |Bibin A Chundatt                                                             |Microsoft      |            |+5.5
   bobby            |Robert(Bobby) Evans                                                          |Nvidia         |            |-6
   brahma           |Brahma Reddy Battula                                                         |Huawei         |            |+5.5
   brandonli        |Brandon Li                                                                   |Hortonworks    |            |-8
@@ -164,7 +165,7 @@ aw                  |Allen Wittenauer                                           
 ayushsaxena         |Ayush Saxena                                                                        |Wipro                           |        |+5.5
 benoy               |[Benoy Antony](http://people.apache.org/~benoy)                                     |eBay                            |        |-8
 bharat              |Bharat Viswanadham                                                                  |Hortonworks                     |        |-8
-bibinchundatt       |Bibin A Chundatt                                                                    |Huawei                          |        |+5.5
+bibinchundatt       |Bibin A Chundatt                                                                    |Microsoft                       |        |+5.5
 bikas               |Bikas Saha                                                                          |Hortonworks                     |        |-8
 billie              |Billie Rinaldi                                                                      |Cloudera                        |        |-5
 bobby               |Robert(Bobby) Evans                                                                 |Nvidia                          |        |-6
