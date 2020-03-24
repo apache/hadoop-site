@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Ozone</title>
@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018 Apache Software Foundation</copyright>
-    <lastBuildDate>Sun, 13 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/ozone/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Release 0.5.0-beta available</title>
+      <link>/ozone/release/0.5.0-beta/</link>
+      <pubDate>Tue, 24 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/ozone/release/0.5.0-beta/</guid>
+      <description>Apache Hadoop Ozone 0.5.0-beta is released with following features:
+ O3FS - S3A based file system semantics Able to handle 1 billion objects Network topology awareness for block placement GDPR Right to Erasure  This is a beta release and not production ready.
+ Image credit: WolfmanSF, Crater Lake, CC-BY-SA-3.0</description>
+    </item>
     
     <item>
       <title>Release 0.4.1-alpha available</title>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>News on Apache Hadoop</title>
@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Sun, 13 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hadoop.apache.org/news/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ozone 0.5.0-beta is released</title>
+      <link>https://hadoop.apache.org/news/2020-03-24-ozone-0.5.0-beta.html</link>
+      <pubDate>Tue, 24 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2020-03-24-ozone-0.5.0-beta.html</guid>
+      <description>First beta release of Apache Hadoop Ozone with GDPR Right to Erasure, Network Topology Awareness, O3FS, and improved scalability/stability.
+For more information check the ozone site.</description>
+    </item>
     
     <item>
       <title>Ozone 0.4.1-alpha is released</title>
