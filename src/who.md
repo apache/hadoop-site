@@ -136,6 +136,7 @@ order):
   zhz              |[Zhe Zhang](http://zhe-thoughts.github.io/about/)                            |LinkedIn       |            |-8
   zjshen           |[Zhijie Shen](http://people.apache.org/~zjshen)                              |Hortonworks    |            |-8
   zshao            |Zheng Shao                                                                   |Facebook       |            |-8
+  ztang            |Zhankun Tang                                                                 |Cloudera       |            |+8
 
 Emeritus Hadoop PMC Members
 -   Andrzej Bialecki
