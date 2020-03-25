@@ -262,6 +262,7 @@ sharad              |Sharad Agarwal                                             
 shv                 |[Konstantin Shvachko](http://people.apache.org/~shv)                                |LinkedIn                        |HDFS    |-8
 sandy               |[Sandy Ryza](http://people.apache.org/~sandy)                                       |Cloudera                        |        |-8
 shashikant          |Shashikant Banerjee                                                                 |Cloudera                        |        |+5.5
+siyao               |[Siyao Meng](http://people.apache.org/~siyao)                                       |Cloudera                        |        |-8
 sjlee               |[Sangjin Lee](http://people.apache.org/~sjlee)                                      |PayPal                          |        |-8
 sradia              |[Sanjay Radia](http://people.apache.org/~sradia)                                    |Hortonworks                     |        |-8
 sreekanth           |Sreekanth Ramakrishnan                                                              |InMobi                          |        |+5.5
