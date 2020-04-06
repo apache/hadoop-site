@@ -298,6 +298,7 @@ wangda              |Wangda Tan                                                 
 weichiu             |[Wei-Chiu Chuang](http://weichiu.com/about-wei-chiu/)                               |Cloudera                        |        |-8
 weiy                |Wei Yan                                                                             |Uber                            |        |-8
 wheat9              |[Haohui Mai](http://haohui.me)                                                      |Uber                            |        |-8
+wilfreds            |[Wilfred Spiegelenburg](https://github.com/wilfred-s)                               |Cloudera                        |        |+10
 wwei                |[Weiwei Yang](https://yangwwei.github.io/)                                          |Hortonworks                     |        |+8
 xgong               |[Xuan Gong](http://people.apache.org/~xgong)                                        |Hortonworks                     |        |-8
 xiao                |Xiao Chen                                                                           |Netflix                         |        |-8
