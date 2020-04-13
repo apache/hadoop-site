@@ -100,7 +100,7 @@ order):
   shv              |[Konstantin Shvachko](http://people.apache.org/~shv)                         |LinkedIn       |HDFS        |-8
   sammichen        |Sammi Chen                                                                   |Tencent        |            |+8
   sandy            |[Sandy Ryza](http://people.apache.org/~sandy)                                |Cloudera       |            |-8
-  shashikant       |Shashikant Banerjee                                                          |Cloudera                    |+5.5
+  shashikant       |Shashikant Banerjee                                                          |Cloudera       |            |+5.5
   sjlee            |[Sangjin Lee](http://people.apache.org/~sjlee)                               |PayPal         |            |-8
   sradia           |[Sanjay Radia](http://people.apache.org/~sradia)                             |Hortonworks    |            |-8
   sseth            |Siddharth Seth                                                               |Hortonworks    |            |-8
@@ -162,6 +162,7 @@ arp                 |[Arpit Agarwal](http://people.apache.org/~arp)             
 arpit               |[Arpit Gupta](http://people.apache.org/~arpit)                                      |Hortonworks                     |        |-8
 asuresh             |Arun Suresh                                                                         |LinkedIn                        |        |-8
 atm                 |[Aaron T. Myers](http://people.apache.org/~atm)                                     |Cloudera                        |        |-8
+avijayan            |[Aravindan Vijayan](https://github.com/avijayanhwx)                                 |Cloudera                        |        |-8
 aw                  |Allen Wittenauer                                                                    |Effective Machines              |        |-8
 ayushsaxena         |Ayush Saxena                                                                        |Wipro                           |        |+5.5
 benoy               |[Benoy Antony](http://people.apache.org/~benoy)                                     |eBay                            |        |-8
@@ -290,6 +291,7 @@ umamahesh           |[Uma Maheswara Rao G](https://people.apache.org/~umamahesh/
 varunsaxena         |[Varun Saxena](http://people.apache.org/~varunsaxena)                               |LinkedIn                        |        |+5.5
 vinayakumarb        |[Vinayakumar B](http://people.apache.org/~vinayakumarb)                             |Huawei                          |HDFS    |+5.5
 vinodkv             |[Vinod Kumar Vavilapalli](http://people.apache.org/~vinodkv)                        |Hortonworks                     |        |-8
+vivekratnavel       |[Vivek Ratnavel Subramanian](https://github.com/vivekratnavel)                      |Cloudera                        |        |-8
 vrushali            |[Vrushali Channapattan](http://people.apache.org/~vrushali)                         |Twitter                         |        |-8
 vvasudev            |Varun Vasudev                                                                       |Hortonworks                     |        |+5.5
 waltersu4549        |Walter Su                                                                           |                                |HDFS    |+8
