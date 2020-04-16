@@ -23,9 +23,9 @@ type: custompage
 1.  Download the release hadoop-X.Y.Z-src.tar.gz from a [mirror
     site](https://www.apache.org/dyn/closer.cgi/hadoop/common).
 2.  Download the signature file hadoop-X.Y.Z-src.tar.gz.asc from
-    [Apache](https://www.apache.org/dist/hadoop/common/).
+    [Apache](https://downloads.apache.org/hadoop/common/).
 3.  Download the [Hadoop
-    KEYS](https://www.apache.org/dist/hadoop/common/KEYS) file.
+    KEYS](https://downloads.apache.org/hadoop/common/KEYS) file.
 4.  gpg --import KEYS
 5.  gpg --verify hadoop-X.Y.Z-src.tar.gz.asc
 
@@ -34,7 +34,7 @@ type: custompage
 1.  Download the release hadoop-X.Y.Z-src.tar.gz from a [mirror
     site](https://www.apache.org/dyn/closer.cgi/hadoop/common).
 2.  Download the checksum hadoop-X.Y.Z-src.tar.gz.sha512 or hadoop-X.Y.Z-src.tar.gz.mds from
-    [Apache](https://www.apache.org/dist/hadoop/common/).
+    [Apache](https://downloads.apache.org/hadoop/common/).
 3.  shasum -a 512 hadoop-X.Y.Z-src.tar.gz
 
 All previous releases of Hadoop are available from the [Apache release
