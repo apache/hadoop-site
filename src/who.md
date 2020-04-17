@@ -59,6 +59,7 @@ order):
   ddas             |[Devaraj Das](http://people.apache.org/~ddas)                                |Hortonworks    |            |-8
   devaraj          |Devaraj K                                                                    |Intel          |            |+5.5
   dhruba           |[Dhruba Borthakur](http://people.apache.org/~dhruba)                         |Facebook       |            |-8
+  dmollitor        |[David Mollitor](https://www.linkedin.com/in/david-mollitor-a17b779/)        |Cloudera       |            |-5
   eli              |[Eli Collins](http://people.apache.org/~eli)                                 |Cloudera       |            |-8
   enis             |[Enis Soztutar](http://people.apache.org/~enis)                              |Hortonworks    |            |-8
   epayne           |[Eric Payne](http://people.apache.org/~epayne)                               |Verizon Media  |            |-6
