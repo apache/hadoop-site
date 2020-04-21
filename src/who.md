@@ -67,6 +67,7 @@ order):
   hairong          |Hairong Kuang                                                                |Facebook       |            |-8
   hitesh           |Hitesh Shah                                                                  |Hortonworks    |            |-8
   inigoiri         |Íñigo Goiri                                                                  |Microsoft      |            |-8
+  iwasakims        |Masatake Iwasaki                                                             |NTT DATA       |            |+9
   jeagles          |[Jonathan Eagles](http://people.apache.org/~jeagles)                         |Verizon Media  |            |-6
   jghoman          |[Jakob Homan](http://people.apache.org/~jghoman)                             |LinkedIn       |            |-8
   jhung            |Jonathan Hung                                                                |LinkedIn       |            |-8
