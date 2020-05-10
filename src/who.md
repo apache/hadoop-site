@@ -229,7 +229,7 @@ knoguchi            |[Koji Noguchi](http://people.apache.org/~knoguchi)         
 kzhang              |Kan Zhang                                                                           |IBM                             |        |-8
 lei                 |[Lei Xu](http://people.apache.org/~lei)                                             |Cloudera                        |        |-8
 liuml07             |[Mingliang Liu](http://people.apache.org/~liuml07)                                  |Salesforce                      |HDFS    |-8
-liuxun              |[Xun Liu](https://github.com/liuxunorg/)                                            |PingCAP                         |        |+8
+liuxun              |[Xun Liu](https://github.com/liuxunorg/)                                            |DiDi                            |        |+8
 lohit               |[Lohit Vijayarenu](http://people.apache.org/~lohit)                                 |Twitter                         |        |-8
 llu                 |[Luke Lu](http://people.apache.org/~llu)                                            |VMware                          |        |-8
 lmccay              |[Larry McCay](http://people.apache.org/~lmccay)                                     |Hortonworks                     |        |-5
@@ -312,7 +312,7 @@ yufei               |[Yufei Gu](http://people.apache.org/~yufei)                
 yjzhangal           |[Yongjun Zhang](http://people.apache.org/~yjzhangal)                                |Pinterest                       |        |-8
 yliu                |[Yi Liu](http://people.apache.org/~yliu)                                            |Intel                           |        |+8
 yqlin               |[Yiqun Lin](https://github.com/linyiqun)                                            |EBay                            |        |+8
-zhouquan            |[Zac Zhou](https://github.com/yuanzac)                                              |Netease                         |        |+8
+zhouquan            |[Zac Zhou](https://github.com/yuanzac)                                              |Ant Financial                   |        |+8
 zhz                 |[Zhe Zhang](http://zhe-thoughts.github.io/about/)                                   |LinkedIn                        |HDFS    |-8
 zjshen              |[Zhijie Shen](http://people.apache.org/~zjshen)                                     |Hortonworks                     |        |-8
 zshao               |[Zheng Shao](http://people.apache.org/~zshao)                                       |Facebook                        |        |-8
