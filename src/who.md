@@ -82,6 +82,7 @@ order):
   kkaranasos       |[Konstantinos Karanasos](http://www.microsoft.com/en-us/research/people/kokarana)|Microsoft  |            |-8
   lei              |[Lei Xu](http://people.apache.org/~lei)                                      |Cruise Automation |            |-8
   liuml07          |[Mingliang Liu](http://people.apache.org/~liuml07)                           |Salesforce     |HDFS        |-8
+  ljain            |[Lokesh Jain](https://github.com/lokeshj1703)                                |Cloudera       |            |+5.5
   llu              |[Luke Lu](http://people.apache.org/~llu)                                     |VMware         |            |-8
   mahadev          |Mahadev Konar                                                                |Hortonworks    |            |-8
   mattf            |Matt Foley                                                                   |Apple          |            |-8
@@ -230,10 +231,10 @@ kzhang              |Kan Zhang                                                  
 lei                 |[Lei Xu](http://people.apache.org/~lei)                                             |Cloudera                        |        |-8
 liuml07             |[Mingliang Liu](http://people.apache.org/~liuml07)                                  |Salesforce                      |HDFS    |-8
 liuxun              |[Xun Liu](https://github.com/liuxunorg/)                                            |DiDi                            |        |+8
+ljain               |[Lokesh Jain](https://github.com/lokeshj1703)                                       |Cloudera                        |        |+5.5
 lohit               |[Lohit Vijayarenu](http://people.apache.org/~lohit)                                 |Twitter                         |        |-8
 llu                 |[Luke Lu](http://people.apache.org/~llu)                                            |VMware                          |        |-8
 lmccay              |[Larry McCay](http://people.apache.org/~lmccay)                                     |Hortonworks                     |        |-5
-ljain               |Lokesh Jain                                                                         |Cloudera                        |        |+5.5
 mackrorysd          |Sean Mackrory                                                                       |Cloudera                        |        |-7
 mahadev             |Mahadev Konar                                                                       |Hortonworks                     |        |-8
 manojpec            |Manoj Govindassamy                                                                  |Cloudera                        |        |-8
