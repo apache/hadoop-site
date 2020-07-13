@@ -62,6 +62,13 @@
      (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.{{ $checksum_suffix }}">checksum</a>
      <a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.asc">signature</a>)
    </p>
+    {{ if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | float | le 3.3 }}
+    <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-aarch64.tar.gz" class="btn btn-success">Download aarch64 tar.gz</a></p>
+    <p>
+        (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-aarch64.tar.gz.{{ $checksum_suffix }}">checksum</a>
+        <a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-aarch64.tar.gz.asc">signature</a>)
+    </p>
+    {{ end }}
    <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz" class="btn btn-warning">Download src</a></p>
    <p>
      (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-src.tar.gz.{{ $checksum_suffix }}">checksum</a>

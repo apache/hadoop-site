@@ -72,6 +72,13 @@
           <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz">binary</a>
           (<a href="https://downloads.apache.org/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.{{ $checksum_suffix }}">checksum</a>
           <a href="https://downloads.apache.org/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}.tar.gz.asc">signature</a>)
+          <!-- Include aarch64 binaries included in releases after 3.3.0 -->
+          {{ if .File.BaseFileName | replaceRE "^([0-9]+.[0-9]+).*" "$1" | float | le 3.3 }}
+            <br/>
+            <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-aarch64.tar.gz">binary-aarch64</a>
+            (<a href="https://downloads.apache.org/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-aarch64.tar.gz.{{ $checksum_suffix }}">checksum</a>
+            <a href="https://downloads.apache.org/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-aarch64.tar.gz.asc">signature</a>)
+          {{ end }}
          </td>
          <td>
            <a href="/release/{{.File.BaseFileName }}.html">Announcement</a>
