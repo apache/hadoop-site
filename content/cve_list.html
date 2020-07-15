@@ -59,6 +59,8 @@
                
                <li role="separator" class="divider"></li>
                
+               <li><a href="https://hadoop.apache.org/docs/r3.3.0/">3.3.0</a></li>
+               
                <li><a href="https://hadoop.apache.org/docs/r2.10.0/">2.10.0</a></li>
                
                <li><a href="https://hadoop.apache.org/docs/r3.1.3/">3.1.3</a></li>
@@ -146,6 +148,8 @@
 
 <div class="container">
 <h1>Hadoop CVE List</h1>
+
+
 <!---
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -159,8 +163,11 @@
   See the License for the specific language governing permissions and
   limitations under the License. See accompanying LICENSE file.
 -->
+
 <p>This page lists security fixes that the Hadoop PMC felt warranted a CVE. If you think something is missing from this list or if you think the set of impacted or fixed versions is incomplete then please <a href="mailing_lists.html#Security">ask on the Security list</a>.</p>
+
 <p>CVEs are presented in most-recent-first order of announcement.</p>
+
 <!-- These should be sorted as most-recent-first. Please copy this template and fill in as needed.
 
 ## [CVE-YYYY-XXXX](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-YYYY-XXXX) Short Description
@@ -174,17 +181,21 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Reported Date**:
 - **Issue Announced**:
 -->
-<h2 id="cve-2018-11768httpcvemitreorgcgi-bincvenamecginamecve-2018-11768-apache-hadoop-hdfs-fsimage-corruption"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11768">CVE-2018-11768</a> Apache Hadoop HDFS FSImage Corruption</h2>
+
+<h2 id="cve-2018-11768-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-11768-apache-hadoop-hdfs-fsimage-corruption"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11768">CVE-2018-11768</a> Apache Hadoop HDFS FSImage Corruption</h2>
+
 <p>There is a mismatch in the size of the fields used to store user/group
 information between memory and disk representation. This causes the user/group
 information to be corrupted across storing in fsimage and reading back from
 fsimage.</p>
+
 <p>This vulnerability fix contains a fsimage layout change, so once the image is
 saved in the new layout format you cannot go back to a version that doesn’t
 support the newer layout. This means that once 2.7.x users upgraded to the
 fixed version, they cannot downgrade to 2.7.x because there is no fixed version
 in 2.7.x. We suggest downgrade to 2.8.5 or upper version that contains the
 vulnerability fix.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 3.1.0 to 3.1.1, 3.0.0-alpha1 to 3.0.3, 2.9.0 to 2.9.1, 2.0.0-alpha to 2.8.4</li>
 <li><strong>Fixed versions</strong>: 3.1.2, 2.9.2, 2.8.5</li>
@@ -193,9 +204,12 @@ vulnerability fix.</p>
 <li><strong>Reported Date</strong>: 2018/06/05</li>
 <li><strong>Issue Announced</strong>: 2019/10/03 (<a href="https://lists.apache.org/thread.html/2067a797b330530a6932f4b08f703b3173253d0a2b7c8c524e54adaf@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-8029httpcvemitreorgcgi-bincvenamecginamecve-2018-8029-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8029">CVE-2018-8029</a> Apache Hadoop Privilege escalation vulnerability</h2>
+
+<h2 id="cve-2018-8029-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-8029-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8029">CVE-2018-8029</a> Apache Hadoop Privilege escalation vulnerability</h2>
+
 <p>A user who can escalate to yarn user can possibly run arbitrary
 commands as root user.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 3.0.0-alpha1 to 3.1.0, 2.9.0 to 2.9.1, 2.2.0 to 2.8.4</li>
 <li><strong>Fixed versions</strong>: 3.1.1, 2.9.2, 2.8.5</li>
@@ -204,11 +218,14 @@ commands as root user.</p>
 <li><strong>Reported Date</strong>: 2018/05/08</li>
 <li><strong>Issue Announced</strong>: 2019/05/30 (<a href="https://lists.apache.org/thread.html/17084c09e6dedf60efe08028b429c92ffd28aacc28454e4fa924578a@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-11767httpcvemitreorgcgi-bincvenamecginamecve-2018-11767-apache-hadoop-kms-acl-regression"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11767">CVE-2018-11767</a> Apache Hadoop KMS ACL regression</h2>
+
+<h2 id="cve-2018-11767-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-11767-apache-hadoop-kms-acl-regression"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11767">CVE-2018-11767</a> Apache Hadoop KMS ACL regression</h2>
+
 <p>After the security fix for CVE-2017-15713, KMS has an access control regression,
 blocking users or granting access to users incorrectly, if the system
 uses non-default groups mapping mechanisms such as LdapGroupsMapping,
 CompositeGroupsMapping, or NullGroupsMapping.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 2.9.0 to 2.9.1, 2.8.3 to 2.8.4, 2.7.5 to 2.7.6</li>
 <li><strong>Fixed versions</strong>: 2.9.2, 2.8.5, 2.7.7</li>
@@ -217,12 +234,15 @@ CompositeGroupsMapping, or NullGroupsMapping.</p>
 <li><strong>Reported Date</strong>: 2018/05/09</li>
 <li><strong>Issue Announced</strong>: 2019/03/11 (<a href="https://lists.apache.org/thread.html/5fb771f66946dd5c99a8a5713347c24873846f555d716f9ac17bccca@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-1296httpcvemitreorgcgi-bincvenamecginamecve-2018-1296-apache-hadoop-hdfs-permissive-listxattr-authorization"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1296">CVE-2018-1296</a> Apache Hadoop HDFS Permissive listXAttr Authorization</h2>
+
+<h2 id="cve-2018-1296-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-1296-apache-hadoop-hdfs-permissive-listxattr-authorization"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1296">CVE-2018-1296</a> Apache Hadoop HDFS Permissive listXAttr Authorization</h2>
+
 <p>HDFS exposes extended attribute key/value pairs during listXAttrs,
 verifying only path-level search access to the directory rather than
 path-level read permission to the referent. This affects features that
 store sensitive data in extended attributes, such as HDFS encryption
 secrets.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 3.0.0-alpha1 to 3.0.0, 2.9.0, 2.8.0 to 2.8.3, 2.5.0 to 2.7.5</li>
 <li><strong>Fixed versions</strong>: 3.0.1, 2.9.1, 2.8.4, 2.7.6</li>
@@ -231,10 +251,13 @@ secrets.</p>
 <li><strong>Reported Date</strong>: 2018/02/09</li>
 <li><strong>Issue Announced</strong>: 2019/01/24 (<a href="https://lists.apache.org/thread.html/752d5fe697ca6be6f472eabb1bcae7961a47d416e4013ac803a2ab2c@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-11766httpcvemitreorgcgi-bincvenamecginamecve-2018-11766-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11766">CVE-2018-11766</a> Apache Hadoop privilege escalation vulnerability</h2>
+
+<h2 id="cve-2018-11766-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-11766-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11766">CVE-2018-11766</a> Apache Hadoop privilege escalation vulnerability</h2>
+
 <p>In Apache Hadoop 2.7.4 to 2.7.6, the security fix for CVE-2016-6811 is
 incomplete. A user who can escalate to yarn user can possibly run arbitrary
 commands as root user.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 2.7.4 to 2.7.6</li>
 <li><strong>Fixed versions</strong>: 2.7.7</li>
@@ -243,12 +266,15 @@ commands as root user.</p>
 <li><strong>Reported Date</strong>: 2018/05/04</li>
 <li><strong>Issue Announced</strong>: 2018/11/27 (<a href="https://lists.apache.org/thread.html/ff37bbbe09d5f03090e2dd2c3dea95de16ef4249e731f19b8959ce4c@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-8009httpcvemitreorgcgi-bincvenamecginamecve-2018-8009-apache-hadoop-distributed-cache-archive-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8009">CVE-2018-8009</a> Apache Hadoop distributed cache archive vulnerability</h2>
+
+<h2 id="cve-2018-8009-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2018-8009-apache-hadoop-distributed-cache-archive-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8009">CVE-2018-8009</a> Apache Hadoop distributed cache archive vulnerability</h2>
+
 <p>Vulnerability allows a cluster user to publish a public
 archive that can affect other files owned by the user running the YARN
 NodeManager daemon. If the impacted files belong to another already
 localized, public archive on the node then code can be injected into
 the jobs of other cluster users using the public archive.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 3.1.0, 3.0.0-alpha to 3.0.2, 2.9.0 to 2.9.1, 2.8.0 to 2.8.4, 2.0.0-alpha to 2.7.6, 0.23.0 to 0.23.11</li>
 <li><strong>Fixed versions</strong>: 3.1.1, 3.0.3, 2.9.2, 2.8.5, 2.7.7</li>
@@ -257,8 +283,11 @@ the jobs of other cluster users using the public archive.</p>
 <li><strong>Reported Date</strong>: 2018/04/19</li>
 <li><strong>Issue Announced</strong>: 2018/11/22 (<a href="https://lists.apache.org/thread.html/a1c227745ce30acbcf388c5b0cc8423e8bf495d619cd0fa973f7f38d@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2016-6811httpcvemitreorgcgi-bincvenamecginamecve-2016-6811-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6811">CVE-2016-6811</a> Apache Hadoop Privilege escalation vulnerability</h2>
+
+<h2 id="cve-2016-6811-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2016-6811-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6811">CVE-2016-6811</a> Apache Hadoop Privilege escalation vulnerability</h2>
+
 <p>A user who can escalate to yarn user can possibly run arbitrary commands as root user.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 2.2.0 to 2.7.3</li>
 <li><strong>Fixed versions</strong>: 2.7.4 or newer</li>
@@ -267,15 +296,20 @@ the jobs of other cluster users using the public archive.</p>
 <li><strong>Reported Date</strong>: 2016/07/06</li>
 <li><strong>Issue Announced</strong>: 2018/05/01 (<a href="https://lists.apache.org/thread.html/ff3859a2188c3662240311acddba9cf97992b839792ec0a14d61b4e5@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
 </ul>
+
 <p>Note: The fix for this vulnerability is incomplete in Apache Hadoop 2.7.4 to 2.7.6 (CVE-2018-11766).</p>
-<h2 id="cve-2017-15718httpcvemitreorgcgi-bincvenamecginamecve-2017-15718-apache-hadoop-yarn-nodemanager-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15718">CVE-2017-15718</a> Apache Hadoop YARN NodeManager vulnerability</h2>
+
+<h2 id="cve-2017-15718-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2017-15718-apache-hadoop-yarn-nodemanager-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15718">CVE-2017-15718</a> Apache Hadoop YARN NodeManager vulnerability</h2>
+
 <p>In Apache Hadoop 2.7.3 and 2.7.4, the security fix for CVE-2016-3086 is incomplete.
 The YARN NodeManager can leak the password for credential store provider
 used by the NodeManager to YARN Applications.</p>
+
 <p>If you use the CredentialProvider feature to encrypt passwords used in
 NodeManager configs, it may be possible for any Container launched
 by that NodeManager to gain access to the encryption password.
 The other passwords themselves are not directly exposed.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 2.7.3, 2.7.4</li>
 <li><strong>Fixed versions</strong>: 2.7.5</li>
@@ -284,12 +318,15 @@ The other passwords themselves are not directly exposed.</p>
 <li><strong>Reported Date</strong>: 2017/09/18</li>
 <li><strong>Issue Announced</strong>: 2018/01/24 (<a href="https://lists.apache.org/thread.html/23a277506bc0d85c1bbe5c0766ffe55e8c3923c8d6f58893b6966957@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2017-15713httpcvemitreorgcgi-bincvenamecginamecve-2017-15713-apache-hadoop-mapreduce-job-history-server-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15713">CVE-2017-15713</a> Apache Hadoop MapReduce job history server vulnerability</h2>
+
+<h2 id="cve-2017-15713-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2017-15713-apache-hadoop-mapreduce-job-history-server-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15713">CVE-2017-15713</a> Apache Hadoop MapReduce job history server vulnerability</h2>
+
 <p>Vulnerability allows a cluster user to expose private files
 owned by the user running the MapReduce job history server process.
 The malicious user can construct a configuration file containing XML
 directives that reference sensitive files on the MapReduce job history
 server host.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 3.0.0-alpha to 3.0.0-beta1, 2.8.0 to 2.8.2, 2.0.0-alpha to 2.7.4, 0.23.0 to 0.23.11</li>
 <li><strong>Fixed versions</strong>: 3.0.0, 2.9.0, 2.8.3, 2.7.5</li>
@@ -298,7 +335,9 @@ server host.</p>
 <li><strong>Reported Date</strong>: 2017/06/30</li>
 <li><strong>Issue Announced</strong>: 2018/01/19 (<a href="https://lists.apache.org/thread.html/9e5d86d5792d04f8a3b458f735e63fa9bdfe28ff454de257a2e02f18@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2017-3166httpcvemitreorgcgi-bincvenamecginamecve-2017-3166-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-3166">CVE-2017-3166</a> Apache Hadoop Privilege escalation vulnerability</h2>
+
+<h2 id="cve-2017-3166-http-cve-mitre-org-cgi-bin-cvename-cgi-name-cve-2017-3166-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-3166">CVE-2017-3166</a> Apache Hadoop Privilege escalation vulnerability</h2>
+
 <p>In a cluster where the YARN user has been granted access to all HDFS
 encryption keys, if a file in an encryption zone with access permissions
 that make it world readable is localized via YARN&rsquo;s localization mechanism,
@@ -307,6 +346,7 @@ in a world-readable location and shared freely with any application
 that requests to localize that file, no matter who the application owner
 is or whether that user should be allowed to access files from the
 target encryption zone.</p>
+
 <ul>
 <li><strong>Versions affected</strong>: 3.0.0-alpha1 - 3.0.0-alpha3 , 2.7.0 to 2.7.3, 2.6.1-2.6.5</li>
 <li><strong>Fixed versions</strong>: 3.0.0-alpha4, 2.8.0, 2.7.4</li>

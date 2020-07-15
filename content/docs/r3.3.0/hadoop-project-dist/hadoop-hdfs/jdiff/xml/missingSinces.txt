@@ -1,0 +1,3 @@
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.server.namenode.DefaultAuditLogger Class
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.server.aliasmap.InMemoryAliasMap Method completeBootstrapTransfer(java.io.File)
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.server.aliasmap.InMemoryAliasMap Method transferForBootstrap(javax.servlet.http.HttpServletResponse, org.apache.hadoop.conf.Configuration, org.apache.hadoop.hdfs.server.aliasmap.InMemoryAliasMap)
