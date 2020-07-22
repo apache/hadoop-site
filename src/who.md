@@ -110,7 +110,7 @@ order):
   stevel           |Steve Loughran                                                               |Cloudera       |            |0
   subru            |Subru Krishnan                                                               |Microsoft      |            |-8
   sunilg            |Sunil Govindan                                                              |Cloudera      |            |+5.5
-  surendralilhore  |Surendra Singh Lilhore                                                       |Huawei         |HDFS        |+5.5
+  surendralilhore  |Surendra Singh Lilhore                                                       |Microsoft      |HDFS        |+5.5
   suresh           |[Suresh Srinivas](http://people.apache.org/~suresh)                          |Hortonworks    |            |-8
   szetszwo         |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                  |Hortonworks    |            |-8
   templedf         |Daniel Templeton                                                             |Cloudera       |            |-8
@@ -278,7 +278,7 @@ stevel              |Steve Loughran                                             
 subru               |Subru Krishnan                                                                      |Microsoft                       |        |-8
 sunchao             |[Chao Sun](http://sunchao.github.io)                                                |Uber                            |HDFS    |-8
 sunilg              |Sunil Govindan                                                                      |Cloudera                     |        |+5.5
-surendralilhore     |Surendra Singh Lilhore                                                              |Huawei                          |HDFS    |+5.5
+surendralilhore     |Surendra Singh Lilhore                                                              |Microsoft                       |HDFS    |+5.5
 suresh              |[Suresh Srinivas](http://people.apache.org/~suresh)                                 |Hortonworks                     |        |-8
 swagle              |[Siddharth Wagle](https://github.com/swagle)                                        |Cloudera                        |        |-8
 szegedim            |Miklos Szegedi                                                                      |Cloudera                        |YARN    |-8
