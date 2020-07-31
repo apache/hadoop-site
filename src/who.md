@@ -205,6 +205,7 @@ gera                |Gera Shegalov                                              
 gifuma              |Giovanni Matteo Fumarola                                                            |Microsoft                       |        |-8
 gkesavan            |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                            |Hortonworks                     |RE      |-8
 gtcarrera9          |Li Lu                                                                               |Hortonworks                     |        |-8
+hemanthboyina       |[Hemanth Boyina](https://github.com/hemanthboyina)                                  |Huawei                          |        |+5.5
 hitesh              |Hitesh Shah                                                                         |Hortonworks                     |        |-8
 haibochen           |Haibo Chen                                                                          |LinkedIn                        |        |-8
 hairong             |[Hairong Kuang](http://people.apache.org/~hairong)                                  |Facebook                        |HDFS    |-8
