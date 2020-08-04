@@ -44,6 +44,7 @@ order):
   arp              |[Arpit Agarwal](http://people.apache.org/~arp)                               |Hortonworks    |            |-8
   asuresh          |Arun Suresh                                                                  |LinkedIn       |            |-8
   atm              |[Aaron T. Myers](http://people.apache.org/~atm)                              |Cloudera       |            |-8
+  ayushsaxena      |Ayush Saxena                                                                 |Cloudera       |            |+5.5
   bikas            |Bikas Saha                                                                   |Hortonworks    |            |-8
   billie           |Billie Rinaldi                                                               |Microsoft      |            |-5
   bibinchundatt    |Bibin A Chundatt                                                             |Microsoft      |            |+5.5
@@ -166,7 +167,7 @@ asuresh             |Arun Suresh                                                
 atm                 |[Aaron T. Myers](http://people.apache.org/~atm)                                     |Cloudera                        |        |-8
 avijayan            |[Aravindan Vijayan](https://github.com/avijayanhwx)                                 |Cloudera                        |        |-8
 aw                  |Allen Wittenauer                                                                    |Effective Machines              |        |-8
-ayushsaxena         |Ayush Saxena                                                                        |Wipro                           |        |+5.5
+ayushsaxena         |Ayush Saxena                                                                        |Cloudera                        |        |+5.5
 benoy               |[Benoy Antony](http://people.apache.org/~benoy)                                     |eBay                            |        |-8
 bharat              |Bharat Viswanadham                                                                  |Hortonworks                     |        |-8
 bibinchundatt       |Bibin A Chundatt                                                                    |Microsoft                       |        |+5.5
