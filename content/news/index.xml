@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Tue, 24 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 02 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://hadoop.apache.org/news/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ozone 1.0.0 is released</title>
+      <link>https://hadoop.apache.org/news/2020-09-02-ozone-1.0.0.html</link>
+      <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/news/2020-09-02-ozone-1.0.0.html</guid>
+      <description>First general available(GA) release of Apache Hadoop Ozone with OM HA, OFS, Security phase II, Ozone Filesystem performance improvement, security enabled Hadoop 2.x support, bucket link, Recon / Recon UI improvment, etc.
+For more information check the ozone site.</description>
+    </item>
     
     <item>
       <title>Ozone 0.5.0-beta is released</title>

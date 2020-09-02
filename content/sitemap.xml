@@ -4,7 +4,17 @@
   
   <url>
     <loc>https://hadoop.apache.org/</loc>
-    <lastmod>2020-08-03T00:00:00+00:00</lastmod>
+    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://hadoop.apache.org/news.html</loc>
+    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://hadoop.apache.org/news/2020-09-02-ozone-1.0.0.html</loc>
+    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -20,11 +30,6 @@
   <url>
     <loc>https://hadoop.apache.org/release/3.3.0.html</loc>
     <lastmod>2020-07-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://hadoop.apache.org/news.html</loc>
-    <lastmod>2020-03-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>

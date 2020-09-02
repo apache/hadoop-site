@@ -17,13 +17,13 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 set -e
 mkdir -p build
-if [ ! -d "$DIR/build/apache-rat-0.12" ]; then
-   wget http://xenia.sote.hu/ftp/mirrors/www.apache.org/creadur/apache-rat-0.12/apache-rat-0.12-bin.tar.gz -O $DIR/build/apache-rat.tar.gz
+if [ ! -d "$DIR/build/apache-rat-0.13" ]; then
+   wget http://xenia.sote.hu/ftp/mirrors/www.apache.org/creadur/apache-rat-0.13/apache-rat-0.13-bin.tar.gz -O $DIR/build/apache-rat.tar.gz
 	cd $DIR/build
 	tar zvxf apache-rat.tar.gz
 	cd -
 fi
-java -jar $DIR/build/apache-rat-0.12/apache-rat-0.12.jar $DIR -e public -e apache-rat-0.12 -e .git -e .gitignore -e content
+java -jar $DIR/build/apache-rat-0.13/apache-rat-0.13.jar $DIR -e public -e apache-rat-0.13 -e .git -e .gitignore -e content
 
 HUGO_EXEC=$(which hugo)
 if [ "$?" -ne 0 ]; then
