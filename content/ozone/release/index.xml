@@ -19,7 +19,7 @@
       
       <guid>/ozone/release/1.0.0/</guid>
       <description>Apache Hadoop Ozone 1.0.0 is released with following features:
- OM HA - HA support for Ozone Manager Security Phase II Support security enabled Hadoop 2.x OFS new scheme Ozone Filesystem performance improvement Support Hadoop 2.7 Recon / Recon UI improvements S3 volume/bucket mapping changes Support bucket link  This is a generally available (GA) release. It represents a point of API stability and quality that we consider production-ready.</description>
+ OM HA - HA support for Ozone Manager Security Phase II Support Hadoop 2.7 &amp;amp; security enabled Hadoop 2.x Ozone OFS new Filesystem scheme Ozone Filesystem performance improvement Recon &amp;amp; Recon UI improvements Bucket link &amp;amp; S3 volume/bucket mapping changes  This is a generally available (GA) release. It represents a point of API stability and quality that we consider production-ready.</description>
     </item>
     
     <item>
