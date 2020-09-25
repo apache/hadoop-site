@@ -47,9 +47,6 @@ Ozone has done some things differently from HDFS. First and foremost, Ozone took
 Both Ozone and HDDS requires one additional master component - Ozone Manager and Storage Container Manager, respectively. 
 The worker parts of Ozone/HDDS can be started as an HDFS Datanode plugin or as standalone.
 
-## I see that Ozone is an Alpha/Beta release. Do you have a road map to GA?
-Yes, We do. Thanks for asking. Here is the [road map][1] to GA.
-
 ### This sounds very interesting. How can I contribute? I have never contributed to Open source/I am a novice/I don't know how to contribute/I am intimidated, what can I do?
 
 As Lao Tzu said, "The journey of a thousand miles begins with one step." You might have never worked on Distributed systems, but you will always be able to help out on Ozone. If you speak a foreign language like Chinese, you can help us out by translating documentation to Chinese. If you are a high school student and starting to learn Java, you are most welcome to come and pick up work items that fit your skill and schedule. If you know HTML, please feel free to work our websites and Ozone UI. If you are graphics artist and feel that Ozone can be improved, please let us know.
