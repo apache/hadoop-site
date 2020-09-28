@@ -176,6 +176,17 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Reported Date**:
 - **Issue Announced**:
 -->
+<h2 id="cve-2018-11765httpcvemitreorgcgi-bincvenamecginamecve-2018-11765-potential-information-disclosure-in-apache-hadoop-web-interfaces"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11765">CVE-2018-11765</a> Potential information disclosure in Apache Hadoop Web interfaces</h2>
+<p>When Kerberos authentication is enabled and SPNEGO through HTTP is not enabled,
+any users can access some servlets without authentication.</p>
+<ul>
+<li><strong>Versions affected</strong>: 3.0.0-alpha2 to 3.0.0, 2.9.0 to 2.9.2, 2.8.0 to 2.8.5</li>
+<li><strong>Fixed versions</strong>: 3.0.1, 2.10.0</li>
+<li><strong>Impact</strong>: information disclosure</li>
+<li><strong>Reporter</strong>: Larry McCay (Discovered by Owen O&rsquo;Malley)</li>
+<li><strong>Reported Date</strong>: 2018/03/11</li>
+<li><strong>Issue Announced</strong>: 2020/09/28 (<a href="https://lists.apache.org/thread.html/r2c7f899911a04164ed1707083fcd4135f8427e04778c87d83509b0da%40%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
+</ul>
 <h2 id="cve-2018-11768httpcvemitreorgcgi-bincvenamecginamecve-2018-11768-apache-hadoop-hdfs-fsimage-corruption"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11768">CVE-2018-11768</a> Apache Hadoop HDFS FSImage Corruption</h2>
 <p>There is a mismatch in the size of the fields used to store user/group
 information between memory and disk representation. This causes the user/group

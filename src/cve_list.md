@@ -37,6 +37,18 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2018-11765](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11765) Potential information disclosure in Apache Hadoop Web interfaces
+
+When Kerberos authentication is enabled and SPNEGO through HTTP is not enabled,
+any users can access some servlets without authentication.
+
+- **Versions affected**: 3.0.0-alpha2 to 3.0.0, 2.9.0 to 2.9.2, 2.8.0 to 2.8.5
+- **Fixed versions**: 3.0.1, 2.10.0
+- **Impact**: information disclosure
+- **Reporter**: Larry McCay (Discovered by Owen O'Malley)
+- **Reported Date**: 2018/03/11
+- **Issue Announced**: 2020/09/28 ([general@hadoop](https://lists.apache.org/thread.html/r2c7f899911a04164ed1707083fcd4135f8427e04778c87d83509b0da%40%3Cgeneral.hadoop.apache.org%3E))
+
 ## [CVE-2018-11768](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11768) Apache Hadoop HDFS FSImage Corruption
 
 There is a mismatch in the size of the fields used to store user/group
