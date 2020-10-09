@@ -201,6 +201,7 @@ eli                 |[Eli Collins](http://people.apache.org/~eli)               
 epayne              |[Eric Payne](http://people.apache.org/~epayne)                                      |Verizon Media                   |        |-6
 enis                |[Enis Soztutar](http://people.apache.org/~enis)                                     |Hortonworks                     |        |-8
 eyang               |[Eric Yang](http://people.apache.org/~eyang)                                        |IBM                             |        |-8
+ferhui              |Hui Fei                                                                             |Tencent                         |        |+8
 gabota              |[Gabor Bota](https://github.com/bgaborg)                                            |Cloudera                        |        |+1
 gera                |Gera Shegalov                                                                       |Salesforce, Einstein Platform   |        |-8
 gifuma              |Giovanni Matteo Fumarola                                                            |Microsoft                       |        |-8
