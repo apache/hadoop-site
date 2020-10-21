@@ -176,6 +176,17 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Reported Date**:
 - **Issue Announced**:
 -->
+<h2 id="cve-2018-11764httpcvemitreorgcgi-bincvenamecginamecve-2018-11764-apache-hadoop-privilege-escalation-in-web-endpoint"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11764">CVE-2018-11764</a> Apache Hadoop Privilege escalation in web endpoint</h2>
+<p>Web endpoint authentication check is broken. Authenticated users may
+impersonate any user even if no proxy user is configured.</p>
+<ul>
+<li><strong>Versions affected</strong>: 3.0.0-alpha4, 3.0.0-beta1, 3.0.0</li>
+<li><strong>Fixed versions</strong>: 3.0.1</li>
+<li><strong>Impact</strong>: privilege escalation</li>
+<li><strong>Reporter</strong>: Daryn Sharp</li>
+<li><strong>Reported Date</strong>: 2018/03/17</li>
+<li><strong>Issue Announced</strong>: 2020/10/21 (<a href="https://lists.apache.org/thread.html/r790ad0a049cde713b93589ecfd4dd2766fda0fc6807eedb6cf69f5c1%40%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
+</ul>
 <h2 id="cve-2018-11765httpcvemitreorgcgi-bincvenamecginamecve-2018-11765-potential-information-disclosure-in-apache-hadoop-web-interfaces"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11765">CVE-2018-11765</a> Potential information disclosure in Apache Hadoop Web interfaces</h2>
 <p>When Kerberos authentication is enabled and SPNEGO through HTTP is not enabled,
 any users can access some servlets without authentication.</p>

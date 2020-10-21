@@ -37,6 +37,19 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+
+## [CVE-2018-11764](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11764) Apache Hadoop Privilege escalation in web endpoint
+
+Web endpoint authentication check is broken. Authenticated users may
+impersonate any user even if no proxy user is configured.
+
+- **Versions affected**: 3.0.0-alpha4, 3.0.0-beta1, 3.0.0
+- **Fixed versions**: 3.0.1
+- **Impact**: privilege escalation
+- **Reporter**: Daryn Sharp
+- **Reported Date**: 2018/03/17
+- **Issue Announced**: 2020/10/21 ([general@hadoop](https://lists.apache.org/thread.html/r790ad0a049cde713b93589ecfd4dd2766fda0fc6807eedb6cf69f5c1%40%3Cgeneral.hadoop.apache.org%3E))
+
 ## [CVE-2018-11765](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11765) Potential information disclosure in Apache Hadoop Web interfaces
 
 When Kerberos authentication is enabled and SPNEGO through HTTP is not enabled,
