@@ -114,6 +114,7 @@ order):
   surendralilhore  |Surendra Singh Lilhore                                                       |Microsoft      |HDFS        |+5.5
   suresh           |[Suresh Srinivas](http://people.apache.org/~suresh)                          |Hortonworks    |            |-8
   szetszwo         |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                  |Hortonworks    |            |-8
+  tasanuma         |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                       |Yahoo! JAPAN   |            |+9
   templedf         |Daniel Templeton                                                             |Cloudera       |            |-8
   tgraves          |Thomas Graves                                                                |Nvidia         |            |-6
   todd             |[Todd Lipcon](http://people.apache.org/~todd)                                |Cloudera       |            |-8
