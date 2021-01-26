@@ -37,6 +37,23 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2020-9492](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-9492) Apache Hadoop Potential privilege escalation
+
+WebHDFS client might send SPNEGO authorization header to remote URL
+without proper verification. A crafty user can trigger services to
+send server credentials to a webhdfs path for capturing the service
+principal.
+
+Users of the affected versions should apply either of the following mitigations:
+* Set different http signature secrets and use dedicated hosts for each privileged impersonation service (such as HiveServer2).
+* Upgrade to 3.3.0, 3.2.2, 3.1.4, 2.10.1, or newer with TLS encryption enabled and configure dfs.http.policy to HTTPS\_ONLY.
+
+- **Versions affected**: 3.2.0 to 3.2.1, 3.0.0-alpha1 to 3.1.3, 2.0.0-alpha to 2.10.0
+- **Fixed versions**: 3.2.2, 3.1.4, 2.10.1
+- **Impact**: privilege escalation
+- **Reporter**: Kevin Risden
+- **Reported Date**: 2020/03/17
+- **Issue Announced**: 2021/01/26 ([general@hadoop](https://lists.apache.org/thread.html/r513758942356ccd0d14538ba18a09903fc72716d74be1cb727ea91ff%40%3Cgeneral.hadoop.apache.org%3E))
 
 ## [CVE-2018-11764](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11764) Apache Hadoop Privilege escalation in web endpoint
 
