@@ -7,7 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Sat, 09 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Jan 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://hadoop.apache.org/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Release 3.2.2 available</title>
       <link>https://hadoop.apache.org/release/3.2.2.html</link>
@@ -1263,7 +1267,7 @@ When upgrading an existing HDFS filesystem to a 0.15.x release from an earlier r
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hadoop.apache.org/versioning.html</guid>
-      <description>Background Apache Hadoop uses a version format of &amp;lt;major&amp;gt;.&amp;lt;minor&amp;gt;.&amp;lt;maintenance&amp;gt;, where each version component is a numeric value. Versions can also have additional suffixes like &amp;quot;-alpha2&amp;quot; or &amp;quot;-beta1&amp;quot;, which denote the API compatibility guarantees and quality of the release. We use &amp;ldquo;a.b.c&amp;rdquo; and &amp;ldquo;x.y.z&amp;rdquo; to denote a dotted version triplet.
+      <description>Background Apache Hadoop uses a version format of &amp;lt;major&amp;gt;.&amp;lt;minor&amp;gt;.&amp;lt;maintenance&amp;gt;, where each version component is a numeric value. Versions can also have additional suffixes like &amp;quot;-alpha2&amp;rdquo; or &amp;quot;-beta1&amp;rdquo;, which denote the API compatibility guarantees and quality of the release. We use &amp;ldquo;a.b.c&amp;rdquo; and &amp;ldquo;x.y.z&amp;rdquo; to denote a dotted version triplet.
 Major versions are used to introduce substantial, potentially incompatible, changes. Examples of this include the replacement of MapReduce 1 with YARN and MapReduce 2 in Hadoop 2, and the required Java runtime version from JDK7 to JDK8 in Hadoop 3.</description>
     </item>
     
