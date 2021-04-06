@@ -14,10 +14,6 @@
 # limitations under the License.
 
 github:
-  description: "Apache Hadoop Site"
-  homepage: https://hadoop.apache.org/
-  labels:
-    - hadoop
   enabled_merge_buttons:
     squash: true
     merge: false
