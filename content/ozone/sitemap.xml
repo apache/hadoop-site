@@ -1,42 +1,65 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
   <url>
     <loc>/ozone/</loc>
-    <lastmod>2021-04-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/ozone/release/1.1.0/</loc>
-    <lastmod>2021-04-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/ozone/release/</loc>
-    <lastmod>2021-04-17T00:00:00+00:00</lastmod>
-  </url><url>
+    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/ozone/release/1.0.0/</loc>
     <lastmod>2020-09-02T00:00:00+00:00</lastmod>
-  </url><url>
+  </url>
+  
+  <url>
+    <loc>/ozone/release/</loc>
+    <lastmod>2020-09-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/ozone/release/0.5.0-beta/</loc>
     <lastmod>2020-03-24T00:00:00+00:00</lastmod>
-  </url><url>
+  </url>
+  
+  <url>
     <loc>/ozone/release/0.4.1-alpha/</loc>
     <lastmod>2019-10-13T00:00:00+00:00</lastmod>
-  </url><url>
+  </url>
+  
+  <url>
     <loc>/ozone/release/0.4.0-alpha/</loc>
     <lastmod>2019-05-07T00:00:00+00:00</lastmod>
-  </url><url>
+  </url>
+  
+  <url>
     <loc>/ozone/release/0.3.0-alpha/</loc>
     <lastmod>2018-11-22T00:00:00+00:00</lastmod>
-  </url><url>
+  </url>
+  
+  <url>
     <loc>/ozone/release/0.2.1-alpha/</loc>
     <lastmod>2018-10-01T00:00:00+00:00</lastmod>
-  </url><url>
+  </url>
+  
+  <url>
     <loc>/ozone/downloads/</loc>
-  </url><url>
+  </url>
+  
+  <url>
     <loc>/ozone/categories/</loc>
-  </url><url>
+  </url>
+  
+  <url>
     <loc>/ozone/docs/</loc>
-  </url><url>
+  </url>
+  
+  <url>
     <loc>/ozone/faq/</loc>
-  </url><url>
+  </url>
+  
+  <url>
     <loc>/ozone/tags/</loc>
   </url>
+  
 </urlset>
