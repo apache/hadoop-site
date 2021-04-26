@@ -106,6 +106,7 @@ order):
   sandy            |[Sandy Ryza](http://people.apache.org/~sandy)                                |Cloudera       |            |-8
   shashikant       |Shashikant Banerjee                                                          |Cloudera       |            |+5.5
   sjlee            |[Sangjin Lee](http://people.apache.org/~sjlee)                               |PayPal         |            |-8
+  snemeth          |[Szilard Nemeth](https://github.com/szilard-nemeth)                          |Cloudera       |            |+1
   sradia           |[Sanjay Radia](http://people.apache.org/~sradia)                             |Hortonworks    |            |-8
   sseth            |Siddharth Seth                                                               |Hortonworks    |            |-8
   stack            |Michael Stack                                                                |Apple          |HBase       |-8
