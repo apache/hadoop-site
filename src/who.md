@@ -67,6 +67,7 @@ order):
   gkesavan         |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                     |Hortonworks    |            |-8
   haibochen        |Haibo Chen                                                                   |LinkedIn       |            |-8
   hairong          |Hairong Kuang                                                                |Facebook       |            |-8
+  hexiaoqiao       |[He Xiaoqiao](http://hexiaoqiao.github.io)                                   |Meituan        |            |+8 
   hitesh           |Hitesh Shah                                                                  |Hortonworks    |            |-8
   inigoiri         |Íñigo Goiri                                                                  |Microsoft      |            |-8
   iwasakims        |Masatake Iwasaki                                                             |NTT DATA       |            |+9
@@ -216,7 +217,7 @@ haibochen           |Haibo Chen                                                 
 hairong             |[Hairong Kuang](http://people.apache.org/~hairong)                                  |Facebook                        |HDFS    |-8
 hanishakoneru       |Hanisha Koneru                                                                      |Hortonworks                     |        |-8
 harsh               |[Harsh J](http://harshj.com/)                                                       |Cloudera                        |        |+5.5
-hexiaoqiao          |[He Xiaoqiao](http://hexiaoqiao.github.com)                                         |Meituan                         |        |+8
+hexiaoqiao          |[He Xiaoqiao](http://hexiaoqiao.github.io)                                          |Meituan                         |        |+8
 inigoiri            |Íñigo Goiri                                                                         |Microsoft                       |        |-8
 ivanmi              |Ivan Mitic                                                                          |Microsoft                       |        |-8
 iwasakims           |Masatake Iwasaki                                                                    |NTT DATA                        |        |+9
