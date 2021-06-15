@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Sat, 17 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Release 3.3.1 available</title>
+      <link>https://hadoop.apache.org/release/3.3.1.html</link>
+      <pubDate>Tue, 15 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/release/3.3.1.html</guid>
+      <description>This is the first stable release of Apache Hadoop 3.3.x line. It contains 697 bug fixes, improvements and enhancements since 3.3.0.
+Users are encouraged to read the overview of major changes since 3.3.0. For details of 697 bug fixes, improvements, and other enhancements since the previous 3.3.0 release, please check release notes and changelog detail the changes since 3.3.0.</description>
+    </item>
+    
     <item>
       <title>Ozone 1.1.0 is released</title>
       <link>https://hadoop.apache.org/news/2021-04-17-ozone-1.1.0.html</link>

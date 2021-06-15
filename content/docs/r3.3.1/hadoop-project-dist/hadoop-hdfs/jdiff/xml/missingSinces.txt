@@ -1,0 +1,6 @@
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.server.namenode.DefaultAuditLogger Class
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.server.aliasmap.InMemoryAliasMap Method completeBootstrapTransfer(java.io.File)
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.qjournal.server.JournalNodeMXBean Method getClusterIds()
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.qjournal.server.JournalNodeMXBean Method getHostAndPort()
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.qjournal.server.JournalNodeMXBean Method getVersion()
+MISSING @SINCE TAG: org.apache.hadoop.hdfs.server.aliasmap.InMemoryAliasMap Method transferForBootstrap(javax.servlet.http.HttpServletResponse, org.apache.hadoop.conf.Configuration, org.apache.hadoop.hdfs.server.aliasmap.InMemoryAliasMap)

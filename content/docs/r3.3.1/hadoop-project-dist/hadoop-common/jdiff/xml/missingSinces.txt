@@ -1,0 +1,66 @@
+MISSING @SINCE TAG: org.apache.hadoop.fs.Abortable Interface
+MISSING @SINCE TAG: org.apache.hadoop.fs.BatchListingOperations Interface
+MISSING @SINCE TAG: org.apache.hadoop.fs.ByteBufferPositionedReadable Interface
+MISSING @SINCE TAG: org.apache.hadoop.util.DurationInfo Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Interface
+MISSING @SINCE TAG: org.apache.hadoop.fs.FutureDataInputStreamBuilder Interface
+MISSING @SINCE TAG: org.apache.hadoop.fs.MultipartUploader Interface
+MISSING @SINCE TAG: org.apache.hadoop.util.OperationDuration Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.PartialListing Class
+MISSING @SINCE TAG: org.apache.hadoop.io.compress.PassthroughCodec Class
+MISSING @SINCE TAG: org.apache.hadoop.service.launcher.ServiceLaunchException Constructor (int, java.lang.Throwable, java.lang.String, java.lang.Object[])
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSDataOutputStream Method abort()
+NO DOC BLOCK: org.apache.hadoop.fs.ChecksumFileSystem Method create(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.permission.FsPermission, java.util.EnumSet, int, short, long, org.apache.hadoop.util.Progressable, org.apache.hadoop.fs.Options.ChecksumOpt)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method createDataOutputStreamBuilder(org.apache.hadoop.fs.FileSystem, org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method createMultipartUploader(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method createMultipartUploader(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method createMultipartUploader(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.ChecksumFileSystem Method createNonRecursive(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.permission.FsPermission, java.util.EnumSet, int, short, long, org.apache.hadoop.util.Progressable)
+NO DOC BLOCK: org.apache.hadoop.ha.HAServiceTarget Method getHealthMonitorProxy(org.apache.hadoop.conf.Configuration, int, int)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSDataInputStream Method getIOStatistics()
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSDataOutputStream Method getIOStatistics()
+MISSING @SINCE TAG: org.apache.hadoop.io.compress.CompressionInputStream Method getIOStatistics()
+MISSING @SINCE TAG: org.apache.hadoop.io.compress.CompressionOutputStream Method getIOStatistics()
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method getServerDefaults(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.ContentSummary Method getSnapshotHeader()
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableStat Method getSnapshotTimeStamp()
+NO DOC BLOCK: org.apache.hadoop.metrics2.lib.MutableRatesWithAggregation Method init(java.lang.Class, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableRatesWithAggregation Method init(java.lang.String[])
+MISSING @SINCE TAG: org.apache.hadoop.fs.BlockLocation Method isStriped()
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method methodNotSupported()
+MISSING @SINCE TAG: org.apache.hadoop.fs.ChecksumFileSystem Method openFile(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileContext Method openFile(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method openFile(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method openFile(org.apache.hadoop.fs.PathHandle)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method openFile(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method openFile(org.apache.hadoop.fs.PathHandle)
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method openFileWithOptions(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.impl.OpenFileParameters)
+MISSING @SINCE TAG: org.apache.hadoop.fs.ChecksumFileSystem Method openFileWithOptions(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.impl.OpenFileParameters)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method openFileWithOptions(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.impl.OpenFileParameters)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method openFileWithOptions(org.apache.hadoop.fs.PathHandle, org.apache.hadoop.fs.impl.OpenFileParameters)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method openFileWithOptions(org.apache.hadoop.fs.Path, org.apache.hadoop.fs.impl.OpenFileParameters)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method openFileWithOptions(org.apache.hadoop.fs.PathHandle, org.apache.hadoop.fs.impl.OpenFileParameters)
+NO DOC BLOCK: org.apache.hadoop.fs.FSDataInputStream Method read(long, java.nio.ByteBuffer)
+NO DOC BLOCK: org.apache.hadoop.fs.FSDataInputStream Method readFully(long, java.nio.ByteBuffer)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableRollingAverages Method setRecordValidityMs(long)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableStat Method setUpdateTimeStamp(boolean)
+MISSING @SINCE TAG: org.apache.hadoop.fs.ContentSummary Method toSnapshot(boolean)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSInputStream Method toString()
+NO DOC BLOCK: org.apache.hadoop.io.ArrayWritable Method toString()
+MISSING @SINCE TAG: org.apache.hadoop.fs.StreamCapabilities Field ABORTABLE_STREAM
+NO DOC BLOCK: org.apache.hadoop.fs.ftp.FTPFileSystem Field DEFAULT_TIMEOUT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field FS_CREATION_PARALLEL_COUNT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field FS_CREATION_PARALLEL_COUNT_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.ftp.FTPFileSystem Field FS_FTP_TIMEOUT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_KERBEROS_KEYTAB_LOGIN_AUTORENEWAL_ENABLED
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_KERBEROS_KEYTAB_LOGIN_AUTORENEWAL_ENABLED_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_PROMETHEUS_ENABLED
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_PROMETHEUS_ENABLED_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.security.UserGroupInformation Field HADOOP_TOKEN
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_TOKENS
+MISSING @SINCE TAG: org.apache.hadoop.fs.StreamCapabilities Field IOSTATISTICS
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_SERVER_REUSEADDR_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_SERVER_REUSEADDR_KEY
+MISSING @SINCE TAG: org.apache.hadoop.io.compress.CodecConstants Field PASSTHROUGH_CODEC_EXTENSION
+MISSING @SINCE TAG: org.apache.hadoop.fs.StreamCapabilities Field PREADBYTEBUFFER
+MISSING @SINCE TAG: org.apache.hadoop.fs.StreamCapabilities Field READBYTEBUFFER
