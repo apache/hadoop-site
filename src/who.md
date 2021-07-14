@@ -237,6 +237,7 @@ kkaranasos          |[Konstantinos Karanasos](http://www.microsoft.com/en-us/res
 knoguchi            |[Koji Noguchi](http://people.apache.org/~knoguchi)                                  |Verizon Media                   |        |-8
 kzhang              |Kan Zhang                                                                           |IBM                             |        |-8
 lei                 |[Lei Xu](http://people.apache.org/~lei)                                             |Cloudera                        |        |-8
+licheng             |[Li Cheng](https://www.linkedin.com/in/licheng1990/)                                |Tencent                         |        |+8
 liuml07             |[Mingliang Liu](http://people.apache.org/~liuml07)                                  |Salesforce                      |HDFS    |-8
 liuxun              |[Xun Liu](https://github.com/liuxunorg/)                                            |DiDi                            |        |+8
 ljain               |[Lokesh Jain](https://github.com/lokeshj1703)                                       |Cloudera                        |        |+5.5
