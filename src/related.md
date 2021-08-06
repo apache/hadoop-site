@@ -36,6 +36,8 @@ Other Hadoop-related projects at Apache include:
     data summarization and ad hoc querying.
 -   [**Mahout™**](https://mahout.apache.org/): A Scalable machine learning and data
     mining library.
+-   [**Ozone™**](https://ozone.apache.org/): A scalable, redundant, and
+    distributed object store for Hadoop.
 -   [**Pig™**](https://pig.apache.org): A high-level data-flow language and execution
     framework for parallel computation.
 -   [**Spark™**](https://spark.apache.org): A fast and general compute engine for
