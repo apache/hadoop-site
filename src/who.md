@@ -48,7 +48,7 @@ order):
   bikas            |Bikas Saha                                                                   |Hortonworks    |            |-8
   billie           |Billie Rinaldi                                                               |Microsoft      |            |-5
   bibinchundatt    |Bibin A Chundatt                                                             |Microsoft      |            |+5.5
-  bobby            |Robert(Bobby) Evans                                                          |Nvidia         |            |-6
+  bobby            |Robert(Bobby) Evans                                                          |NVIDIA         |            |-6
   brahma           |Brahma Reddy Battula                                                         |Huawei         |            |+5.5
   brandonli        |Brandon Li                                                                   |Hortonworks    |            |-8
   cdouglas         |[Chris Douglas](http://people.apache.org/~cdouglas)                          |Microsoft      |            |-8
@@ -67,7 +67,7 @@ order):
   gkesavan         |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                     |Hortonworks    |            |-8
   haibochen        |Haibo Chen                                                                   |LinkedIn       |            |-8
   hairong          |Hairong Kuang                                                                |Facebook       |            |-8
-  hexiaoqiao       |[He Xiaoqiao](http://hexiaoqiao.github.io)                                   |Meituan        |            |+8 
+  hexiaoqiao       |[He Xiaoqiao](http://hexiaoqiao.github.io)                                   |Meituan        |            |+8
   hitesh           |Hitesh Shah                                                                  |Hortonworks    |            |-8
   inigoiri         |Íñigo Goiri                                                                  |Microsoft      |            |-8
   iwasakims        |Masatake Iwasaki                                                             |NTT DATA       |            |+9
@@ -77,7 +77,7 @@ order):
   jianhe           |[Jian He](http://people.apache.org/~jianhe)                                  |Hortonworks    |            |-8
   jing9            |Jing Zhao                                                                    |Hortonworks    |            |-8
   jitendra         |[Jitendra Nath Pandey](http://people.apache.org/~jitendra)                   |Hortonworks    |            |-8
-  jlowe            |Jason Lowe                                                                   |Nvidia         |            |-6
+  jlowe            |Jason Lowe                                                                   |NVIDIA         |            |-6
   jzhuge           |John Zhuge                                                                   |Netflix        |            |-8
   junping\_du      |Junping Du                                                                   |Tencent        |            |+8
   kasha            |[Karthik Kambatla](http://people.apache.org/~kasha)                          |Cloudera       |            |-8
@@ -119,7 +119,7 @@ order):
   szetszwo         |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                  |Hortonworks    |            |-8
   tasanuma         |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                       |Yahoo! JAPAN   |            |+9
   templedf         |Daniel Templeton                                                             |Cloudera       |            |-8
-  tgraves          |Thomas Graves                                                                |Nvidia         |            |-6
+  tgraves          |Thomas Graves                                                                |NVIDIA         |            |-6
   todd             |[Todd Lipcon](http://people.apache.org/~todd)                                |Cloudera       |            |-8
   tomwhite         |[Tom White](http://weblogs.java.net/blog/tomwhite/)                          |Cloudera       |            |-8
   tucu             |Alejandro Abdelnur                                                           |Cloudera       |            |-8
@@ -177,7 +177,7 @@ bharat              |Bharat Viswanadham                                         
 bibinchundatt       |Bibin A Chundatt                                                                    |Microsoft                       |        |+5.5
 bikas               |Bikas Saha                                                                          |Hortonworks                     |        |-8
 billie              |Billie Rinaldi                                                                      |Cloudera                        |        |-5
-bobby               |Robert(Bobby) Evans                                                                 |Nvidia                          |        |-6
+bobby               |Robert(Bobby) Evans                                                                 |NVIDIA                          |        |-6
 boryas              |[Boris Shkolnik](http://people.apache.org/~boryas)                                  |LinkedIn                        |        |-8
 botong              |Botong Huang                                                                        |Alibaba                         |        |-8
 brahma              |Brahma Reddy Battula                                                                |Huawei                          |        |+5.5
@@ -207,7 +207,7 @@ enis                |[Enis Soztutar](http://people.apache.org/~enis)            
 eyang               |[Eric Yang](http://people.apache.org/~eyang)                                        |IBM                             |        |-8
 ferhui              |Hui Fei                                                                             |Tencent                         |        |+8
 gabota              |[Gabor Bota](https://github.com/bgaborg)                                            |Cloudera                        |        |+1
-gera                |Gera Shegalov                                                                       |Salesforce, Einstein Platform   |        |-8
+gera                |[Gera Shegalov](https://github.com/gerashegalov)                                    |NVIDIA                          |        |-8
 gifuma              |Giovanni Matteo Fumarola                                                            |Microsoft                       |        |-8
 gkesavan            |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                            |Hortonworks                     |RE      |-8
 gtcarrera9          |Li Lu                                                                               |Hortonworks                     |        |-8
@@ -221,13 +221,14 @@ hexiaoqiao          |[He Xiaoqiao](http://hexiaoqiao.github.io)                 
 inigoiri            |Íñigo Goiri                                                                         |Microsoft                       |        |-8
 ivanmi              |Ivan Mitic                                                                          |Microsoft                       |        |-8
 iwasakims           |Masatake Iwasaki                                                                    |NTT DATA                        |        |+9
+jbrennan            |[Jim Brennan](https://github.com/jbrennan333)                                       |NVIDIA                      |        |-6
 jeagles             |[Jonathan Eagles](http://people.apache.org/~jeagles)                                |Verizon Media                   |        |-6
 jghoman             |[Jakob Homan](http://people.apache.org/~jghoman)                                    |LinkedIn                        |        |-8
 jhung               |Jonathan Hung                                                                       |LinkedIn                        |        |-8
 jianhe              |[Jian He](http://people.apache.org/~jianhe)                                         |Hortonworks                     |        |-8
 jing9               |Jing Zhao                                                                           |Hortonworks                     |        |-8
 jitendra            |[Jitendra Nath Pandey](http://people.apache.org/~jitendra)                          |Hortonworks                     |        |-8
-jlowe               |Jason Lowe                                                                          |Nvidia                          |        |-6
+jlowe               |Jason Lowe                                                                          |NVIDIA                          |        |-6
 johan               |[Johan Oskarsson](http://people.apache.org/~johan)                                  |Twitter                         |        |0
 junping\_du         |Junping Du                                                                          |Tencent                         |        |+8
 jzhuge              |John Zhuge                                                                          |Netflix                         |        |-8
@@ -296,7 +297,7 @@ taoyang             |Tao Yang                                                   
 tasanuma            |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                              |Yahoo! JAPAN                    |        |+9
 taton               |[Christophe Taton](http://people.apache.org/~taton)                                 |INRIA                           |        |+1
 templedf            |Daniel Templeton                                                                    |Cloudera                        |        |-8
-tgraves             |Thomas Graves                                                                       |Nvidia                          |        |-6
+tgraves             |Thomas Graves                                                                       |NVIDIA                          |        |-6
 todd                |[Todd Lipcon](http://people.apache.org/~todd)                                       |Cloudera                        |        |-8
 tomwhite            |[Tom White](http://www.lexemetech.com)                                              |Cloudera                        |        |-8
 tucu                |Alejandro Abdelnur                                                                  |Cloudera                        |        |-8
