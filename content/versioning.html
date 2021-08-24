@@ -141,6 +141,8 @@
 
 <div class="container">
 <h1>Apache Hadoop Release Versioning</h1>
+
+
 <!---
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -154,63 +156,81 @@
   See the License for the specific language governing permissions and
   limitations under the License. See accompanying LICENSE file.
 -->
+
 <h2 id="background">Background</h2>
+
 <p>Apache Hadoop uses a version format of
 <strong>&lt;major&gt;.&lt;minor&gt;.&lt;maintenance&gt;</strong>, where each version
 component is a numeric value. Versions can also have additional suffixes
-like <em>&quot;-alpha2&quot;</em> or <em>&quot;-beta1&quot;</em>, which denote the API compatibility
+like <em>&rdquo;-alpha2&rdquo;</em> or <em>&rdquo;-beta1&rdquo;</em>, which denote the API compatibility
 guarantees and quality of the release. We use <em>&ldquo;a.b.c&rdquo;</em> and <em>&ldquo;x.y.z&rdquo;</em> to
 denote a dotted version triplet.</p>
+
 <p>Major versions are used to introduce substantial, potentially
 incompatible, changes. Examples of this include the replacement of
 MapReduce 1 with YARN and MapReduce 2 in Hadoop 2, and the required Java
 runtime version from JDK7 to JDK8 in Hadoop 3.</p>
+
 <p>Minor versions are used to introduce new compatible features within a
 major release line.</p>
+
 <p>Maintenance releases include bug fixes or low-risk supportability
 changes.</p>
+
 <p>Hadoop&rsquo;s versioning scheme has evolved over the years. The early days of
 0.20.2 leading up to the 1.y releases saw a <a href="http://blog.cloudera.com/blog/2012/01/an-update-on-apache-hadoop-1-0/">plethora of parallel
 releases</a>
 with different featuresets. Release activities coalesced in the early
 2.y release era, with a mostly linear progression of releases from 2.0.0
 through 2.7.0.</p>
+
 <p>However, the ongoing maintenance of the 2.6.z and 2.7.z re-introduced
 parallel active release lines to Hadoop. Additional plans for 2.8.z and
 3.0.z releases mean potentially four active release lines, necessitating
 clarification on Hadoop versioning and how it affects these parallel
 release branches.</p>
+
 <h2 id="versioning-rules">Versioning rules</h2>
+
 <p>To establish a common foundation of knowledge, we require the following
 in terms of release versions.</p>
+
 <ul>
-<li>For <strong>a.b.c</strong> (maintenance) releases, the &ldquo;c&quot;s need to be released
+<li>For <strong>a.b.c</strong> (maintenance) releases, the &ldquo;c&rdquo;s need to be released
 in order.</li>
-<li>For <strong>a.b.0</strong> (minor) releases, the &ldquo;b&quot;s need to be released in
+<li>For <strong>a.b.0</strong> (minor) releases, the &ldquo;b&rdquo;s need to be released in
 order.</li>
 <li>For <strong>a.0.0</strong> (major) releases, it comes after a specific x.y.0
 minor release.</li>
 </ul>
+
 <p>This means that new major releases need to be coordinated with the
 previous minor release. New minor and maintenance releases only require
 coordination within their release line.</p>
-<p><em>&quot;-alphaX&rdquo;</em> and <em>&quot;-betaX&rdquo;</em> suffixed version can be treated as a.b.c
-versions, with the first (e.g. <em>&quot;-alpha1&quot;</em>) being the a.b.0 release.</p>
+
+<p><em>&rdquo;-alphaX&rdquo;</em> and <em>&rdquo;-betaX&rdquo;</em> suffixed version can be treated as a.b.c
+versions, with the first (e.g. <em>&rdquo;-alpha1&rdquo;</em>) being the a.b.0 release.</p>
+
 <p>When it comes to setting fix versions, this policy is encoded by the
 following set of rules:</p>
+
 <ol>
 <li>For each <strong>minor</strong> release line, set the <strong>lowest unreleased a.b.c
 version, where c ≥ 0</strong>.</li>
 <li>For each <strong>major</strong> release line, set the <strong>lowest unreleased a.b.0
 version</strong>.</li>
 </ol>
+
 <h2 id="example">Example</h2>
+
 <p>As an example, as of August 3rd, 2016, the latest releases in the 2.6.x
 and 2.7.x lines are 2.6.4 and 2.7.2. We have also cut the following
 branches for planned future releases: branch-2.7.3, branch-2.8, and
 branch-3.0.0-alpha1.</p>
+
 <p>If we are committing a bugfix that is intended for the 2.6.5 release, we
 would commit to:</p>
+
 <ol>
 <li>trunk (3.0.0-alpha2)</li>
 <li>branch-3.0.0-alpha1 (3.0.0-alpha1)</li>
@@ -220,13 +240,16 @@ would commit to:</p>
 <li>branch-2.7.3 (2.7.3)</li>
 <li>branch-2.6 (2.6.5)</li>
 </ol>
+
 <p>Applying the above rules for setting fix versions:</p>
+
 <ol>
 <li>Rule 1: 2.6.z and 2.7.z are both minor release lines, so set
 <strong>2.6.5</strong> and <strong>2.7.3</strong></li>
 <li>Rule 2: 2.y.z and 3.y.z the major release lines, so set <strong>2.8.0</strong>
 and <strong>3.0.0-alpha1</strong></li>
 </ol>
+
 <p>Note that when backporting changes, we always make sure to backport to
 the next higher release in a release line. For instance, we make sure to
 backport to branch-2.7 (2.7.4) when backporting to branch-2.7.3 (2.7.3),
@@ -270,6 +293,7 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
+
 </body>
 </html>
 

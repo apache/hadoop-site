@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Releases on Apache Hadoop</title>
@@ -7,7 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Tue, 15 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/release/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Jun 2021 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://hadoop.apache.org/release/index.xml" rel="self" type="application/rss+xml" />
+    
+    
     <item>
       <title>Release 3.3.1 available</title>
       <link>https://hadoop.apache.org/release/3.3.1.html</link>
@@ -427,7 +431,7 @@ Please see the Hadoop 2.7.1 Release Notes for the list of 131 bug fixes and patc
       
       <guid>https://hadoop.apache.org/release/2.7.0.html</guid>
       <description>Apache Hadoop 2.7.0 contains a number of significant enhancements. A few of them are noted below.
- IMPORTANT notes This release drops support for JDK6 runtime and works with JDK 7+ only. This release is not yet ready for production use. Critical issues are being ironed out via testing and downstream adoption. Production users should wait for a 2.7.1/2.7.2 release. Hadoop Common HADOOP-9629 - Support Windows Azure Storage - Blob as a file system in Hadoop.</description>
+ IMPORTANT notes This release drops support for JDK6 runtime and works with JDK 7+ only. This release is not yet ready for production use. Critical issues are being ironed out via testing and downstream adoption. Production users should wait for a 2.7.1&amp;frasl;2.7.2 release. Hadoop Common HADOOP-9629 - Support Windows Azure Storage - Blob as a file system in Hadoop.</description>
     </item>
     
     <item>
