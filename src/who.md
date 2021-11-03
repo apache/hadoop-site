@@ -207,6 +207,7 @@ enis                |[Enis Soztutar](http://people.apache.org/~enis)            
 eyang               |[Eric Yang](http://people.apache.org/~eyang)                                        |IBM                             |        |-8
 ferhui              |Hui Fei                                                                             |Tencent                         |        |+8
 gabota              |[Gabor Bota](https://github.com/bgaborg)                                            |Cloudera                        |        |+1
+gaurava             |[Gautham Banasandra](https://github.com/GauthamBanasandra)                          |Microsoft                       |        |+5.5
 gera                |[Gera Shegalov](https://github.com/gerashegalov)                                    |NVIDIA                          |        |-8
 gifuma              |Giovanni Matteo Fumarola                                                            |Microsoft                       |        |-8
 gkesavan            |[Giridharan Kesavan](http://people.apache.org/~gkesavan)                            |Hortonworks                     |RE      |-8
