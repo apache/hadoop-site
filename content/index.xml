@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Hadoop</title>
@@ -501,7 +501,7 @@ Please see the Hadoop 2.7.1 Release Notes for the list of 131 bug fixes and patc
       
       <guid>https://hadoop.apache.org/release/2.7.0.html</guid>
       <description>Apache Hadoop 2.7.0 contains a number of significant enhancements. A few of them are noted below.
- IMPORTANT notes This release drops support for JDK6 runtime and works with JDK 7+ only. This release is not yet ready for production use. Critical issues are being ironed out via testing and downstream adoption. Production users should wait for a 2.7.1&amp;frasl;2.7.2 release. Hadoop Common HADOOP-9629 - Support Windows Azure Storage - Blob as a file system in Hadoop.</description>
+ IMPORTANT notes This release drops support for JDK6 runtime and works with JDK 7+ only. This release is not yet ready for production use. Critical issues are being ironed out via testing and downstream adoption. Production users should wait for a 2.7.1/2.7.2 release. Hadoop Common HADOOP-9629 - Support Windows Azure Storage - Blob as a file system in Hadoop.</description>
     </item>
     
     <item>
@@ -1287,7 +1287,7 @@ When upgrading an existing HDFS filesystem to a 0.15.x release from an earlier r
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hadoop.apache.org/versioning.html</guid>
-      <description>Background Apache Hadoop uses a version format of &amp;lt;major&amp;gt;.&amp;lt;minor&amp;gt;.&amp;lt;maintenance&amp;gt;, where each version component is a numeric value. Versions can also have additional suffixes like &amp;rdquo;-alpha2&amp;rdquo; or &amp;rdquo;-beta1&amp;rdquo;, which denote the API compatibility guarantees and quality of the release. We use &amp;ldquo;a.b.c&amp;rdquo; and &amp;ldquo;x.y.z&amp;rdquo; to denote a dotted version triplet.
+      <description>Background Apache Hadoop uses a version format of &amp;lt;major&amp;gt;.&amp;lt;minor&amp;gt;.&amp;lt;maintenance&amp;gt;, where each version component is a numeric value. Versions can also have additional suffixes like &amp;quot;-alpha2&amp;rdquo; or &amp;quot;-beta1&amp;rdquo;, which denote the API compatibility guarantees and quality of the release. We use &amp;ldquo;a.b.c&amp;rdquo; and &amp;ldquo;x.y.z&amp;rdquo; to denote a dotted version triplet.
 Major versions are used to introduce substantial, potentially incompatible, changes. Examples of this include the replacement of MapReduce 1 with YARN and MapReduce 2 in Hadoop 2, and the required Java runtime version from JDK7 to JDK8 in Hadoop 3.</description>
     </item>
     
@@ -1317,7 +1317,7 @@ Hadoop is a project of the Apache Software Foundation. The foundation holds the 
       
       <guid>https://hadoop.apache.org/committer_criteria.html</guid>
       <description>Committers are responsible for reviewing and integrating code changes. The PMC votes to make a contributor a committer based on an assessment of their contributions to the project. Contributions can be made in many ways, and there is no one route to committership. That said, here are the general criteria that the PMC looks for from all potential committers:
- A history of sustained contribution to the project. This is a way for a contributor to demonstrate their expertise in an area, and thus their ability to help review and commit contributions by others in that same area.</description>
+  A history of sustained contribution to the project. This is a way for a contributor to demonstrate their expertise in an area, and thus their ability to help review and commit contributions by others in that same area.</description>
     </item>
     
     <item>
@@ -1363,7 +1363,8 @@ We welcome input, however, before filing a request, please make sure you do the 
       <description>User The user@ mailing list is the preferred mailing list for end-user questions and discussion.
 Please use the specific module&amp;rsquo;s -dev@ mailing list to address developers on a specific technical question. The Hadoop user mailing list is : user@hadoop.apache.org.
  Subscribe to List Unsubscribe from List Archives  中文用户可利用user-zh邮件列表以中文发问
- 订阅邮件列表 取消订阅 归档邮件  In order to post to the list, it is necessary to first subscribe to it.</description>
+ 订阅邮件列表 取消订阅 归档邮件  In order to post to the list, it is necessary to first subscribe to it.
+Security The security mailing list is a private list for discussion of potential security vulnerabilities issues.</description>
     </item>
     
     <item>
