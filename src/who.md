@@ -37,7 +37,7 @@ order):
 
   username         |name                                                                         |organization   |roles       |timezone
   ---------------- |---------------------------------------------------------------------------- |-------------- |----------- |----------
-  aajisaka         |Akira Ajisaka                                                                |Yahoo! JAPAN   |            |+9
+  aajisaka         |Akira Ajisaka                                                                |AWS            |            |+9
   acmurthy         |[Arun C Murthy](http://people.apache.org/~acmurthy)                          |Hortonworks    |            |-8
   aengineer        |Anu Engineer                                                                 |Hortonworks    |            |-8
   amareshwari      |Amareshwari Sriramadasu                                                      |InMobi         |            |+5.5
@@ -156,7 +156,7 @@ Hadoop's active committers include:
 
 username            |name                                                                               |organization        |roles  |timezone  |
 --------------------|-----------------------------------------------------------------------------------|--------------------|-------|----------|
-aajisaka            |Akira Ajisaka                                                                       |Yahoo! JAPAN                    |        |+9
+aajisaka            |Akira Ajisaka                                                                       |AWS                             |        |+9
 ab                  |Andrzej Bialecki                                                                    |Getopt                          |        |+1
 abmodi              |Abhishek Modi                                                                       |Microsoft                       |        |+5.5
 acmurthy            |[Arun C Murthy](http://people.apache.org/~acmurthy)                                 |Hortonworks                     |        |-8
