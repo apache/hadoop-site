@@ -16,7 +16,7 @@
 
 ## Usage
 
-The site is generated with [Hugo](https://gohugo.io/).
+The site is generated with [Hugo](https://gohugo.io/) version 0.89.0.
 
 To generate a site you need only one binary. Follow the install guide from the hugo site. (Typically all the package managers
 contain dedicated package, but as the hugo is written in go it's also possible to download the single binary from the release page).
@@ -26,6 +26,8 @@ After the installation you can generate the site with:
 `hugo`
 
 And the site will be generated to the `content` sub directory.
+
+> Please make sure to use Hugo version 0.89.0 to avoid unnecessary formatting changes.
 
 This repository contains both the source and the rendered version of the site.
 __Always execute a `hugo` before the commit, to refresh the content folder.__
