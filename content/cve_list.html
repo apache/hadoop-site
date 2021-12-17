@@ -350,6 +350,13 @@ target encryption zone.</p>
 <li><strong>Reported Date</strong>: 2016/11/18</li>
 <li><strong>Issue Announced</strong>: 2017/11/08 (<a href="https://lists.apache.org/thread.html/2e16689b44bdd1976b6368c143a4017fc7159d1f2d02a5d54fe9310f@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
+<h1 id="thirdparty-vulnerabilities">Thirdparty vulnerabilities</h1>
+<p>The following section describes thirdparty vulnerabilities that may be of interest to Hadoop users. Please contact the respective project owners for details.</p>
+<h2 id="cve-2021-44228httpscvemitreorgcgi-bincvenamecginamecve-2021-44228-log4jshell-vulnerability"><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228">CVE-2021-44228</a> Log4JShell Vulnerability</h2>
+<p>It is understood that the log4jshell vulnerability CVE-2021-44228 impacts log4j2 (2.0-beta9 through 2.15.0). Hadoop, as of 3.3.x depends on log4j 1.x, which is <em>NOT</em> susceptible to the attack. Once we migrate over to log4j2, we will adopt a version &gt;= 2.16.0 that is not susceptible to the attack, too.</p>
+<ul>
+<li><strong>Versions affected</strong>: N/A</li>
+</ul>
 
 </div>
 

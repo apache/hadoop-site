@@ -3,16 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://hadoop.apache.org/</loc>
-    <lastmod>2021-06-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hadoop.apache.org/news/2021-12-17-log4jshell.html</loc>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hadoop.apache.org/news.html</loc>
+    <lastmod>2021-12-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://hadoop.apache.org/release/3.3.1.html</loc>
     <lastmod>2021-06-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://hadoop.apache.org/release.html</loc>
     <lastmod>2021-06-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://hadoop.apache.org/news.html</loc>
-    <lastmod>2021-04-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://hadoop.apache.org/news/2021-04-17-ozone-1.1.0.html</loc>
     <lastmod>2021-04-17T00:00:00+00:00</lastmod>
