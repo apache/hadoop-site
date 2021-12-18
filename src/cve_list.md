@@ -238,6 +238,6 @@ The following section describes thirdparty vulnerabilities that may be of intere
 
 ## [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228) Log4JShell Vulnerability
 
-It is understood that the log4jshell vulnerability CVE-2021-44228 impacts log4j2 (2.0-beta9 through 2.15.0). Hadoop, as of 3.3.x depends on log4j 1.x, which is **NOT** susceptible to the attack. Once we migrate over to log4j2, we will adopt a version >= 2.16.0 that is not susceptible to the attack, too. Therefore, no ASF version of Hadoop has ever been vulnerable. Third party products  and applications based on Hadoop *may* be vulnerable, please consult the vendor or the project owner.
+It is understood that the log4jshell vulnerability CVE-2021-44228 impacts log4j2. Hadoop, as of 3.3.x depends on log4j 1.x, which is **NOT** susceptible to the attack. Once we migrate over to log4j2, we will adopt a version that is not susceptible to the attack, too. Therefore, no ASF version of Hadoop has ever been vulnerable. Third party products  and applications based on Hadoop *may* be vulnerable, please consult the vendor or the project owner.
 
 - **Versions affected**: N/A
