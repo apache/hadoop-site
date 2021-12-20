@@ -357,6 +357,12 @@ target encryption zone.</p>
 <ul>
 <li><strong>Versions affected</strong>: N/A</li>
 </ul>
+<h2 id="cve-2021-4104httpscvemitreorgcgi-bincvenamecginamecve-2021-4104-log4jshell-vulnerability"><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-4104">CVE-2021-4104</a> Log4JShell Vulnerability</h2>
+<p>JMSAppender in Log4j 1.2, used by all versions of Apache Hadoop, is vulnerable to the Log4JShell attack in a similar fashion to CVE-2021-4428. However, the JMSAppender is not the default configuration shipped in Hadoop. When JMSAppender is not enabled, Hadoop is not vulnerable to the attack.</p>
+<p>To mitigate the risk, you can remove JMSAppender from the log4j-1.2.17.jar artifact yourself following the instructions in this <a href="http://slf4j.org/log4shell.html">link</a>.</p>
+<ul>
+<li><strong>Versions affected</strong>: N/A</li>
+</ul>
 
 </div>
 
