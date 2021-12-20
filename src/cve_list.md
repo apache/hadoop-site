@@ -233,3 +233,19 @@ target encryption zone.
 - **Reported Date**: 2016/11/18
 - **Issue Announced**: 2017/11/08 ([general@hadoop](https://lists.apache.org/thread.html/2e16689b44bdd1976b6368c143a4017fc7159d1f2d02a5d54fe9310f@%3Cgeneral.hadoop.apache.org%3E))
 
+# Thirdparty vulnerabilities
+The following section describes thirdparty vulnerabilities that may be of interest to Hadoop users. Please contact the respective project owners for details.
+
+## [CVE-2021-44228](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228) Log4JShell Vulnerability
+
+It is understood that the log4jshell vulnerability CVE-2021-44228 impacts log4j2. Hadoop, as of 3.3.x depends on log4j 1.x, which is **NOT** susceptible to the attack. Once we migrate over to log4j2, we will adopt a version that is not susceptible to the attack, too. Therefore, no ASF version of Hadoop has ever been vulnerable. Third party products and applications based on Hadoop *may* be vulnerable, please consult the vendor or the project owner.
+
+- **Versions affected**: N/A
+
+## [CVE-2021-4104](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-4104) Log4JShell Vulnerability
+
+JMSAppender in Log4j 1.2, used by all versions of Apache Hadoop, is vulnerable to the Log4JShell attack in a similar fashion to CVE-2021-44228. However, the JMSAppender is not the default configuration shipped in Hadoop. When JMSAppender is not enabled, Hadoop is not vulnerable to the attack.
+
+To mitigate the risk, you can remove JMSAppender from the log4j-1.2.17.jar artifact yourself following the instructions in this [link](http://slf4j.org/log4shell.html).
+
+- **Versions affected**: N/A
