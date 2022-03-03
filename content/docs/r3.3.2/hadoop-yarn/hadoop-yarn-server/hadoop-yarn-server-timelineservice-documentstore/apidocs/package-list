@@ -1,0 +1,11 @@
+org.apache.hadoop.yarn.server.timelineservice.documentstore
+org.apache.hadoop.yarn.server.timelineservice.documentstore.collection
+org.apache.hadoop.yarn.server.timelineservice.documentstore.collection.document
+org.apache.hadoop.yarn.server.timelineservice.documentstore.collection.document.entity
+org.apache.hadoop.yarn.server.timelineservice.documentstore.collection.document.flowactivity
+org.apache.hadoop.yarn.server.timelineservice.documentstore.collection.document.flowrun
+org.apache.hadoop.yarn.server.timelineservice.documentstore.lib
+org.apache.hadoop.yarn.server.timelineservice.documentstore.reader
+org.apache.hadoop.yarn.server.timelineservice.documentstore.reader.cosmosdb
+org.apache.hadoop.yarn.server.timelineservice.documentstore.writer
+org.apache.hadoop.yarn.server.timelineservice.documentstore.writer.cosmosdb
