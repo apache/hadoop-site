@@ -1,14 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -149,9 +140,16 @@
     </nav>
 
 <div class="container">
-<div class="col-md-8">
-<h1>release 0.16.0 available</h1>
-<!---
+
+<section id="main">
+  <div>
+    <h1 id="title">Releases Archive</h1>
+        <ul id="list">
+            
+            <h1><a href="/release/0.14.1.html">release 0.14.1 available</a></h1>
+            <p><small>2007 Sep 4 </small></p>
+
+            <!---
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -164,31 +162,59 @@
   See the License for the specific language governing permissions and
   limitations under the License. See accompanying LICENSE file.
 -->
-<p>This release contains many improvements, new features, bug fixes and
-optimizations.</p>
-<p>See the release notes (above) for details.</p>
-<p>When upgrading an existing HDFS filesystem to a 0.16.x release from an
-earlier release, you should first start HDFS with &lsquo;bin/start-dfs.sh
--upgrade&rsquo;. See the <a href="https://wiki.apache.org/hadoop/Hadoop_Upgrade">Hadoop
-Upgrade</a> page for details.</p>
+<p>New features in release 0.14 include:</p>
+<ul>
+<li>Better checksums in HDFS. Checksums are no longer stored in parallel
+HDFS files, but are stored directly by datanodes alongside blocks.
+This is more efficient for the namenode and also improves data
+integrity.</li>
+<li>Pipes: A C++ API for MapReduce</li>
+<li>Eclipse Plugin, including HDFS browsing, job monitoring, etc.</li>
+<li>File modification times in HDFS.</li>
+</ul>
+<p>There are many other improvements, bug fixes, optimizations and new
+features. Performance and reliability are better than ever.</p>
+<p>When upgrading an existing HDFS filesystem to a 0.14.x release from a
+0.13.x or earlier release, you should first start HDFS with
+&lsquo;bin/start-dfs.sh -upgrade&rsquo;. See the <a href="https://wiki.apache.org/hadoop/Hadoop_0.14_Upgrade">Hadoop 0.14
+Upgrade</a> page for
+details.</p>
 
-<small>2008 Feb 7 </small>
-</div>
-<div class="col-md-4">
-   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-0.16.0/hadoop-0.16.0.tar.gz" class="btn btn-success">Download tar.gz</a></p>
-   <p>
-     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-0.16.0/hadoop-0.16.0.tar.gz.md5">checksum</a>
-     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-0.16.0/hadoop-0.16.0.tar.gz.asc">signature</a>)
-   </p>
-    
-   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-0.16.0/hadoop-0.16.0-src.tar.gz" class="btn btn-warning">Download src</a></p>
-   <p>
-     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-0.16.0/hadoop-0.16.0-src.tar.gz.md5">checksum</a>
-     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-0.16.0/hadoop-0.16.0-src.tar.gz.asc">signature</a>)
-   </p>
-      <p><a href="https://hadoop.apache.org/docs/r0.16.0" class="btn btn-primary">Documentation</a></p>
 
-</div>
+            
+        </ul>
+  </div>
+
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/release.html" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/11.html" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/8.html" aria-label="Page 8" class="page-link" role="button">8</a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/9.html" aria-label="Page 9" class="page-link" role="button">9</a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/10.html" aria-label="Page 10" class="page-link" role="button">10</a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/11.html" aria-label="Page 11" class="page-link" role="button">11</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 12" class="page-link" role="button">12</a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul>
+</section>
 </div>
 
 <div class="container">
