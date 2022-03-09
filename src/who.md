@@ -263,6 +263,7 @@ nroberts            |Nathan Roberts                                             
 omalley             |[Owen O\'Malley](http://people.apache.org/~omalley)                                 |Hortonworks                     |        |-8
 ozawa               |[Tsuyoshi Ozawa](http://people.apache.org/~ozawa)                                   |NTT                             |        |+9
 prabhujoseph        |Prabhu Joseph                                                                       |Microsoft                       |        |+5.5
+quapaw              |[Andras Gyori](https://github.com/9uapaw)                                           |Cloudera                        |        |+1
 rakeshr             |[Rakesh Radhakrishnan](https://people.apache.org/~rakeshr)                          |Intel                           |        |+5.5
 rangadi             |[Raghu Angadi](http://people.apache.org/~rangadi)                                   |Twitter                         |HDFS    |-8
 ramya               |[Ramya Sunil](http://people.apache.org/~ramya)                                      |Hortonworks                     |        |-8
