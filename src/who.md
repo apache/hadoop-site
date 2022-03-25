@@ -182,6 +182,7 @@ boryas              |[Boris Shkolnik](http://people.apache.org/~boryas)         
 botong              |Botong Huang                                                                        |Alibaba                         |        |-8
 brahma              |Brahma Reddy Battula                                                                |Huawei                          |        |+5.5
 brandonli           |Brandon Li                                                                          |Hortonworks                     |        |-8
+bteke               |[Benjamin Teke](https://github.com/brumi1024)                                       |Cloudera                        |        |+1
 busbey              |Sean Busbey                                                                         |Cloudera                        |        |-6
 cdouglas            |Chris Douglas                                                                       |Microsoft                       |        |-8
 cliang              |Chen Liang                                                                          |LinkedIn                        |        |-8
