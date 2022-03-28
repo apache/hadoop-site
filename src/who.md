@@ -288,7 +288,7 @@ snemeth             |[Szilard Nemeth](https://github.com/szilard-nemeth)        
 sseth               |Siddharth Seth                                                                      |Hortonworks                     |        |-8
 stevel              |Steve Loughran                                                                      |Cloudera                     |        |0
 subru               |Subru Krishnan                                                                      |Microsoft                       |        |-8
-sunchao             |[Chao Sun](http://sunchao.github.io)                                                |Uber                            |HDFS    |-8
+sunchao             |[Chao Sun](http://sunchao.github.io)                                                |Apple                           |HDFS    |-8
 sunilg              |Sunil Govindan                                                                      |Cloudera                     |        |+5.5
 surendralilhore     |Surendra Singh Lilhore                                                              |Microsoft                       |HDFS    |+5.5
 suresh              |[Suresh Srinivas](http://people.apache.org/~suresh)                                 |Hortonworks                     |        |-8

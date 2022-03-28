@@ -1,0 +1,3 @@
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableStat Method getSnapshotTimeStamp()
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableRollingAverages Method setRecordValidityMs(long)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableStat Method setUpdateTimeStamp(boolean)
