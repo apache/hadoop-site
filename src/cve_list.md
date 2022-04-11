@@ -37,6 +37,21 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2022-26612](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-26612) Arbitrary file write during untar on Windows
+
+In Apache Hadoop, The `unTar` function uses `unTarUsingJava` function on Windows and the built-in tar utility on Unix and other OSes.  As a result, a TAR entry may create a symlink under the expected extraction directory which points to an external directory. A subsequent TAR entry may extract an arbitrary file into the external directory using the symlink name. This however would be caught by the same `targetDirPath` check on Unix because of the `getCanonicalPath` call. However on Windows, `getCanonicalPath` doesn't resolve symbolic links, which bypasses the check.  `unpackEntries` during TAR extraction follows symbolic links which allows writing outside expected base directory on Windows.
+
+Users of the affected versions should apply either of the following mitigations:
+* Do not run any of the YARN daemons as a user possessing the permissions to create symlinks on Windows.
+* Do not use symlinks in the tar file.
+
+- **Versions affected**: Versions below 3.2.3, 3.3.1, 3.3.2
+- **Fixed versions**: 3.2.3, 3.4 onwards
+- **Impact**: file write to arbitrary path in Windows
+- **Reporter**: A member of GitHub Security Lab, [Jaroslav Lobačevski](https://github.com/JarLob)
+- **Reported Date**: 2022/02/09
+- **Issue Announced**: 2022/04/7 ([general@hadoop](https://lists.apache.org/thread/wps21pzjl1myxw23yb466y9yofv104yl))
+
 ## [CVE-2020-9492](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-9492) Apache Hadoop Potential privilege escalation
 
 WebHDFS client might send SPNEGO authorization header to remote URL
