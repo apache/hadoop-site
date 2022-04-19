@@ -46,7 +46,7 @@ Users of the affected versions should apply either of the following mitigations:
 * Do not use symlinks in the tar file.
 
 - **Versions affected**: Versions below 3.2.3, 3.3.2
-- **Fixed versions**: 3.2.3, 3.4 onwards
+- **Fixed versions**: 3.2.3, 3.3.3, 3.4 onwards
 - **Impact**: file write to arbitrary path in Windows
 - **Reporter**: A member of GitHub Security Lab, [Jaroslav Lobačevski](https://github.com/JarLob)
 - **Reported Date**: 2022/02/09
