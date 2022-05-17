@@ -1,0 +1,5 @@
+org.apache.hadoop.mapred.nativetask
+org.apache.hadoop.mapred.nativetask.buffer
+org.apache.hadoop.mapred.nativetask.handlers
+org.apache.hadoop.mapred.nativetask.serde
+org.apache.hadoop.mapred.nativetask.util
