@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Tue, 17 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/release/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 31 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/release/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Release 2.10.2 available</title>
+      <link>https://hadoop.apache.org/release/2.10.2.html</link>
+      <pubDate>Tue, 31 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/release/2.10.2.html</guid>
+      <description>This is the first stable release of Apache Hadoop 2.10 line.
+It contains 211 bug fixes, improvements and enhancements since 2.10.1.
+Users are encouraged to read the overview of major changes since 2.10.1. For details of 211 bug fixes, improvements, and other enhancements since the previous 2.10.1 release, please check release notes and changelog.</description>
+    </item>
+    
     <item>
       <title>Release 3.3.3 available</title>
       <link>https://hadoop.apache.org/release/3.3.3.html</link>
