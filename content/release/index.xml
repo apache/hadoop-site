@@ -14,7 +14,7 @@
       <pubDate>Tue, 31 May 2022 00:00:00 +0000</pubDate>
       
       <guid>https://hadoop.apache.org/release/2.10.2.html</guid>
-      <description>This is the first stable release of Apache Hadoop 2.10 line.
+      <description>This is the second stable release of Apache Hadoop 2.10 line.
 It contains 211 bug fixes, improvements and enhancements since 2.10.1.
 Users are encouraged to read the overview of major changes since 2.10.1. For details of 211 bug fixes, improvements, and other enhancements since the previous 2.10.1 release, please check release notes and changelog.</description>
     </item>
