@@ -302,6 +302,7 @@ taton               |[Christophe Taton](http://people.apache.org/~taton)        
 templedf            |Daniel Templeton                                                                    |Cloudera                        |        |-8
 tgraves             |Thomas Graves                                                                       |NVIDIA                          |        |-6
 todd                |[Todd Lipcon](http://people.apache.org/~todd)                                       |Cloudera                        |        |-8
+tomscut             |[Tao Li](http://github.com/tomscut)                                                 |BIGO                            |        |+8
 tomwhite            |[Tom White](http://www.lexemetech.com)                                              |Cloudera                        |        |-8
 tucu                |Alejandro Abdelnur                                                                  |Cloudera                        |        |-8
 umamahesh           |[Uma Maheswara Rao G](https://people.apache.org/~umamahesh/umamahesh.html)          |Intel                           |HDFS    |+5.5
