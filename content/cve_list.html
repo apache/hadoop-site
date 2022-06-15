@@ -178,11 +178,23 @@ can escalate to yarn user and cannot escalate to root user, remove the
 permission to escalate to yarn user from them.</p>
 <ul>
 <li><strong>Versions affected</strong>: 2.2.0 to 2.10.1, 3.0.0-alpha1 to 3.1.4, 3.2.0 to 3.2.2, 3.3.0 to 3.3.1</li>
-<li><strong>Fixed versions</strong>: 3.2.3, 3.3.2</li>
+<li><strong>Fixed versions</strong>: 2.10.2, 3.2.3, 3.3.2</li>
 <li><strong>Impact</strong>: privilege escalation</li>
 <li><strong>Reporter</strong>: Hideyuki Furue</li>
 <li><strong>Reported Date</strong>: 2021/05/05</li>
 <li><strong>Issue Announced</strong>: 2022/06/15 (<a href="https://lists.apache.org/thread/ctr84rmo3xd2tzqcx2b277c8z692vhl5">general@hadoop</a>)</li>
+</ul>
+<h2 id="cve-2021-37404httpcvemitreorgcgi-bincvenamecginamecve-2021-37404-heap-buffer-overflow-in-libhdfs-native-library"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37404">CVE-2021-37404</a> Heap buffer overflow in libhdfs native library</h2>
+<p>There is a potential heap buffer overflow in libhdfs native code.
+Opening a file path provided by user without validation may result in
+a denial of service or arbitrary code execution.</p>
+<ul>
+<li><strong>Versions affected</strong>: 2.9.0 to 2.10.1, 3.0.0 to 3.1.4, 3.2.0 to 3.2.2, 3.3.0 to 3.3.1</li>
+<li><strong>Fixed versions</strong>: 2.10.2, 3.2.3, 3.3.2</li>
+<li><strong>Impact</strong>: denial of service or arbitrary code execution</li>
+<li><strong>Reporter</strong>: Igor Chervatyuk</li>
+<li><strong>Reported Date</strong>: 2021/04/04</li>
+<li><strong>Issue Announced</strong>: 2022/06/11 (<a href="https://lists.apache.org/thread/36k6f4s4ff97tgo4wl9681vtcp7dsg06">general@hadoop</a>)</li>
 </ul>
 <h2 id="cve-2022-26612httpcvemitreorgcgi-bincvenamecginamecve-2022-26612-arbitrary-file-write-during-untar-on-windows"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-26612">CVE-2022-26612</a> Arbitrary file write during untar on Windows</h2>
 <p>In Apache Hadoop, The <code>unTar</code> function uses <code>unTarUsingJava</code> function on Windows and the built-in tar utility on Unix and other OSes.  As a result, a TAR entry may create a symlink under the expected extraction directory which points to an external directory. A subsequent TAR entry may extract an arbitrary file into the external directory using the symlink name. This however would be caught by the same <code>targetDirPath</code> check on Unix because of the <code>getCanonicalPath</code> call. However on Windows, <code>getCanonicalPath</code> doesn&rsquo;t resolve symbolic links, which bypasses the check.  <code>unpackEntries</code> during TAR extraction follows symbolic links which allows writing outside expected base directory on Windows.</p>

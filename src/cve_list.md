@@ -48,11 +48,24 @@ can escalate to yarn user and cannot escalate to root user, remove the
 permission to escalate to yarn user from them.
 
 - **Versions affected**: 2.2.0 to 2.10.1, 3.0.0-alpha1 to 3.1.4, 3.2.0 to 3.2.2, 3.3.0 to 3.3.1
-- **Fixed versions**: 3.2.3, 3.3.2
+- **Fixed versions**: 2.10.2, 3.2.3, 3.3.2
 - **Impact**: privilege escalation
 - **Reporter**: Hideyuki Furue
 - **Reported Date**: 2021/05/05
 - **Issue Announced**: 2022/06/15 ([general@hadoop](https://lists.apache.org/thread/ctr84rmo3xd2tzqcx2b277c8z692vhl5))
+
+## [CVE-2021-37404](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37404) Heap buffer overflow in libhdfs native library
+
+There is a potential heap buffer overflow in libhdfs native code.
+Opening a file path provided by user without validation may result in
+a denial of service or arbitrary code execution.
+
+- **Versions affected**: 2.9.0 to 2.10.1, 3.0.0 to 3.1.4, 3.2.0 to 3.2.2, 3.3.0 to 3.3.1
+- **Fixed versions**: 2.10.2, 3.2.3, 3.3.2
+- **Impact**: denial of service or arbitrary code execution
+- **Reporter**: Igor Chervatyuk
+- **Reported Date**: 2021/04/04
+- **Issue Announced**: 2022/06/11 ([general@hadoop](https://lists.apache.org/thread/36k6f4s4ff97tgo4wl9681vtcp7dsg06))
 
 ## [CVE-2022-26612](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-26612) Arbitrary file write during untar on Windows
 
