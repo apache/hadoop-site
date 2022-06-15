@@ -37,6 +37,23 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2021-33036](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-33036) Apache Hadoop Privilege escalation vulnerability
+
+In Apache Hadoop 2.2.0 to 2.10.1, 3.0.0-alpha1 to 3.1.4, 3.2.0 to
+3.2.2, and 3.3.0 to 3.3.1, A user who can escalate to yarn user can
+possibly run arbitrary commands as root user.
+
+If you are using the affected version of Apache Hadoop and some users
+can escalate to yarn user and cannot escalate to root user, remove the
+permission to escalate to yarn user from them.
+
+- **Versions affected**: 2.2.0 to 2.10.1, 3.0.0-alpha1 to 3.1.4, 3.2.0 to 3.2.2, 3.3.0 to 3.3.1
+- **Fixed versions**: 3.2.3, 3.3.2
+- **Impact**: privilege escalation
+- **Reporter**: Hideyuki Furue
+- **Reported Date**: 2021/05/05
+- **Issue Announced**: 2022/06/15 ([general@hadoop](https://lists.apache.org/thread/ctr84rmo3xd2tzqcx2b277c8z692vhl5))
+
 ## [CVE-2022-26612](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-26612) Arbitrary file write during untar on Windows
 
 In Apache Hadoop, The `unTar` function uses `unTarUsingJava` function on Windows and the built-in tar utility on Unix and other OSes.  As a result, a TAR entry may create a symlink under the expected extraction directory which points to an external directory. A subsequent TAR entry may extract an arbitrary file into the external directory using the symlink name. This however would be caught by the same `targetDirPath` check on Unix because of the `getCanonicalPath` call. However on Windows, `getCanonicalPath` doesn't resolve symbolic links, which bypasses the check.  `unpackEntries` during TAR extraction follows symbolic links which allows writing outside expected base directory on Windows.
