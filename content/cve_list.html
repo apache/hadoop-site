@@ -169,6 +169,30 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Reported Date**:
 - **Issue Announced**:
 -->
+<h2 id="cve-2022-25168httpcvemitreorgcgi-bincvenamecginamecve-2022-25168-command-injection-in-orgapachehadoopfsfileutiluntarusingtar"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25168">CVE-2022-25168</a> Command injection in org.apache.hadoop.fs.FileUtil.unTarUsingTar</h2>
+<p>Apache Hadoop&rsquo;s FileUtil.unTar(File, File) API does not escape the
+input file name before being passed to the shell. An attacker can
+inject arbitrary commands.</p>
+<p>This is only used in Hadoop 3.3
+InMemoryAliasMap.completeBootstrapTransfer, which is only ever run by
+a local user.</p>
+<p>It has been used in Hadoop 2.x for yarn localization, which does
+enable remote code execution.</p>
+<p>It is used in Apache Spark, from the SQL command ADD ARCHIVE. As the
+ADD ARCHIVE command adds new binaries to the classpath, being able to
+execute shell scripts does not confer new permissions to the caller.</p>
+<p>SPARK-38305. &ldquo;Check existence of file before untarring/zipping&rdquo;, which
+is included in 3.3.0, 3.1.4, 3.2.2, prevents shell commands being
+executed, regardless of which version of the hadoop libraries are in
+use.</p>
+<ul>
+<li><strong>Versions affected</strong>: 2.0.0 to 2.10.1, 3.0.0-alpha1 to 3.2.3, 3.3.0 to 3.3.2</li>
+<li><strong>Fixed versions</strong>: 2.10.2, 3.2.4, 3.3.3</li>
+<li><strong>Impact</strong>: injection attack</li>
+<li><strong>Reporter</strong>: Kostya Kortchinsky</li>
+<li><strong>Reported Date</strong>: 2022/02/12</li>
+<li><strong>Issue Announced</strong>: 2022/08/04 (<a href="https://lists.apache.org/thread/ktplnsr0b9zn8ylzb98zcnt5gydfvjm1">general@hadoop</a>)</li>
+</ul>
 <h2 id="cve-2021-33036httpcvemitreorgcgi-bincvenamecginamecve-2021-33036-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-33036">CVE-2021-33036</a> Apache Hadoop Privilege escalation vulnerability</h2>
 <p>In Apache Hadoop 2.2.0 to 2.10.1, 3.0.0-alpha1 to 3.1.4, 3.2.0 to
 3.2.2, and 3.3.0 to 3.3.1, A user who can escalate to yarn user can

@@ -37,6 +37,35 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2022-25168](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25168) Command injection in org.apache.hadoop.fs.FileUtil.unTarUsingTar
+
+Apache Hadoop's FileUtil.unTar(File, File) API does not escape the
+input file name before being passed to the shell. An attacker can
+inject arbitrary commands.
+
+This is only used in Hadoop 3.3
+InMemoryAliasMap.completeBootstrapTransfer, which is only ever run by
+a local user.
+
+It has been used in Hadoop 2.x for yarn localization, which does
+enable remote code execution.
+
+It is used in Apache Spark, from the SQL command ADD ARCHIVE. As the
+ADD ARCHIVE command adds new binaries to the classpath, being able to
+execute shell scripts does not confer new permissions to the caller.
+
+SPARK-38305. "Check existence of file before untarring/zipping", which
+is included in 3.3.0, 3.1.4, 3.2.2, prevents shell commands being
+executed, regardless of which version of the hadoop libraries are in
+use.
+
+- **Versions affected**: 2.0.0 to 2.10.1, 3.0.0-alpha1 to 3.2.3, 3.3.0 to 3.3.2
+- **Fixed versions**: 2.10.2, 3.2.4, 3.3.3
+- **Impact**: injection attack
+- **Reporter**: Kostya Kortchinsky
+- **Reported Date**: 2022/02/12
+- **Issue Announced**: 2022/08/04 ([general@hadoop](https://lists.apache.org/thread/ktplnsr0b9zn8ylzb98zcnt5gydfvjm1))
+
 ## [CVE-2021-33036](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-33036) Apache Hadoop Privilege escalation vulnerability
 
 In Apache Hadoop 2.2.0 to 2.10.1, 3.0.0-alpha1 to 3.1.4, 3.2.0 to
