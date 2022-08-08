@@ -1,0 +1,6336 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<comments
+  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+  xsi:noNamespaceSchemaLocation='comments.xsd'
+  name="Apache_Hadoop_YARN_API_2.7.2_to_Apache_Hadoop_YARN_API_3.3.4"
+  jdversion="1.0.9">
+
+<!-- This file contains comments for a JDiff report. -->
+<!-- It is used only in generating the report, and does not need to ship with the final report. -->
+
+<!-- The id attribute in an identifier element identifiers the change as noted in the report. -->
+<!-- An id has the form package[.class[.[ctor|method|field].signature]], where [] indicates optional text. -->
+<!-- A comment element can have multiple identifier elements, which will -->
+<!-- will cause the same text to appear at each place in the report, but -->
+<!-- will be converted to separate comments when the comments file is used. -->
+<!-- HTML tags in the text field will appear in the report. -->
+<comment>
+  <identifier id="org.apache.hadoop.yarn.ams"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.failApplicationAttempt_added(org.apache.hadoop.yarn.api.protocolrecords.FailApplicationAttemptRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.getAttributesToNodes_added(org.apache.hadoop.yarn.api.protocolrecords.GetAttributesToNodesRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.getClusterNodeAttributes_added(org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeAttributesRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.getNewReservation_added(org.apache.hadoop.yarn.api.protocolrecords.GetNewReservationRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.getNodesToAttributes_added(org.apache.hadoop.yarn.api.protocolrecords.GetNodesToAttributesRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.getResourceProfile_added(org.apache.hadoop.yarn.api.protocolrecords.GetResourceProfileRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.getResourceProfiles_added(org.apache.hadoop.yarn.api.protocolrecords.GetAllResourceProfilesRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.getResourceTypeInfo_added(org.apache.hadoop.yarn.api.protocolrecords.GetAllResourceTypeInfoRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.listReservations_added(org.apache.hadoop.yarn.api.protocolrecords.ReservationListRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.signalToContainer_added(org.apache.hadoop.yarn.api.protocolrecords.SignalContainerRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.updateApplicationPriority_added(org.apache.hadoop.yarn.api.protocolrecords.UpdateApplicationPriorityRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationClientProtocol.updateApplicationTimeouts_added(org.apache.hadoop.yarn.api.protocolrecords.UpdateApplicationTimeoutsRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationConstants"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationConstants.ContainerLaunchType"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationConstants.KEYSTORE_FILE_LOCATION_ENV_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationConstants.KEYSTORE_PASSWORD_ENV_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationConstants.MAX_APP_ATTEMPTS_ENV"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationConstants.TRUSTSTORE_FILE_LOCATION_ENV_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ApplicationConstants.TRUSTSTORE_PASSWORD_ENV_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol.commitLastReInitialization_added(org.apache.hadoop.yarn.api.records.ContainerId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol.getLocalizationStatuses_added(org.apache.hadoop.yarn.api.protocolrecords.GetLocalizationStatusesRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol.increaseContainersResource_added(org.apache.hadoop.yarn.api.protocolrecords.IncreaseContainersResourceRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol.localize_added(org.apache.hadoop.yarn.api.protocolrecords.ResourceLocalizationRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol.reInitializeContainer_added(org.apache.hadoop.yarn.api.protocolrecords.ReInitializeContainerRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol.restartContainer_added(org.apache.hadoop.yarn.api.records.ContainerId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol.rollbackLastReInitialization_added(org.apache.hadoop.yarn.api.records.ContainerId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol.signalToContainer_added(org.apache.hadoop.yarn.api.protocolrecords.SignalContainerRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.ContainerManagementProtocol.updateContainer_added(org.apache.hadoop.yarn.api.protocolrecords.ContainerUpdateRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.AllocateRequestBuilder"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.getIncreaseRequests_removed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.getSchedulingRequests_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.getTrackingUrl_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.getUpdateRequests_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.newBuilder_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.newInstance_added(int, float, java.util.List, java.util.List, java.util.List, org.apache.hadoop.yarn.api.records.ResourceBlacklistRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.newInstance_added(int, float, java.util.List, java.util.List, org.apache.hadoop.yarn.api.records.ResourceBlacklistRequest, java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.newInstance_removed(int, float, java.util.List, java.util.List, org.apache.hadoop.yarn.api.records.ResourceBlacklistRequest, java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.setIncreaseRequests_removed(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.setSchedulingRequests_added(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.setTrackingUrl_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateRequest.setUpdateRequests_added(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.getApplicationPriority_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.getCollectorInfo_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.getContainersFromPreviousAttempts_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.getDecreasedContainers_removed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.getIncreasedContainers_removed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.getRejectedSchedulingRequests_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.getUpdateErrors_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.getUpdatedContainers_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.newInstance_changed(int, java.util.List, java.util.List, java.util.List, org.apache.hadoop.yarn.api.records.Resource, org.apache.hadoop.yarn.api.records.AMCommand, int, org.apache.hadoop.yarn.api.records.PreemptionMessage, java.util.List, org.apache.hadoop.yarn.api.records.Token, java.util.List, org.apache.hadoop.yarn.api.records.CollectorInfo)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.AllocateResponse.setUpdateErrors_added(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.CommitResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ContainerUpdateRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ContainerUpdateResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.FailApplicationAttemptRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.FailApplicationAttemptResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetAllResourceProfilesRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetAllResourceProfilesResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetAllResourceTypeInfoRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetAllResourceTypeInfoResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetApplicationsRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetApplicationsRequest.newInstance_changed(org.apache.hadoop.yarn.api.protocolrecords.ApplicationsRequestScope, java.util.Set, java.util.Set, java.util.Set, java.util.Set, java.util.EnumSet, org.apache.commons.lang3.Range, org.apache.commons.lang3.Range, java.lang.Long)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetAttributesToNodesRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetAttributesToNodesResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeAttributesRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeAttributesResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeLabelsResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeLabelsResponse.getNodeLabelList_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeLabelsResponse.getNodeLabels_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeLabelsResponse.newInstance_added(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeLabelsResponse.newInstance_added(java.util.Set)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeLabelsResponse.newInstance_removed(java.util.Set)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeLabelsResponse.setNodeLabelList_added(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetClusterNodeLabelsResponse.setNodeLabels_changed(java.util.Set)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetLocalizationStatusesRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetLocalizationStatusesResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetNewReservationRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetNewReservationResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetNodesToAttributesRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetNodesToAttributesResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetResourceProfileRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.GetResourceProfileResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.IncreaseContainersResourceRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.IncreaseContainersResourceResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.KillApplicationRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.KillApplicationRequest.getDiagnostics_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.KillApplicationRequest.setDiagnostics_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.MoveApplicationAcrossQueuesResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReInitializeContainerRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReInitializeContainerResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.RegisterApplicationMasterRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.RegisterApplicationMasterRequest.getPlacementConstraints_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.RegisterApplicationMasterRequest.setPlacementConstraints_added(java.util.Map)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.RegisterApplicationMasterResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.RegisterApplicationMasterResponse.getResourceProfiles_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.RegisterApplicationMasterResponse.getResourceTypes_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReservationListRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReservationListResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReservationSubmissionRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReservationSubmissionRequest.getReservationId_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReservationSubmissionRequest.newInstance_changed(org.apache.hadoop.yarn.api.records.ReservationDefinition, java.lang.String, org.apache.hadoop.yarn.api.records.ReservationId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReservationSubmissionRequest.setReservationId_added(org.apache.hadoop.yarn.api.records.ReservationId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReservationSubmissionResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ReservationSubmissionResponse.getReservationId_removed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ResourceLocalizationRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.ResourceLocalizationResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.RestartContainerResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.RollbackResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.SignalContainerRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.SignalContainerResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.UpdateApplicationPriorityRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.UpdateApplicationPriorityResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.UpdateApplicationTimeoutsRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.protocolrecords.UpdateApplicationTimeoutsResponse"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationAttemptId"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationAttemptId.fromString_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationAttemptId.newInstance_added(org.apache.hadoop.yarn.api.records.ApplicationId, int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationAttemptReport"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationAttemptReport.getFinishTime_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationAttemptReport.getStartTime_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationAttemptReport.newInstance_added(org.apache.hadoop.yarn.api.records.ApplicationAttemptId, java.lang.String, int, java.lang.String, java.lang.String, java.lang.String, org.apache.hadoop.yarn.api.records.YarnApplicationAttemptState, org.apache.hadoop.yarn.api.records.ContainerId)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationId"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationId.fromString_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationId.newInstance_added(long, int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.getAmNodeLabelExpression_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.getAppNodeLabelExpression_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.getApplicationTimeouts_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.getLaunchTime_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.getLogAggregationStatus_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.getPriority_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.getSubmitTime_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.isUnmanagedApp_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.setAmNodeLabelExpression_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.setAppNodeLabelExpression_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationReport.setUnmanagedApp_added(boolean)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationResourceUsageReport"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationResourceUsageReport.getClusterUsagePercentage_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationResourceUsageReport.getPreemptedMemorySeconds_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationResourceUsageReport.getPreemptedResourceSecondsMap_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationResourceUsageReport.getPreemptedVcoreSeconds_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationResourceUsageReport.getQueueUsagePercentage_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationResourceUsageReport.getResourceSecondsMap_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext.getAMContainerResourceRequest_changed()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext.getAMContainerResourceRequests_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext.getApplicationSchedulingPropertiesMap_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext.getApplicationTimeouts_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext.setAMContainerResourceRequest_changed(org.apache.hadoop.yarn.api.records.ResourceRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext.setAMContainerResourceRequests_added(java.util.List)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext.setApplicationSchedulingPropertiesMap_added(java.util.Map)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationSubmissionContext.setApplicationTimeouts_added(java.util.Map)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationTimeout"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ApplicationTimeoutType"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.CollectorInfo"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Container"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Container.getAllocationRequestId_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Container.getExposedPorts_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerExitStatus"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerExitStatus.KILLED_BY_CONTAINER_SCHEDULER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerExitStatus.KILLED_FOR_EXCESS_LOGS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerId"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerId.newContainerId_added(org.apache.hadoop.yarn.api.records.ApplicationAttemptId, long)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerLaunchContext"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerLaunchContext.getContainerRetryContext_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerLaunchContext.getTokensConf_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerLaunchContext.newInstance_added(java.util.Map, java.util.Map, java.util.List, java.util.Map, java.nio.ByteBuffer, java.util.Map, org.apache.hadoop.yarn.api.records.ContainerRetryContext)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerLaunchContext.setContainerRetryContext_added(org.apache.hadoop.yarn.api.records.ContainerRetryContext)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerLaunchContext.setTokensConf_added(java.nio.ByteBuffer)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerReport"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerReport.getExecutionType_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerReport.getExposedPorts_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerResourceIncreaseRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerRetryContext"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerRetryPolicy"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerStatus"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerStatus.getCapability_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerStatus.getExecutionType_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerStatus.getExposedPorts_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerStatus.getHost_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerStatus.getIPs_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerSubState"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ContainerUpdateType"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ExecutionType"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ExecutionTypeRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.LocalizationState"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.LocalizationStatus"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.LogAggregationContext"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.LogAggregationContext.getLogAggregationPolicyClassName_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.LogAggregationContext.getLogAggregationPolicyParameters_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.LogAggregationContext.newInstance_added(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.LogAggregationContext.setLogAggregationPolicyClassName_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.LogAggregationContext.setLogAggregationPolicyParameters_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeAttribute"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeAttributeInfo"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeAttributeKey"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeAttributeOpCode"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeAttributeType"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeId"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeId.fromString_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeId.newInstance_added(java.lang.String, int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeLabel"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeReport"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeReport.getAggregatedContainersUtilization_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeReport.getDecommissioningTimeout_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeReport.getNodeAttributes_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeReport.getNodeUpdateType_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeReport.getNodeUtilization_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeReport.setDecommissioningTimeout_added(java.lang.Integer)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeReport.setNodeAttributes_added(java.util.Set)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeReport.setNodeUpdateType_added(org.apache.hadoop.yarn.api.records.NodeUpdateType)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeState"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeState.isActiveState_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeState.isInactiveState_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.NodeToAttributeValue"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.QueueInfo"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.QueueInfo.getIntraQueuePreemptionDisabled_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.QueueInfo.getPreemptionDisabled_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.QueueInfo.getQueueConfigurations_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.QueueInfo.getQueueStatistics_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.QueueInfo.setQueueStatistics_added(org.apache.hadoop.yarn.api.records.QueueStatistics)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.QueueStatistics"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.RejectedSchedulingRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.RejectionReason"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ReservationACL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ReservationAllocationState"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ReservationDefinition"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ReservationDefinition.getPriority_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ReservationDefinition.getRecurrenceExpression_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ReservationDefinition.newInstance_added(long, long, org.apache.hadoop.yarn.api.records.ReservationRequests, java.lang.String, java.lang.String, org.apache.hadoop.yarn.api.records.Priority)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ReservationDefinition.setPriority_added(org.apache.hadoop.yarn.api.records.Priority)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ReservationDefinition.setRecurrenceExpression_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.MEMORY_INDEX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.VCORES_INDEX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.castToIntSafely_added(long)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.compareTo_added(org.apache.hadoop.yarn.api.records.Resource)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.getFormattedString_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.getMemorySize_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.getResourceInformation_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.getResourceValue_added(java.lang.String)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.newDefaultInformation_added(java.lang.String, java.lang.String, long)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.newInstance_added(long, int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.newInstance_added(long, int, java.util.Map)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.resources"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.setMemorySize_added(long)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.setResourceInformation_added(java.lang.String, org.apache.hadoop.yarn.api.records.ResourceInformation)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.setResourceValue_added(java.lang.String, long)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.Resource.throwExceptionWhenArrayOutOfBound_added(int)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceAllocationRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceOption"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceOption.OVER_COMMIT_TIMEOUT_MILLIS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceRequest.ResourceRequestBuilder"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceRequest.clone_added(org.apache.hadoop.yarn.api.records.ResourceRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceRequest.getAllocationRequestId_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceRequest.getExecutionTypeRequest_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceRequest.newBuilder_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceRequest.newInstance_added(org.apache.hadoop.yarn.api.records.Priority, java.lang.String, org.apache.hadoop.yarn.api.records.Resource, int, boolean, java.lang.String, org.apache.hadoop.yarn.api.records.ExecutionTypeRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceRequest.setAllocationRequestId_added(long)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceRequest.setExecutionTypeRequest_added(org.apache.hadoop.yarn.api.records.ExecutionTypeRequest)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceSizing"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ResourceUtilization"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.SchedulingRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.SchedulingRequest.SchedulingRequestBuilder"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.ShellContainerCommand"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.SignalContainerCommand"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.URL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.URL.fromPath_added(org.apache.hadoop.fs.Path)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.URL.fromURI_added(java.net.URI)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.URL.toPath_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.UpdateContainerError"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.UpdateContainerRequest"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.UpdatedContainer"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.YarnClusterMetrics"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.YarnClusterMetrics.getNumActiveNodeManagers_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.YarnClusterMetrics.getNumDecommissionedNodeManagers_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.YarnClusterMetrics.getNumLostNodeManagers_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.YarnClusterMetrics.getNumRebootedNodeManagers_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.YarnClusterMetrics.getNumUnhealthyNodeManagers_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.impl"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.timeline"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.timeline.TimelineAbout"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.timeline.TimelineEntityGroupId"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.timeline.TimelineHealth"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.timeline.TimelinePutResponse.TimelinePutError"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.timeline.TimelinePutResponse.TimelinePutError.EXPIRED_ENTITY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.records.timelineservice"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.api.resource"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.AMRM_PROXY_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.AMRM_PROXY_CLIENT_THREAD_COUNT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.AMRM_PROXY_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.AMRM_PROXY_HA_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.AMRM_PROXY_INTERCEPTOR_CLASS_PIPELINE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.AM_SCHEDULING_NODE_BLACKLISTING_DISABLE_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.AM_SCHEDULING_NODE_BLACKLISTING_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.APPLICATION_TAG_BASED_PLACEMENT_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.APPLICATION_TAG_BASED_PLACEMENT_USER_WHITELIST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.APP_ATTEMPT_DIAGNOSTICS_LIMIT_KC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.APP_FINAL_VALUE_RETENTION_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.APP_NAME_PLACEMENT_RULE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ATS_APP_COLLECTOR_LINGER_PERIOD_IN_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.AUTOMATICALLY_DISCOVER_GPU_DEVICES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.AUTO_FAILOVER_EMBEDDED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.CENTRALIZED_NODELABEL_CONFIGURATION_TYPE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.CLIENT_FAILOVER_NO_HA_PROXY_PROVIDER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.CONFIG_NODE_DESCRIPTOR_PROVIDER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.CURATOR_LEADER_ELECTOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFALUT_RM_PROXY_TIMEOUT_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_AMRM_PROXY_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_AMRM_PROXY_CLIENT_THREAD_COUNT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_AMRM_PROXY_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_AMRM_PROXY_HA_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_AMRM_PROXY_INTERCEPTOR_CLASS_PIPELINE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_AMRM_PROXY_PORT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_AM_SCHEDULING_NODE_BLACKLISTING_DISABLE_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_AM_SCHEDULING_NODE_BLACKLISTING_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_APPLICATION_TAG_BASED_PLACEMENT_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_APP_ATTEMPT_DIAGNOSTICS_LIMIT_KC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_APP_FINAL_VALUE_RETENTION_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ATS_APP_COLLECTOR_LINGER_PERIOD_IN_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_AUTO_FAILOVER_EMBEDDED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_CLIENT_FAILOVER_NO_HA_PROXY_PROVIDER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_CLUSTER_LEVEL_APPLICATION_PRIORITY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_CONFIGURATION_STORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_CURATOR_LEADER_ELECTOR_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_DISK_VALIDATOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_DISPLAY_APPS_FOR_LOGGED_IN_USER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_DIST_SCHEDULING_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ENABLE_REST_APP_SUBMISSIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_AMRMPROXY_HB_MAX_WAIT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_AMRMPROXY_SUBCLUSTER_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_CACHE_TIME_TO_LIVE_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_CLUSTER_RESOLVER_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_FAILOVER_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_FLUSH_CACHE_FOR_RM_ADDR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_POLICY_KEY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_POLICY_MANAGER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_POLICY_MANAGER_PARAMS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_REGISTRY_BASE_KEY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_STATESTORE_CLIENT_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_STATESTORE_HEARTBEAT_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_STATESTORE_SQL_JDBC_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_STATESTORE_SQL_MAXCONNECTIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FEDERATION_STATESTORE_ZK_PARENT_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FILTER_INVALID_XML_CHARS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FLOW_VERSION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FS_NODE_LABELS_STORE_IMPL_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FS_NODE_LABELS_STORE_RETRY_POLICY_SPEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_FS_RM_STATE_STORE_RETRY_POLICY_SPEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_HDFS_LOCATION_FLOW_RUN_COPROCESSOR_JAR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_LINUX_CONTAINER_RUNTIME_ALLOWED_RUNTIMES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_LOG_AGGREGATION_DEBUG_FILESIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_LOG_AGGREGATION_STATUS_TIME_OUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_ADMIN_FORCE_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_AUX_SERVICES_MANIFEST_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_AUX_SERVICES_MANIFEST_RELOAD_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_COLLECTOR_SERVICE_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_COLLECTOR_SERVICE_PORT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_COLLECTOR_SERVICE_THREAD_COUNT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_DIAGNOSTICS_MAXIMUM_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_EXECUTOR_EXIT_FILE_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_LOG_DIR_SIZE_LIMIT_BYTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_LOG_MONITOR_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_LOG_MON_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_LOG_TOTAL_SIZE_LIMIT_BYTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_MONITOR_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_QUEUING_LIMIT_STDEV"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_QUEUING_LOAD_COMPARATOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_QUEUING_MAX_QUEUE_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_QUEUING_MAX_QUEUE_WAIT_TIME_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_QUEUING_MIN_QUEUE_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_QUEUING_MIN_QUEUE_WAIT_TIME_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_QUEUING_SORTING_NODES_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_QUEUING_USE_PAUSE_FOR_PREEMPTION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_RETRY_MINIMUM_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_STDERR_BYTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CONTAINER_STDERR_PATTERN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_COUNT_LOGICAL_PROCESSORS_AS_CORES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_CPU_RESOURCE_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DISK_FREE_SPACE_THRESHOLD_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DISK_RESOURCE_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DISK_UTILIZATION_THRESHOLD_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_ALLOWED_CONTAINER_NETWORKS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_ALLOWED_CONTAINER_RUNTIMES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_ALLOW_DELAYED_REMOVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_ALLOW_HOST_PID_NAMESPACE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_ALLOW_PRIVILEGED_CONTAINERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_CONTAINER_CAPABILITIES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_DEFAULT_CONTAINER_NETWORK"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_ENABLE_USER_REMAPPING"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_PRIVILEGED_CONTAINERS_ACL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_STOP_GRACE_PERIOD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_USER_REMAPPING_GID_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_DOCKER_USER_REMAPPING_UID_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_ELASTIC_MEMORY_CONTROL_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_ELASTIC_MEMORY_CONTROL_OOM_TIMEOUT_SEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_ENABLE_HARDWARE_CAPABILITY_DETECTION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_FPGA_VENDOR_PLUGIN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_GPU_DOCKER_PLUGIN_IMPL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_HEALTH_CHECK_RUN_BEFORE_STARTUP"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_HEALTH_CHECK_SCRIPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_HEALTH_CHECK_SCRIPT_TIMEOUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_HEALTH_CHECK_TIMEOUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_LOG_AGGREGATION_NUM_LOG_FILES_SIZE_PER_APP"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_LOG_AGGREGATION_THREAD_POOL_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_LOG_CONTAINER_DEBUG_INFO"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_MEMORY_RESOURCE_CGROUPS_SOFT_LIMIT_PERCENTAGE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_MEMORY_RESOURCE_CGROUPS_SWAPPINESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_MEMORY_RESOURCE_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_MEMORY_RESOURCE_ENFORCED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NETWORK_RESOURCE_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NETWORK_RESOURCE_INTERFACE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NETWORK_RESOURCE_OUTBOUND_BANDWIDTH_MBIT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NETWORK_RESOURCE_TAG_MAPPING_FILE_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NETWORK_TAG_HANDLER_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NODE_ATTRIBUTES_PROVIDER_FETCH_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NODE_ATTRIBUTES_PROVIDER_FETCH_TIMEOUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NODE_ATTRIBUTES_RESYNC_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NODE_LABELS_PROVIDER_FETCH_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NODE_LABELS_PROVIDER_FETCH_TIMEOUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NODE_LABELS_RESYNC_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NUMA_AWARENESS_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NUMA_AWARENESS_NUMACTL_CMD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_NUMA_AWARENESS_READ_TOPOLOGY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_OPPORTUNISTIC_CONTAINERS_MAX_QUEUE_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_PCORES_VCORES_MULTIPLIER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_PLUGGABLE_DEVICE_FRAMEWORK_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_PUBLISH_CONTAINER_EVENTS_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_REAP_RUNC_LAYER_MOUNTS_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RECOVERY_COMPACTION_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RECOVERY_SUPERVISED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_REMOTE_APP_LOG_DIR_INCLUDE_OLDER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RESOURCE_MON_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RESOURCE_PLUGINS_FAIL_FAST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_ALLOWED_CONTAINER_NETWORKS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_ALLOWED_CONTAINER_RUNTIMES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_ALLOW_HOST_PID_NAMESPACE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_ALLOW_PRIVILEGED_CONTAINERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_CACHE_REFRESH_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_IMAGE_TAG_TO_MANIFEST_PLUGIN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_IMAGE_TOPLEVEL_DIR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_LAYER_MOUNTS_TO_KEEP"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_MANIFEST_TO_RESOURCES_PLUGIN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_PRIVILEGED_CONTAINERS_ACL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NM_RUNC_STAT_CACHE_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NODELABEL_CONFIGURATION_TYPE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NUMBER_OF_ASYNC_ENTITIES_TO_MERGE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NUM_MANIFESTS_TO_CACHE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_NVIDIA_DOCKER_PLUGIN_V1_ENDPOINT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_OPPORTUNISTIC_CONTAINER_ALLOCATION_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_OPP_CONTAINER_ALLOCATION_NODES_NUMBER_USED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_OPP_CONTAINER_MAX_ALLOCATIONS_PER_AM_HEARTBEAT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_ACTIVITIES_MANAGER_APP_ACTIVITIES_MAX_QUEUE_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_ACTIVITIES_MANAGER_APP_ACTIVITIES_TTL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_ACTIVITIES_MANAGER_CLEANUP_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_ACTIVITIES_MANAGER_SCHEDULER_ACTIVITIES_TTL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_APPLICATION_HTTPS_POLICY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_APPLICATION_MAX_TAGS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_APPLICATION_MAX_TAG_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_APPLICATION_MONITOR_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_AUTO_UPDATE_CONTAINERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_CLUSTER_ID"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_DECOMMISSIONING_NODES_WATCHER_POLL_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_DELEGATION_TOKEN_ALWAYS_CANCEL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_DELEGATION_TOKEN_MAX_CONF_SIZE_BYTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_DT_RENEWER_THREAD_RETRY_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_DT_RENEWER_THREAD_RETRY_MAX_ATTEMPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_DT_RENEWER_THREAD_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_EPOCH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_EPOCH_RANGE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_LEVELDB_COMPACTION_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_MAX_LOG_AGGREGATION_DIAGNOSTICS_IN_MEMORY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NM_HEARTBEAT_INTERVAL_MAX_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NM_HEARTBEAT_INTERVAL_MIN_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NM_HEARTBEAT_INTERVAL_SCALING_ENABLE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NM_HEARTBEAT_INTERVAL_SLOWDOWN_FACTOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NM_HEARTBEAT_INTERVAL_SPEEDUP_FACTOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NM_REGISTRATION_IP_HOSTNAME_CHECK_KEY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NODEMANAGER_CONNECT_RETIRES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NODEMANAGER_CONNECT_RETRIES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NODEMANAGER_UNTRACKED_REMOVAL_TIMEOUT_MSEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NODE_GRACEFUL_DECOMMISSION_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NODE_IP_CACHE_EXPIRY_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_NODE_LABELS_PROVIDER_FETCH_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_PLACEMENT_CONSTRAINTS_ALGORITHM_POOL_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_PLACEMENT_CONSTRAINTS_RETRY_ATTEMPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_PLACEMENT_CONSTRAINTS_SCHEDULER_POOL_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_PROXY_CONNECTION_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_PROXY_USER_PRIVILEGES_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_PUBLISH_CONTAINER_EVENTS_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_RESERVATION_SYSTEM_MAX_PERIODICITY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_RESOURCE_PROFILES_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_RESOURCE_PROFILES_SOURCE_FILE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_SCHEDCONF_LEVELDB_COMPACTION_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_SCHEDCONF_LEVELDB_MAX_LOGS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_SCHEDCONF_STORE_ZK_PARENT_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_SCHEDCONF_ZK_MAX_LOGS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_STATE_STORE_MAX_COMPLETED_APPLICATIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_SUBMISSION_PREPROCESSOR_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_SUBMISSION_PREPROCESSOR_FILE_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_SUBMISSION_PREPROCESSOR_REFRESH_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_TIMELINE_SERVER_V1_PUBLISHER_BATCH_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_TIMELINE_SERVER_V1_PUBLISHER_DISPATCHER_BATCH_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_TIMELINE_SERVER_V1_PUBLISHER_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_ZK_RETRY_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_ZK_ZNODE_SIZE_LIMIT_BYTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_CLIENTRM_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_CLIENTRM_INTERCEPTOR_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_CLIENTRM_PORT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_CLIENTRM_SUBMIT_RETRY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_PIPELINE_CACHE_MAX_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_RMADMIN_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_RMADMIN_INTERCEPTOR_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_RMADMIN_PORT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_USER_CLIENT_THREADS_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_WEBAPP_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_WEBAPP_DEFAULT_INTERCEPTOR_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_WEBAPP_HTTPS_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_WEBAPP_HTTPS_PORT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_WEBAPP_INTERCEPTOR_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_WEBAPP_PARTIAL_RESULTS_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ROUTER_WEBAPP_PORT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RUNC_STAT_CACHE_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_SCHEDULER_CONFIGURATION_FS_MAX_VERSION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_SYSTEM_METRICS_PUBLISHER_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_AGGREGATION_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_BIND_HOST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_CLIENT_INTERNAL_ATTEMPT_DIR_CACHE_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_COLLECTOR_WEBAPP_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_COLLECTOR_WEBAPP_HTTPS_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_HBASE_SCHEMA_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_LEVELDB_CACHE_READ_CACHE_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_LEVELDB_MAX_OPEN_FILES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_LEVELDB_WRITE_BATCH_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_LEVELDB_WRITE_BUFFER_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_READER_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_READER_WEBAPP_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_READER_WEBAPP_HTTPS_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_READ_ALLOWED_USERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_READ_AUTH_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_ROLLING_PERIOD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_SCHEMA_CREATOR_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_STORAGE_MONITOR_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_VERSION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_WRITER_ASYNC_QUEUE_CAPACITY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_WRITER_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_SERVICE_WRITER_FLUSH_INTERVAL_SECONDS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_TIMELINE_V2_CLIENT_DRAIN_TIME_MILLIS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_API_SYSTEM_SERVICES_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_CLIENT_LOAD_RESOURCETYPES_FROM_SERVER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_CONTAINER_SANDBOX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_CONTAINER_SANDBOX_FILE_PERMISSIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_DISPATCHER_CPU_MONITOR_SAMPLES_PER_MIN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_DISPATCHER_PRINT_EVENTS_INFO_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_INTERMEDIATE_DATA_ENCRYPTION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_REGISTRY_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_RESERVATION_ACL_ENABLE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_WEBAPP_UI2_ENABLE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_YARN_WORKFLOW_ID_TAG_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ZK_APPID_NODE_SPLIT_INDEX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_ZK_DELEGATION_TOKEN_NODE_SPLIT_INDEX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DELEGATED_CENTALIZED_NODELABEL_CONFIGURATION_TYPE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DISABLED_RM_PLACEMENT_CONSTRAINTS_HANDLER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DISK_VALIDATOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DISPLAY_APPS_FOR_LOGGED_IN_USER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DISTRIBUTED_NODELABEL_CONFIGURATION_TYPE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DIST_SCHEDULING_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DOCKER_CONTAINER_RUNTIME_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.DR_CONFIGURATION_FILE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ENABLE_REST_APP_SUBMISSIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.EXCLUSIVE_ENFORCED_PARTITIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.EXCLUSIVE_ENFORCED_PARTITIONS_SUFFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_AMRMPROXY_HB_MAX_WAIT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_AMRMPROXY_SUBCLUSTER_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_CACHE_TIME_TO_LIVE_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_CLUSTER_RESOLVER_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_FAILOVER_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_FLUSH_CACHE_FOR_RM_ADDR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_MACHINE_LIST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_POLICY_MANAGER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_POLICY_MANAGER_PARAMS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_REGISTRY_BASE_KEY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_STATESTORE_CLIENT_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_STATESTORE_HEARTBEAT_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_STATESTORE_SQL_JDBC_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_STATESTORE_SQL_MAXCONNECTIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_STATESTORE_SQL_PASSWORD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_STATESTORE_SQL_URL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_STATESTORE_SQL_USERNAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_STATESTORE_ZK_PARENT_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FEDERATION_STATESTORE_ZK_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FILE_CONFIGURATION_STORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FILTER_ENTITY_LIST_BY_USER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FILTER_INVALID_XML_CHARS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FLOW_NAME_DEFAULT_MAX_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FLOW_NAME_MAX_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FLOW_RUN_COPROCESSOR_JAR_HDFS_LOCATION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FS_CONFIGURATION_STORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FS_NODE_ATTRIBUTE_STORE_IMPL_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FS_NODE_ATTRIBUTE_STORE_ROOT_DIR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FS_NODE_LABELS_STORE_IMPL_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FS_NODE_LABELS_STORE_RETRY_POLICY_SPEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.FS_RM_STATE_STORE_RETRY_POLICY_SPEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.GLOBAL_RM_AM_MAX_ATTEMPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.HADOOP_HTTP_WEBAPP_SCHEDULER_PAGE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LEVELDB_CONFIGURATION_STORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LINUX_CONTAINER_RUNTIME_ALLOWED_RUNTIMES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LINUX_CONTAINER_RUNTIME_CLASS_FMT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LINUX_CONTAINER_RUNTIME_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LINUX_CONTAINER_RUNTIME_TYPE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LOG_AGGREGATION_DEBUG_FILESIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LOG_AGGREGATION_FILE_CONTROLLER_FMT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LOG_AGGREGATION_FILE_FORMATS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LOG_AGGREGATION_REMOTE_APP_LOG_DIR_FMT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LOG_AGGREGATION_REMOTE_APP_LOG_DIR_SUFFIX_FMT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.LOG_AGGREGATION_STATUS_TIME_OUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.MAX_CLUSTER_LEVEL_APPLICATION_PRIORITY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.MEMORY_CONFIGURATION_STORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.MIN_LOG_ROLLING_INTERVAL_SECONDS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.MIN_LOG_ROLLING_INTERVAL_SECONDS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_ADMIN_FORCE_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_AUX_SERVICES_CLASSPATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_AUX_SERVICES_MANIFEST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_AUX_SERVICES_MANIFEST_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_AUX_SERVICES_MANIFEST_RELOAD_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_AUX_SERVICES_SYSTEM_CLASSES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_AUX_SERVICE_REMOTE_CLASSPATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_COLLECTOR_SERVICE_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_COLLECTOR_SERVICE_THREAD_COUNT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONFIGURATION_FILES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINERS_LAUNCHER_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_DIAGNOSTICS_MAXIMUM_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_EXECUTOR_EXIT_FILE_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_LOCALIZER_JAVA_OPTS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_LOCALIZER_JAVA_OPTS_KEY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_LOCALIZER_LOG_LEVEL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_LOCALIZER_LOG_LEVEL_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_LOG_DIR_SIZE_LIMIT_BYTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_LOG_MONITOR_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_LOG_MON_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_LOG_TOTAL_SIZE_LIMIT_BYTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_MONITOR_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_QUEUING_LIMIT_STDEV"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_QUEUING_LOAD_COMPARATOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_QUEUING_MAX_QUEUE_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_QUEUING_MAX_QUEUE_WAIT_TIME_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_QUEUING_MIN_QUEUE_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_QUEUING_MIN_QUEUE_WAIT_TIME_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_QUEUING_SORTING_NODES_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_QUEUING_USE_PAUSE_FOR_PREEMPTION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_RETRY_MINIMUM_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_STATE_TRANSITION_LISTENERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_STDERR_BYTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CONTAINER_STDERR_PATTERN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_COUNT_LOGICAL_PROCESSORS_AS_CORES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CPU_RESOURCE_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CPU_RESOURCE_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSI_ADAPTOR_ADDRESSES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSI_ADAPTOR_ADDRESS_SUFFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSI_ADAPTOR_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSI_ADAPTOR_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSI_DRIVER_ENDPOINT_SUFFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSI_DRIVER_NAMES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSI_DRIVER_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSRF_CUSTOM_HEADER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSRF_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSRF_METHODS_TO_IGNORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_CSRF_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DEFAULT_CONTAINER_EXECUTOR_LOG_DIRS_PERMISSIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DEFAULT_CONTAINER_EXECUTOR_LOG_DIRS_PERMISSIONS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DEFAULT_CONTAINER_EXECUTOR_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DEFAULT_DOCKER_CONTAINER_EXECUTOR_EXEC_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DISK_FREE_SPACE_THRESHOLD_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DISK_RESOURCE_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DISK_RESOURCE_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DISK_UTILIZATION_THRESHOLD_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_ALLOWED_CONTAINER_NETWORKS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_ALLOWED_CONTAINER_RUNTIMES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_ALLOW_DELAYED_REMOVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_ALLOW_HOST_PID_NAMESPACE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_ALLOW_PRIVILEGED_CONTAINERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_CONTAINER_CAPABILITIES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_CONTAINER_EXECUTOR_EXEC_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_CONTAINER_EXECUTOR_IMAGE_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_DEFAULT_CONTAINER_NETWORK"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_DEFAULT_RO_MOUNTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_DEFAULT_RW_MOUNTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_DEFAULT_TMPFS_MOUNTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_ENABLE_USER_REMAPPING"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_IMAGE_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_IMAGE_UPDATE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_PRIVILEGED_CONTAINERS_ACL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_STOP_GRACE_PERIOD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_USER_REMAPPING_GID_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_DOCKER_USER_REMAPPING_UID_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_ELASTIC_MEMORY_CONTROL_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_ELASTIC_MEMORY_CONTROL_OOM_HANDLER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_ELASTIC_MEMORY_CONTROL_OOM_LISTENER_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_ELASTIC_MEMORY_CONTROL_OOM_TIMEOUT_SEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_ENABLE_HARDWARE_CAPABILITY_DETECTION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_FPGA_ALLOWED_DEVICES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_FPGA_AVAILABLE_DEVICES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_FPGA_DEVICE_DISCOVERY_SCRIPT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_FPGA_PATH_TO_EXEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_FPGA_RESOURCE_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_FPGA_VENDOR_PLUGIN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_GPU_ALLOWED_DEVICES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_GPU_DOCKER_PLUGIN_IMPL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_GPU_PATH_TO_EXEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_GPU_RESOURCE_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HDFS_RUNC_IMAGE_TAG_TO_HASH_FILE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_RUN_BEFORE_STARTUP"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_SCRIPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_SCRIPT_INTERVAL_MS_TEMPLATE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_SCRIPT_OPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_SCRIPT_OPTS_TEMPLATE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_SCRIPT_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_SCRIPT_PATH_TEMPLATE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_SCRIPT_TIMEOUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_SCRIPT_TIMEOUT_MS_TEMPLATE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_HEALTH_CHECK_TIMEOUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_LINUX_CONTAINER_GROUP"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_LOCAL_RUNC_IMAGE_TAG_TO_HASH_FILE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_LOG_AGGREGATION_NUM_LOG_FILES_SIZE_PER_APP"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_LOG_AGGREGATION_THREAD_POOL_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_LOG_AGG_POLICY_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_LOG_AGG_POLICY_CLASS_PARAMETERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_LOG_CONTAINER_DEBUG_INFO"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_MEMORY_RESOURCE_CGROUPS_SOFT_LIMIT_PERCENTAGE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_MEMORY_RESOURCE_CGROUPS_SWAPPINESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_MEMORY_RESOURCE_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_MEMORY_RESOURCE_ENFORCED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_MEMORY_RESOURCE_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_MON_RESOURCE_CALCULATOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NETWORK_RESOURCE_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NETWORK_RESOURCE_INTERFACE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NETWORK_RESOURCE_OUTBOUND_BANDWIDTH_MBIT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NETWORK_RESOURCE_OUTBOUND_BANDWIDTH_YARN_MBIT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NETWORK_RESOURCE_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NETWORK_TAG_HANDLER_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NETWORK_TAG_MAPPING_FILE_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NETWORK_TAG_MAPPING_MANAGER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NETWORK_TAG_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NODE_ATTRIBUTES_PROVIDER_CONFIG"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NODE_ATTRIBUTES_PROVIDER_FETCH_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NODE_ATTRIBUTES_PROVIDER_FETCH_TIMEOUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NODE_ATTRIBUTES_RESYNC_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NODE_LABELS_PROVIDER_CONFIG"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NODE_LABELS_PROVIDER_FETCH_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NODE_LABELS_PROVIDER_FETCH_TIMEOUT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NODE_LABELS_RESYNC_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NUMA_AWARENESS_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NUMA_AWARENESS_NODE_IDS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NUMA_AWARENESS_NUMACTL_CMD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_NUMA_AWARENESS_READ_TOPOLOGY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_OPPORTUNISTIC_CONTAINERS_MAX_QUEUE_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_PCORES_VCORES_MULTIPLIER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_PLUGGABLE_DEVICE_FRAMEWORK_DEVICE_CLASSES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_PLUGGABLE_DEVICE_FRAMEWORK_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_PROVIDER_CONFIGURED_NODE_ATTRIBUTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_PROVIDER_CONFIGURED_NODE_PARTITION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_PUBLISH_CONTAINER_EVENTS_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_REAP_RUNC_LAYER_MOUNTS_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RECOVERY_COMPACTION_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RECOVERY_SUPERVISED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_REMOTE_APP_LOG_DIR_GROUPNAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_REMOTE_APP_LOG_DIR_INCLUDE_OLDER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RESOURCEMANAGER_CONNECT_MAX_WAIT_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RESOURCEMANAGER_CONNECT_RETRY_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RESOURCES_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RESOURCE_MON_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RESOURCE_PLUGINS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RESOURCE_PLUGINS_FAIL_FAST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_ALLOWED_CONTAINER_NETWORKS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_ALLOWED_CONTAINER_RUNTIMES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_ALLOW_HOST_PID_NAMESPACE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_ALLOW_PRIVILEGED_CONTAINERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_CACHE_REFRESH_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_DEFAULT_RO_MOUNTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_DEFAULT_RW_MOUNTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_IMAGE_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_IMAGE_TAG_TO_MANIFEST_PLUGIN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_IMAGE_TOPLEVEL_DIR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_LAYER_MOUNTS_TO_KEEP"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_MANIFEST_TO_RESOURCES_PLUGIN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_NUM_MANIFESTS_TO_CACHE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_PRIVILEGED_CONTAINERS_ACL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_SECCOMP_PROFILE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_STAT_CACHE_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_RUNC_STAT_CACHE_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_SCRIPT_BASED_NODE_ATTRIBUTES_PROVIDER_OPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_SCRIPT_BASED_NODE_ATTRIBUTES_PROVIDER_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_SCRIPT_BASED_NODE_LABELS_PROVIDER_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_SCRIPT_BASED_NODE_LABELS_PROVIDER_SCRIPT_OPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_SYSTEM_RESERVED_PMEM_MB"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_WM_HIGH_PER_DISK_FREE_SPACE_MB"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_WM_LOW_PER_DISK_UTILIZATION_PERCENTAGE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_XFS_OPTIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NM_XFS_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NODELABEL_CONFIGURATION_TYPE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NODE_ATTRIBUTE_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NODE_RESOURCES_CONFIGURATION_FILE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NUMBER_OF_ASYNC_ENTITIES_TO_MERGE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NVIDIA_DOCKER_PLUGIN_V1_ENDPOINT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NVIDIA_DOCKER_V1"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.NVIDIA_DOCKER_V2"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.OPPORTUNISTIC_CONTAINER_ALLOCATION_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.OPP_CONTAINER_ALLOCATION_NODES_NUMBER_USED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.OPP_CONTAINER_MAX_ALLOCATIONS_PER_AM_HEARTBEAT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.PHOENIX_OFFLINE_STORAGE_CONN_STR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.PHOENIX_OFFLINE_STORAGE_CONN_STR_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.PROCESSOR_RM_PLACEMENT_CONSTRAINTS_HANDLER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.PROXY_BIND_HOST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.QUEUE_PLACEMENT_RULES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RESOURCE_TYPES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RESOURCE_TYPES_CONFIGURATION_FILE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.REST_CSRF"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_ACTIVITIES_MANAGER_APP_ACTIVITIES_MAX_QUEUE_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_ACTIVITIES_MANAGER_APP_ACTIVITIES_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_ACTIVITIES_MANAGER_APP_ACTIVITIES_TTL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_ACTIVITIES_MANAGER_CLEANUP_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_ACTIVITIES_MANAGER_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_ACTIVITIES_MANAGER_SCHEDULER_ACTIVITIES_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_ACTIVITIES_MANAGER_SCHEDULER_ACTIVITIES_TTL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_APPLICATION_HTTPS_POLICY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_APPLICATION_MASTER_SERVICE_PROCESSORS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_APPLICATION_MAX_TAGS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_APPLICATION_MAX_TAG_LENGTH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_APPLICATION_MONITOR_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_AUTO_UPDATE_CONTAINERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_CSRF_CUSTOM_HEADER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_CSRF_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_CSRF_METHODS_TO_IGNORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_CSRF_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_DECOMMISSIONING_NODES_WATCHER_POLL_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_DELEGATION_TOKEN_ALWAYS_CANCEL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_DELEGATION_TOKEN_MAX_CONF_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_DT_RENEWER_THREAD_RETRY_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_DT_RENEWER_THREAD_RETRY_MAX_ATTEMPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_DT_RENEWER_THREAD_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_EPOCH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_EPOCH_RANGE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_HA_FC_ELECTOR_ZK_RETRIES_KEY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_LEVELDB_COMPACTION_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_MAX_LOG_AGGREGATION_DIAGNOSTICS_IN_MEMORY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NM_HEARTBEAT_INTERVAL_MAX_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NM_HEARTBEAT_INTERVAL_MIN_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NM_HEARTBEAT_INTERVAL_SCALING_ENABLE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NM_HEARTBEAT_INTERVAL_SLOWDOWN_FACTOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NM_HEARTBEAT_INTERVAL_SPEEDUP_FACTOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NM_REGISTRATION_IP_HOSTNAME_CHECK_KEY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NODEMANAGER_CONNECT_RETIRES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NODEMANAGER_CONNECT_RETRIES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NODEMANAGER_UNTRACKED_REMOVAL_TIMEOUT_MSEC"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NODE_GRACEFUL_DECOMMISSION_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NODE_IP_CACHE_EXPIRY_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NODE_LABELS_PROVIDER_CONFIG"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_NODE_LABELS_PROVIDER_FETCH_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_ALGORITHM_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_ALGORITHM_ITERATOR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_ALGORITHM_POOL_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_HANDLER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_RETRY_ATTEMPTS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_PLACEMENT_CONSTRAINTS_SCHEDULER_POOL_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_PROXY_CONNECTION_TIMEOUT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_PROXY_TIMEOUT_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_PUBLISH_CONTAINER_EVENTS_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_RESERVATION_SYSTEM_MAX_PERIODICITY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_RESOURCE_PROFILES_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_RESOURCE_PROFILES_SOURCE_FILE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SCHEDCONF_LEVELDB_COMPACTION_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SCHEDCONF_MAX_LOGS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SCHEDCONF_STORE_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SCHEDCONF_STORE_ZK_PARENT_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SCHEDULER_MUTATION_ACL_POLICY_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SUBMISSION_PREPROCESSOR_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SUBMISSION_PREPROCESSOR_FILE_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SUBMISSION_PREPROCESSOR_REFRESH_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_TIMELINE_SERVER_V1_PUBLISHER_BATCH_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_TIMELINE_SERVER_V1_PUBLISHER_DISPATCHER_BATCH_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_TIMELINE_SERVER_V1_PUBLISHER_INTERVAL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_XFS_OPTIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_XFS_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RM_ZK_ZNODE_SIZE_LIMIT_BYTES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_BIND_HOST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_CLIENTRM_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_CLIENTRM_INTERCEPTOR_CLASS_PIPELINE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_CLIENTRM_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_CLIENTRM_SUBMIT_RETRY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_PIPELINE_CACHE_MAX_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_RMADMIN_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_RMADMIN_INTERCEPTOR_CLASS_PIPELINE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_RMADMIN_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_USER_CLIENT_THREADS_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_WEBAPP_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_WEBAPP_DEFAULT_INTERCEPTOR_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_WEBAPP_HTTPS_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_WEBAPP_INTERCEPTOR_CLASS_PIPELINE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_WEBAPP_PARTIAL_RESULTS_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ROUTER_WEBAPP_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.RUNC_CONTAINER_RUNTIME_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.SCHEDULER_CONFIGURATION_FS_MAX_VERSION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.SCHEDULER_CONFIGURATION_FS_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.SCHEDULER_CONFIGURATION_STORE_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.SCHEDULER_RM_PLACEMENT_CONSTRAINTS_HANDLER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.SCRIPT_NODE_DESCRIPTOR_PROVIDER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.SYSTEM_METRICS_PUBLISHER_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_CSRF_CUSTOM_HEADER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_CSRF_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_CSRF_METHODS_TO_IGNORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_CSRF_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_OFFLINE_AGGREGATION_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_AGGREGATION_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_CLIENT_FD_CLEAN_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_CLIENT_FD_CLEAN_INTERVAL_SECS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_CLIENT_FD_FLUSH_INTERVAL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_CLIENT_FD_FLUSH_INTERVAL_SECS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_CLIENT_FD_RETAIN_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_CLIENT_FD_RETAIN_SECS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_CLIENT_INTERNAL_ATTEMPT_DIR_CACHE_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_CLIENT_INTERNAL_TIMERS_TTL_SECS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_CLIENT_INTERNAL_TIMERS_TTL_SECS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_COLLECTOR_BIND_HOST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_COLLECTOR_BIND_PORT_RANGES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_COLLECTOR_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_COLLECTOR_WEBAPP_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_COLLECTOR_WEBAPP_HTTPS_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYFILE_FS_SUPPORT_APPEND"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_ACTIVE_DIR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_ACTIVE_DIR_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_APP_CACHE_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_APP_CACHE_SIZE_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_CACHE_STORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_CLEANER_INTERVAL_SECONDS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_CLEANER_INTERVAL_SECONDS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_DONE_DIR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_DONE_DIR_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_RETAIN_SECONDS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_RETAIN_SECONDS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_SCAN_INTERVAL_SECONDS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_SCAN_INTERVAL_SECONDS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_SUMMARY_ENTITY_TYPES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_SUMMARY_STORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_THREADS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_THREADS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_UNKNOWN_ACTIVE_SECONDS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_UNKNOWN_ACTIVE_SECONDS_DEFAULT"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITYGROUP_FS_STORE_WITH_USER_DIR"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITY_GROUP_PLUGIN_CLASSES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITY_GROUP_PLUGIN_CLASSPATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ENTITY_GROUP_PLUGIN_SYSTEM_CLASSES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_HBASE_CONFIGURATION_FILE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_HBASE_SCHEMA_PREFIX_NAME"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_LEVELDB_CACHE_READ_CACHE_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_LEVELDB_MAX_OPEN_FILES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_LEVELDB_WRITE_BATCH_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_LEVELDB_WRITE_BUFFER_SIZE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_READER_BIND_HOST"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_READER_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_READER_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_READER_STORAGE_MONITOR_INTERVAL_MS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_READER_WEBAPP_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_READER_WEBAPP_HTTPS_ADDRESS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_READ_ALLOWED_USERS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_READ_AUTH_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_ROLLING_PERIOD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_SCHEMA_CREATOR_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_VERSION"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_VERSIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_WRITER_ASYNC_QUEUE_CAPACITY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_WRITER_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_SERVICE_WRITER_FLUSH_INTERVAL_SECONDS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_V2_CLIENT_DRAIN_TIME_MILLIS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_XFS_OPTIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.TIMELINE_XFS_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.USER_GROUP_PLACEMENT_RULE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.XFS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_API_SERVICES_ENABLE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_CLIENT_LOAD_RESOURCETYPES_FROM_SERVER"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_CONTAINER_SANDBOX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_CONTAINER_SANDBOX_FILE_PERMISSIONS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_CONTAINER_SANDBOX_POLICY"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_CONTAINER_SANDBOX_POLICY_GROUP_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_CONTAINER_SANDBOX_WHITELIST_GROUP"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_DISPATCHER_CPU_MONITOR_SAMPLES_PER_MIN"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_DISPATCHER_PRINT_EVENTS_INFO_THRESHOLD"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_HTTP_WEBAPP_CUSTOM_DAO_CLASSES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_HTTP_WEBAPP_CUSTOM_UNWRAPPED_DAO_CLASSES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_HTTP_WEBAPP_EXTERNAL_CLASSES"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_HTTP_WEBAPP_SCHEDULER_PAGE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_LOG_SERVER_WEBSERVICE_URL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_REGISTRY_CLASS"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_RESERVATION_ACL_ENABLE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_SECURITY_SERVICE_AUTHORIZATION_APPLICATIONMASTER_NODEMANAGER_PROTOCOL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_SECURITY_SERVICE_AUTHORIZATION_COLLECTOR_NODEMANAGER_PROTOCOL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_SECURITY_SERVICE_AUTHORIZATION_DISTRIBUTEDSCHEDULING_PROTOCOL"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_WEBAPP_UI2_ENABLE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_WEBAPP_UI2_WARFILE_PATH"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_WORKFLOW_ID_TAG_PREFIX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.YARN_XFS_ENABLED"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ZK_APPID_NODE_SPLIT_INDEX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ZK_CONFIGURATION_STORE"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.ZK_DELEGATION_TOKEN_NODE_SPLIT_INDEX"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.getTimelineServiceVersion_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.isAclEnabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.isDistSchedulingEnabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.isOpportunisticContainerAllocationEnabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.main_added(java.lang.String[])"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.numaAwarenessEnabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.systemMetricsPublisherEnabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.timelineServiceEnabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.timelineServiceV15Enabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.timelineServiceV1Enabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.conf.YarnConfiguration.timelineServiceV2Enabled_added(org.apache.hadoop.conf.Configuration)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.exceptions"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.exceptions.ConfigurationException"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.exceptions.ResourceNotFoundException"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.exceptions.YARNFeatureNotEnabledException"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.AuxiliaryLocalPathHandler"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.AuxiliaryService"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.AuxiliaryService.getAuxiliaryLocalPathHandler_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.AuxiliaryService.setAuxiliaryLocalPathHandler_added(org.apache.hadoop.yarn.server.api.AuxiliaryLocalPathHandler)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerContext"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerContext.ctor_added(java.lang.String, org.apache.hadoop.yarn.api.records.ContainerId, org.apache.hadoop.yarn.api.records.Resource, org.apache.hadoop.yarn.server.api.ContainerType)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerContext.ctor_added(java.lang.String, org.apache.hadoop.yarn.api.records.ContainerId, org.apache.hadoop.yarn.api.records.Resource, org.apache.hadoop.yarn.server.api.ContainerType, org.apache.hadoop.yarn.api.records.ExecutionType)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerContext.getContainerType_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerContext.getExecutionType_added()"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerInitializationContext"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerInitializationContext.ctor_added(java.lang.String, org.apache.hadoop.yarn.api.records.ContainerId, org.apache.hadoop.yarn.api.records.Resource, org.apache.hadoop.yarn.server.api.ContainerType)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerLogAggregationPolicy"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerLogContext"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerTerminationContext"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.server.api.ContainerTerminationContext.ctor_added(java.lang.String, org.apache.hadoop.yarn.api.records.ContainerId, org.apache.hadoop.yarn.api.records.Resource, org.apache.hadoop.yarn.server.api.ContainerType)"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.constraint"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.csi"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+<comment>
+  <identifier id="org.apache.hadoop.yarn.util.resource"/>
+  <text>
+    InsertCommentsHere
+  </text>
+</comment>
+
+</comments>

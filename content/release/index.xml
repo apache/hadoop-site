@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Fri, 22 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/release/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/release/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Release 3.3.4 available</title>
+      <link>https://hadoop.apache.org/release/3.3.4.html</link>
+      <pubDate>Mon, 08 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/release/3.3.4.html</guid>
+      <description>This is a release of Apache Hadoop 3.3 line.
+It contains a small number security and critical integration fixes since 3.3.3.
+Users of Apache Hadoop 3.3.3 should upgrade to this release.
+Users of hadoop 2.x and hadoop 3.2 should also upgrade to the 3.3.x line. As well as feature enhancements, this is the sole branch currently receiving fixes for anything other than critical security/data integrity issues.
+Users are encouraged to read the overview of major changes since release 3.</description>
+    </item>
+    
     <item>
       <title>Release 3.2.4 available</title>
       <link>https://hadoop.apache.org/release/3.2.4.html</link>
