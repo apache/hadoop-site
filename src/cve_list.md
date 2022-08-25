@@ -37,6 +37,20 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2021-25642](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-25642) Apache Hadoop YARN remote code execution in ZKConfigurationStore of capacity scheduler
+
+ZKConfigurationStore which is optionally used by CapacityScheduler of
+Apache Hadoop YARN deserializes data obtained from ZooKeeper without
+validation. An attacker having access to ZooKeeper can run arbitrary
+commands as YARN user by exploiting this.
+
+- **Versions affected**: 2.9.0 to 2.10.1, 3.0.0-alpha to 3.2.3, 3.3.0 to 3.3.3
+- **Fixed versions**: 2.10.2, 3.2.4, 3.3.4
+- **Impact**: remote command execution
+- **Reporter**: Liu Ximing
+- **Reported Date**: 2020/12/16
+- **Issue Announced**: 2022/08/25 ([general@hadoop](https://lists.apache.org/thread/w1nf92148xcnxl5ys0owtokf9y0l9zsv))
+
 ## [CVE-2022-25168](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25168) Command injection in org.apache.hadoop.fs.FileUtil.unTarUsingTar
 
 Apache Hadoop's FileUtil.unTar(File, File) API does not escape the

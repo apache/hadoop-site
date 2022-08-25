@@ -169,6 +169,19 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Reported Date**:
 - **Issue Announced**:
 -->
+<h2 id="cve-2021-25642httpcvemitreorgcgi-bincvenamecginamecve-2021-25642-apache-hadoop-yarn-remote-code-execution-in-zkconfigurationstore-of-capacity-scheduler"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-25642">CVE-2021-25642</a> Apache Hadoop YARN remote code execution in ZKConfigurationStore of capacity scheduler</h2>
+<p>ZKConfigurationStore which is optionally used by CapacityScheduler of
+Apache Hadoop YARN deserializes data obtained from ZooKeeper without
+validation. An attacker having access to ZooKeeper can run arbitrary
+commands as YARN user by exploiting this.</p>
+<ul>
+<li><strong>Versions affected</strong>: 2.9.0 to 2.10.1, 3.0.0-alpha to 3.2.3, 3.3.0 to 3.3.3</li>
+<li><strong>Fixed versions</strong>: 2.10.2, 3.2.4, 3.3.4</li>
+<li><strong>Impact</strong>: remote command execution</li>
+<li><strong>Reporter</strong>: Liu Ximing</li>
+<li><strong>Reported Date</strong>: 2020/12/16</li>
+<li><strong>Issue Announced</strong>: 2022/08/25 (<a href="https://lists.apache.org/thread/w1nf92148xcnxl5ys0owtokf9y0l9zsv">general@hadoop</a>)</li>
+</ul>
 <h2 id="cve-2022-25168httpcvemitreorgcgi-bincvenamecginamecve-2022-25168-command-injection-in-orgapachehadoopfsfileutiluntarusingtar"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25168">CVE-2022-25168</a> Command injection in org.apache.hadoop.fs.FileUtil.unTarUsingTar</h2>
 <p>Apache Hadoop&rsquo;s FileUtil.unTar(File, File) API does not escape the
 input file name before being passed to the shell. An attacker can
