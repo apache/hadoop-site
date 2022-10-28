@@ -54,7 +54,7 @@ order):
   cdouglas         |[Chris Douglas](http://people.apache.org/~cdouglas)                          |Microsoft      |            |-8
   cliang           |Chen Liang                                                                   |LinkedIn       |            |-8
   cmccabe          |[Colin Patrick McCabe](http://www.club.cc.cmu.edu/~cmccabe)                  |Cloudera       |HDFS        |-8
-  cnauroth         |Chris Nauroth                                                                |Hortonworks    |            |-8
+  cnauroth         |[Chris Nauroth](https://github.com/cnauroth)                                 |Google         |            |-8
   cutting          |[Doug Cutting](http://blog.lucene.com/)                                      |Cloudera       |            |-8
   daryn            |Daryn Sharp                                                                  |Verizon Media  |            |-6
   ddas             |[Devaraj Das](http://people.apache.org/~ddas)                                |Hortonworks    |            |-8
@@ -125,7 +125,7 @@ order):
   tucu             |Alejandro Abdelnur                                                           |Cloudera       |            |-8
   umamahesh        |[Uma Maheswara Rao G](https://people.apache.org/~umamahesh/umamahesh.html)   |Intel          |            |+5.5
   varunsaxena      |[Varun Saxena](http://people.apache.org/~varunsaxena)                        |LinkedIn       |            |+5.5
-  vinayakumarb     |[Vinayakumar B](https://people.apache.org/~vinayakumarb/)                    |Huawei         |            |+5.5
+  vinayakumarb     |[Vinayakumar B](https://people.apache.org/~vinayakumarb/)                    |Google         |            |+5.5
   vinodkv          |Vinod Kumar Vavilapalli                                                      |Hortonworks    |            |-8
   vvasudev         |Varun Vasudev                                                                |               |            |+5.5
   yhemanth         |Hemanth Yamijala                                                             |               |            |+5.5
@@ -158,7 +158,7 @@ username            |name                                                       
 --------------------|-----------------------------------------------------------------------------------|--------------------|-------|----------|
 aajisaka            |Akira Ajisaka                                                                       |AWS                             |        |+9
 ab                  |Andrzej Bialecki                                                                    |Getopt                          |        |+1
-abmodi              |Abhishek Modi                                                                       |Microsoft                       |        |+5.5
+abmodi              |Abhishek Modi                                                                       |Google                          |        |+5.5
 acmurthy            |[Arun C Murthy](http://people.apache.org/~acmurthy)                                 |Hortonworks                     |        |-8
 adhoot              |Anubhav Dhoot                                                                       |Cloudera                        |        |-8
 aengineer           |Anu Engineer                                                                        |Hortonworks                     |        |-8
@@ -187,7 +187,7 @@ busbey              |Sean Busbey                                                
 cdouglas            |Chris Douglas                                                                       |Microsoft                       |        |-8
 cliang              |Chen Liang                                                                          |LinkedIn                        |        |-8
 cmccabe             |[Colin Patrick McCabe](http://www.club.cc.cmu.edu/~cmccabe)                         |Cloudera                        |HDFS    |-8
-cnauroth            |Chris Nauroth                                                                       |Hortonworks                     |        |-8
+cnauroth            |[Chris Nauroth](https://github.com/cnauroth)                                        |Google                          |        |-8
 cos                 |[Konstantin Boudnik](http://people.apache.org/~cos)                                 |WANdisco                        |        |-8
 csingh              |Chandni Singh                                                                       |LinkedIn                        |        |-8
 ctrezzo             |Chris Trezzo                                                                        |Twitter                         |        |-8
@@ -307,7 +307,7 @@ tomwhite            |[Tom White](http://www.lexemetech.com)                     
 tucu                |Alejandro Abdelnur                                                                  |Cloudera                        |        |-8
 umamahesh           |[Uma Maheswara Rao G](https://people.apache.org/~umamahesh/umamahesh.html)          |Intel                           |HDFS    |+5.5
 varunsaxena         |[Varun Saxena](http://people.apache.org/~varunsaxena)                               |LinkedIn                        |        |+5.5
-vinayakumarb        |[Vinayakumar B](http://people.apache.org/~vinayakumarb)                             |Huawei                          |HDFS    |+5.5
+vinayakumarb        |[Vinayakumar B](http://people.apache.org/~vinayakumarb)                             |Google                          |HDFS    |+5.5
 vinodkv             |[Vinod Kumar Vavilapalli](http://people.apache.org/~vinodkv)                        |Hortonworks                     |        |-8
 vivekratnavel       |[Vivek Ratnavel Subramanian](https://github.com/vivekratnavel)                      |Cloudera                        |        |-8
 vrushali            |[Vrushali Channapattan](http://people.apache.org/~vrushali)                         |Twitter                         |        |-8
@@ -316,7 +316,7 @@ waltersu4549        |Walter Su                                                  
 wang                |Andrew Wang                                                                         |Cloudera                        |        |-8
 wangda              |Wangda Tan                                                                          |Hortonworks                     |        |-8
 weichiu             |[Wei-Chiu Chuang](http://weichiu.com/about-wei-chiu/)                               |Cloudera                        |        |-8
-weiy                |Wei Yan                                                                             |Uber                            |        |-8
+weiy                |Wei Yan                                                                             |Google                          |        |-8
 wheat9              |[Haohui Mai](http://haohui.me)                                                      |Uber                            |        |-8
 wilfreds            |[Wilfred Spiegelenburg](https://github.com/wilfred-s)                               |Cloudera                        |        |+10
 wwei                |[Weiwei Yang](https://yangwwei.github.io/)                                          |Hortonworks                     |        |+8
