@@ -284,6 +284,7 @@ sjlee               |[Sangjin Lee](http://people.apache.org/~sjlee)             
 sradia              |[Sanjay Radia](http://people.apache.org/~sradia)                                    |Hortonworks                     |        |-8
 sreekanth           |Sreekanth Ramakrishnan                                                              |InMobi                          |        |+5.5
 sidharta            |Sidharta Seethana                                                                   |Hortonworks                     |        |-8
+slfan1989           |Shilun Fan                                                                          |DiDi                            |        |+8
 snemeth             |[Szilard Nemeth](https://github.com/szilard-nemeth)                                 |Cloudera                        |        |+1
 sseth               |Siddharth Seth                                                                      |Hortonworks                     |        |-8
 stevel              |Steve Loughran                                                                      |Cloudera                     |        |0
