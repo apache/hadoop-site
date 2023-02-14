@@ -33,6 +33,12 @@ publishDir = "content"
   weight = 2
 
 [[menu.main]]
+   name = "Current (trunk)"
+   parent = "documentation"
+   url = "http://apache.github.io/hadoop/"
+
+
+[[menu.main]]
    name = "Latest"
    parent = "documentation"
    url = "https://hadoop.apache.org/docs/current/"
