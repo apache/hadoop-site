@@ -1,0 +1,34 @@
+MISSING @SINCE TAG: org.apache.hadoop.util.functional.CloseableTaskPoolSubmitter Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.Options.OpenFileOptions Class
+MISSING @SINCE TAG: org.apache.hadoop.util.functional.FutureIO Method eval(org.apache.hadoop.util.functional.CallableRaisingIOE)
+MISSING @SINCE TAG: org.apache.hadoop.security.UserGroupInformation Method getRealUserOrSelf(org.apache.hadoop.security.UserGroupInformation)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSDataInputStream Method getWrappedStream()
+NO DOC BLOCK: org.apache.hadoop.fs.FSDataInputStream Method maxReadSizeForVectorReads()
+MISSING @SINCE TAG: org.apache.hadoop.fs.PositionedReadable Method maxReadSizeForVectorReads()
+NO DOC BLOCK: org.apache.hadoop.fs.FSDataInputStream Method minSeekForVectorReads()
+MISSING @SINCE TAG: org.apache.hadoop.fs.PositionedReadable Method minSeekForVectorReads()
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method must(java.lang.String, long)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method opt(java.lang.String, long)
+MISSING @SINCE TAG: org.apache.hadoop.util.functional.FutureIO Method propagateOptions(org.apache.hadoop.fs.FSBuilder, org.apache.hadoop.conf.Configuration, java.lang.String, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.util.functional.FutureIO Method propagateOptions(org.apache.hadoop.fs.FSBuilder, org.apache.hadoop.conf.Configuration, java.lang.String, boolean)
+NO DOC BLOCK: org.apache.hadoop.fs.FSDataInputStream Method readVectored(java.util.List, java.util.function.IntFunction)
+MISSING @SINCE TAG: org.apache.hadoop.fs.PositionedReadable Method readVectored(java.util.List, java.util.function.IntFunction)
+MISSING @SINCE TAG: org.apache.hadoop.io.ByteBufferPool Method release()
+NO DOC BLOCK: org.apache.hadoop.io.compress.BZip2Codec Method writeHeader(java.io.OutputStream)
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field ACTION_FILE_OPENED
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_CALLER_CONTEXT_SEPARATOR_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_CALLER_CONTEXT_SEPARATOR_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.StreamCapabilities Field IOSTATISTICS_CONTEXT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_SERVER_METRICS_UPDATE_RUNNER_INTERVAL
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_SERVER_METRICS_UPDATE_RUNNER_INTERVAL_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field OP_CREATE_FILE
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field OP_MSYNC
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field OP_OPENFILE
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field STORE_IO_RATE_LIMITED
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_REMOTE_STREAM_ABORTED
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_REMOTE_STREAM_DRAINED
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_VECTORED_COMBINED_RANGES
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_VECTORED_INCOMING_RANGES
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_VECTORED_OPERATIONS
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_VECTORED_READ_BYTES_DISCARDED
+MISSING @SINCE TAG: org.apache.hadoop.fs.StreamCapabilities Field VECTOREDIO
