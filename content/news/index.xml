@@ -137,7 +137,7 @@ Apache HBase can now be found at http://hbase.apache.org/</description>
       
       <guid>https://hadoop.apache.org/news/2009-07-xx-subprojects.html</guid>
       <description>Hadoop is getting bigger!
- Hadoop Core is renamed Hadoop Common. MapReduce and the Hadoop Distributed File System (HDFS) are now separate subprojects. Avro and Chukwa are new Hadoop subprojects.  See the summary descriptions for all subprojects above. Visit the individual sites for more detailed information.</description>
+Hadoop Core is renamed Hadoop Common. MapReduce and the Hadoop Distributed File System (HDFS) are now separate subprojects. Avro and Chukwa are new Hadoop subprojects. See the summary descriptions for all subprojects above. Visit the individual sites for more detailed information.</description>
     </item>
     
     <item>

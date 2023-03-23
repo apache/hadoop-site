@@ -14,6 +14,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -157,7 +158,7 @@
 
 <div class="container">
 <div class="col-md-8">
-<h1>Release 2.10.1 available</h1>
+<h1>Release 3.3.5 available</h1>
 <!---
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -171,27 +172,57 @@
   See the License for the specific language governing permissions and
   limitations under the License. See accompanying LICENSE file.
 -->
-<p>This is the second stable release of Apache Hadoop 2.10 line. It contains 218 bug fixes, improvements and enhancements since 2.10.0.</p>
-<p>Users are encouraged to read the <a href="/docs/r2.10.1/index.html">overview of major changes</a> since 2.10.0.
-For details of 218 bug fixes, improvements, and other enhancements since the previous 2.10.0 release,
-please check <a href="http://hadoop.apache.org/docs/r2.10.1/hadoop-project-dist/hadoop-common/release/2.10.1/RELEASENOTES.2.10.1.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r2.10.1/hadoop-project-dist/hadoop-common/release/2.10.1/CHANGES.2.10.1.html">changelog</a>
-detail the changes since 2.10.0.</p>
+<p>This is a release of Apache Hadoop 3.3 line.</p>
+<p>Key changes include</p>
+<ul>
+<li>A big update of dependencies to try and keep those reports of
+transitive CVEs under control -both genuine and false positives.</li>
+<li>Critical fix to ABFS input stream prefetching for correct reading.</li>
+<li>Vectored IO API for all FSDataInputStream implementations, with
+high-performance versions for file:// and s3a:// filesystems.
+file:// through java native IO
+s3a:// parallel GET requests.</li>
+<li>Arm64 binaries. Note, because the arm64 release was on a different
+platform, the jar files may not match those of the x86
+release -and therefore the maven artifacts.</li>
+<li>Security fixes in Hadoop&rsquo;s own code.</li>
+</ul>
+<p>Users of Apache Hadoop 3.3.4 and earlier should upgrade to
+this release.</p>
+<p>All users are encouraged to read the <a href="http://hadoop.apache.org/docs/r3.3.5/index.html">overview of major changes</a>
+since release 3.3.4.</p>
+<p>For details of bug fixes, improvements, and other enhancements since
+the previous 3.3.4 release, please check <a href="http://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/release/3.3.5/RELEASENOTES.3.3.5.html">release notes</a>
+and <a href="http://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/release/3.3.5/CHANGELOG.3.3.5.html">changelog</a>.</p>
+<h2 id="azure-abfs-critical-stream-prefetch-fix">Azure ABFS: Critical Stream Prefetch Fix</h2>
+<p>The ABFS connector has a critical bug fix
+<a href="https://issues.apache.org/jira/browse/HADOOP-18546">https://issues.apache.org/jira/browse/HADOOP-18546</a>:
+<em>ABFS. Disable purging list of in-progress reads in abfs stream close().</em></p>
+<p>All users of the abfs connector in hadoop releases 3.3.2+ MUST either upgrade
+to this release or disable prefetching by setting
+<code>fs.azure.readaheadqueue.depth</code> to <code>0</code>.</p>
 
-<small>2020 Sep 21 </small>
+<small>2023 Mar 22 </small>
 </div>
 <div class="col-md-4">
-   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz" class="btn btn-success">Download tar.gz</a></p>
+   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5.tar.gz" class="btn btn-success">Download tar.gz</a></p>
    <p>
-     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz.sha512">checksum</a>
-     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz.asc">signature</a>)
+     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5.tar.gz.sha512">checksum</a>
+     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5.tar.gz.asc">signature</a>)
    </p>
     
-   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.10.1/hadoop-2.10.1-src.tar.gz" class="btn btn-warning">Download src</a></p>
+    <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5-aarch64.tar.gz" class="btn btn-success">Download aarch64 tar.gz</a></p>
+    <p>
+        (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5-aarch64.tar.gz.sha512">checksum</a>
+        <a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5-aarch64.tar.gz.asc">signature</a>)
+    </p>
+    
+   <p><a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5-src.tar.gz" class="btn btn-warning">Download src</a></p>
    <p>
-     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.10.1/hadoop-2.10.1-src.tar.gz.sha512">checksum</a>
-     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-2.10.1/hadoop-2.10.1-src.tar.gz.asc">signature</a>)
+     (<a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5-src.tar.gz.sha512">checksum</a>
+     <a href="https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5-src.tar.gz.asc">signature</a>)
    </p>
-      <p><a href="https://hadoop.apache.org/docs/r2.10.1" class="btn btn-primary">Documentation</a></p>
+      <p><a href="https://hadoop.apache.org/docs/r3.3.5" class="btn btn-primary">Documentation</a></p>
 
 </div>
 </div>

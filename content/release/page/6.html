@@ -61,7 +61,7 @@
                
                <li role="separator" class="divider"></li>
                
-               <li><a href="https://hadoop.apache.org/docs/r3.3.4/">3.3.4</a></li>
+               <li><a href="https://hadoop.apache.org/docs/r3.3.5/">3.3.5</a></li>
                
                <li><a href="https://hadoop.apache.org/docs/r3.2.4/">3.2.4</a></li>
                
@@ -147,6 +147,75 @@
   <div>
     <h1 id="title">Releases Archive</h1>
         <ul id="list">
+            
+            <h1><a href="/release/2.6.0.html">Release 2.6.0 available</a></h1>
+            <p><small>2014 Nov 18 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>Apache Hadoop 2.6.0 contains a number of significant enhancements such
+as:</p>
+<ul>
+<li>Hadoop Common</li>
+<li><a href="https://issues.apache.org/jira/browse/HADOOP-10433">HADOOP-10433</a> -
+Key management server (beta)</li>
+<li><a href="https://issues.apache.org/jira/browse/HADOOP-10607">HADOOP-10607</a> -
+Credential provider (beta)</li>
+<li>Hadoop HDFS</li>
+<li>Heterogeneous Storage Tiers - Phase 2</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-5682">HDFS-5682</a> -
+Application APIs for heterogeneous storage</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-7228">HDFS-7228</a> -
+SSD storage tier</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-5851">HDFS-5851</a> -
+Memory as a storage tier (beta)</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-6584">HDFS-6584</a> -
+Support for Archival Storage</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-6134">HDFS-6134</a> -
+Transparent data at rest encryption (beta)</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-2856">HDFS-2856</a> -
+Operating secure DataNode without requiring root access</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-6740">HDFS-6740</a> -
+Hot swap drive: support add/remove data node volumes without
+restarting data node (beta)</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-6606">HDFS-6606</a> -
+AES support for faster wire encryption</li>
+<li>Hadoop YARN</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-896">YARN-896</a> -
+Support for long running services in YARN</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-913">YARN-913</a> -
+Service Registry for applications</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-666">YARN-666</a> -
+Support for rolling upgrades</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-556">YARN-556</a> -
+Work-preserving restarts of ResourceManager</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-1336">YARN-1336</a> -
+Container-preserving restart of NodeManager</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-796">YARN-796</a> -
+Support node labels during scheduling</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-1051">YARN-1051</a> -
+Support for time-based resource reservations in Capacity
+Scheduler (beta)</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-1964">YARN-1964</a> -
+Support running of applications natively in Docker containers
+(alpha)</li>
+</ul>
+<p>Please see the <a href="https://hadoop.apache.org/docs/r2.6.0/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 2.6.0 Release
+Notes</a>
+for details.</p>
+
+
             
             <h1><a href="/release/2.5.1.html">Release 2.5.1 available</a></h1>
             <p><small>2014 Sep 12 </small></p>
@@ -417,41 +486,6 @@ for details.</p>
 <p>Apache Hadoop 2.1.1-beta is a bug-fix version of the beta release of
 Apache Hadoop 2.x.</p>
 <p>Please see the <a href="https://hadoop.apache.org/docs/r2.1.1-beta/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 2.1.1-beta Release
-Notes</a>
-for details.</p>
-
-
-            
-            <h1><a href="/release/2.1.0-beta.html">Release 2.1.0-beta available</a></h1>
-            <p><small>2013 Aug 25 </small></p>
-
-            <!---
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License. See accompanying LICENSE file.
--->
-<p>Apache Hadoop 2.1.0-beta is the <strong>beta</strong> release of Apache Hadoop 2.x.</p>
-<p>Users are encouraged to immediately move to 2.1.0-beta since this
-release is significantly more stable and has completley whetted set of
-APIs and wire-protocols for future compatibility.</p>
-<p>In addition, this release has a number of other significant highlights:</p>
-<ul>
-<li>HDFS Snapshots</li>
-<li>Support for running Hadoop on Microsoft Windows</li>
-<li>YARN API stabilization</li>
-<li>Binary Compatibility for MapReduce applications built on hadoop-1.x</li>
-<li>Substantial amount of integration testing with rest of projects in
-the ecosystem</li>
-</ul>
-<p>Please see the <a href="https://hadoop.apache.org/docs/r2.1.0-beta/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 2.1.0-beta Release
 Notes</a>
 for details.</p>
 
