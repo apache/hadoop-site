@@ -1,0 +1,28 @@
+OK: org.apache.hadoop.fs.statistics.IOStatisticsSetters Interface
+NO DOC BLOCK: org.apache.hadoop.util.VersionInfo Method _getCompilePlatform()
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method append(org.apache.hadoop.fs.Path, boolean)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method append(org.apache.hadoop.fs.Path, int, org.apache.hadoop.util.Progressable, boolean)
+MISSING @SINCE TAG: org.apache.hadoop.util.VersionInfo Method getCompilePlatform()
+MISSING @SINCE TAG: org.apache.hadoop.util.functional.RemoteIterators Method haltableRemoteIterator(org.apache.hadoop.fs.RemoteIterator, org.apache.hadoop.util.functional.CallableRaisingIOE)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method must(java.lang.String, boolean)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method must(java.lang.String, double)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method must(java.lang.String, int)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method must(java.lang.String, long)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method mustDouble(java.lang.String, double)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method mustLong(java.lang.String, long)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method opt(java.lang.String, boolean)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method opt(java.lang.String, int)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method optDouble(java.lang.String, double)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FSBuilder Method optLong(java.lang.String, long)
+MISSING @SINCE TAG: org.apache.hadoop.util.functional.RemoteIterators Method rangeExcludingIterator(long, long)
+NO DOC BLOCK: org.apache.hadoop.fs.statistics.IOStatisticsSnapshot Method setCounter(java.lang.String, long)
+NO DOC BLOCK: org.apache.hadoop.fs.statistics.IOStatisticsSnapshot Method setGauge(java.lang.String, long)
+NO DOC BLOCK: org.apache.hadoop.fs.statistics.IOStatisticsSnapshot Method setMaximum(java.lang.String, long)
+NO DOC BLOCK: org.apache.hadoop.fs.statistics.IOStatisticsSnapshot Method setMeanStatistic(java.lang.String, org.apache.hadoop.fs.statistics.MeanStatistic)
+NO DOC BLOCK: org.apache.hadoop.fs.statistics.IOStatisticsSnapshot Method setMinimum(java.lang.String, long)
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_ACTIVE_MEMORY_IN_USE
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_ACTIVE_PREFETCH_OPERATIONS
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_BLOCK_ACQUIRE_AND_READ
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_BLOCKS_IN_FILE_CACHE
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_PREFETCH_OPERATIONS
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_READ_REMOTE_BLOCK_READ

@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Wed, 22 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Jun 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Release 3.3.6 available</title>
+      <link>https://hadoop.apache.org/release/3.3.6.html</link>
+      <pubDate>Fri, 23 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://hadoop.apache.org/release/3.3.6.html</guid>
+      <description>This is a release of Apache Hadoop 3.3 line.
+It contains 117 bug fixes, improvements and enhancements since 3.3.5. Users of Apache Hadoop 3.3.5 and earlier should upgrade to this release.
+Feature highlights:
+SBOM artifacts Starting from this release, Hadoop publishes Software Bill of Materials (SBOM) using CycloneDX Maven plugin. For more information on SBOM, please go to SBOM.
+HDFS RBF: RDBMS based token storage support HDFS Router-Router Based Federation now supports storing delegation tokens on MySQL, HADOOP-18535 which improves token operation through over the original Zookeeper-based implementation.</description>
+    </item>
+    
     <item>
       <title>Release 3.3.5 available</title>
       <link>https://hadoop.apache.org/release/3.3.5.html</link>

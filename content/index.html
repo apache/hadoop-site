@@ -62,7 +62,7 @@
                
                <li role="separator" class="divider"></li>
                
-               <li><a href="https://hadoop.apache.org/docs/r3.3.5/">3.3.5</a></li>
+               <li><a href="https://hadoop.apache.org/docs/r3.3.6/">3.3.6</a></li>
                
                <li><a href="https://hadoop.apache.org/docs/r3.2.4/">3.2.4</a></li>
                
@@ -179,6 +179,47 @@
         <div class="col-md-4">
           <h2>Latest news</h2>
             <div class="col-md-12">
+            
+            <div class="panel panel-default">
+               <div class="panel-heading clearfix"><a class="pull-left" href=/release/3.3.6.html>Release 3.3.6 available</a> <small class="pull-right">2023 Jun 23 </small></div>
+               <div class="panel-body">
+                  <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is a release of Apache Hadoop 3.3 line.</p>
+<p>It contains 117 bug fixes, improvements and enhancements since 3.3.5.
+Users of Apache Hadoop 3.3.5 and earlier should upgrade to this release.</p>
+<p>Feature highlights:</p>
+<h2 id="sbom-artifacts">SBOM artifacts</h2>
+<p>Starting from this release, Hadoop publishes Software Bill of Materials (SBOM) using
+CycloneDX Maven plugin. For more information on SBOM, please go to
+<a href="https://cwiki.apache.org/confluence/display/COMDEV/SBOM">SBOM</a>.</p>
+<h2 id="hdfs-rbf-rdbms-based-token-storage-support">HDFS RBF: RDBMS based token storage support</h2>
+<p>HDFS Router-Router Based Federation now supports storing delegation tokens on MySQL,
+<a href="https://issues.apache.org/jira/browse/HADOOP-18535">HADOOP-18535</a>
+which improves token operation through over the original Zookeeper-based implementation.</p>
+<h2 id="new-file-system-apis">New File System APIs</h2>
+<p><a href="https://issues.apache.org/jira/browse/HADOOP-18671">HADOOP-18671</a> moved a number of
+HDFS-specific APIs to Hadoop Common to make it possible for certain applications that
+depend on HDFS semantics to run on other Hadoop compatible file systems.</p>
+<p>In particular, recoverLease() and isFileClosed() are exposed through LeaseRecoverable
+interface, while setSafeMode() is exposed through SafeMode interface.</p>
+<p>Users are encouraged to read the <a href="/docs/r3.3.6/index.html">overview of major changes</a> since release 3.3.5.
+For details of 117 bug fixes, improvements, and other enhancements since the previous 3.3.5 release,
+please check <a href="http://hadoop.apache.org/docs/r3.3.6/hadoop-project-dist/hadoop-common/release/3.3.6/RELEASENOTES.3.3.6.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.3.6/hadoop-project-dist/hadoop-common/release/3.3.6/CHANGELOG.3.3.6.html">changelog</a>.</p>
+
+               </div>
+              </div>
             
             <div class="panel panel-default">
                <div class="panel-heading clearfix"><a class="pull-left" href=/release/3.3.5.html>Release 3.3.5 available</a> <small class="pull-right">2023 Mar 22 </small></div>
@@ -305,32 +346,6 @@ please check <a href="http://hadoop.apache.org/docs/r3.2.4/hadoop-project-dist/h
 <p>Users are encouraged to read the <a href="/docs/r2.10.2/index.html">overview of major changes</a> since 2.10.1.
 For details of 211 bug fixes, improvements, and other enhancements since the previous 2.10.1 release,
 please check <a href="http://hadoop.apache.org/docs/r2.10.2/hadoop-project-dist/hadoop-common/release/2.10.2/RELEASENOTES.2.10.2.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r2.10.2/hadoop-project-dist/hadoop-common/release/2.10.2/CHANGELOG.2.10.2.html">changelog</a>.</p>
-
-               </div>
-              </div>
-            
-            <div class="panel panel-default">
-               <div class="panel-heading clearfix"><a class="pull-left" href=/release/3.3.3.html>Release 3.3.3 available</a> <small class="pull-right">2022 May 17 </small></div>
-               <div class="panel-body">
-                  <!---
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License. See accompanying LICENSE file.
--->
-<p>This is the third stable release of the Apache Hadoop 3.3 line.</p>
-<p>It contains 23 bug fixes, improvements and enhancements since 3.3.2.</p>
-<p>This is primarily a security update; for this reason, upgrading is strongly advised.</p>
-<p>Users are encouraged to read the <a href="/docs/r3.3.3/index.html">overview of major changes</a> since 3.3.2.
-For details of bug fixes, improvements, and other enhancements since the previous 3.3.2 release,
-please check <a href="http://hadoop.apache.org/docs/r3.3.3/hadoop-project-dist/hadoop-common/release/3.3.3/RELEASENOTES.3.3.3.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.3.3/hadoop-project-dist/hadoop-common/release/3.3.3/CHANGELOG.3.3.3.html">changelog</a>.</p>
 
                </div>
               </div>
