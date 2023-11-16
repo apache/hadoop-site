@@ -171,6 +171,34 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Reported Date**:
 - **Issue Announced**:
 -->
+<h2 id="cve-2023-26031httpcvemitreorgcgi-bincvenamecginamecve-2023-26031-privilege-escalation-in-apache-haoop-yarn-container-executor-binary-on-linux-systems"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-26031">CVE-2023-26031</a> Privilege escalation in Apache Haoop Yarn container-executor binary on Linux systems</h2>
+<p>Relative library resolution in linux container-executor binary in Apache Hadoop 3.3.1-3.3.4 on Linux allows local user to gain root privileges. If the YARN cluster is accepting work from remote (authenticated) users, this MAY permit remote users to gain root privileges.</p>
+<p>Hadoop 3.3.0 updated the <a href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/SecureContainer.html">YARN Secure Containers</a> to add a feature for executing user-submitted applications in isolated linux containers.</p>
+<p>The native binary HADOOP_HOME/bin/container-executor is used to launch these containers; it must be owned by root and have the suid bit set in order for the YARN processes to run the containers as the specific users submitting the jobs.</p>
+<p>The patch <a href="https://issues.apache.org/jira/browse/YARN-10495">YARN-10495</a> &ldquo;make the rpath of container-executor configurable&rdquo; modified the library loading path for loading .so files from <code>$ORIGIN/</code> to <code>$ORIGIN/:../lib/native/</code>. This is the a path through which libcrypto.so is located. Thus it is is possible for a user with reduced privileges to install a malicious libcrypto library into a path to which they have write access, invoke the container-executor command, and have their modified library executed as root.
+If the YARN cluster is accepting work from remote (authenticated) users, and these users&rsquo; submitted job are executed in the physical host, rather than a container, then the CVE permits remote users to gain root privileges.</p>
+<p>The fix for the vulnerability is to revert the change, which is done in <a href="https://issues.apache.org/jira/browse/YARN-11441">YARN-11441</a>, &ldquo;Revert YARN-10495&rdquo;. This patch is in hadoop-3.3.5.</p>
+<p>To determine whether a version of container-executor is vulnerable, use the readelf command. If the RUNPATH or RPATH value contains the relative path <code>./lib/native/</code> then it  is at risk</p>
+<pre tabindex="0"><code>$ readelf -d container-executor|grep &#39;RUNPATH\|RPATH&#39;
+0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN/:../lib/native/]
+</code></pre><p>If it does not, then it is safe:</p>
+<pre tabindex="0"><code>$ readelf -d container-executor|grep &#39;RUNPATH\|RPATH&#39;
+0x000000000000001d (RUNPATH)            Library runpath: [$ORIGIN/]
+</code></pre><p>For an at-risk version of container-executor to enable privilege escalation, the owner must be root and the suid bit must be set</p>
+<pre tabindex="0"><code>$ ls -laF /opt/hadoop/bin/container-executor
+---Sr-s---. 1 root hadoop 802968 May 9 20:21 /opt/hadoop/bin/container-executor
+</code></pre><p>A safe installation lacks the suid bit; ideally is also not owned by root.</p>
+<pre tabindex="0"><code>$ ls -laF /opt/hadoop/bin/container-executor
+-rwxr-xr-x. 1 yarn hadoop 802968 May 9 20:21 /opt/hadoop/bin/container-executor
+</code></pre><p>This configuration does not support Yarn Secure Containers, but all other hadoop services, including YARN job execution outside secure containers continue to work.</p>
+<ul>
+<li><strong>Versions affected</strong>: 3.3.1 to 3.3.4</li>
+<li><strong>Fixed versions</strong>: 3.3.5</li>
+<li><strong>Impact</strong>: privilege escalation</li>
+<li><strong>Reporter</strong>: Esa Hiltunen, Mikko Kortelainen</li>
+<li><strong>Reported Date</strong>: 2022/07/13</li>
+<li><strong>Issue Announced</strong>: 2023/11/16 (<a href="https://lists.apache.org/thread/q9qpdlv952gb4kphpndd5phvl7fkh71r">general@hadoop</a>)</li>
+</ul>
 <h2 id="cve-2021-25642httpcvemitreorgcgi-bincvenamecginamecve-2021-25642-apache-hadoop-yarn-remote-code-execution-in-zkconfigurationstore-of-capacity-scheduler"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-25642">CVE-2021-25642</a> Apache Hadoop YARN remote code execution in ZKConfigurationStore of capacity scheduler</h2>
 <p>ZKConfigurationStore which is optionally used by CapacityScheduler of
 Apache Hadoop YARN deserializes data obtained from ZooKeeper without

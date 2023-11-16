@@ -1436,7 +1436,7 @@ The Apache Hadoop software library is a framework that allows for the distribute
       <guid>https://hadoop.apache.org/cve_list.html</guid>
       <description>This page lists security fixes that the Hadoop PMC felt warranted a CVE. If you think something is missing from this list or if you think the set of impacted or fixed versions is incomplete then please ask on the Security list.
 CVEs are presented in most-recent-first order of announcement.
-CVE-2021-25642 Apache Hadoop YARN remote code execution in ZKConfigurationStore of capacity scheduler ZKConfigurationStore which is optionally used by CapacityScheduler of Apache Hadoop YARN deserializes data obtained from ZooKeeper without validation.</description>
+CVE-2023-26031 Privilege escalation in Apache Haoop Yarn container-executor binary on Linux systems Relative library resolution in linux container-executor binary in Apache Hadoop 3.</description>
     </item>
     
     <item>
