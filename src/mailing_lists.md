@@ -55,6 +55,14 @@ to it.
 
 For information on published vulnerabilities please see our [CVE list](cve_list.html).
 
+This mailing list is only for discussing security vulnerabilities in hadoop 'source' code, **NOT** security vulnerabilities coming via thirdparty libraries. For security issues related to thirdparty libraries use the dev/user mailing lists.
+
+The thridparty library versions in the upcoming releases can be checked here:
+* [3.4.x](https://github.com/apache/hadoop/blob/trunk/LICENSE-binary)
+* [3.3.x](https://github.com/apache/hadoop/blob/branch-3.3/LICENSE-binary)
+
+**Note:** Not all vulnerabilities coming from thirdparty libraries impact hadoop and it isn't possible to update every thirdparty library. Read a hadoop developer's point of view on upgrading thirdparty libraries [here](https://steveloughran.blogspot.com/2022/08/transitive-issues.html)
+
 ## General
 
 This mailing list is **NOT** for end-user questions and discussion.
