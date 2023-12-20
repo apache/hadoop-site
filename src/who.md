@@ -79,7 +79,7 @@ order):
   jitendra         |[Jitendra Nath Pandey](http://people.apache.org/~jitendra)                   |Hortonworks    |            |-8
   jlowe            |Jason Lowe                                                                   |NVIDIA         |            |-6
   jzhuge           |John Zhuge                                                                   |Netflix        |            |-8
-  junping\_du      |Junping Du                                                                   |Datastrato     |            |-8
+  junping\_du      |Junping Du                                                                   |Datastrato     |            |+8
   kasha            |[Karthik Kambatla](http://people.apache.org/~kasha)                          |Cloudera       |            |-8
   kihwal           |[Kihwal Lee](http://people.apache.org/~kihwal)                               |Verizon Media  |            |-6
   kkaranasos       |[Konstantinos Karanasos](http://www.microsoft.com/en-us/research/people/kokarana)|Microsoft  |            |-8
@@ -232,7 +232,7 @@ jing9               |Jing Zhao                                                  
 jitendra            |[Jitendra Nath Pandey](http://people.apache.org/~jitendra)                          |Hortonworks                     |        |-8
 jlowe               |Jason Lowe                                                                          |NVIDIA                          |        |-6
 johan               |[Johan Oskarsson](http://people.apache.org/~johan)                                  |Twitter                         |        |0
-junping\_du         |Junping Du                                                                          |Datastrato                      |        |-8
+junping\_du         |Junping Du                                                                          |Datastrato                      |        |+8
 jzhuge              |John Zhuge                                                                          |Netflix                         |        |-8
 kasha               |[Karthik Kambatla](http://people.apache.org/~kasha)                                 |Cloudera                        |        |-8
 kihwal              |[Kihwal Lee](http://people.apache.org/~kihwal)                                      |Verizon Media                   |        |-6
