@@ -7,119 +7,165 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright © 2006-{year} The Apache Software Foundation</copyright>
-    <lastBuildDate>Fri, 17 Dec 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://hadoop.apache.org/news/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 17 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://hadoop.apache.org/news/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hadoop is not susceptible to log4shell vulnerability</title>
       <link>https://hadoop.apache.org/news/2021-12-17-log4shell.html</link>
       <pubDate>Fri, 17 Dec 2021 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2021-12-17-log4shell.html</guid>
-      <description>Hadoop, as of today depends on log4j 1.x, which is NOT susceptible to the attack (CVE-2021-44228).&#xA;For more information check the published CVEs page.</description>
+      <description>Hadoop, as of today depends on log4j 1.x, which is NOT susceptible to the attack (CVE-2021-44228).
+For more information check the published CVEs page.</description>
     </item>
+    
     <item>
       <title>Ozone 1.1.0 is released</title>
       <link>https://hadoop.apache.org/news/2021-04-17-ozone-1.1.0.html</link>
       <pubDate>Sat, 17 Apr 2021 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2021-04-17-ozone-1.1.0.html</guid>
-      <description>General available(GA) release of Apache Hadoop Ozone with Volume/Bucket Quota Support, Security related enhancements, ofs/o3fs performance improvements, Recon improvements etc.&#xA;For more information check the ozone site.</description>
+      <description>General available(GA) release of Apache Hadoop Ozone with Volume/Bucket Quota Support, Security related enhancements, ofs/o3fs performance improvements, Recon improvements etc.
+For more information check the ozone site.</description>
     </item>
+    
     <item>
       <title>Ozone 1.0.0 is released</title>
       <link>https://hadoop.apache.org/news/2020-09-02-ozone-1.0.0.html</link>
       <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2020-09-02-ozone-1.0.0.html</guid>
-      <description>First general available(GA) release of Apache Hadoop Ozone with OM HA, OFS, Security phase II, Ozone Filesystem performance improvement, security enabled Hadoop 2.x support, bucket link, Recon / Recon UI improvment, etc.&#xA;For more information check the ozone site.</description>
+      <description>First general available(GA) release of Apache Hadoop Ozone with OM HA, OFS, Security phase II, Ozone Filesystem performance improvement, security enabled Hadoop 2.x support, bucket link, Recon / Recon UI improvment, etc.
+For more information check the ozone site.</description>
     </item>
+    
     <item>
       <title>Ozone 0.5.0-beta is released</title>
       <link>https://hadoop.apache.org/news/2020-03-24-ozone-0.5.0-beta.html</link>
       <pubDate>Tue, 24 Mar 2020 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2020-03-24-ozone-0.5.0-beta.html</guid>
-      <description>First beta release of Apache Hadoop Ozone with GDPR Right to Erasure, Network Topology Awareness, O3FS, and improved scalability/stability.&#xA;For more information check the ozone site.</description>
+      <description>First beta release of Apache Hadoop Ozone with GDPR Right to Erasure, Network Topology Awareness, O3FS, and improved scalability/stability.
+For more information check the ozone site.</description>
     </item>
+    
     <item>
       <title>Ozone 0.4.1-alpha is released</title>
       <link>https://hadoop.apache.org/news/2019-10-13-ozone-0.4.1-alpha.html</link>
       <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2019-10-13-ozone-0.4.1-alpha.html</guid>
-      <description>Next version of Apache Hadoop Ozone is released with Native ACLs, K8s support and improved stability.&#xA;For more information check the ozone site.</description>
+      <description>Next version of Apache Hadoop Ozone is released with Native ACLs, K8s support and improved stability.
+For more information check the ozone site.</description>
     </item>
+    
     <item>
       <title>Ozone 0.4.0-alpha is released</title>
       <link>https://hadoop.apache.org/news/2019-05-07-ozone-0.4.0-alpha.html</link>
       <pubDate>Tue, 07 May 2019 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2019-05-07-ozone-0.4.0-alpha.html</guid>
-      <description>Ozone 0.4.0 alpha version supports kerberos and transparent data encryption. This is first secure Ozone release. It is compatible with apache Spark, Hive and Yarn.&#xA;For more information check the ozone site.</description>
+      <description>Ozone 0.4.0 alpha version supports kerberos and transparent data encryption. This is first secure Ozone release. It is compatible with apache Spark, Hive and Yarn.
+For more information check the ozone site.</description>
     </item>
+    
     <item>
       <title>Ozone 0.3.0-alpha is released</title>
       <link>https://hadoop.apache.org/news/2018-11-22-ozone-0.3.0-alpha.html</link>
       <pubDate>Thu, 22 Nov 2018 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2018-11-22-ozone-0.3.0-alpha.html</guid>
-      <description>Next version of Apache Hadoop Ozone is released with S3 support and improved stability.&#xA;For more information check the ozone site.</description>
+      <description>Next version of Apache Hadoop Ozone is released with S3 support and improved stability.
+For more information check the ozone site.</description>
     </item>
+    
     <item>
       <title>Ozone release 0.2.1-alpha available</title>
       <link>https://hadoop.apache.org/news/2018-10-01-ozone-0.2.1-alpha.html</link>
       <pubDate>Mon, 01 Oct 2018 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2018-10-01-ozone-0.2.1-alpha.html</guid>
-      <description>This is the first version of Apache Hadoop Ozone. Ozone is an Object store for Hadoop built using Hadoop Distributed Data Store.&#xA;For more information check the ozone site.</description>
+      <description>This is the first version of Apache Hadoop Ozone. Ozone is an Object store for Hadoop built using Hadoop Distributed Data Store.
+For more information check the ozone site.</description>
     </item>
+    
     <item>
       <title>Apache Hadoop takes top prize at Media Guardian Innovation Awards</title>
       <link>https://hadoop.apache.org/news/2011-03-xx-award.html</link>
       <pubDate>Thu, 31 Mar 2011 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2011-03-xx-award.html</guid>
-      <description>Described by the judging panel as a &amp;ldquo;Swiss army knife of the 21st century&amp;rdquo;, Apache Hadoop picked up the innovator of the year award for having the potential to change the face of media innovations.&#xA;See The Guardian web site</description>
+      <description>Described by the judging panel as a &amp;ldquo;Swiss army knife of the 21st century&amp;rdquo;, Apache Hadoop picked up the innovator of the year award for having the potential to change the face of media innovations.
+See The Guardian web site</description>
     </item>
+    
     <item>
       <title>ZooKeeper Graduates</title>
       <link>https://hadoop.apache.org/news/2011-01-xx-zookeeper.html</link>
       <pubDate>Sun, 30 Jan 2011 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2011-01-xx-zookeeper.html</guid>
-      <description>Hadoop&amp;rsquo;s ZooKeeper subproject has graduated to become a top-level Apache project.&#xA;Apache ZooKeeper can now be found at http://zookeeper.apache.org/</description>
+      <description>Hadoop&amp;rsquo;s ZooKeeper subproject has graduated to become a top-level Apache project.
+Apache ZooKeeper can now be found at http://zookeeper.apache.org/</description>
     </item>
+    
     <item>
       <title>Hive and Pig Graduate</title>
       <link>https://hadoop.apache.org/news/2010-10-xx-hive-pig.html</link>
       <pubDate>Sat, 30 Oct 2010 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2010-10-xx-hive-pig.html</guid>
-      <description>Hadoop&amp;rsquo;s Hive and Pig subprojects have graduated to become top-level Apache projects.&#xA;Apache Hive can now be found at http://hive.apache.org/&#xA;Pig can now be found at http://pig.apache.org/</description>
+      <description>Hadoop&amp;rsquo;s Hive and Pig subprojects have graduated to become top-level Apache projects.
+Apache Hive can now be found at http://hive.apache.org/
+Pig can now be found at http://pig.apache.org/</description>
     </item>
+    
     <item>
       <title>Avro and HBase Graduate</title>
       <link>https://hadoop.apache.org/news/2010-05-xx-avro-hbase.html</link>
       <pubDate>Mon, 31 May 2010 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2010-05-xx-avro-hbase.html</guid>
-      <description>Hadoop&amp;rsquo;s Avro and HBase subprojects have graduated to become top-level Apache projects.&#xA;Apache Avro can now be found at http://avro.apache.org/&#xA;Apache HBase can now be found at http://hbase.apache.org/</description>
+      <description>Hadoop&amp;rsquo;s Avro and HBase subprojects have graduated to become top-level Apache projects.
+Apache Avro can now be found at http://avro.apache.org/
+Apache HBase can now be found at http://hbase.apache.org/</description>
     </item>
+    
     <item>
       <title>New Hadoop Subprojects</title>
       <link>https://hadoop.apache.org/news/2009-07-xx-subprojects.html</link>
       <pubDate>Fri, 31 Jul 2009 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2009-07-xx-subprojects.html</guid>
-      <description>Hadoop is getting bigger!&#xA;Hadoop Core is renamed Hadoop Common. MapReduce and the Hadoop Distributed File System (HDFS) are now separate subprojects. Avro and Chukwa are new Hadoop subprojects. See the summary descriptions for all subprojects above. Visit the individual sites for more detailed information.</description>
+      <description>Hadoop is getting bigger!
+Hadoop Core is renamed Hadoop Common. MapReduce and the Hadoop Distributed File System (HDFS) are now separate subprojects. Avro and Chukwa are new Hadoop subprojects. See the summary descriptions for all subprojects above. Visit the individual sites for more detailed information.</description>
     </item>
+    
     <item>
       <title>ApacheCon EU</title>
       <link>https://hadoop.apache.org/news/2009-03-xx-apachecon-eu.html</link>
       <pubDate>Tue, 31 Mar 2009 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2009-03-xx-apachecon-eu.html</guid>
       <description>In case you missed it&amp;hellip;. ApacheCon Europe 2009</description>
     </item>
+    
     <item>
       <title>ApacheCon US 2008</title>
       <link>https://hadoop.apache.org/news/2008-11-xx-apachecon.html</link>
       <pubDate>Sun, 30 Nov 2008 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2008-11-xx-apachecon.html</guid>
       <description>In case you missed it&amp;hellip;. ApacheCon US 2008</description>
     </item>
+    
     <item>
       <title>July 2008 - Hadoop Wins Terabyte Sort Benchmark</title>
       <link>https://hadoop.apache.org/news/2008-07-xx-terabyte-sort.html</link>
       <pubDate>Thu, 31 Jul 2008 00:00:00 +0000</pubDate>
+      
       <guid>https://hadoop.apache.org/news/2008-07-xx-terabyte-sort.html</guid>
       <description>Hadoop Wins Terabyte Sort Benchmark: One of Yahoo&amp;rsquo;s Hadoop clusters sorted 1 terabyte of data in 209 seconds, which beat the previous record of 297 seconds in the annual general purpose (Daytona) terabyte sort benchmark. This is the first time that either a Java or an open source program has won.</description>
     </item>
+    
   </channel>
 </rss>
