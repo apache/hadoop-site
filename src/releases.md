@@ -1,5 +1,5 @@
 ---
-title: "Apache Hadoop Releases"
+title: "Apache Hadoop® Releases"
 menu: "releases"
 layout: release
 type: custompage
@@ -18,7 +18,7 @@ type: custompage
   limitations under the License. See accompanying LICENSE file.
 -->
 
-## To verify Hadoop releases using GPG:
+## To verify Apache Hadoop® releases using GPG:
 
 1.  Download the release hadoop-X.Y.Z-src.tar.gz from a [mirror
     site](https://www.apache.org/dyn/closer.cgi/hadoop/common).
@@ -37,7 +37,7 @@ type: custompage
     [Apache](https://downloads.apache.org/hadoop/common/).
 3.  shasum -a 512 hadoop-X.Y.Z-src.tar.gz
 
-All previous releases of Hadoop are available from the [Apache release
+All previous releases of Apache Hadoop are available from the [Apache release
 archive](https://archive.apache.org/dist/hadoop/common/) site.
 
 Many third parties distribute products that include Apache Hadoop and
