@@ -331,6 +331,7 @@ yjzhangal           |[Yongjun Zhang](http://people.apache.org/~yjzhangal)       
 yliu                |[Yi Liu](http://people.apache.org/~yliu)                                            |Intel                           |        |+8
 yqlin               |[Yiqun Lin](https://github.com/linyiqun)                                            |EBay                            |        |+8
 zanderxu            |[Zengqiang Xu](https://github.com/ZanderXu)                                         |Shopee                          |        |+8
+zhangshuyan         |[Shuyan Zhang](https://github.com/zhangshuyan0)                                     |Meituan                         |        |+8
 zhouquan            |[Zac Zhou](https://github.com/yuanzac)                                              |Ant Financial                   |        |+8
 zhuqi               |[Qi Zhu](https://github.com/zhuqi-lucas)                                            |Cloudera                        |        |+8
 zhz                 |[Zhe Zhang](http://zhe-thoughts.github.io/about/)                                   |LinkedIn                        |HDFS    |-8
