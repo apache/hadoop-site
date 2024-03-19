@@ -61,7 +61,7 @@
                
                <li role="separator" class="divider"></li>
                
-               <li><a href="https://hadoop.apache.org/docs/r3.3.6/">3.3.6</a></li>
+               <li><a href="https://hadoop.apache.org/docs/r3.4.0/">3.4.0</a></li>
                
                <li><a href="https://hadoop.apache.org/docs/r2.10.2/">2.10.2</a></li>
                
@@ -145,6 +145,60 @@
   <div>
     <h1 id="title">Releases Archive</h1>
         <ul id="list">
+            
+            <h1><a href="/release/2.7.0.html">Release 2.7.0 available</a></h1>
+            <p><small>2015 Apr 21 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>Apache Hadoop 2.7.0 contains a number of significant enhancements. A few
+of them are noted below.</p>
+<ul>
+<li>IMPORTANT notes</li>
+<li>This release drops support for JDK6 runtime and works with JDK
+7+ only.</li>
+<li>This release is not yet ready for production use. Critical
+issues are being ironed out via testing and downstream adoption.
+Production users should wait for a 2.7.1/2.7.2 release.</li>
+<li>Hadoop Common</li>
+<li><a href="https://issues.apache.org/jira/browse/HADOOP-9629">HADOOP-9629</a> -
+Support Windows Azure Storage - Blob as a file system in Hadoop.</li>
+<li>Hadoop HDFS</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-3107">HDFS-3107</a> -
+Support for file truncate</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-7584">HDFS-7584</a> -
+Support for quotas per storage type</li>
+<li><a href="https://issues.apache.org/jira/browse/HDFS-3689">HDFS-3689</a> -
+Support for files with variable-length blocks</li>
+<li>Hadoop YARN</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-3100">YARN-3100</a> -
+Make YARN authorization pluggable</li>
+<li><a href="https://issues.apache.org/jira/browse/YARN-1492">YARN-1492</a> -
+Automatic shared, global caching of YARN localized resources
+(beta)</li>
+<li>Hadoop MapReduce</li>
+<li><a href="https://issues.apache.org/jira/browse/MAPREDUCE-5583">MAPREDUCE-5583</a> -
+Ability to limit running Map/Reduce tasks of a job</li>
+<li><a href="https://issues.apache.org/jira/browse/MAPREDUCE-4815">MAPREDUCE-4815</a> -
+Speed up FileOutputCommitter for very large jobs with many
+output files.</li>
+</ul>
+<p>Please see the <a href="https://hadoop.apache.org/docs/r2.7.0/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 2.7.0 Release
+Notes</a>
+for details.</p>
+
+
             
             <h1><a href="/release/2.5.2.html">Release 2.5.2 available</a></h1>
             <p><small>2014 Nov 19 </small></p>
@@ -438,54 +492,6 @@ for details.</p>
 
 
             
-            <h1><a href="/release/2.2.0.html">Release 2.2.0 available</a></h1>
-            <p><small>2013 Oct 15 </small></p>
-
-            <!---
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License. See accompanying LICENSE file.
--->
-<p>Apache Hadoop 2.2.0 is the <strong>GA</strong> release of Apache Hadoop 2.x.</p>
-<p>Users are encouraged to immediately move to 2.2.0 since this release is
-significantly more stable and is guaranteed to remain compatible in
-terms of both APIs and protocols.</p>
-<p>To recap, this release has a number of significant highlights compared
-to Hadoop 1.x:</p>
-<ul>
-<li>YARN - A general purpose resource management system for Hadoop to
-allow MapReduce and other other data processing frameworks and
-services</li>
-<li>High Availability for HDFS</li>
-<li>HDFS Federation</li>
-<li>HDFS Snapshots</li>
-<li>NFSv3 access to data in HDFS</li>
-<li>Support for running Hadoop on Microsoft Windows</li>
-<li>Binary Compatibility for MapReduce applications built on hadoop-1.x</li>
-<li>Substantial amount of integration testing with rest of projects in
-the ecosystem</li>
-</ul>
-<p>A couple of important points to note while upgrading to hadoop-2.2.0:</p>
-<ul>
-<li>HDFS - The HDFS community decided to push the symlinks feature out
-to a future 2.3.0 release and is currently disabled.</li>
-<li>YARN/MapReduce - Users need to change ShuffleHandler service name
-from mapreduce.shuffle to mapreduce_shuffle.</li>
-</ul>
-<p>Please see the <a href="https://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/releasenotes.html">Hadoop 2.2.0 Release
-Notes</a>
-for details.</p>
-
-
-            
         </ul>
   </div>
 
@@ -527,7 +533,7 @@ for details.</p>
   <p>Apache Hadoop, Hadoop, Apache, the Apache feather logo,
     and the Apache Hadoop project logo are either registered trademarks or trademarks of the Apache Software Foundation
      in the United States and other countries</p>
-  <p>Copyright © 2006-2023 The Apache Software Foundation</p>
+  <p>Copyright © 2006-2024 The Apache Software Foundation</p>
   <p><a href="/privacy_policy.html">Privacy policy</a></p>
   </div>
   <div class="col-md-6">
