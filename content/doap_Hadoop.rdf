@@ -37,8 +37,8 @@
     <release>
       <Version>
         <name>Stable Release</name>
-        <created>2023-06-18</created>
-        <revision>3.3.6</revision>
+        <created>2024-03-17</created>
+        <revision>3.4.0</revision>
       </Version>
     </release>
     <repository>
