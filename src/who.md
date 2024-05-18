@@ -242,7 +242,7 @@ kzhang              |Kan Zhang                                                  
 lei                 |[Lei Xu](http://people.apache.org/~lei)                                             |Cloudera                        |        |-8
 licheng             |[Li Cheng](https://www.linkedin.com/in/licheng1990/)                                |Tencent                         |        |+8
 liuml07             |[Mingliang Liu](http://people.apache.org/~liuml07)                                  |Salesforce                      |HDFS    |-8
-liuxun              |[Xun Liu](https://github.com/liuxunorg/)                                            |Datastrato                      |        |+8
+liuxun              |[Xun Liu](https://github.com/xunliu/)                                               |Tencent                         |        |+8
 ljain               |[Lokesh Jain](https://github.com/lokeshj1703)                                       |Cloudera                        |        |+5.5
 lohit               |[Lohit Vijayarenu](http://people.apache.org/~lohit)                                 |Twitter                         |        |-8
 llu                 |[Luke Lu](http://people.apache.org/~llu)                                            |VMware                          |        |-8
@@ -332,7 +332,7 @@ yliu                |[Yi Liu](http://people.apache.org/~yliu)                   
 yqlin               |[Yiqun Lin](https://github.com/linyiqun)                                            |EBay                            |        |+8
 zanderxu            |[Zengqiang Xu](https://github.com/ZanderXu)                                         |Shopee                          |        |+8
 zhangshuyan         |[Shuyan Zhang](https://github.com/zhangshuyan0)                                     |Meituan                         |        |+8
-zhouquan            |[Zac Zhou](https://github.com/yuanzac)                                              |Ant Financial                   |        |+8
+zhouquan            |[Zac Zhou](https://github.com/yuanzac)                                              |Tencent                         |        |+8
 zhuqi               |[Qi Zhu](https://github.com/zhuqi-lucas)                                            |Cloudera                        |        |+8
 zhz                 |[Zhe Zhang](http://zhe-thoughts.github.io/about/)                                   |LinkedIn                        |HDFS    |-8
 zjshen              |[Zhijie Shen](http://people.apache.org/~zjshen)                                     |Hortonworks                     |        |-8
