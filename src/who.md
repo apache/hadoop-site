@@ -220,6 +220,7 @@ hairong             |[Hairong Kuang](http://people.apache.org/~hairong)         
 hanishakoneru       |Hanisha Koneru                                                                      |Hortonworks                     |        |-8
 harsh               |[Harsh J](http://harshj.com/)                                                       |Cloudera                        |        |+5.5
 hexiaoqiao          |[He Xiaoqiao](http://hexiaoqiao.github.io)                                          |Meituan                         |        |+8
+huhaiyang           |[Haiyang Hu](https://github.com/haiyang1987)                                        |Shopee                          |        |+8
 inigoiri            |Íñigo Goiri                                                                         |Microsoft                       |        |-8
 ivanmi              |Ivan Mitic                                                                          |Microsoft                       |        |-8
 iwasakims           |Masatake Iwasaki                                                                    |NTT DATA                        |        |+9
