@@ -1,0 +1,76 @@
+MISSING @SINCE TAG: org.apache.hadoop.fs.BulkDelete Interface
+MISSING @SINCE TAG: org.apache.hadoop.fs.BulkDeleteSource Interface
+MISSING @SINCE TAG: org.apache.hadoop.fs.ClosedIOException Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.ClusterStorageCapacityExceededException Class
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.FileSystemStatisticNames Class
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableInverseQuantiles Class
+NO DOC BLOCK: org.apache.hadoop.fs.FsServerDefaults Constructor (long, int, int, short, int, boolean, long, org.apache.hadoop.util.DataChecksum.Type, java.lang.String, byte, boolean)
+NO DOC BLOCK: org.apache.hadoop.metrics2.lib.MutableQuantiles Constructor (void)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableQuantiles Method addQuantileInfo(int, org.apache.hadoop.metrics2.MetricsInfo)
+NO DOC BLOCK: org.apache.hadoop.fs.StorageType Method allowSameDiskTiering(org.apache.hadoop.fs.StorageType)
+MISSING @SINCE TAG: org.apache.hadoop.util.functional.FutureIO Method awaitAllFutures(java.util.Collection)
+MISSING @SINCE TAG: org.apache.hadoop.util.functional.FutureIO Method awaitAllFutures(java.util.Collection, java.time.Duration)
+MISSING @SINCE TAG: org.apache.hadoop.util.functional.FutureIO Method cancelAllFuturesAndAwaitCompletion(java.util.Collection, boolean, java.time.Duration)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method createBulkDelete(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.security.UserGroupInformation Method forceReloginFromTicketCache()
+MISSING @SINCE TAG: org.apache.hadoop.fs.StorageType Method getConf(org.apache.hadoop.conf.Configuration, org.apache.hadoop.fs.StorageType, java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.AbstractFileSystem Method getEnclosingRoot(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileSystem Method getEnclosingRoot(org.apache.hadoop.fs.Path)
+NO DOC BLOCK: org.apache.hadoop.fs.FilterFileSystem Method getEnclosingRoot(org.apache.hadoop.fs.Path)
+MISSING @SINCE TAG: org.apache.hadoop.conf.Configuration Method getEnumSet(java.lang.String, java.lang.Class, boolean)
+NO DOC BLOCK: org.apache.hadoop.fs.ContentSummary Method getErasureCodingPolicyHeader()
+MISSING @SINCE TAG: org.apache.hadoop.security.GroupMappingServiceProvider Method getGroupsSet(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.security.UserGroupInformation Method getGroupsSet()
+MISSING @SINCE TAG: org.apache.hadoop.fs.Path Method getOptionalParentPath()
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableQuantiles Method getQuantiles()
+NO DOC BLOCK: org.apache.hadoop.fs.FsServerDefaults Method getSnapshotTrashRootEnabled()
+MISSING @SINCE TAG: org.apache.hadoop.io.Text Method getTextLength()
+MISSING @SINCE TAG: org.apache.hadoop.security.UserGroupInformation Method isLoginSuccess()
+NO DOC BLOCK: org.apache.hadoop.fs.StorageType Method isRAM()
+NO DOC BLOCK: org.apache.hadoop.fs.FileUtil Method isRegularFile(java.io.File)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileUtil Method isRegularFile(java.io.File, boolean)
+MISSING @SINCE TAG: org.apache.hadoop.fs.FileUtil Method maybeIgnoreMissingDirectory(org.apache.hadoop.fs.FileSystem, org.apache.hadoop.fs.Path, java.io.FileNotFoundException)
+MISSING @SINCE TAG: org.apache.hadoop.util.ReflectionUtils Method newInstance(java.lang.Class, org.apache.hadoop.conf.Configuration, java.lang.Class[], java.lang.Object[])
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MetricsRegistry Method newInverseQuantiles(java.lang.String, java.lang.String, java.lang.String, java.lang.String, int)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableQuantiles Method setInterval(int)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableQuantiles Method setNumInfo(org.apache.hadoop.metrics2.MetricsInfo)
+MISSING @SINCE TAG: org.apache.hadoop.metrics2.lib.MutableQuantiles Method setQuantileInfos(int)
+MISSING @SINCE TAG: org.apache.hadoop.security.SecurityUtil Method setSslConfiguration(org.apache.zookeeper.client.ZKClientConfig, org.apache.hadoop.security.SecurityUtil.TruststoreKeystore)
+NO DOC BLOCK: org.apache.hadoop.security.SecurityUtil Method setSslConfiguration(org.apache.zookeeper.client.ZKClientConfig, org.apache.hadoop.security.SecurityUtil.TruststoreKeystore, org.apache.zookeeper.common.ClientX509Util)
+MISSING @SINCE TAG: org.apache.hadoop.conf.Configuration Method substituteCommonVariables(java.lang.String)
+MISSING @SINCE TAG: org.apache.hadoop.fs.ContentSummary Method toErasureCodingPolicy()
+NO DOC BLOCK: org.apache.hadoop.security.SecurityUtil Method validateSslConfiguration(org.apache.hadoop.security.SecurityUtil.TruststoreKeystore)
+MISSING @SINCE TAG: org.apache.hadoop.conf.Configuration Method writeXml(java.lang.String, java.io.Writer, org.apache.hadoop.conf.Configuration)
+NO DOC BLOCK: org.apache.hadoop.fs.StorageType Field CONF_KEY_HEADER
+MISSING @SINCE TAG: org.apache.hadoop.fs.Options.OpenFileOptions Field FS_OPTION_OPENFILE_FOOTER_CACHE
+MISSING @SINCE TAG: org.apache.hadoop.fs.Options.OpenFileOptions Field FS_OPTION_OPENFILE_READ_POLICY_AVRO
+MISSING @SINCE TAG: org.apache.hadoop.fs.Options.OpenFileOptions Field FS_OPTION_OPENFILE_READ_POLICY_COLUMNAR
+MISSING @SINCE TAG: org.apache.hadoop.fs.Options.OpenFileOptions Field FS_OPTION_OPENFILE_READ_POLICY_CSV
+MISSING @SINCE TAG: org.apache.hadoop.fs.Options.OpenFileOptions Field FS_OPTION_OPENFILE_READ_POLICY_HBASE
+MISSING @SINCE TAG: org.apache.hadoop.fs.Options.OpenFileOptions Field FS_OPTION_OPENFILE_READ_POLICY_JSON
+MISSING @SINCE TAG: org.apache.hadoop.fs.Options.OpenFileOptions Field FS_OPTION_OPENFILE_READ_POLICY_ORC
+MISSING @SINCE TAG: org.apache.hadoop.fs.Options.OpenFileOptions Field FS_OPTION_OPENFILE_READ_POLICY_PARQUET
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field FS_TRASH_CLEAN_TRASHROOT_ENABLE_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field FS_TRASH_CLEAN_TRASHROOT_ENABLE_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_HTTP_METRICS_ENABLED
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_HTTP_METRICS_ENABLED_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_CRYPTO_CODEC_CLASSES_SM4_CTR_NOPADDING_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_CRYPTO_CODEC_CLASSES_SM4_CTR_NOPADDING_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field HADOOP_SECURITY_OPENSSL_ENGINE_ID_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field HTTP_RESPONSE_400
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field HTTP_RESPONSE_429
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field HTTP_RESPONSE_4XX
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field HTTP_RESPONSE_500
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field HTTP_RESPONSE_503
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field HTTP_RESPONSE_5XX
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_SERVER_LOG_SLOW_RPC_THRESHOLD_MS_DEFAULT
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field IPC_SERVER_LOG_SLOW_RPC_THRESHOLD_MS_KEY
+MISSING @SINCE TAG: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field JMX_NAN_FILTER
+NO DOC BLOCK: org.apache.hadoop.fs.CommonConfigurationKeysPublic Field JMX_NAN_FILTER_DEFAULT
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field OBJECT_MULTIPART_UPLOAD_LIST
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field OP_BULK_DELETE
+NO DOC BLOCK: org.apache.hadoop.metrics2.lib.MutableQuantiles Field QUANTILES
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StoreStatisticNames Field STORE_CLIENT_CREATION
+NO DOC BLOCK: org.apache.hadoop.fs.statistics.StoreStatisticNames Field STORE_IO_RATE_LIMITED_DURATION
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_EVICT_BLOCKS_FROM_FILE_CACHE
+MISSING @SINCE TAG: org.apache.hadoop.fs.statistics.StreamStatisticNames Field STREAM_FILE_CACHE_EVICTION
