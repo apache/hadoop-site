@@ -100,7 +100,7 @@ publishDir = "content"
 
 [[menu.main]]
    name = "Event"
-   url = "https://events.apache.org"
+   url = "https://www.apache.org/events/current-event.html"
    parent = "apache"
 
 [[menu.main]]
