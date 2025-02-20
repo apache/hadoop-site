@@ -48,15 +48,10 @@ publishDir = "content"
    parent = "documentation"
    url = "https://hadoop.apache.org/docs/stable/"
 
-
-
-
 [[menu.main]]
    name = "Community"
    identifier = "community"
    weight = 3
-
-
 
 [[menu.main]]
    name = "Development"
@@ -69,25 +64,49 @@ publishDir = "content"
   parent = "development"
 
 [[menu.main]]
-   name = "Help"
-   identifier = "help"
+   name = "Apache Software Foundation"
+   identifier = "apache"
    weight = 5
+
+[[menu.main]]
+   name = "Apache Home"
+   url = "https://www.apache.org"
+   parent = "apache"
 
 [[menu.main]]
    name = "Buy Stuff"
    url = "https://www.cafepress.com/hadoop"
-   parent = "help"
+   parent = "apache"
 
 [[menu.main]]
    name = "Sponsorship"
    url = "https://www.apache.org/foundation/sponsorship.html"
-   parent = "help"
+   parent = "apache"
 
 [[menu.main]]
    name = "Thanks"
    url = "https://www.apache.org/foundation/thanks.html"
-   parent = "help"
+   parent = "apache"
 
+[[menu.main]]
+   name = "License"
+   url = "https://www.apache.org/licenses"
+   parent = "apache"
+
+[[menu.main]]
+   name = "Security"
+   url = "https://www.apache.org/security"
+   parent = "apache"
+
+[[menu.main]]
+   name = "Event"
+   url = "https://events.apache.org"
+   parent = "apache"
+
+[[menu.main]]
+   name = "Privacy Policy"
+   url = "https://privacy.apache.org/policies/privacy-policy-public.html"
+   parent = "apache"
 
 # Configure the English version of the website.
 [languages.en]
