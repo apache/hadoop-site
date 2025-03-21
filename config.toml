@@ -17,7 +17,6 @@ copyright = "Copyright © 2006-{year} The Apache Software Foundation"
 enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 uglyurls = true
-googleAnalytics = "UA-7453027-1"
 contentDir = "src"
 publishDir = "content"
 
