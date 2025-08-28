@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>News on Apache Hadoop</title>
-    <link>https://hadoop.apache.org/news.html</link>
+    <link>https://hadoop.apache.org/news/index.html</link>
     <description>Recent content in News on Apache Hadoop</description>
     <generator>Hugo</generator>
     <language>en-us</language>
