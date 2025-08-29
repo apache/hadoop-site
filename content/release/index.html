@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+    <base href="https://hadoop.apache.org/">
+    <title>Apache Hadoop</title>
+
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/hadoop.css">
+
+    
+    
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <img class="navbar-logo" src="/elephant.png">
+          <a class="navbar-brand" href="/"> Apache Hadoop</a>
+        </div>
+        
+   <div id="navbar" class="navbar-collapse collapse">
+     <ul class="nav navbar-nav">
+       
+       
+          
+             <li class=""><a href="releases.html">Download</a></li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="http://apache.github.io/hadoop/">Current (trunk)</a></li>
+               
+                  <li ><a href="https://hadoop.apache.org/docs/current/">Latest</a></li>
+               
+                  <li ><a href="https://hadoop.apache.org/docs/stable/">Stable</a></li>
+               
+               
+               <li role="separator" class="divider"></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.4.2/">3.4.2</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.4.1/">3.4.1</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.4.0/">3.4.0</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r3.3.6/">3.3.6</a></li>
+               
+               <li><a href="https://hadoop.apache.org/docs/r2.10.2/">2.10.2</a></li>
+               
+               <li role="separator" class="divider"></li>
+               <li><a href="https://wiki.apache.org/hadoop">Wiki</a></li>
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Community <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="/bylaws.html">Bylaws</a></li>
+               
+                  <li ><a href="/committer_criteria.html">Criteria for Committership</a></li>
+               
+                  <li ><a href="/mailing_lists.html">Mailing lists</a></li>
+               
+                  <li ><a href="/cve_list.html">Published CVEs</a></li>
+               
+                  <li ><a href="/who.html">Who We are</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Development <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="https://cwiki.apache.org/confluence/display/HADOOP/How&#43;To&#43;Contribute">How to Contribute</a></li>
+               
+                  <li ><a href="/issue_tracking.html">Issue Tracking</a></li>
+               
+                  <li ><a href="/version_control.html">Version Control</a></li>
+               
+                  <li ><a href="/versioning.html">Versioning</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+          
+            <li class="dropdown ">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apache Software Foundation <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               
+                  <li ><a href="https://www.apache.org">Apache Home</a></li>
+               
+                  <li ><a href="https://www.cafepress.com/hadoop">Buy Stuff</a></li>
+               
+                  <li ><a href="https://www.apache.org/events/current-event.html">Event</a></li>
+               
+                  <li ><a href="https://www.apache.org/licenses">License</a></li>
+               
+                  <li ><a href="https://privacy.apache.org/policies/privacy-policy-public.html">Privacy Policy</a></li>
+               
+                  <li ><a href="https://www.apache.org/security">Security</a></li>
+               
+                  <li ><a href="https://www.apache.org/foundation/sponsorship.html">Sponsorship</a></li>
+               
+                  <li ><a href="https://www.apache.org/foundation/thanks.html">Thanks</a></li>
+               
+               
+             </ul>
+           </li>
+          
+       
+     </ul>
+   </div>
+
+      </div>
+    </nav>
+
+<div class="container">
+
+<section id="main">
+  <div>
+    <h1 id="title">Releases Archive</h1>
+        <ul id="list">
+            
+            <h1><a href="/release/3.4.2.html">Release 3.4.2 available</a></h1>
+            <p><small>2025 Aug 29 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is a release of Apache Hadoop 3.4.2 line.</p>
+<p>Users of Apache Hadoop 3.4.1 and earlier should upgrade to
+this release.</p>
+<p>All users are encouraged to read the <a href="http://hadoop.apache.org/docs/r3.4.2/index.html">overview of major changes</a>
+since release 3.4.1.</p>
+<p>For details of bug fixes, improvements, and other enhancements since
+the previous 3.4.1 release, please check <a href="http://hadoop.apache.org/docs/r3.4.2/hadoop-project-dist/hadoop-common/release/3.4.2/RELEASENOTES.3.4.2.html">release notes</a>
+and <a href="http://hadoop.apache.org/docs/r3.4.2/hadoop-project-dist/hadoop-common/release/3.4.2/CHANGELOG.3.4.2.html">changelog</a>.</p>
+
+
+            
+            <h1><a href="/release/3.4.1.html">Release 3.4.1 available</a></h1>
+            <p><small>2024 Oct 18 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is a release of Apache Hadoop 3.4.1 line.</p>
+<p>Users of Apache Hadoop 3.4.0 and earlier should upgrade to
+this release.</p>
+<p>All users are encouraged to read the <a href="http://hadoop.apache.org/docs/r3.4.1/index.html">overview of major changes</a>
+since release 3.4.0.</p>
+<p>We have also introduced a lean tar which is a small tar file that does not contain the AWS SDK
+because the size of AWS SDK is itself 500 MB. This can ease usage for non AWS users.
+Even AWS users can add this jar explicitly if desired.</p>
+<p>For details of bug fixes, improvements, and other enhancements since
+the previous 3.4.0 release, please check <a href="http://hadoop.apache.org/docs/r3.4.1/hadoop-project-dist/hadoop-common/release/3.4.1/RELEASENOTES.3.4.1.html">release notes</a>
+and <a href="http://hadoop.apache.org/docs/r3.4.1/hadoop-project-dist/hadoop-common/release/3.4.1/CHANGELOG.3.4.1.html">changelog</a>.</p>
+
+
+            
+            <h1><a href="/release/3.4.0.html">Release 3.4.0 available</a></h1>
+            <p><small>2024 Mar 17 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is the first release of Apache Hadoop 3.4 line. It contains 2888 bug fixes, improvements and enhancements since 3.3.</p>
+<p>Users are encouraged to read the <a href="/docs/r3.4.0/index.html">overview of major changes</a>.
+For details of please check <a href="http://hadoop.apache.org/docs/r3.4.0/hadoop-project-dist/hadoop-common/release/3.4.0/RELEASENOTES.3.4.0.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.4.0/hadoop-project-dist/hadoop-common/release/3.4.0/CHANGELOG.3.4.0.html">changelog</a>.</p>
+
+
+            
+            <h1><a href="/release/3.3.6.html">Release 3.3.6 available</a></h1>
+            <p><small>2023 Jun 23 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is a release of Apache Hadoop 3.3 line.</p>
+<p>It contains 117 bug fixes, improvements and enhancements since 3.3.5.
+Users of Apache Hadoop 3.3.5 and earlier should upgrade to this release.</p>
+<p>Feature highlights:</p>
+<h2 id="sbom-artifacts">SBOM artifacts</h2>
+<p>Starting from this release, Hadoop publishes Software Bill of Materials (SBOM) using
+CycloneDX Maven plugin. For more information on SBOM, please go to
+<a href="https://cwiki.apache.org/confluence/display/COMDEV/SBOM">SBOM</a>.</p>
+<h2 id="hdfs-rbf-rdbms-based-token-storage-support">HDFS RBF: RDBMS based token storage support</h2>
+<p>HDFS Router-Router Based Federation now supports storing delegation tokens on MySQL,
+<a href="https://issues.apache.org/jira/browse/HADOOP-18535">HADOOP-18535</a>
+which improves token operation through over the original Zookeeper-based implementation.</p>
+<h2 id="new-file-system-apis">New File System APIs</h2>
+<p><a href="https://issues.apache.org/jira/browse/HADOOP-18671">HADOOP-18671</a> moved a number of
+HDFS-specific APIs to Hadoop Common to make it possible for certain applications that
+depend on HDFS semantics to run on other Hadoop compatible file systems.</p>
+<p>In particular, recoverLease() and isFileClosed() are exposed through LeaseRecoverable
+interface, while setSafeMode() is exposed through SafeMode interface.</p>
+<p>Users are encouraged to read the <a href="/docs/r3.3.6/index.html">overview of major changes</a> since release 3.3.5.
+For details of 117 bug fixes, improvements, and other enhancements since the previous 3.3.5 release,
+please check <a href="http://hadoop.apache.org/docs/r3.3.6/hadoop-project-dist/hadoop-common/release/3.3.6/RELEASENOTES.3.3.6.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.3.6/hadoop-project-dist/hadoop-common/release/3.3.6/CHANGELOG.3.3.6.html">changelog</a>.</p>
+
+
+            
+            <h1><a href="/release/3.3.5.html">Release 3.3.5 available</a></h1>
+            <p><small>2023 Mar 22 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is a release of Apache Hadoop 3.3 line.</p>
+<p>Key changes include</p>
+<ul>
+<li>A big update of dependencies to try and keep those reports of
+transitive CVEs under control -both genuine and false positives.</li>
+<li>Critical fix to ABFS input stream prefetching for correct reading.</li>
+<li>Vectored IO API for all FSDataInputStream implementations, with
+high-performance versions for file:// and s3a:// filesystems.
+file:// through java native IO
+s3a:// parallel GET requests.</li>
+<li>Arm64 binaries. Note, because the arm64 release was on a different
+platform, the jar files may not match those of the x86
+release -and therefore the maven artifacts.</li>
+<li>Security fixes in Hadoop&rsquo;s own code.</li>
+</ul>
+<p>Users of Apache Hadoop 3.3.4 and earlier should upgrade to
+this release.</p>
+<p>All users are encouraged to read the <a href="http://hadoop.apache.org/docs/r3.3.5/index.html">overview of major changes</a>
+since release 3.3.4.</p>
+<p>For details of bug fixes, improvements, and other enhancements since
+the previous 3.3.4 release, please check <a href="http://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/release/3.3.5/RELEASENOTES.3.3.5.html">release notes</a>
+and <a href="http://hadoop.apache.org/docs/r3.3.5/hadoop-project-dist/hadoop-common/release/3.3.5/CHANGELOG.3.3.5.html">changelog</a>.</p>
+<h2 id="azure-abfs-critical-stream-prefetch-fix">Azure ABFS: Critical Stream Prefetch Fix</h2>
+<p>The ABFS connector has a critical bug fix
+<a href="https://issues.apache.org/jira/browse/HADOOP-18546">https://issues.apache.org/jira/browse/HADOOP-18546</a>:
+<em>ABFS. Disable purging list of in-progress reads in abfs stream close().</em></p>
+<p>All users of the abfs connector in hadoop releases 3.3.2+ MUST either upgrade
+to this release or disable prefetching by setting
+<code>fs.azure.readaheadqueue.depth</code> to <code>0</code>.</p>
+
+
+            
+            <h1><a href="/release/3.3.4.html">Release 3.3.4 available</a></h1>
+            <p><small>2022 Aug 8 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is a release of Apache Hadoop 3.3 line.</p>
+<p>It contains a small number security and critical integration fixes since 3.3.3.</p>
+<p>Users of Apache Hadoop 3.3.3 should upgrade to this release.</p>
+<p>Users of hadoop 2.x and hadoop 3.2 should also upgrade to the 3.3.x line.
+As well as feature enhancements, this is the sole branch currently
+receiving fixes for anything other than critical security/data integrity
+issues.</p>
+<p>Users are encouraged to read the <a href="/docs/r3.3.4/index.html">overview of major changes</a> since release 3.3.3.
+For details of bug fixes, improvements, and other enhancements since the previous 3.3.3 release,
+please check <a href="http://hadoop.apache.org/docs/r3.3.4/hadoop-project-dist/hadoop-common/release/3.3.4/RELEASENOTES.3.3.4.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.3.4/hadoop-project-dist/hadoop-common/release/3.3.4/CHANGELOG.3.3.4.html">changelog</a>.</p>
+
+
+            
+            <h1><a href="/release/3.2.4.html">Release 3.2.4 available</a></h1>
+            <p><small>2022 Jul 22 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is the third stable release of Apache Hadoop 3.2 line.</p>
+<p>It contains 153 bug fixes, improvements and enhancements since 3.2.3.</p>
+<p>Users are encouraged to read the <a href="/docs/r3.2.4/index.html">overview of major changes</a> since 3.2.3.
+For details of 153 bug fixes, improvements, and other enhancements since the previous 3.2.3 release,
+please check <a href="http://hadoop.apache.org/docs/r3.2.4/hadoop-project-dist/hadoop-common/release/3.2.4/RELEASENOTES.3.2.4.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.2.4/hadoop-project-dist/hadoop-common/release/3.2.4/CHANGELOG.3.2.4.html">changelog</a>.</p>
+
+
+            
+            <h1><a href="/release/2.10.2.html">Release 2.10.2 available</a></h1>
+            <p><small>2022 May 31 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is the second stable release of Apache Hadoop 2.10 line.</p>
+<p>It contains 211 bug fixes, improvements and enhancements since 2.10.1.</p>
+<p>Users are encouraged to read the <a href="/docs/r2.10.2/index.html">overview of major changes</a> since 2.10.1.
+For details of 211 bug fixes, improvements, and other enhancements since the previous 2.10.1 release,
+please check <a href="http://hadoop.apache.org/docs/r2.10.2/hadoop-project-dist/hadoop-common/release/2.10.2/RELEASENOTES.2.10.2.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r2.10.2/hadoop-project-dist/hadoop-common/release/2.10.2/CHANGELOG.2.10.2.html">changelog</a>.</p>
+
+
+            
+            <h1><a href="/release/3.3.3.html">Release 3.3.3 available</a></h1>
+            <p><small>2022 May 17 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is the third stable release of the Apache Hadoop 3.3 line.</p>
+<p>It contains 23 bug fixes, improvements and enhancements since 3.3.2.</p>
+<p>This is primarily a security update; for this reason, upgrading is strongly advised.</p>
+<p>Users are encouraged to read the <a href="/docs/r3.3.3/index.html">overview of major changes</a> since 3.3.2.
+For details of bug fixes, improvements, and other enhancements since the previous 3.3.2 release,
+please check <a href="http://hadoop.apache.org/docs/r3.3.3/hadoop-project-dist/hadoop-common/release/3.3.3/RELEASENOTES.3.3.3.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.3.3/hadoop-project-dist/hadoop-common/release/3.3.3/CHANGELOG.3.3.3.html">changelog</a>.</p>
+
+
+            
+            <h1><a href="/release/3.2.3.html">Release 3.2.3 available</a></h1>
+            <p><small>2022 Mar 28 </small></p>
+
+            <!---
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<p>This is the third stable release of Apache Hadoop 3.2 line. It contains 328 bug fixes, improvements and enhancements since 3.2.2.</p>
+<p>Users are encouraged to read the <a href="/docs/r3.2.3/index.html">overview of major changes</a> since 3.2.2.
+For details of 328 bug fixes, improvements, and other enhancements since the previous 3.2.2 release,
+please check <a href="http://hadoop.apache.org/docs/r3.2.3/hadoop-project-dist/hadoop-common/release/3.2.3/RELEASENOTES.3.2.3.html">release notes</a> and <a href="http://hadoop.apache.org/docs/r3.2.3/hadoop-project-dist/hadoop-common/release/3.2.3/CHANGELOG.3.2.3.html">changelog</a>
+detail the changes since 3.2.2.</p>
+
+
+            
+        </ul>
+  </div>
+
+    <ul class="pagination pagination-default">
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="First" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item disabled">
+        <a aria-disabled="true" aria-label="Previous" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 1" class="page-link" role="button">1</a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/2/index.html" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/3/index.html" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/4/index.html" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/5/index.html" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/2/index.html" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/release/page/13/index.html" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul>
+</section>
+</div>
+
+<div class="container">
+<footer class="footer container">
+  <div class="col-md-6">
+  <p>Apache Hadoop, Hadoop, Apache, the Apache feather logo,
+    and the Apache Hadoop project logo are either registered trademarks or trademarks of the Apache Software Foundation
+     in the United States and other countries</p>
+  <p>Copyright © 2006-2025 The Apache Software Foundation</p>
+  <p><a href="/privacy_policy.html">Privacy policy</a></p>
+  </div>
+  <div class="col-md-6">
+    <img class="img-responsive" src="/asf_logo_wide.png"/>
+  </div>
+</footer>
+</div>
+    
+    
+    <script src="/js/jquery.min.js"></script>
+    <script>window.jQuery || document.write('\x3Cscript src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script>
+    $(function() { $('table').addClass('table table-striped'); })
+    </script>
+</body>
+</html>
+

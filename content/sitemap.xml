@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hadoop.apache.org/</loc>
-    <lastmod>2024-10-18T00:00:00+00:00</lastmod>
+    <loc>https://hadoop.apache.org/index.html</loc>
+    <lastmod>2025-08-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hadoop.apache.org/release/3.4.2.html</loc>
+    <lastmod>2025-08-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hadoop.apache.org/release/index.html</loc>
+    <lastmod>2025-08-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://hadoop.apache.org/release/3.4.1.html</loc>
-    <lastmod>2024-10-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://hadoop.apache.org/release.html</loc>
     <lastmod>2024-10-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://hadoop.apache.org/release/3.4.0.html</loc>
@@ -41,7 +44,7 @@
     <loc>https://hadoop.apache.org/news/2021-12-17-log4shell.html</loc>
     <lastmod>2021-12-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://hadoop.apache.org/news.html</loc>
+    <loc>https://hadoop.apache.org/news/index.html</loc>
     <lastmod>2021-12-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://hadoop.apache.org/release/3.3.1.html</loc>
@@ -425,7 +428,7 @@
   </url><url>
     <loc>https://hadoop.apache.org/bylaws.html</loc>
   </url><url>
-    <loc>https://hadoop.apache.org/categories.html</loc>
+    <loc>https://hadoop.apache.org/categories/index.html</loc>
   </url><url>
     <loc>https://hadoop.apache.org/committer_criteria.html</loc>
   </url><url>
@@ -445,7 +448,7 @@
   </url><url>
     <loc>https://hadoop.apache.org/related.html</loc>
   </url><url>
-    <loc>https://hadoop.apache.org/tags.html</loc>
+    <loc>https://hadoop.apache.org/tags/index.html</loc>
   </url><url>
     <loc>https://hadoop.apache.org/who.html</loc>
   </url>
