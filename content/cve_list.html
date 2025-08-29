@@ -61,6 +61,8 @@
                
                <li role="separator" class="divider"></li>
                
+               <li><a href="https://hadoop.apache.org/docs/r3.4.2/">3.4.2</a></li>
+               
                <li><a href="https://hadoop.apache.org/docs/r3.4.1/">3.4.1</a></li>
                
                <li><a href="https://hadoop.apache.org/docs/r3.4.0/">3.4.0</a></li>
@@ -176,7 +178,7 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Reported Date**:
 - **Issue Announced**:
 -->
-<h2 id="cve-2023-26031httpcvemitreorgcgi-bincvenamecginamecve-2023-26031-privilege-escalation-in-apache-haoop-yarn-container-executor-binary-on-linux-systems"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-26031">CVE-2023-26031</a> Privilege escalation in Apache Haoop Yarn container-executor binary on Linux systems</h2>
+<h2 id="cve-2023-26031-privilege-escalation-in-apache-haoop-yarn-container-executor-binary-on-linux-systems"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-26031">CVE-2023-26031</a> Privilege escalation in Apache Haoop Yarn container-executor binary on Linux systems</h2>
 <p>Relative library resolution in linux container-executor binary in Apache Hadoop 3.3.1-3.3.4 on Linux allows local user to gain root privileges. If the YARN cluster is accepting work from remote (authenticated) users, this MAY permit remote users to gain root privileges.</p>
 <p>Hadoop 3.3.0 updated the <a href="https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/SecureContainer.html">YARN Secure Containers</a> to add a feature for executing user-submitted applications in isolated linux containers.</p>
 <p>The native binary HADOOP_HOME/bin/container-executor is used to launch these containers; it must be owned by root and have the suid bit set in order for the YARN processes to run the containers as the specific users submitting the jobs.</p>
@@ -204,7 +206,7 @@ If the YARN cluster is accepting work from remote (authenticated) users, and the
 <li><strong>Reported Date</strong>: 2022/07/13</li>
 <li><strong>Issue Announced</strong>: 2023/11/16 (<a href="https://lists.apache.org/thread/q9qpdlv952gb4kphpndd5phvl7fkh71r">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2021-25642httpcvemitreorgcgi-bincvenamecginamecve-2021-25642-apache-hadoop-yarn-remote-code-execution-in-zkconfigurationstore-of-capacity-scheduler"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-25642">CVE-2021-25642</a> Apache Hadoop YARN remote code execution in ZKConfigurationStore of capacity scheduler</h2>
+<h2 id="cve-2021-25642-apache-hadoop-yarn-remote-code-execution-in-zkconfigurationstore-of-capacity-scheduler"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-25642">CVE-2021-25642</a> Apache Hadoop YARN remote code execution in ZKConfigurationStore of capacity scheduler</h2>
 <p>ZKConfigurationStore which is optionally used by CapacityScheduler of
 Apache Hadoop YARN deserializes data obtained from ZooKeeper without
 validation. An attacker having access to ZooKeeper can run arbitrary
@@ -217,7 +219,7 @@ commands as YARN user by exploiting this.</p>
 <li><strong>Reported Date</strong>: 2020/12/16</li>
 <li><strong>Issue Announced</strong>: 2022/08/25 (<a href="https://lists.apache.org/thread/w1nf92148xcnxl5ys0owtokf9y0l9zsv">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2022-25168httpcvemitreorgcgi-bincvenamecginamecve-2022-25168-command-injection-in-orgapachehadoopfsfileutiluntarusingtar"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25168">CVE-2022-25168</a> Command injection in org.apache.hadoop.fs.FileUtil.unTarUsingTar</h2>
+<h2 id="cve-2022-25168-command-injection-in-orgapachehadoopfsfileutiluntarusingtar"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25168">CVE-2022-25168</a> Command injection in org.apache.hadoop.fs.FileUtil.unTarUsingTar</h2>
 <p>Apache Hadoop&rsquo;s FileUtil.unTar(File, File) API does not escape the
 input file name before being passed to the shell. An attacker can
 inject arbitrary commands.</p>
@@ -241,7 +243,7 @@ use.</p>
 <li><strong>Reported Date</strong>: 2022/02/12</li>
 <li><strong>Issue Announced</strong>: 2022/08/04 (<a href="https://lists.apache.org/thread/ktplnsr0b9zn8ylzb98zcnt5gydfvjm1">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2021-33036httpcvemitreorgcgi-bincvenamecginamecve-2021-33036-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-33036">CVE-2021-33036</a> Apache Hadoop Privilege escalation vulnerability</h2>
+<h2 id="cve-2021-33036-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-33036">CVE-2021-33036</a> Apache Hadoop Privilege escalation vulnerability</h2>
 <p>In Apache Hadoop 2.2.0 to 2.10.1, 3.0.0-alpha1 to 3.1.4, 3.2.0 to
 3.2.2, and 3.3.0 to 3.3.1, A user who can escalate to yarn user can
 possibly run arbitrary commands as root user.</p>
@@ -256,7 +258,7 @@ permission to escalate to yarn user from them.</p>
 <li><strong>Reported Date</strong>: 2021/05/05</li>
 <li><strong>Issue Announced</strong>: 2022/06/15 (<a href="https://lists.apache.org/thread/ctr84rmo3xd2tzqcx2b277c8z692vhl5">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2021-37404httpcvemitreorgcgi-bincvenamecginamecve-2021-37404-heap-buffer-overflow-in-libhdfs-native-library"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37404">CVE-2021-37404</a> Heap buffer overflow in libhdfs native library</h2>
+<h2 id="cve-2021-37404-heap-buffer-overflow-in-libhdfs-native-library"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37404">CVE-2021-37404</a> Heap buffer overflow in libhdfs native library</h2>
 <p>There is a potential heap buffer overflow in libhdfs native code.
 Opening a file path provided by user without validation may result in
 a denial of service or arbitrary code execution.</p>
@@ -268,7 +270,7 @@ a denial of service or arbitrary code execution.</p>
 <li><strong>Reported Date</strong>: 2021/04/04</li>
 <li><strong>Issue Announced</strong>: 2022/06/11 (<a href="https://lists.apache.org/thread/36k6f4s4ff97tgo4wl9681vtcp7dsg06">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2022-26612httpcvemitreorgcgi-bincvenamecginamecve-2022-26612-arbitrary-file-write-during-untar-on-windows"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-26612">CVE-2022-26612</a> Arbitrary file write during untar on Windows</h2>
+<h2 id="cve-2022-26612-arbitrary-file-write-during-untar-on-windows"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-26612">CVE-2022-26612</a> Arbitrary file write during untar on Windows</h2>
 <p>In Apache Hadoop, The <code>unTar</code> function uses <code>unTarUsingJava</code> function on Windows and the built-in tar utility on Unix and other OSes.  As a result, a TAR entry may create a symlink under the expected extraction directory which points to an external directory. A subsequent TAR entry may extract an arbitrary file into the external directory using the symlink name. This however would be caught by the same <code>targetDirPath</code> check on Unix because of the <code>getCanonicalPath</code> call. However on Windows, <code>getCanonicalPath</code> doesn&rsquo;t resolve symbolic links, which bypasses the check.  <code>unpackEntries</code> during TAR extraction follows symbolic links which allows writing outside expected base directory on Windows.</p>
 <p>Users of the affected versions should apply either of the following mitigations:</p>
 <ul>
@@ -283,7 +285,7 @@ a denial of service or arbitrary code execution.</p>
 <li><strong>Reported Date</strong>: 2022/02/09</li>
 <li><strong>Issue Announced</strong>: 2022/04/7 (<a href="https://lists.apache.org/thread/wps21pzjl1myxw23yb466y9yofv104yl">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2020-9492httpcvemitreorgcgi-bincvenamecginamecve-2020-9492-apache-hadoop-potential-privilege-escalation"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-9492">CVE-2020-9492</a> Apache Hadoop Potential privilege escalation</h2>
+<h2 id="cve-2020-9492-apache-hadoop-potential-privilege-escalation"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-9492">CVE-2020-9492</a> Apache Hadoop Potential privilege escalation</h2>
 <p>WebHDFS client might send SPNEGO authorization header to remote URL
 without proper verification. A crafty user can trigger services to
 send server credentials to a webhdfs path for capturing the service
@@ -301,7 +303,7 @@ principal.</p>
 <li><strong>Reported Date</strong>: 2020/03/17</li>
 <li><strong>Issue Announced</strong>: 2021/01/26 (<a href="https://lists.apache.org/thread.html/r513758942356ccd0d14538ba18a09903fc72716d74be1cb727ea91ff%40%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-11764httpcvemitreorgcgi-bincvenamecginamecve-2018-11764-apache-hadoop-privilege-escalation-in-web-endpoint"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11764">CVE-2018-11764</a> Apache Hadoop Privilege escalation in web endpoint</h2>
+<h2 id="cve-2018-11764-apache-hadoop-privilege-escalation-in-web-endpoint"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11764">CVE-2018-11764</a> Apache Hadoop Privilege escalation in web endpoint</h2>
 <p>Web endpoint authentication check is broken. Authenticated users may
 impersonate any user even if no proxy user is configured.</p>
 <ul>
@@ -312,7 +314,7 @@ impersonate any user even if no proxy user is configured.</p>
 <li><strong>Reported Date</strong>: 2018/03/17</li>
 <li><strong>Issue Announced</strong>: 2020/10/21 (<a href="https://lists.apache.org/thread.html/r790ad0a049cde713b93589ecfd4dd2766fda0fc6807eedb6cf69f5c1%40%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-11765httpcvemitreorgcgi-bincvenamecginamecve-2018-11765-potential-information-disclosure-in-apache-hadoop-web-interfaces"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11765">CVE-2018-11765</a> Potential information disclosure in Apache Hadoop Web interfaces</h2>
+<h2 id="cve-2018-11765-potential-information-disclosure-in-apache-hadoop-web-interfaces"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11765">CVE-2018-11765</a> Potential information disclosure in Apache Hadoop Web interfaces</h2>
 <p>When Kerberos authentication is enabled and SPNEGO through HTTP is not enabled,
 any users can access some servlets without authentication.</p>
 <ul>
@@ -323,7 +325,7 @@ any users can access some servlets without authentication.</p>
 <li><strong>Reported Date</strong>: 2018/03/11</li>
 <li><strong>Issue Announced</strong>: 2020/09/28 (<a href="https://lists.apache.org/thread.html/r2c7f899911a04164ed1707083fcd4135f8427e04778c87d83509b0da%40%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-11768httpcvemitreorgcgi-bincvenamecginamecve-2018-11768-apache-hadoop-hdfs-fsimage-corruption"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11768">CVE-2018-11768</a> Apache Hadoop HDFS FSImage Corruption</h2>
+<h2 id="cve-2018-11768-apache-hadoop-hdfs-fsimage-corruption"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11768">CVE-2018-11768</a> Apache Hadoop HDFS FSImage Corruption</h2>
 <p>There is a mismatch in the size of the fields used to store user/group
 information between memory and disk representation. This causes the user/group
 information to be corrupted across storing in fsimage and reading back from
@@ -342,7 +344,7 @@ vulnerability fix.</p>
 <li><strong>Reported Date</strong>: 2018/06/05</li>
 <li><strong>Issue Announced</strong>: 2019/10/03 (<a href="https://lists.apache.org/thread.html/2067a797b330530a6932f4b08f703b3173253d0a2b7c8c524e54adaf@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-8029httpcvemitreorgcgi-bincvenamecginamecve-2018-8029-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8029">CVE-2018-8029</a> Apache Hadoop Privilege escalation vulnerability</h2>
+<h2 id="cve-2018-8029-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8029">CVE-2018-8029</a> Apache Hadoop Privilege escalation vulnerability</h2>
 <p>A user who can escalate to yarn user can possibly run arbitrary
 commands as root user.</p>
 <ul>
@@ -353,7 +355,7 @@ commands as root user.</p>
 <li><strong>Reported Date</strong>: 2018/05/08</li>
 <li><strong>Issue Announced</strong>: 2019/05/30 (<a href="https://lists.apache.org/thread.html/17084c09e6dedf60efe08028b429c92ffd28aacc28454e4fa924578a@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-11767httpcvemitreorgcgi-bincvenamecginamecve-2018-11767-apache-hadoop-kms-acl-regression"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11767">CVE-2018-11767</a> Apache Hadoop KMS ACL regression</h2>
+<h2 id="cve-2018-11767-apache-hadoop-kms-acl-regression"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11767">CVE-2018-11767</a> Apache Hadoop KMS ACL regression</h2>
 <p>After the security fix for CVE-2017-15713, KMS has an access control regression,
 blocking users or granting access to users incorrectly, if the system
 uses non-default groups mapping mechanisms such as LdapGroupsMapping,
@@ -366,7 +368,7 @@ CompositeGroupsMapping, or NullGroupsMapping.</p>
 <li><strong>Reported Date</strong>: 2018/05/09</li>
 <li><strong>Issue Announced</strong>: 2019/03/11 (<a href="https://lists.apache.org/thread.html/5fb771f66946dd5c99a8a5713347c24873846f555d716f9ac17bccca@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-1296httpcvemitreorgcgi-bincvenamecginamecve-2018-1296-apache-hadoop-hdfs-permissive-listxattr-authorization"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1296">CVE-2018-1296</a> Apache Hadoop HDFS Permissive listXAttr Authorization</h2>
+<h2 id="cve-2018-1296-apache-hadoop-hdfs-permissive-listxattr-authorization"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-1296">CVE-2018-1296</a> Apache Hadoop HDFS Permissive listXAttr Authorization</h2>
 <p>HDFS exposes extended attribute key/value pairs during listXAttrs,
 verifying only path-level search access to the directory rather than
 path-level read permission to the referent. This affects features that
@@ -380,7 +382,7 @@ secrets.</p>
 <li><strong>Reported Date</strong>: 2018/02/09</li>
 <li><strong>Issue Announced</strong>: 2019/01/24 (<a href="https://lists.apache.org/thread.html/752d5fe697ca6be6f472eabb1bcae7961a47d416e4013ac803a2ab2c@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-11766httpcvemitreorgcgi-bincvenamecginamecve-2018-11766-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11766">CVE-2018-11766</a> Apache Hadoop privilege escalation vulnerability</h2>
+<h2 id="cve-2018-11766-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-11766">CVE-2018-11766</a> Apache Hadoop privilege escalation vulnerability</h2>
 <p>In Apache Hadoop 2.7.4 to 2.7.6, the security fix for CVE-2016-6811 is
 incomplete. A user who can escalate to yarn user can possibly run arbitrary
 commands as root user.</p>
@@ -392,7 +394,7 @@ commands as root user.</p>
 <li><strong>Reported Date</strong>: 2018/05/04</li>
 <li><strong>Issue Announced</strong>: 2018/11/27 (<a href="https://lists.apache.org/thread.html/ff37bbbe09d5f03090e2dd2c3dea95de16ef4249e731f19b8959ce4c@%3Cgeneral.hadoop.apache.org%3E">general@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2018-8009httpcvemitreorgcgi-bincvenamecginamecve-2018-8009-apache-hadoop-distributed-cache-archive-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8009">CVE-2018-8009</a> Apache Hadoop distributed cache archive vulnerability</h2>
+<h2 id="cve-2018-8009-apache-hadoop-distributed-cache-archive-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-8009">CVE-2018-8009</a> Apache Hadoop distributed cache archive vulnerability</h2>
 <p>Vulnerability allows a cluster user to publish a public
 archive that can affect other files owned by the user running the YARN
 NodeManager daemon. If the impacted files belong to another already
@@ -406,7 +408,7 @@ the jobs of other cluster users using the public archive.</p>
 <li><strong>Reported Date</strong>: 2018/04/19</li>
 <li><strong>Issue Announced</strong>: 2018/11/22 (<a href="https://lists.apache.org/thread.html/a1c227745ce30acbcf388c5b0cc8423e8bf495d619cd0fa973f7f38d@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2016-6811httpcvemitreorgcgi-bincvenamecginamecve-2016-6811-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6811">CVE-2016-6811</a> Apache Hadoop Privilege escalation vulnerability</h2>
+<h2 id="cve-2016-6811-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6811">CVE-2016-6811</a> Apache Hadoop Privilege escalation vulnerability</h2>
 <p>A user who can escalate to yarn user can possibly run arbitrary commands as root user.</p>
 <ul>
 <li><strong>Versions affected</strong>: 2.2.0 to 2.7.3</li>
@@ -417,7 +419,7 @@ the jobs of other cluster users using the public archive.</p>
 <li><strong>Issue Announced</strong>: 2018/05/01 (<a href="https://lists.apache.org/thread.html/ff3859a2188c3662240311acddba9cf97992b839792ec0a14d61b4e5@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
 </ul>
 <p>Note: The fix for this vulnerability is incomplete in Apache Hadoop 2.7.4 to 2.7.6 (CVE-2018-11766).</p>
-<h2 id="cve-2017-15718httpcvemitreorgcgi-bincvenamecginamecve-2017-15718-apache-hadoop-yarn-nodemanager-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15718">CVE-2017-15718</a> Apache Hadoop YARN NodeManager vulnerability</h2>
+<h2 id="cve-2017-15718-apache-hadoop-yarn-nodemanager-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15718">CVE-2017-15718</a> Apache Hadoop YARN NodeManager vulnerability</h2>
 <p>In Apache Hadoop 2.7.3 and 2.7.4, the security fix for CVE-2016-3086 is incomplete.
 The YARN NodeManager can leak the password for credential store provider
 used by the NodeManager to YARN Applications.</p>
@@ -433,7 +435,7 @@ The other passwords themselves are not directly exposed.</p>
 <li><strong>Reported Date</strong>: 2017/09/18</li>
 <li><strong>Issue Announced</strong>: 2018/01/24 (<a href="https://lists.apache.org/thread.html/23a277506bc0d85c1bbe5c0766ffe55e8c3923c8d6f58893b6966957@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2017-15713httpcvemitreorgcgi-bincvenamecginamecve-2017-15713-apache-hadoop-mapreduce-job-history-server-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15713">CVE-2017-15713</a> Apache Hadoop MapReduce job history server vulnerability</h2>
+<h2 id="cve-2017-15713-apache-hadoop-mapreduce-job-history-server-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-15713">CVE-2017-15713</a> Apache Hadoop MapReduce job history server vulnerability</h2>
 <p>Vulnerability allows a cluster user to expose private files
 owned by the user running the MapReduce job history server process.
 The malicious user can construct a configuration file containing XML
@@ -447,7 +449,7 @@ server host.</p>
 <li><strong>Reported Date</strong>: 2017/06/30</li>
 <li><strong>Issue Announced</strong>: 2018/01/19 (<a href="https://lists.apache.org/thread.html/9e5d86d5792d04f8a3b458f735e63fa9bdfe28ff454de257a2e02f18@%3Cuser.hadoop.apache.org%3E">user@hadoop</a>)</li>
 </ul>
-<h2 id="cve-2017-3166httpcvemitreorgcgi-bincvenamecginamecve-2017-3166-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-3166">CVE-2017-3166</a> Apache Hadoop Privilege escalation vulnerability</h2>
+<h2 id="cve-2017-3166-apache-hadoop-privilege-escalation-vulnerability"><a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-3166">CVE-2017-3166</a> Apache Hadoop Privilege escalation vulnerability</h2>
 <p>In a cluster where the YARN user has been granted access to all HDFS
 encryption keys, if a file in an encryption zone with access permissions
 that make it world readable is localized via YARN&rsquo;s localization mechanism,
@@ -466,12 +468,12 @@ target encryption zone.</p>
 </ul>
 <h1 id="thirdparty-vulnerabilities">Thirdparty vulnerabilities</h1>
 <p>The following section describes thirdparty vulnerabilities that may be of interest to Hadoop users. Please contact the respective project owners for details.</p>
-<h2 id="cve-2021-44228httpscvemitreorgcgi-bincvenamecginamecve-2021-44228-log4shell-vulnerability"><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228">CVE-2021-44228</a> Log4Shell Vulnerability</h2>
+<h2 id="cve-2021-44228-log4shell-vulnerability"><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-44228">CVE-2021-44228</a> Log4Shell Vulnerability</h2>
 <p>It is understood that the log4shell vulnerability CVE-2021-44228 impacts log4j2. Hadoop, as of 3.3.x depends on log4j 1.x, which is <strong>NOT</strong> susceptible to the attack. Once we migrate over to log4j2, we will adopt a version that is not susceptible to the attack, too. Therefore, no ASF version of Hadoop has ever been vulnerable. Third party products and applications based on Hadoop <em>may</em> be vulnerable, please consult the vendor or the project owner.</p>
 <ul>
 <li><strong>Versions affected</strong>: N/A</li>
 </ul>
-<h2 id="cve-2021-4104httpscvemitreorgcgi-bincvenamecginamecve-2021-4104-log4shell-vulnerability"><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-4104">CVE-2021-4104</a> Log4Shell Vulnerability</h2>
+<h2 id="cve-2021-4104-log4shell-vulnerability"><a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-4104">CVE-2021-4104</a> Log4Shell Vulnerability</h2>
 <p>JMSAppender in Log4j 1.2, used by all versions of Apache Hadoop, is vulnerable to the Log4Shell attack in a similar fashion to CVE-2021-44228. However, the JMSAppender is not the default configuration shipped in Hadoop. When JMSAppender is not enabled, Hadoop is not vulnerable to the attack.</p>
 <p>To mitigate the risk, you can remove JMSAppender from the log4j-1.2.17.jar artifact yourself following the instructions in this <a href="http://slf4j.org/log4shell.html">link</a>.</p>
 <ul>
