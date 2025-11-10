@@ -37,7 +37,7 @@ order):
 
   username         |name                                                                         |organization   |roles       |timezone
   ---------------- |---------------------------------------------------------------------------- |-------------- |----------- |----------
-  aajisaka         |Akira Ajisaka                                                                |AWS            |            |+9
+  aajisaka         |Akira Ajisaka                                                                |LY Corporation |            |+9
   acmurthy         |[Arun C Murthy](http://people.apache.org/~acmurthy)                          |Hortonworks    |            |-8
   aengineer        |Anu Engineer                                                                 |Hortonworks    |            |-8
   amareshwari      |Amareshwari Sriramadasu                                                      |InMobi         |            |+5.5
@@ -117,7 +117,7 @@ order):
   surendralilhore  |Surendra Singh Lilhore                                                       |Microsoft      |HDFS        |+5.5
   suresh           |[Suresh Srinivas](http://people.apache.org/~suresh)                          |Hortonworks    |            |-8
   szetszwo         |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                  |Hortonworks    |            |-8
-  tasanuma         |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                       |Yahoo! JAPAN   |            |+9
+  tasanuma         |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                       |LY Corporation |            |+9
   templedf         |Daniel Templeton                                                             |Cloudera       |            |-8
   tgraves          |Thomas Graves                                                                |NVIDIA         |            |-6
   todd             |[Todd Lipcon](http://people.apache.org/~todd)                                |Cloudera       |            |-8
@@ -156,7 +156,7 @@ Hadoop's active committers include:
 
 username            |name                                                                               |organization        |roles  |timezone  |
 --------------------|-----------------------------------------------------------------------------------|--------------------|-------|----------|
-aajisaka            |Akira Ajisaka                                                                       |AWS                             |        |+9
+aajisaka            |Akira Ajisaka                                                                       |LY Corporation                  |        |+9
 ab                  |Andrzej Bialecki                                                                    |Getopt                          |        |+1
 abmodi              |Abhishek Modi                                                                       |Google                          |        |+5.5
 acmurthy            |[Arun C Murthy](http://people.apache.org/~acmurthy)                                 |Hortonworks                     |        |-8
@@ -300,7 +300,7 @@ szegedim            |Miklos Szegedi                                             
 szetszwo            |[Tsz Wo (Nicholas) Sze](http://people.apache.org/~szetszwo)                         |Hortonworks                     |        |-8
 tanping             |[Tanping Wang](http://people.apache.org/~tanping)                                   |Yahoo!                          |        |-8
 taoyang             |Tao Yang                                                                            |Alibaba                         |        |+8
-tasanuma            |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                              |Yahoo! JAPAN                    |        |+9
+tasanuma            |[Takanobu Asanuma](http://people.apache.org/~tasanuma)                              |LY Corporation                  |        |+9
 taton               |[Christophe Taton](http://people.apache.org/~taton)                                 |INRIA                           |        |+1
 templedf            |Daniel Templeton                                                                    |Cloudera                        |        |-8
 tgraves             |Thomas Graves                                                                       |NVIDIA                          |        |-6
