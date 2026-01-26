@@ -37,6 +37,23 @@ One paragraph summary goes here. Don't need nuts-and-bolts detail, just enough f
 - **Issue Announced**:
 -->
 
+## [CVE-2025-27821](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-27821) Out of bounds write in URI parser of native HDFS client
+
+Out-of-bounds Write vulnerability in Apache Hadoop HDFS native client.
+
+This issue affects Apache Hadoop: from 3.2.0 before 3.4.2.
+
+Users are recommended to upgrade to version 3.4.2, which fixes the issue.
+
+This issue is being tracked as [HDFS-17754](https://issues.apache.org/jira/browse/HDFS-17754).
+
+- **Versions affected**: 3.2.0 to 3.4.1
+- **Fixed versions**: 3.4.2
+- **Impact**: Memory Corruption
+- **Reporter**: BUI Ngoc Tan
+- **Reported Date**: 2025/03/01
+- **Issue Announced**: 2026/01/23
+
 ## [CVE-2023-26031](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-26031) Privilege escalation in Apache Haoop Yarn container-executor binary on Linux systems
 
 Relative library resolution in linux container-executor binary in Apache Hadoop 3.3.1-3.3.4 on Linux allows local user to gain root privileges. If the YARN cluster is accepting work from remote (authenticated) users, this MAY permit remote users to gain root privileges.
