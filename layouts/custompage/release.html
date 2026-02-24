@@ -79,19 +79,7 @@
             (<a href="https://downloads.apache.org/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-aarch64.tar.gz.{{ $checksum_suffix }}">checksum</a>
             <a href="https://downloads.apache.org/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-aarch64.tar.gz.asc">signature</a>)
           {{ end }}
-          <!-- Include lean tar.gz binaries included in releases after 3.4.1 -->
-          {{ $version := .File.BaseFileName | replaceRE "^([0-9]+\\.[0-9]+\\.[0-9]+).*" "$1" }}
-          {{ $versionParts := split $version "." }}
-          {{ $major := (index $versionParts 0) | int }}
-          {{ $minor := (index $versionParts 1) | int }}
-          {{ $patch := (index $versionParts 2) | int }}
-          {{ if or (gt $major 3) (and (eq $major 3) (gt $minor 4)) (and (eq $major 3) (eq $minor 4) (gt $patch 0)) }}
-          <br/>
-          <a href="https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-lean.tar.gz">binary-lean</a>
-          (<a href="https://downloads.apache.org/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-lean.tar.gz.{{ $checksum_suffix }}">checksum</a>
-          <a href="https://downloads.apache.org/hadoop/common/hadoop-{{.File.BaseFileName }}/hadoop-{{.File.BaseFileName }}-lean.tar.gz.asc">signature</a>)
-          </p>
-          {{ end }}
+
          </td>
          <td>
            <a href="/release/{{.File.BaseFileName }}.html">Announcement</a>
