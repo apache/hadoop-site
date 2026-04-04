@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.apache.hadoop.mapreduce.v2.hs.webapp","l":"MapReduceTrackingUriPlugin"}];updateSearchResults();

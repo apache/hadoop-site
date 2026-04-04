@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.apache.hadoop.mapred.nativetask"},{"l":"org.apache.hadoop.mapred.nativetask.buffer"},{"l":"org.apache.hadoop.mapred.nativetask.handlers"},{"l":"org.apache.hadoop.mapred.nativetask.serde"},{"l":"org.apache.hadoop.mapred.nativetask.util"}];updateSearchResults();
