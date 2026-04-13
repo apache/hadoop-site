@@ -185,6 +185,7 @@ brandonli           |Brandon Li                                                 
 bteke               |[Benjamin Teke](https://github.com/brumi1024)                                       |Cloudera                        |        |+1
 busbey              |Sean Busbey                                                                         |Cloudera                        |        |-6
 cdouglas            |Chris Douglas                                                                       |Microsoft                       |        |-8
+chengpan            |[Cheng Pan](https://github.com/pan3793)                                             |NetEase                         |        |+8
 cliang              |Chen Liang                                                                          |LinkedIn                        |        |-8
 cmccabe             |[Colin Patrick McCabe](http://www.club.cc.cmu.edu/~cmccabe)                         |Cloudera                        |HDFS    |-8
 cnauroth            |[Chris Nauroth](https://github.com/cnauroth)                                        |Google                          |        |-8
