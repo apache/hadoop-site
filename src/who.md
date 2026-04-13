@@ -336,6 +336,7 @@ yqlin               |[Yiqun Lin](https://github.com/linyiqun)                   
 zanderxu            |[Zengqiang Xu](https://github.com/ZanderXu)                                         |Shopee                          |        |+8
 zhangshuyan         |[Shuyan Zhang](https://github.com/zhangshuyan0)                                     |Meituan                         |        |+8
 zhouquan            |[Zac Zhou](https://github.com/yuanzac)                                              |Tencent                         |        |+8
+zhtttylz            |[Hualong Zhang](https://github.com/zhtttylz)                                        |DiDi                            |        |+8
 zhuqi               |[Qi Zhu](https://github.com/zhuqi-lucas)                                            |Cloudera                        |        |+8
 zhz                 |[Zhe Zhang](http://zhe-thoughts.github.io/about/)                                   |LinkedIn                        |HDFS    |-8
 zjshen              |[Zhijie Shen](http://people.apache.org/~zjshen)                                     |Hortonworks                     |        |-8
