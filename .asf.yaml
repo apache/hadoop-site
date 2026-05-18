@@ -22,10 +22,23 @@ github:
     squash: true
     merge: false
     rebase: false
+  rulesets:
+    - name: "Default Branch Protection"
+      type: branch
+      branches:
+        includes:
+          - "~DEFAULT_BRANCH"
+          - "release/*"
+          - "rel/*"
+        excludes: []
+      bypass_teams:
+        - root
+      restrict_deletion: true
+      restrict_force_push: true
 notifications:
-  commits:      common-commits@hadoop.apache.org
-  issues:       common-issues@hadoop.apache.org
+  commits: common-commits@hadoop.apache.org
+  issues: common-issues@hadoop.apache.org
   pullrequests: common-issues@hadoop.apache.org
   jira_options: link label worklog
 publish:
-  whoami:  asf-site
+  whoami: asf-site
